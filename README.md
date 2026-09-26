@@ -15,6 +15,7 @@
 - `data/markdown/`：正文
 - `data/raw/`：原始 JSON
 - `data/attachments/_files/`：PDF、图片和宣传压缩包
+- `视频主题筛选.md`：按演示视频要求和评分细则筛过的选题
 
 赛区组委会联系方式在官网是图片，本地文件为：
 
