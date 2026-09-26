@@ -1,0 +1,14 @@
+{
+  "source": "https://www.aicomp.cn/tracks",
+  "built_at": "2026-09-26T12:55:38+08:00",
+  "n_pages": 11,
+  "n_unique_problems": 11,
+  "by_track_pages": {
+    "通用资料": 9,
+    "算法主题赛": 2
+  },
+  "by_track_unique": {
+    "通用资料": 9,
+    "算法主题赛": 2
+  }
+}

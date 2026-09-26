@@ -1,0 +1,730 @@
+{
+  "source": "https://www.aicomp.cn/tracks",
+  "built_at": "2026-09-26T12:55:38+08:00",
+  "n_pages": 11,
+  "n_unique_problems": 11,
+  "n_overviews": 0,
+  "by_track_pages": {
+    "通用资料": 9,
+    "算法主题赛": 2
+  },
+  "by_track_unique": {
+    "通用资料": 9,
+    "算法主题赛": 2
+  },
+  "overviews": [],
+  "pages": [
+    {
+      "id": 4924,
+      "title": "2026AIC· “AI+开源”算法主题赛赛题及竞赛规则",
+      "track": "算法主题赛",
+      "kind": "rules",
+      "date": "2026-08-13",
+      "link": "https://www.aicomp.cn/tracks/tracks-5/4924.html",
+      "chars": 2898,
+      "n_links": 3,
+      "n_assets": 3,
+      "assets": [
+        {
+          "text": "关于举办第八届全球校园人工智能算法精英大赛算法主题赛（AI+开源）的通知260812",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/08/关于举办第八届全球校园人工智能算法精英大赛算法主题赛（AI开源）的通知260812.pdf"
+        },
+        {
+          "text": "AIC·AI+开源竞赛规则及作品提交要求0812",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/08/附件1_AIC·AI开源竞赛规则及作品提交要求0812.pdf"
+        },
+        {
+          "text": "AIC·AI+开源技术报告参考大纲260812",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/08/附件2_AIC·AI开源技术报告参考大纲260812.pdf"
+        }
+      ],
+      "subproblems": [],
+      "contacts": {
+        "emails": [
+          "zhaoyuan@nju.edu.cn"
+        ],
+        "phones": [],
+        "qq": [
+          "2166034927"
+        ],
+        "orgs": [
+          "全球校园人工智能算法精英大赛全国组委会"
+        ]
+      },
+      "excerpt": "一、竞赛目的 开源软件、开源模型、开源数据和开放协作机制已成为人工智能技术创新与人才培养的重要基础。随着开源大模型、智能体框架、低代码工具和开发平台快速普及，学生团队能够在有限算力和开发成本条件下，完成面向真实问题的人工智能应用、工具和可复用成果。举办本次主题赛，旨在引导学生正确使用开源及第三方资源，围绕学习科研、生产生活、社会服务和开源协作中的具体问题开展",
+      "markdown_file": "C:\\Users\\tianc\\Projects\\aicomp-2026-tracks\\data\\markdown\\4924_2026AIC· “AI+开源”算法主题赛赛题及竞赛规则.md"
+    },
+    {
+      "id": 5019,
+      "title": "AI+开源",
+      "track": "算法主题赛",
+      "kind": "nav",
+      "date": "2026-08-20",
+      "link": "https://www.aicomp.cn/aic-4/5019.html",
+      "chars": 28,
+      "n_links": 1,
+      "n_assets": 0,
+      "assets": [],
+      "subproblems": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "2026AIC· “AI+开源”算法主题赛赛题及竞赛规则",
+      "markdown_file": "C:\\Users\\tianc\\Projects\\aicomp-2026-tracks\\data\\markdown\\5019_AI+开源.md"
+    },
+    {
+      "id": 2,
+      "title": "大赛概况",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2025-06-06",
+      "link": "https://www.aicomp.cn/about",
+      "chars": 414,
+      "n_links": 0,
+      "n_assets": 0,
+      "assets": [],
+      "subproblems": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "全球校园人工智能算法精英大赛由中国科学院院士周志华教授于2019年倡议创办并担任科学顾问。首届大赛在南京大学开赛，至今已连续举办7届，累计吸引全球26个国家和地区、1000多所高校的4.5万余支队伍、超10万名师生参赛。2023年，大赛首次被列入“全国普通高等学校学科竞赛排行榜”，成为唯一以“人工智能算法”为主题的国家级赛事。 2025年第七届大赛进一步扩大",
+      "markdown_file": "C:\\Users\\tianc\\Projects\\aicomp-2026-tracks\\data\\markdown\\2_大赛概况.md"
+    },
+    {
+      "id": 17,
+      "title": "竞赛章程",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2025-06-14",
+      "link": "https://www.aicomp.cn/bylaws",
+      "chars": 5626,
+      "n_links": 1,
+      "n_assets": 0,
+      "assets": [],
+      "subproblems": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "全球校园人工智能算法精英大赛章程（试行） 第一章 总则 第一条 全球校园人工智能算法精英大赛（英文名称 Global Campus Artificial Intelligence Algorithm Elite Competition，英文缩写AIC，以下简称“大赛”）是面向全球校园具有正式学籍的在校学生和在职教师举办的人工智能算法领域竞赛。为规范大赛组织、",
+      "markdown_file": "C:\\Users\\tianc\\Projects\\aicomp-2026-tracks\\data\\markdown\\17_竞赛章程.md"
+    },
+    {
+      "id": 1484,
+      "title": "指导教师/评委/管理员 – 注册流程",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2025-06-21",
+      "link": "https://www.aicomp.cn/progress/1484.html",
+      "chars": 677,
+      "n_links": 2,
+      "n_assets": 1,
+      "assets": [
+        {
+          "text": "教师系统操作指南",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/06/教师系统操作指南.pdf"
+        }
+      ],
+      "subproblems": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "一、注册地址 点击大赛官网（www.aicomp.cn）右上角“大赛报名”按钮（参考下图） 大赛报名官网页面 二、注册教师专属账号 进入大赛报名官网点击右上角蓝色注册按钮进行注册，并按照要求填写对应的信息，注册成功后选择账号/手机号进行登录。 大赛报名系统页面 注：需选择红色标记的教师身份。 教师注册页面示意图 三、填写个人信息 第一次进入大赛官网时，点击左",
+      "markdown_file": "C:\\Users\\tianc\\Projects\\aicomp-2026-tracks\\data\\markdown\\1484_指导教师_评委_管理员 – 注册流程.md"
+    },
+    {
+      "id": 1463,
+      "title": "报名参赛流程",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2025-06-21",
+      "link": "https://www.aicomp.cn/progress/1463.html",
+      "chars": 1729,
+      "n_links": 4,
+      "n_assets": 2,
+      "assets": [
+        {
+          "text": "学生报名参赛指南",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/06/学生报名参赛指南-1.pdf"
+        },
+        {
+          "text": "学生报名参赛指南",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/06/学生报名参赛指南.pdf"
+        }
+      ],
+      "subproblems": [],
+      "contacts": {
+        "emails": [
+          "office@aicomp.cn"
+        ],
+        "phones": [],
+        "qq": [
+          "1026637157。"
+        ],
+        "orgs": []
+      },
+      "excerpt": "一、报名方式 点击大赛官网（www.aicomp.cn）右上角“大赛报名”按钮（参考下图）进入登录页面。 二、注册大赛账号 （一）登录页面 填写账号（注册账号使用的手机号）、密码、验证码进行登录。 登录页面 若忘记密码，则点击“找回密码”跳转到找回密码页面，若未注册则点击“注册”按钮跳转到用户注册页面。 （二）用户注册页面 填写相应信息，进行注册。注册成功后",
+      "markdown_file": "C:\\Users\\tianc\\Projects\\aicomp-2026-tracks\\data\\markdown\\1463_报名参赛流程.md"
+    },
+    {
+      "id": 1771,
+      "title": "AIC·宣传资料下载",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2025-12-01",
+      "link": "https://www.aicomp.cn/download/1771.html",
+      "chars": 210,
+      "n_links": 13,
+      "n_assets": 19,
+      "assets": [
+        {
+          "text": "2026AIC算法大赛介绍ppt-9月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC算法大赛介绍ppt-9月.pdf"
+        },
+        {
+          "text": "2026AIC算法大赛介绍ppt-9月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC算法大赛介绍ppt-9月-1.pdf"
+        },
+        {
+          "text": "TheklaBoldExtended",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/TheklaBoldExtended.zip"
+        },
+        {
+          "text": "",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/标识矢量源文件.zip"
+        },
+        {
+          "text": "2026AIC回顾手册-260917",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC回顾手册-260917.pdf"
+        },
+        {
+          "text": "2026AIC大赛回顾手册-8月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC大赛回顾手册-8月.pdf"
+        },
+        {
+          "text": "2026AIC算法大赛介绍ppt-8月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC算法大赛介绍ppt-8月-1.pdf"
+        },
+        {
+          "text": "2026AIC算法大赛介绍ppt-8月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC算法大赛介绍ppt-8月.pdf"
+        },
+        {
+          "text": "AIC算法大赛概况-5月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/AIC算法大赛概况-5月.pdf"
+        },
+        {
+          "text": "2026AIC大赛回顾手册-5月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC大赛回顾手册-5月.pdf"
+        },
+        {
+          "text": "2026AIC回顾手册-0512",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC回顾手册-0512.pdf"
+        },
+        {
+          "text": "主画面中英文字矢量文件",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/主画面中英文字矢量文件.zip"
+        },
+        {
+          "text": "主画面中英文字体文件",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/主画面中英文字体文件.zip"
+        },
+        {
+          "text": "AIC·AIC算法大赛回顾手册（压缩版）",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/AIC·AIC算法大赛回顾手册（压缩版）.pdf"
+        },
+        {
+          "text": "AIC·AIC算法大赛概况（PPT版）-260304",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/AIC·AIC算法大赛概况（PPT版）-260304.pdf"
+        },
+        {
+          "text": "(宣传)2026AIC回顾手册",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/宣传2026AIC回顾手册.pdf"
+        },
+        {
+          "text": "（宣传）2026AIC大赛介绍ppt",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/（宣传）2026AIC大赛介绍ppt.pdf"
+        },
+        {
+          "text": "（已压缩）2026AIC回顾手册0210修改",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/（已压缩）2026AIC回顾手册0210修改.pdf"
+        },
+        {
+          "text": "（已压缩）AIC介绍手册",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/07/（已压缩）AIC介绍手册.pdf"
+        }
+      ],
+      "subproblems": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "1.大赛简介PPT:2026AIC算法大赛介绍ppt-9月 2.大赛回顾手册：2026AIC算法大赛介绍ppt-9月 3.大赛标识： LOGO（电子） LOGO（印刷） LOGOicon（方形） 主题（电子） 主题（印刷） 主题icon（方形） 英文主题（电子） 英文主题（印刷） 英文icon（方形） 英文主题字体 英文主题字体文件 TheklaBoldEx",
+      "markdown_file": "C:\\Users\\tianc\\Projects\\aicomp-2026-tracks\\data\\markdown\\1771_AIC·宣传资料下载.md"
+    },
+    {
+      "id": 2449,
+      "title": "AIC·对公转账流程",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2026-01-01",
+      "link": "https://www.aicomp.cn/progress/2449.html",
+      "chars": 458,
+      "n_links": 1,
+      "n_assets": 0,
+      "assets": [],
+      "subproblems": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [
+          "1026637157（有任何疑问也可加此群）"
+        ],
+        "orgs": []
+      },
+      "excerpt": "指导教师、团队队长可先进行对公转账 对公转账收款信息 收款单位：江苏省人工智能学会 收款账号：320006678018010081595 开户银行：交通银行南京仙林支行 以对公转账形式缴纳报名费后，请提交以下信息 【学校名称+教师姓名+联系电话+转账截图+所需缴费团队名称+参赛编号+开票信息+开票人邮箱】 点击链接填写采集表：https://doc.weix",
+      "markdown_file": "C:\\Users\\tianc\\Projects\\aicomp-2026-tracks\\data\\markdown\\2449_AIC·对公转账流程.md"
+    },
+    {
+      "id": 3618,
+      "title": "关于举办第八届全球校园人工智能算法精英大赛的通知",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2026-04-29",
+      "link": "https://www.aicomp.cn/notice/notice-1/3618.html",
+      "chars": 2816,
+      "n_links": 2,
+      "n_assets": 3,
+      "assets": [
+        {
+          "text": "关于举办第八届AIC算法大赛的通知",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/04/关于举办第八届AIC算法大赛的通知-2.pdf"
+        },
+        {
+          "text": "关于举办第八届AIC算法大赛的通知",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/04/关于举办第八届AIC算法大赛的通知-1.pdf"
+        },
+        {
+          "text": "关于举办第八届AIC算法大赛的通知",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/04/关于举办第八届AIC算法大赛的通知.pdf"
+        }
+      ],
+      "subproblems": [],
+      "contacts": {
+        "emails": [
+          "office@aicomp.cn"
+        ],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "各高校、相关单位及参赛团队： “全球校园人工智能算法精英大赛”位列全国普通高校学科竞赛排行榜，迄今已连续成功举办七届，覆盖全球1000余所高校，累计参赛人数超过10万人。大赛秉持“以赛促学、以赛促教、以赛促创”办赛理念，聚焦算法创新与应用创新，搭建算法竞技舞台，激发校园学子创新意识，托举青年科技人才成长。经大赛组委会研究，决定于2026年4月-12月期间举办",
+      "markdown_file": "C:\\Users\\tianc\\Projects\\aicomp-2026-tracks\\data\\markdown\\3618_关于举办第八届全球校园人工智能算法精英大赛的通知.md"
+    },
+    {
+      "id": 3963,
+      "title": "AIC·参赛报名流程",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2026-05-11",
+      "link": "https://www.aicomp.cn/download/3963.html",
+      "chars": 1665,
+      "n_links": 3,
+      "n_assets": 0,
+      "assets": [],
+      "subproblems": [],
+      "contacts": {
+        "emails": [
+          "office@aicomp.cn"
+        ],
+        "phones": [],
+        "qq": [
+          "1026637157。"
+        ],
+        "orgs": []
+      },
+      "excerpt": "一、报名方式 点击大赛官网（www.aicomp.cn）右上角“大赛报名”按钮（参考下图）进入登录页面。 二、注册大赛账号 （一）登录页面 填写账号（注册账号使用的手机号）、密码、验证码进行登录。 登录页面 若忘记密码，则点击“找回密码”跳转到找回密码页面，若未注册则点击“注册”按钮跳转到用户注册页面。 （二）用户注册页面 填写相应信息，进行注册。注册成功后",
+      "markdown_file": "C:\\Users\\tianc\\Projects\\aicomp-2026-tracks\\data\\markdown\\3963_AIC·参赛报名流程.md"
+    },
+    {
+      "id": 4951,
+      "title": "2026AIC·省级选拔赛组委会联系方式",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2026-08-13",
+      "link": "https://www.aicomp.cn/download/4951.html",
+      "chars": 0,
+      "n_links": 2,
+      "n_assets": 0,
+      "assets": [],
+      "subproblems": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "",
+      "markdown_file": "C:\\Users\\tianc\\Projects\\aicomp-2026-tracks\\data\\markdown\\4951_2026AIC·省级选拔赛组委会联系方式.md"
+    }
+  ],
+  "problems": [
+    {
+      "id": 4924,
+      "title": "2026AIC· “AI+开源”算法主题赛赛题及竞赛规则",
+      "norm": "AI+开源算法主题赛",
+      "track": "算法主题赛",
+      "kind": "rules",
+      "date": "2026-08-13",
+      "link": "https://www.aicomp.cn/tracks/tracks-5/4924.html",
+      "chars": 2898,
+      "n_assets": 3,
+      "assets": [
+        {
+          "text": "关于举办第八届全球校园人工智能算法精英大赛算法主题赛（AI+开源）的通知260812",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/08/关于举办第八届全球校园人工智能算法精英大赛算法主题赛（AI开源）的通知260812.pdf"
+        },
+        {
+          "text": "AIC·AI+开源竞赛规则及作品提交要求0812",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/08/附件1_AIC·AI开源竞赛规则及作品提交要求0812.pdf"
+        },
+        {
+          "text": "AIC·AI+开源技术报告参考大纲260812",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/08/附件2_AIC·AI开源技术报告参考大纲260812.pdf"
+        }
+      ],
+      "contacts": {
+        "emails": [
+          "zhaoyuan@nju.edu.cn"
+        ],
+        "phones": [],
+        "qq": [
+          "2166034927"
+        ],
+        "orgs": [
+          "全球校园人工智能算法精英大赛全国组委会"
+        ]
+      },
+      "excerpt": "一、竞赛目的 开源软件、开源模型、开源数据和开放协作机制已成为人工智能技术创新与人才培养的重要基础。随着开源大模型、智能体框架、低代码工具和开发平台快速普及，学生团队能够在有限算力和开发成本条件下，完成面向真实问题的人工智能应用、工具和可复用成果。举办本次主题赛，旨在引导学生正确使用开源及第三方资源，围绕学习科研、生产生活、社会服务和开源协作中的具体问题开展轻量化创新，形成可运行、可演示、可验证的作品；同时培养学生的知识产权、开源许可证"
+    },
+    {
+      "id": 5019,
+      "title": "AI+开源",
+      "norm": "AI+开源",
+      "track": "算法主题赛",
+      "kind": "nav",
+      "date": "2026-08-20",
+      "link": "https://www.aicomp.cn/aic-4/5019.html",
+      "chars": 28,
+      "n_assets": 0,
+      "assets": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "2026AIC· “AI+开源”算法主题赛赛题及竞赛规则"
+    },
+    {
+      "id": 4951,
+      "title": "2026AIC·省级选拔赛组委会联系方式",
+      "norm": "省级选拔赛组委会联系方式",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2026-08-13",
+      "link": "https://www.aicomp.cn/download/4951.html",
+      "chars": 0,
+      "n_assets": 0,
+      "assets": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": ""
+    },
+    {
+      "id": 3963,
+      "title": "AIC·参赛报名流程",
+      "norm": "AIC·参赛报名流程",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2026-05-11",
+      "link": "https://www.aicomp.cn/download/3963.html",
+      "chars": 1665,
+      "n_assets": 0,
+      "assets": [],
+      "contacts": {
+        "emails": [
+          "office@aicomp.cn"
+        ],
+        "phones": [],
+        "qq": [
+          "1026637157。"
+        ],
+        "orgs": []
+      },
+      "excerpt": "一、报名方式 点击大赛官网（www.aicomp.cn）右上角“大赛报名”按钮（参考下图）进入登录页面。 二、注册大赛账号 （一）登录页面 填写账号（注册账号使用的手机号）、密码、验证码进行登录。 登录页面 若忘记密码，则点击“找回密码”跳转到找回密码页面，若未注册则点击“注册”按钮跳转到用户注册页面。 （二）用户注册页面 填写相应信息，进行注册。注册成功后点击“立即登录”返回登录页面。注册时请参赛者根据参赛情况进行身份选择：参赛学生/"
+    },
+    {
+      "id": 1771,
+      "title": "AIC·宣传资料下载",
+      "norm": "AIC·宣传资料下载",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2025-12-01",
+      "link": "https://www.aicomp.cn/download/1771.html",
+      "chars": 210,
+      "n_assets": 19,
+      "assets": [
+        {
+          "text": "2026AIC算法大赛介绍ppt-9月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC算法大赛介绍ppt-9月.pdf"
+        },
+        {
+          "text": "2026AIC算法大赛介绍ppt-9月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC算法大赛介绍ppt-9月-1.pdf"
+        },
+        {
+          "text": "TheklaBoldExtended",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/TheklaBoldExtended.zip"
+        },
+        {
+          "text": "",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/标识矢量源文件.zip"
+        },
+        {
+          "text": "2026AIC回顾手册-260917",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC回顾手册-260917.pdf"
+        },
+        {
+          "text": "2026AIC大赛回顾手册-8月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC大赛回顾手册-8月.pdf"
+        },
+        {
+          "text": "2026AIC算法大赛介绍ppt-8月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC算法大赛介绍ppt-8月-1.pdf"
+        },
+        {
+          "text": "2026AIC算法大赛介绍ppt-8月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC算法大赛介绍ppt-8月.pdf"
+        },
+        {
+          "text": "AIC算法大赛概况-5月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/AIC算法大赛概况-5月.pdf"
+        },
+        {
+          "text": "2026AIC大赛回顾手册-5月",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC大赛回顾手册-5月.pdf"
+        },
+        {
+          "text": "2026AIC回顾手册-0512",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/2026AIC回顾手册-0512.pdf"
+        },
+        {
+          "text": "主画面中英文字矢量文件",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/主画面中英文字矢量文件.zip"
+        },
+        {
+          "text": "主画面中英文字体文件",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/主画面中英文字体文件.zip"
+        },
+        {
+          "text": "AIC·AIC算法大赛回顾手册（压缩版）",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/AIC·AIC算法大赛回顾手册（压缩版）.pdf"
+        },
+        {
+          "text": "AIC·AIC算法大赛概况（PPT版）-260304",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/AIC·AIC算法大赛概况（PPT版）-260304.pdf"
+        },
+        {
+          "text": "(宣传)2026AIC回顾手册",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/宣传2026AIC回顾手册.pdf"
+        },
+        {
+          "text": "（宣传）2026AIC大赛介绍ppt",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/（宣传）2026AIC大赛介绍ppt.pdf"
+        },
+        {
+          "text": "（已压缩）2026AIC回顾手册0210修改",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/12/（已压缩）2026AIC回顾手册0210修改.pdf"
+        },
+        {
+          "text": "（已压缩）AIC介绍手册",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/07/（已压缩）AIC介绍手册.pdf"
+        }
+      ],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "1.大赛简介PPT:2026AIC算法大赛介绍ppt-9月 2.大赛回顾手册：2026AIC算法大赛介绍ppt-9月 3.大赛标识： LOGO（电子） LOGO（印刷） LOGOicon（方形） 主题（电子） 主题（印刷） 主题icon（方形） 英文主题（电子） 英文主题（印刷） 英文icon（方形） 英文主题字体 英文主题字体文件 TheklaBoldExtended TheklaBoldExtended"
+    },
+    {
+      "id": 2449,
+      "title": "AIC·对公转账流程",
+      "norm": "AIC·对公转账流程",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2026-01-01",
+      "link": "https://www.aicomp.cn/progress/2449.html",
+      "chars": 458,
+      "n_assets": 0,
+      "assets": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [
+          "1026637157（有任何疑问也可加此群）"
+        ],
+        "orgs": []
+      },
+      "excerpt": "指导教师、团队队长可先进行对公转账 对公转账收款信息 收款单位：江苏省人工智能学会 收款账号：320006678018010081595 开户银行：交通银行南京仙林支行 以对公转账形式缴纳报名费后，请提交以下信息 【学校名称+教师姓名+联系电话+转账截图+所需缴费团队名称+参赛编号+开票信息+开票人邮箱】 点击链接填写采集表：https://doc.weixin.qq.com/forms/ACYAxAeGABEATwA6gb5AK8CN"
+    },
+    {
+      "id": 3618,
+      "title": "关于举办第八届全球校园人工智能算法精英大赛的通知",
+      "norm": "关于举办第八届全球校园人工智能算法精英大赛的通知",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2026-04-29",
+      "link": "https://www.aicomp.cn/notice/notice-1/3618.html",
+      "chars": 2816,
+      "n_assets": 3,
+      "assets": [
+        {
+          "text": "关于举办第八届AIC算法大赛的通知",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/04/关于举办第八届AIC算法大赛的通知-2.pdf"
+        },
+        {
+          "text": "关于举办第八届AIC算法大赛的通知",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/04/关于举办第八届AIC算法大赛的通知-1.pdf"
+        },
+        {
+          "text": "关于举办第八届AIC算法大赛的通知",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2026/04/关于举办第八届AIC算法大赛的通知.pdf"
+        }
+      ],
+      "contacts": {
+        "emails": [
+          "office@aicomp.cn"
+        ],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "各高校、相关单位及参赛团队： “全球校园人工智能算法精英大赛”位列全国普通高校学科竞赛排行榜，迄今已连续成功举办七届，覆盖全球1000余所高校，累计参赛人数超过10万人。大赛秉持“以赛促学、以赛促教、以赛促创”办赛理念，聚焦算法创新与应用创新，搭建算法竞技舞台，激发校园学子创新意识，托举青年科技人才成长。经大赛组委会研究，决定于2026年4月-12月期间举办第八届全球校园人工智能算法精英大赛。现将有关事项通知如下： 一、赛事标识 中文名"
+    },
+    {
+      "id": 2,
+      "title": "大赛概况",
+      "norm": "大赛概况",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2025-06-06",
+      "link": "https://www.aicomp.cn/about",
+      "chars": 414,
+      "n_assets": 0,
+      "assets": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "全球校园人工智能算法精英大赛由中国科学院院士周志华教授于2019年倡议创办并担任科学顾问。首届大赛在南京大学开赛，至今已连续举办7届，累计吸引全球26个国家和地区、1000多所高校的4.5万余支队伍、超10万名师生参赛。2023年，大赛首次被列入“全国普通高等学校学科竞赛排行榜”，成为唯一以“人工智能算法”为主题的国家级赛事。 2025年第七届大赛进一步扩大至900多所高校、2万余支团队、超5万名师生参与，设立13个省级赛区，覆盖33个"
+    },
+    {
+      "id": 1463,
+      "title": "报名参赛流程",
+      "norm": "报名参赛流程",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2025-06-21",
+      "link": "https://www.aicomp.cn/progress/1463.html",
+      "chars": 1729,
+      "n_assets": 2,
+      "assets": [
+        {
+          "text": "学生报名参赛指南",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/06/学生报名参赛指南-1.pdf"
+        },
+        {
+          "text": "学生报名参赛指南",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/06/学生报名参赛指南.pdf"
+        }
+      ],
+      "contacts": {
+        "emails": [
+          "office@aicomp.cn"
+        ],
+        "phones": [],
+        "qq": [
+          "1026637157。"
+        ],
+        "orgs": []
+      },
+      "excerpt": "一、报名方式 点击大赛官网（www.aicomp.cn）右上角“大赛报名”按钮（参考下图）进入登录页面。 二、注册大赛账号 （一）登录页面 填写账号（注册账号使用的手机号）、密码、验证码进行登录。 登录页面 若忘记密码，则点击“找回密码”跳转到找回密码页面，若未注册则点击“注册”按钮跳转到用户注册页面。 （二）用户注册页面 填写相应信息，进行注册。注册成功后点击“立即登录”返回登录页面。注册时请参赛者根据参赛情况进行身份选择：参赛学生/"
+    },
+    {
+      "id": 1484,
+      "title": "指导教师/评委/管理员 – 注册流程",
+      "norm": "指导教师/评委/管理员–注册流程",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2025-06-21",
+      "link": "https://www.aicomp.cn/progress/1484.html",
+      "chars": 677,
+      "n_assets": 1,
+      "assets": [
+        {
+          "text": "教师系统操作指南",
+          "href": "https://www.aicomp.cn/wp-content/uploads/2025/06/教师系统操作指南.pdf"
+        }
+      ],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "一、注册地址 点击大赛官网（www.aicomp.cn）右上角“大赛报名”按钮（参考下图） 大赛报名官网页面 二、注册教师专属账号 进入大赛报名官网点击右上角蓝色注册按钮进行注册，并按照要求填写对应的信息，注册成功后选择账号/手机号进行登录。 大赛报名系统页面 注：需选择红色标记的教师身份。 教师注册页面示意图 三、填写个人信息 第一次进入大赛官网时，点击左侧“我的基本信息”补全个人资料并点击提交保存（可随时在此页面中修改个人信息）。 "
+    },
+    {
+      "id": 17,
+      "title": "竞赛章程",
+      "norm": "竞赛章程",
+      "track": "通用资料",
+      "kind": "guide",
+      "date": "2025-06-14",
+      "link": "https://www.aicomp.cn/bylaws",
+      "chars": 5626,
+      "n_assets": 0,
+      "assets": [],
+      "contacts": {
+        "emails": [],
+        "phones": [],
+        "qq": [],
+        "orgs": []
+      },
+      "excerpt": "全球校园人工智能算法精英大赛章程（试行） 第一章 总则 第一条 全球校园人工智能算法精英大赛（英文名称 Global Campus Artificial Intelligence Algorithm Elite Competition，英文缩写AIC，以下简称“大赛”）是面向全球校园具有正式学籍的在校学生和在职教师举办的人工智能算法领域竞赛。为规范大赛组织、管理与评审（裁判）工作，制定本章程。 第二条 大赛中文口号为“智青春·算未来”，"
+    }
+  ]
+}
