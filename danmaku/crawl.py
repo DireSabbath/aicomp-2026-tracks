@@ -219,7 +219,7 @@ class BilibiliClient:
             if code in (0, "0"):
                 return data
             last = data
-            if code in (-352, -412, -799, -509, 429) and attempt + 1 < 6:
+            if code in (-352, -412, -702, -799, -509, 429) and attempt + 1 < 6:
                 time.sleep(2 ** attempt + 1)
                 continue
             break
