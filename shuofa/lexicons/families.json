@@ -1,0 +1,34 @@
+{
+  "families": [
+    {
+      "id": "ziwen",
+      "name": "自刎归天",
+      "variants": ["自刎归天", "三军听令，自刎归天", "三军听令,自刎归天", "三军听令！自刎归天"]
+    },
+    {
+      "id": "buqiguai",
+      "name": "这就不奇怪了",
+      "variants": ["这就不奇怪了"]
+    },
+    {
+      "id": "sansan",
+      "name": "三三来迟",
+      "variants": ["三三来迟", "三迟但到"]
+    },
+    {
+      "id": "kehan",
+      "name": "可汗勤政",
+      "variants": ["可汗勤政"]
+    },
+    {
+      "id": "haoye",
+      "name": "好耶",
+      "variants": ["好耶"]
+    },
+    {
+      "id": "menghuan",
+      "name": "梦幻联动",
+      "variants": ["梦幻联动"]
+    }
+  ]
+}
