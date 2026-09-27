@@ -319,7 +319,7 @@ class BilibiliClient:
 
     def history_day(self, cid: int, date: str, bvid: str) -> list[dict]:
         last_message = "rate limit"
-        for attempt in range(8):
+        for attempt in range(4):
             blob = self.get(
                 "https://api.bilibili.com/x/v2/dm/web/history/seg.so?"
                 + urllib.parse.urlencode({"type": 1, "oid": cid, "date": date}),
@@ -338,8 +338,8 @@ class BilibiliClient:
                 raise LoginExpired(f"history {bvid} {date}: 账号未登录")
             if code in RATE_LIMIT_CODES:
                 last_message = str(payload.get("message") or code)
-                self.delay = min(2.5, max(self.delay, 0.8) + 0.15)
-                time.sleep(min(90, 8 * (attempt + 1)))
+                self.delay = min(2.5, max(self.delay, 1.0) + 0.2)
+                time.sleep(30 * (attempt + 1))
                 continue
             return []
         raise RuntimeError(f"history {bvid} {date}: {last_message}")
@@ -803,13 +803,27 @@ def crawl_history_collection(client: BilibiliClient, spec: dict, out_dir: Path, 
     failures = []
     for index, video in enumerate(videos, 1):
         print(f"[{spec['id']}] {index}/{len(videos)} {video['bvid']} {(video.get('title') or '')[:40]}", flush=True)
-        try:
-            meta = crawl_history_video(client, video, folder)
-        except LoginExpired:
-            raise
-        except Exception as exc:
-            failures.append({"bvid": video["bvid"], "title": video.get("title"), "error": str(exc)})
-            print(f"  FAIL {exc}", flush=True)
+        meta = None
+        for rate_try in range(4):
+            try:
+                meta = crawl_history_video(client, video, folder)
+                break
+            except LoginExpired:
+                raise
+            except Exception as exc:
+                limited = "频率" in str(exc) or "rate limit" in str(exc)
+                if limited and rate_try < 3:
+                    wait = 120 * (rate_try + 1)
+                    print(f"  请求过快，休息 {wait} 秒后再试这条", flush=True)
+                    time.sleep(wait)
+                    continue
+                if limited:
+                    print("  频率限制还在，先停下。稍后用同一条命令可以续跑。", flush=True)
+                    raise SystemExit(2) from exc
+                failures.append({"bvid": video["bvid"], "title": video.get("title"), "error": str(exc)})
+                print(f"  FAIL {exc}", flush=True)
+                break
+        if meta is None:
             continue
         done.append(meta)
         print(f"  完成 {meta['count']} 条，页面累计 {meta['page_danmaku']}，日期 {meta['dates']}", flush=True)
