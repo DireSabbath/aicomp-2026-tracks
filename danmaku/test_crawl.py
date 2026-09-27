@@ -1,8 +1,6 @@
 import unittest
 
-from datetime import datetime, timedelta, timezone
-
-from crawl import bv_to_aid, decode_danmaku_segment, months_from, segment_count_from_view
+from crawl import bv_to_aid, decode_danmaku_segment, segment_count_from_view
 
 
 def encode_varint(number: int) -> bytes:
@@ -52,12 +50,6 @@ class DecodeTests(unittest.TestCase):
         self.assertEqual([row["content"] for row in rows], ["???", "????"])
         self.assertEqual(rows[0]["progress_ms"], 40000)
         self.assertEqual(rows[1]["id"], 100)
-
-    def test_months_from(self):
-        zone = timezone(timedelta(hours=8))
-        pubdate = int(datetime(2024, 6, 15, 12, 0, tzinfo=zone).timestamp())
-        months = months_from(pubdate, datetime(2024, 8, 1, tzinfo=zone))
-        self.assertEqual(months, ["2024-06", "2024-07", "2024-08"])
 
     def test_segment_count(self):
         inner = encode_varint((2 << 3) | 0) + encode_varint(3)

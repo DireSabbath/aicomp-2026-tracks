@@ -1,6 +1,6 @@
 {
   "source": "https://api.bilibili.com/x/v2/dm/web/seg.so",
-  "scope": "播放器当前公开弹幕池的全部分段。历史弹幕接口返回账号未登录，页面累计数更大。",
+  "scope": "播放器当前公开弹幕池的全部分段。页面上的累计数可以更大。",
   "fields": [
     "id",
     "progress_ms",
