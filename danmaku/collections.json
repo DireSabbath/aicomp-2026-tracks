@@ -1,0 +1,66 @@
+[
+  {
+    "id": "luoxiang",
+    "title": "罗翔说刑法",
+    "mid": 517327498,
+    "list": "author_plus_search",
+    "keyword": "罗翔说刑法",
+    "note": "该账号公开合集、系列，再并上搜索「罗翔说刑法」里属于这个账号的视频。搜索最多约 1000 条，空间投稿接口在这台机器上被风控，所以可能少于投稿总数。",
+    "search_orders": [
+      "dm",
+      "pubdate",
+      "click"
+    ]
+  },
+  {
+    "id": "yuanshen-preview",
+    "title": "原神前瞻特别节目",
+    "mid": 401742377,
+    "list": "search",
+    "keyword": "前瞻特别节目",
+    "title_contains": "前瞻",
+    "note": "只收官方账号「原神」标题里带「前瞻」的视频，不是全站原神视频，也不是该账号的全部投稿。",
+    "search_orders": [
+      "dm",
+      "pubdate"
+    ]
+  },
+  {
+    "id": "new-sanguo",
+    "title": "吃蛋挞的折棒·吐槽新三国",
+    "mid": 8878219,
+    "list": "season",
+    "season_id": 4058111,
+    "note": "该账号合集「吐槽新三国」的全部视频。"
+  },
+  {
+    "id": "xiaoyuehan",
+    "title": "小约翰可汗专栏",
+    "mid": 23947287,
+    "list": "seasons",
+    "season_ids": [
+      665,
+      1095498,
+      3491,
+      7022339
+    ],
+    "note": "奇葩小国、神奇组织、硬核狠人、世纪风暴四个合集。"
+  },
+  {
+    "id": "heishenhua",
+    "title": "黑神话官方",
+    "mid": 642389251,
+    "list": "seasons_and_search",
+    "season_ids": [
+      3838930,
+      1940894,
+      650336
+    ],
+    "keyword": "黑神话",
+    "note": "官方账号三个合集，再并上搜索「黑神话」里属于该账号的视频。空间投稿接口在这台机器上会 412，所以不是按投稿总数逐条点名。",
+    "search_orders": [
+      "dm",
+      "pubdate"
+    ]
+  }
+]

@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 .DS_Store
 data/attachments/_files/*.tmp
+danmaku_out/
+danmaku_history/
