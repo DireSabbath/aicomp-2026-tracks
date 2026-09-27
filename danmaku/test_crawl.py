@@ -2,7 +2,7 @@ import unittest
 
 from datetime import datetime, timedelta, timezone
 
-from crawl import bv_to_aid, decode_danmaku_segment, months_from, segment_count_from_view
+from crawl import RATE_LIMIT_CODES, bv_to_aid, decode_danmaku_segment, months_from, segment_count_from_view
 
 
 def encode_varint(number: int) -> bytes:
@@ -52,6 +52,11 @@ class DecodeTests(unittest.TestCase):
         self.assertEqual([row["content"] for row in rows], ["???", "????"])
         self.assertEqual(rows[0]["progress_ms"], 40000)
         self.assertEqual(rows[1]["id"], 100)
+
+    def test_rate_limit_codes_are_retried(self):
+        self.assertIn(-702, RATE_LIMIT_CODES)
+        self.assertNotIn(0, RATE_LIMIT_CODES)
+        self.assertNotIn(-101, RATE_LIMIT_CODES)
 
     def test_months_from(self):
         zone = timezone(timedelta(hours=8))

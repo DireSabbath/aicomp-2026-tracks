@@ -49,6 +49,7 @@ class LoginExpired(RuntimeError):
 
 CN_TZ = timezone(timedelta(hours=8))
 HISTORY_DAY_CAP = 5000
+RATE_LIMIT_CODES = {-702, -509, -799, -412, 429}
 
 
 def months_from(pubdate: int, now: datetime | None = None) -> list[str]:
@@ -268,7 +269,7 @@ class BilibiliClient:
             if code in (0, "0"):
                 return data
             last = data
-            if code in (-352, -412, -799, -509, 429) and attempt + 1 < 6:
+            if (code in RATE_LIMIT_CODES or code == -352) and attempt + 1 < 6:
                 time.sleep(2 ** attempt + 1)
                 continue
             break
@@ -317,22 +318,31 @@ class BilibiliClient:
         return list(data.get("data") or [])
 
     def history_day(self, cid: int, date: str, bvid: str) -> list[dict]:
-        blob = self.get(
-            "https://api.bilibili.com/x/v2/dm/web/history/seg.so?"
-            + urllib.parse.urlencode({"type": 1, "oid": cid, "date": date}),
-            f"https://www.bilibili.com/video/{bvid}",
-            raw=True,
-            login=True,
-        )
-        if blob[:1] == b"{":
+        last_message = "rate limit"
+        for attempt in range(8):
+            blob = self.get(
+                "https://api.bilibili.com/x/v2/dm/web/history/seg.so?"
+                + urllib.parse.urlencode({"type": 1, "oid": cid, "date": date}),
+                f"https://www.bilibili.com/video/{bvid}",
+                raw=True,
+                login=True,
+            )
+            if blob[:1] != b"{":
+                return decode_danmaku_segment(blob)
             try:
                 payload = json.loads(blob.decode("utf-8", "replace"))
             except json.JSONDecodeError:
                 return []
-            if payload.get("code") == -101:
+            code = payload.get("code")
+            if code == -101:
                 raise LoginExpired(f"history {bvid} {date}: 账号未登录")
+            if code in RATE_LIMIT_CODES:
+                last_message = str(payload.get("message") or code)
+                self.delay = min(2.5, max(self.delay, 0.8) + 0.15)
+                time.sleep(min(90, 8 * (attempt + 1)))
+                continue
             return []
-        return decode_danmaku_segment(blob)
+        raise RuntimeError(f"history {bvid} {date}: {last_message}")
 
     def fetch_video_danmaku(self, bvid: str, aid: int | None = None) -> tuple[list[dict], dict]:
         if aid is None:
