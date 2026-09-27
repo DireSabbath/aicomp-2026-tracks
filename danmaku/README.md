@@ -1,10 +1,6 @@
 # 弹幕爬取
 
-通用脚本 `crawl.py` 拉取 B 站播放器当前公开弹幕池的全部分段。每段 6 分钟，接口是 `https://api.bilibili.com/x/v2/dm/web/seg.so`。
-
-历史弹幕按发送日期另外存放，要登录。加上 `--history`，并提供你自己的 `SESSDATA`（环境变量或 `--sessdata-file`）。文件和终端输出都不会打印这串凭证，也不要把它提交进仓库。从最新一天往回跳，用每条弹幕的发送时间决定下一天，凑满页面累计数或碰到不满 5000 条的那天就停。每一天拿回来的是那天屏幕上的一池，最多 5000 条。把这些池合并、同一条只留一次之后，仍可能少于页面上的累计条数。某一天刚好 5000 条时，那天超出的部分不在文件里。
-
-不带 `--history` 时，脚本保存的是现在播放器里的那一池，同一条不重复写入。
+通用脚本 `crawl.py` 拉取 B 站播放器当前公开弹幕池的全部分段。每段 6 分钟，接口是 `https://api.bilibili.com/x/v2/dm/web/seg.so`。脚本保存的是现在播放器里的那一池，同一条不重复写入。页面上的累计条数可以更大。
 
 每条记录有：`id`、`progress_ms`（视频内毫秒）、`mode`、`content`、`ctime`（发送时间，接口有则保留）、`cid`、`page`。用户标识 `midHash` 不写入。
 
@@ -16,7 +12,6 @@ python danmaku/crawl.py --bvid BV1BK411L7DJ --out danmaku_out
 python danmaku/crawl.py --collections danmaku/collections.json --list-only --out danmaku/lists
 python danmaku/crawl.py --collections danmaku/collections.json --out danmaku_out
 python danmaku/crawl.py --collections danmaku/collections.json --only yuanshen-preview --limit 2
-python danmaku/crawl.py --collections danmaku/collections.json --history --sessdata-file /path/SESSDATA --out danmaku_history
 ```
 
 `danmaku/lists/` 里是已经列好的视频。爬取默认读这份清单。`--refresh-list` 会丢掉清单，重新向接口要列表。中断后重跑会跳过已经写好的视频。弹幕输出在 `danmaku_out/`，不进 git。每个视频一个 `.jsonl.gz`，合集汇总是 `_collection.json`。
