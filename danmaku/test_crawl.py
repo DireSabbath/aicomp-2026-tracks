@@ -2,7 +2,15 @@ import unittest
 
 from datetime import datetime, timedelta, timezone
 
-from crawl import RATE_LIMIT_CODES, bv_to_aid, decode_danmaku_segment, months_from, segment_count_from_view
+from crawl import (
+    HISTORY_DAY_CAP,
+    RATE_LIMIT_CODES,
+    bv_to_aid,
+    decode_danmaku_segment,
+    jump_target_day,
+    months_from,
+    segment_count_from_view,
+)
 
 
 def encode_varint(number: int) -> bytes:
@@ -63,6 +71,17 @@ class DecodeTests(unittest.TestCase):
         pubdate = int(datetime(2024, 6, 15, 12, 0, tzinfo=zone).timestamp())
         months = months_from(pubdate, datetime(2024, 8, 1, tzinfo=zone))
         self.assertEqual(months, ["2024-06", "2024-07", "2024-08"])
+
+    def test_jump_stops_when_pool_is_under_cap(self):
+        ctime = int(datetime(2024, 6, 15, 0, 30, tzinfo=timezone.utc).timestamp())
+        self.assertIsNone(jump_target_day([ctime], "2024-08-01", HISTORY_DAY_CAP - 1))
+
+    def test_jump_uses_china_day_before_oldest_ctime(self):
+        # 2024-06-14 16:30 UTC is 2024-06-15 00:30 in China.
+        ctime = int(datetime(2024, 6, 14, 16, 30, tzinfo=timezone.utc).timestamp())
+        self.assertEqual(jump_target_day([ctime], "2024-08-01", HISTORY_DAY_CAP), "2024-06-14")
+        same_day = int(datetime(2024, 8, 1, 2, 0, tzinfo=timezone.utc).timestamp())
+        self.assertEqual(jump_target_day([same_day], "2024-08-01", HISTORY_DAY_CAP), "2024-07-31")
 
     def test_segment_count(self):
         inner = encode_varint((2 << 3) | 0) + encode_varint(3)

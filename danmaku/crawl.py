@@ -2,12 +2,13 @@
 """通用 B 站弹幕爬取。
 
 按公开接口拉取播放器当前能加载的全部分段弹幕（每段 6 分钟）。
-历史弹幕接口需要登录，这里不使用，因此结果少于视频页面上的累计弹幕数。
+历史弹幕要登录。加上 --history 后，从最新一天往回跳：下一天由本池最早的发送时间决定，
+凑满页面累计数，或碰到不满 5000 条的那天，就停。
 
 示例：
   python danmaku/crawl.py --bvid BV1BK411L7DJ --out danmaku_out
   python danmaku/crawl.py --collections danmaku/collections.json --out danmaku_out
-  python danmaku/crawl.py --collections danmaku/collections.json --list-only
+  python danmaku/crawl.py --collections danmaku/collections.json --history --sessdata-file /path/SESSDATA --out danmaku_history
 """
 
 from __future__ import annotations
@@ -67,6 +68,44 @@ def months_from(pubdate: int, now: datetime | None = None) -> list[str]:
         if len(months) > 360:
             break
     return months
+
+
+def china_day(timestamp: int) -> str:
+    return datetime.fromtimestamp(int(timestamp), CN_TZ).strftime("%Y-%m-%d")
+
+
+def shift_day(day: str, delta: int) -> str:
+    parsed = datetime.strptime(day, "%Y-%m-%d")
+    return (parsed + timedelta(days=delta)).strftime("%Y-%m-%d")
+
+
+def shift_month(month: str, delta: int) -> str:
+    year, mon = (int(part) for part in month.split("-"))
+    mon += delta
+    while mon < 1:
+        mon += 12
+        year -= 1
+    while mon > 12:
+        mon -= 12
+        year += 1
+    return f"{year:04d}-{mon:02d}"
+
+
+def jump_target_day(ctimes: list[int], fetched: str, row_count: int, cap: int = HISTORY_DAY_CAP) -> str | None:
+    """Next China date when walking newest to oldest, or None to stop.
+
+    A snapshot under the pool cap still holds older danmaku, so the walk stops.
+    A full snapshot jumps to the day before its oldest ctime. If every ctime
+    falls on the fetched day, step exactly one day back.
+    """
+    if row_count < cap:
+        return None
+    if not ctimes:
+        return shift_day(fetched, -1)
+    oldest = china_day(min(ctimes))
+    if oldest >= fetched:
+        return shift_day(fetched, -1)
+    return shift_day(oldest, -1)
 
 
 def read_sessdata(path: Path | None) -> str:
@@ -180,6 +219,7 @@ class BilibiliClient:
         self._last = 0.0
         self.cookie = self._load_buvid()
         self.sessdata = sessdata.strip()
+        self.login_with_buvid = False
 
     def _load_buvid(self) -> str:
         """Anonymous buvid. Season archive pages return -352 without it."""
@@ -222,6 +262,8 @@ class BilibiliClient:
         if login:
             if not self.sessdata:
                 raise LoginExpired("缺少 SESSDATA")
+            if self.login_with_buvid and self.cookie:
+                parts.append(self.cookie)
             parts.append(f"SESSDATA={self.sessdata}")
         if parts:
             headers["Cookie"] = "; ".join(parts)
@@ -259,9 +301,9 @@ class BilibiliClient:
         )
         return data["data"]
 
-    def get_ok(self, url: str, referer: str, what: str, cookie: bool = False, login: bool = False) -> dict:
+    def get_ok(self, url: str, referer: str, what: str, cookie: bool = False, login: bool = False, tries: int = 6) -> dict:
         last = None
-        for attempt in range(6):
+        for attempt in range(tries):
             data = self.get(url, referer, cookie=cookie, login=login)
             code = data.get("code")
             if code == -101 and login:
@@ -269,7 +311,7 @@ class BilibiliClient:
             if code in (0, "0"):
                 return data
             last = data
-            if (code in RATE_LIMIT_CODES or code == -352) and attempt + 1 < 6:
+            if (code in RATE_LIMIT_CODES or code == -352) and attempt + 1 < tries:
                 time.sleep(2 ** attempt + 1)
                 continue
             break
@@ -314,17 +356,22 @@ class BilibiliClient:
             f"https://www.bilibili.com/video/{bvid}",
             f"history index {bvid} {month}",
             login=True,
+            tries=3,
         )
         return list(data.get("data") or [])
 
     def history_day(self, cid: int, date: str, bvid: str) -> list[dict]:
         last_message = "rate limit"
-        for attempt in range(4):
+        url = (
+            "https://api.bilibili.com/x/v2/dm/web/history/seg.so?"
+            + urllib.parse.urlencode({"type": 1, "oid": cid, "date": date})
+        )
+        for attempt in range(2):
             blob = self.get(
-                "https://api.bilibili.com/x/v2/dm/web/history/seg.so?"
-                + urllib.parse.urlencode({"type": 1, "oid": cid, "date": date}),
+                url,
                 f"https://www.bilibili.com/video/{bvid}",
                 raw=True,
+                retries=2,
                 login=True,
             )
             if blob[:1] != b"{":
@@ -336,12 +383,16 @@ class BilibiliClient:
             code = payload.get("code")
             if code == -101:
                 raise LoginExpired(f"history {bvid} {date}: 账号未登录")
+            message = str(payload.get("message") or code)
             if code in RATE_LIMIT_CODES:
-                last_message = str(payload.get("message") or code)
-                self.delay = min(2.5, max(self.delay, 1.0) + 0.2)
-                time.sleep(30 * (attempt + 1))
-                continue
-            return []
+                last_message = message
+                if attempt == 0:
+                    time.sleep(2)
+                    continue
+                break
+            if code in (0, "0", None):
+                return []
+            raise RuntimeError(f"history {bvid} {date}: {message} ({code})")
         raise RuntimeError(f"history {bvid} {date}: {last_message}")
 
     def fetch_video_danmaku(self, bvid: str, aid: int | None = None) -> tuple[list[dict], dict]:
@@ -712,7 +763,7 @@ def gzip_text_file(src: Path, dest: Path) -> None:
 
 
 def crawl_history_video(client: BilibiliClient, video: dict, folder: Path) -> dict:
-    """Union of daily history snapshots. Same danmaku id is kept once."""
+    """Union of history pools, newest first. Same danmaku id is kept once."""
     bvid = video["bvid"]
     done_path = folder / f"{bvid}.done.json"
     if done_path.exists():
@@ -720,59 +771,135 @@ def crawl_history_video(client: BilibiliClient, video: dict, folder: Path) -> di
     folder.mkdir(parents=True, exist_ok=True)
     raw_path = folder / f"{bvid}.jsonl"
     plan_path = folder / f"{bvid}.plan.json"
+    plan = None
     if plan_path.exists():
         plan = json.loads(plan_path.read_text(encoding="utf-8"))
-    else:
+        if plan.get("mode") != "jump":
+            plan_path.unlink()
+            plan = None
+    if plan is None:
         detail = client.video_detail(bvid)
-        slots = []
-        for page in detail["pages"]:
-            for month in months_from(detail["pubdate"]):
-                for date in client.history_dates(page["cid"], month, bvid):
-                    slots.append({"cid": page["cid"], "page": page.get("page"), "date": date})
         plan = {
+            "mode": "jump",
             "bvid": bvid,
             "aid": detail["aid"],
             "title": detail["title"] or video.get("title") or "",
             "pubdate": detail["pubdate"],
             "page_danmaku": detail["page_danmaku"],
-            "slots": slots,
-            "done": [],
+            "pages": detail["pages"],
+            "page_index": 0,
+            "cursor": None,
             "capped_days": 0,
+            "fetched_days": 0,
             "count": 0,
         }
         plan_path.write_text(json.dumps(plan, ensure_ascii=False), encoding="utf-8")
-        print(f"  {bvid} 历史日期 {len(slots)} 天，页面累计 {plan['page_danmaku']}", flush=True)
+        print(
+            f"  {bvid} 按发送时间从新往旧跳，页面累计 {plan['page_danmaku']}，分P {len(plan['pages'])}",
+            flush=True,
+        )
     seen = load_seen_ids(raw_path)
-    done = set(plan.get("done") or [])
-    capped = int(plan.get("capped_days") or 0)
-    total_slots = len(plan["slots"])
-    for index, slot in enumerate(plan["slots"], 1):
-        key = f"{slot['cid']}:{slot['date']}"
-        if key in done:
-            continue
-        decoded = client.history_day(slot["cid"], slot["date"], bvid)
-        fresh = []
-        for row in decoded:
-            if row["id"] in seen:
-                continue
-            seen.add(row["id"])
-            row["cid"] = slot["cid"]
-            row["page"] = slot.get("page")
-            row["history_date"] = slot["date"]
-            fresh.append(row)
-        if len(decoded) >= HISTORY_DAY_CAP:
-            capped += 1
-        append_jsonl(raw_path, fresh)
-        done.add(key)
-        plan["done"] = list(done)
-        plan["capped_days"] = capped
+    pubdate = int(plan.get("pubdate") or 0)
+    pub_day = china_day(pubdate) if pubdate else "2009-01-01"
+    pub_month = pub_day[:7]
+    page_danmaku = plan.get("page_danmaku")
+    try:
+        page_danmaku = int(page_danmaku) if page_danmaku is not None else None
+    except (TypeError, ValueError):
+        page_danmaku = None
+    index_cache: dict[tuple[int, str], list[str]] = {}
+
+    def dates_in(cid: int, month: str) -> list[str]:
+        key = (cid, month)
+        if key not in index_cache:
+            index_cache[key] = client.history_dates(cid, month, bvid)
+        return index_cache[key]
+
+    def snap(cid: int, target: str) -> str | None:
+        month = target[:7]
+        for _ in range(240):
+            if month < pub_month:
+                return None
+            found = [day for day in dates_in(cid, month) if pub_day <= day <= target]
+            if found:
+                return max(found)
+            month = shift_month(month, -1)
+        return None
+
+    def newest(cid: int) -> str | None:
+        month = datetime.now(CN_TZ).strftime("%Y-%m")
+        for _ in range(240):
+            if month < pub_month:
+                return None
+            found = [day for day in dates_in(cid, month) if day >= pub_day]
+            if found:
+                return max(found)
+            month = shift_month(month, -1)
+        return None
+
+    def save() -> None:
         plan["count"] = len(seen)
         plan_path.write_text(json.dumps(plan, ensure_ascii=False), encoding="utf-8")
-        if index == total_slots or index % 25 == 0:
-            print(
-                f"  {bvid} {index}/{total_slots} 新增后共 {len(seen)} 条",
-                flush=True,
+
+    pages = plan.get("pages") or []
+    start = int(plan.get("page_index") or 0)
+    filled = False
+    for page_index in range(start, len(pages)):
+        page = pages[page_index]
+        cid = page["cid"]
+        plan["page_index"] = page_index
+        target = plan.get("cursor") if page_index == start else None
+        visited: set[str] = set()
+        while True:
+            if page_danmaku is not None and page_danmaku > 0 and len(seen) >= page_danmaku:
+                filled = True
+                print(f"  {bvid} 已凑满页面累计 {page_danmaku}", flush=True)
+                break
+            if target is None:
+                day = newest(cid)
+            elif target < pub_day:
+                break
+            else:
+                day = snap(cid, target)
+            if not day or day < pub_day:
+                break
+            if day in visited:
+                earlier = shift_day(day, -1)
+                if earlier < pub_day:
+                    break
+                target = earlier
+                continue
+            visited.add(day)
+            plan["cursor"] = day
+            save()
+            decoded = client.history_day(cid, day, bvid)
+            fresh = []
+            for row in decoded:
+                if row["id"] is None or row["id"] in seen:
+                    continue
+                seen.add(row["id"])
+                row["cid"] = cid
+                row["page"] = page.get("page")
+                row["history_date"] = day
+                fresh.append(row)
+            if len(decoded) >= HISTORY_DAY_CAP:
+                plan["capped_days"] = int(plan.get("capped_days") or 0) + 1
+            plan["fetched_days"] = int(plan.get("fetched_days") or 0) + 1
+            append_jsonl(raw_path, fresh)
+            nxt = jump_target_day(
+                [int(row["ctime"]) for row in decoded if row.get("ctime")],
+                day,
+                len(decoded),
             )
+            print(f"  {bvid} {day} 本池 {len(decoded)} 新增后共 {len(seen)}", flush=True)
+            if nxt is None or nxt < pub_day:
+                break
+            target = nxt
+        plan["page_index"] = page_index + 1
+        plan["cursor"] = None
+        save()
+        if filled:
+            break
     gz_path = folder / f"{bvid}.jsonl.gz"
     if raw_path.exists():
         gzip_text_file(raw_path, gz_path)
@@ -785,8 +912,8 @@ def crawl_history_video(client: BilibiliClient, video: dict, folder: Path) -> di
         "title": plan.get("title"),
         "page_danmaku": plan.get("page_danmaku"),
         "count": len(seen),
-        "dates": total_slots,
-        "capped_days": capped,
+        "dates": int(plan.get("fetched_days") or 0),
+        "capped_days": int(plan.get("capped_days") or 0),
         "file": str(gz_path),
     }
     done_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -804,7 +931,7 @@ def crawl_history_collection(client: BilibiliClient, spec: dict, out_dir: Path, 
     for index, video in enumerate(videos, 1):
         print(f"[{spec['id']}] {index}/{len(videos)} {video['bvid']} {(video.get('title') or '')[:40]}", flush=True)
         meta = None
-        for rate_try in range(4):
+        for _rate_try in range(2):
             try:
                 meta = crawl_history_video(client, video, folder)
                 break
@@ -812,13 +939,12 @@ def crawl_history_collection(client: BilibiliClient, spec: dict, out_dir: Path, 
                 raise
             except Exception as exc:
                 limited = "频率" in str(exc) or "rate limit" in str(exc)
-                if limited and rate_try < 3:
-                    wait = 120 * (rate_try + 1)
-                    print(f"  请求过快，休息 {wait} 秒后再试这条", flush=True)
-                    time.sleep(wait)
+                if limited and not client.login_with_buvid:
+                    client.login_with_buvid = True
+                    print("  正文接口被限流，带上匿名标识再请求一次", flush=True)
                     continue
                 if limited:
-                    print("  频率限制还在，先停下。稍后用同一条命令可以续跑。", flush=True)
+                    print("  历史弹幕正文仍返回频率过高，先停下。进度已留下，同一条命令可以续跑。", flush=True)
                     raise SystemExit(2) from exc
                 failures.append({"bvid": video["bvid"], "title": video.get("title"), "error": str(exc)})
                 print(f"  FAIL {exc}", flush=True)
@@ -916,7 +1042,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.history:
         manifest = {
             "source": "https://api.bilibili.com/x/v2/dm/web/history/seg.so",
-            "scope": "登录后按日期拉取的历史弹幕。同一 id 只保留一次。单日接口最多返回 5000 条，当天超出的部分不在文件里。",
+            "scope": "登录后从最新一天往回跳着拉历史弹幕。下一天由本池最早的发送时间决定。凑满页面累计数，或碰到不满 5000 条的那天，就停。同一 id 只保留一次。满 5000 条的那天，超出的部分不在文件里。",
             "fields": ["id", "progress_ms", "mode", "content", "ctime", "cid", "page", "history_date"],
             "omitted": ["midHash"],
             "collections": summaries,
