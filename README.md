@@ -4,7 +4,7 @@
 
 弹幕清单和爬取脚本在 `danmaku/`。弹幕正文在本地 `danmaku_out/`，不进 git。
 
-相关研究见 [research/README.md](research/README.md)。当前能用的人、代理、数据、模型和接口见 [资源清单.md](资源清单.md)。按最高档设计的三套做法见 [满分方案.md](满分方案.md)。
+相关研究见 [research/README.md](research/README.md)。当前能用的人、代理、数据、模型和接口见 [资源清单.md](资源清单.md)。
 
 ## 保留范围
 
