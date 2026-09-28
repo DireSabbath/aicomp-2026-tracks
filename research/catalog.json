@@ -4,13 +4,15 @@
   "sweep": {
     "retrieved_on": "2026-09-28",
     "openalex_works_downloaded": 1179,
-    "direct_after_dedupe": 313,
+    "direct_after_dedupe": 389,
     "niconico_after_dedupe": 17,
-    "manual": 17,
-    "total": 347,
+    "manual": 16,
+    "total": 422,
     "dropped_homonym_title_matches": 12,
     "dropped_timesync_without_comment_or_video": 0,
-    "openalex_works_not_included_because_title_lacked_keywords": 829
+    "openalex_works_not_included_because_title_lacked_keywords": 825,
+    "phrase_search_added": 77,
+    "phrase_search_rejected": 42
   },
   "records": [
     {
@@ -29,6 +31,87 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7214314665",
+      "relevance": "direct_danmaku",
+      "title": "A Multi Carrier Covert Communication Framework for Live Streaming Bullet Comments",
+      "authors": [
+        "Liangliang Yin",
+        "Xinhong Hei",
+        "Yichuan Wang",
+        "Xiaoxue Liu",
+        "Jiaxin Li"
+      ],
+      "year": 2026,
+      "venue": "2026 International Conference on Networking and Network Applications (NaNA)",
+      "doi": "https://doi.org/10.23919/nanacps00070.2026.00075",
+      "url": "https://doi.org/10.23919/nanacps00070.2026.00075",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W7203922165",
+      "relevance": "direct_danmaku",
+      "title": "A Multimodal Learning Analytics Study on the Role of Bullet Comment Sentiment in Online Video Learning",
+      "authors": [
+        "Jingjing Li",
+        "Xue Yuan",
+        "Xinyuan Shao",
+        "Cong Zhao",
+        "Honghong Yang",
+        "Ya Wang"
+      ],
+      "year": 2026,
+      "venue": "2026 8th International Conference on Computer Science and Technologies in Education (CSTE)",
+      "doi": "https://doi.org/10.1109/cste69562.2026.11649749",
+      "url": "https://doi.org/10.1109/cste69562.2026.11649749",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W7127656029",
+      "relevance": "direct_danmaku",
+      "title": "A Study on the Factors Affecting User Satisfaction of the Ctrip Travel Platform-An Empirical Analysis Based on 460 Video Bullet Comments and Reviews",
+      "authors": [
+        "Gong Jingtong",
+        "Nie Rujiao",
+        "Lin Jiaxiang"
+      ],
+      "year": 2026,
+      "venue": "Global Journal of Tourism Leisure and Hospitality Management",
+      "doi": "https://doi.org/10.19080/gjtlh.2026.03.555624",
+      "url": "https://doi.org/10.19080/gjtlh.2026.03.555624",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W7127644531",
+      "relevance": "direct_danmaku",
+      "title": "A Study on the Factors Affecting User Satisfaction of the Ctrip Travel Platform-An Empirical Analysis Based on 460 Video Bullet Comments and Reviews",
+      "authors": [
+        "Gong Jingtong",
+        "Nie Rujiao",
+        "Lin Jiaxiang"
+      ],
+      "year": 2026,
+      "venue": "Global Journal of Tourism Leisure and Hospitality Management",
+      "doi": "https://doi.org/10.19080/gjtlh.2025.03.555624",
+      "url": "https://doi.org/10.19080/gjtlh.2025.03.555624",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W7138871105",
@@ -67,6 +150,23 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7133489201",
+      "relevance": "direct_danmaku",
+      "title": "Bullet-Screen Comments on Bilibili for the Chinese documentary Life Matters: Reunion",
+      "authors": [
+        "liang ruo chen"
+      ],
+      "year": 2026,
+      "venue": "ScienceDB",
+      "doi": "https://doi.org/10.57760/sciencedb.28628",
+      "url": "https://doi.org/10.57760/sciencedb.28628",
+      "extra_urls": [],
+      "type": "dataset",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W7172023226",
@@ -348,6 +448,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7208797965",
+      "relevance": "direct_danmaku",
+      "title": "Immersion in Online Interaction Rituals: The Paradoxical Role of Time-Synchronized Comments on Video Platforms",
+      "authors": [
+        "Yijing Li"
+      ],
+      "year": 2026,
+      "venue": "OSF Preprints (OSF Preprints)",
+      "doi": "",
+      "url": "https://osf.io/r9t8d",
+      "extra_urls": [],
+      "type": "preprint",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W7204170039",
       "relevance": "direct_danmaku",
       "title": "Let the Bullets Fly: Multimodal Fake News Detection with Temporal-Aligned Generative Danmaku",
@@ -367,6 +484,24 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7211870666",
+      "relevance": "direct_danmaku",
+      "title": "Multi-Dimensional Behavioral Signature Analysis for Video Bullet Comment Steganography Detection",
+      "authors": [
+        "Yitong Liu",
+        "Hongwei Zhao"
+      ],
+      "year": 2026,
+      "venue": "Entropy",
+      "doi": "https://doi.org/10.3390/e28090999",
+      "url": "https://doi.org/10.3390/e28090999",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W7164164385",
@@ -390,6 +525,60 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7123345421",
+      "relevance": "direct_danmaku",
+      "title": "NLP-Based Sentiment Analysis of Bullet Comments on Honor of Kings Live Streaming Matches",
+      "authors": [
+        "明月 李"
+      ],
+      "year": 2026,
+      "venue": "Modern Linguistics",
+      "doi": "https://doi.org/10.12677/ml.2026.141065",
+      "url": "https://doi.org/10.12677/ml.2026.141065",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W7162105192",
+      "relevance": "direct_danmaku",
+      "title": "Raw Data of Bullet Comments",
+      "authors": [
+        "Chenyu Wang"
+      ],
+      "year": 2026,
+      "venue": "Figshare",
+      "doi": "https://doi.org/10.6084/m9.figshare.32367603.v1",
+      "url": "https://doi.org/10.6084/m9.figshare.32367603.v1",
+      "extra_urls": [],
+      "type": "dataset",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W7204909359",
+      "relevance": "direct_danmaku",
+      "title": "Research on Live Streaming E-commerce Bullet Comment Content Generation System Based on LSTM Model",
+      "authors": [
+        "Jingyi Zeng",
+        "Xinlin Xiao",
+        "Chenghan Wang",
+        "Sheng Jie Cao"
+      ],
+      "year": 2026,
+      "venue": "Proceedings of the 2026 7th International Conference on Computer Information and Big Data Applications",
+      "doi": "https://doi.org/10.1145/3813822.3814192",
+      "url": "https://doi.org/10.1145/3813822.3814192",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W7167014494",
       "relevance": "direct_danmaku",
       "title": "Research on product iteration direction prediction method based on perceptual-cognitive data of Danmaku",
@@ -410,6 +599,62 @@
       "cited_by_count": 1,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7212173290",
+      "relevance": "direct_danmaku",
+      "title": "SOABC: saliency and object-aware bullet comments in virtual reality videos",
+      "authors": [
+        "Tsz-lok Ng",
+        "Fu-Lai Chung"
+      ],
+      "year": 2026,
+      "venue": "Virtual Reality",
+      "doi": "https://doi.org/10.1007/s10055-026-01479-z",
+      "url": "https://doi.org/10.1007/s10055-026-01479-z",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W7127636797",
+      "relevance": "direct_danmaku",
+      "title": "Socially engaged or informationally overwhelmed? Effect of bullet-screen comment quantity on video-liking",
+      "authors": [
+        "Mingyue Zhang",
+        "Lei He",
+        "Haipeng (Allan) Chen"
+      ],
+      "year": 2026,
+      "venue": "Journal of Research in Interactive Marketing",
+      "doi": "https://doi.org/10.1108/jrim-04-2025-0174",
+      "url": "https://doi.org/10.1108/jrim-04-2025-0174",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 1,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W7133982812",
+      "relevance": "direct_danmaku",
+      "title": "Synergy or Cannibalization: The Effects of Product Demonstration and Bullet Comments in Livestreaming Shopping",
+      "authors": [
+        "Nan Zhang (46264)",
+        "Xunyi Wang",
+        "Huigang Liang"
+      ],
+      "year": 2026,
+      "venue": "Journal of the Association for Information Systems",
+      "doi": "https://doi.org/10.17705/1jais.00989",
+      "url": "https://doi.org/10.17705/1jais.00989",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W7164775765",
@@ -468,6 +713,40 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7127060336",
+      "relevance": "direct_danmaku",
+      "title": "The Influence Mechanism of Bullet Comments on the Breadth and Depth of Video Dissemination",
+      "authors": [
+        "Qiannuo Wang"
+      ],
+      "year": 2026,
+      "venue": "Communications in Humanities Research",
+      "doi": "https://doi.org/10.54254/2753-7064/2026.bj31638",
+      "url": "https://doi.org/10.54254/2753-7064/2026.bj31638",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W7133231299",
+      "relevance": "direct_danmaku",
+      "title": "The Mechanism of Social Presence in E-commerce Live Streaming Contexts Driving Impulsive Consumption Through Provocative Bullet Comments",
+      "authors": [
+        "Xinzhe Chu"
+      ],
+      "year": 2026,
+      "venue": "Advances in Economics Management and Political Sciences",
+      "doi": "https://doi.org/10.54254/2754-1169/2026.bj32040",
+      "url": "https://doi.org/10.54254/2754-1169/2026.bj32040",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W7167819592",
@@ -775,6 +1054,24 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4415928228",
+      "relevance": "direct_danmaku",
+      "title": "AeerBERT: Recognizing Atypical Emotions in Bullet Comment",
+      "authors": [
+        "Bei Xu",
+        "Yue Wang"
+      ],
+      "year": 2025,
+      "venue": "Lecture notes in computer science",
+      "doi": "https://doi.org/10.1007/978-981-95-4384-7_15",
+      "url": "https://doi.org/10.1007/978-981-95-4384-7_15",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4413127694",
       "relevance": "direct_danmaku",
       "title": "An audience reception study of danmu-enabled humour in multimodal texts",
@@ -950,6 +1247,25 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4406890336",
+      "relevance": "direct_danmaku",
+      "title": "CovLBCG: A Covert Communication Framework Using Live Broadcast Bullet Comment Game",
+      "authors": [
+        "Chun Mao",
+        "Zhenyu Li",
+        "Xiangyang Luo"
+      ],
+      "year": 2025,
+      "venue": "IEEE Transactions on Games",
+      "doi": "https://doi.org/10.1109/tg.2025.3535684",
+      "url": "https://doi.org/10.1109/tg.2025.3535684",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 2,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4410982745",
@@ -1270,6 +1586,26 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4412675890",
+      "relevance": "direct_danmaku",
+      "title": "Dynamic analysis of barrage comments on sentimental influence and behavior",
+      "authors": [
+        "Qiao Wang",
+        "Liang Liu",
+        "Stephen  John Turnbull",
+        "Mitsuo Yoshida"
+      ],
+      "year": 2025,
+      "venue": "Scientific Reports",
+      "doi": "https://doi.org/10.1038/s41598-025-12286-y",
+      "url": "https://doi.org/10.1038/s41598-025-12286-y",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 1,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4409535869",
       "relevance": "direct_danmaku",
       "title": "Dynamic Scene Segmentation and Sentiment Analysis for Danmaku",
@@ -1307,6 +1643,26 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7127251656",
+      "relevance": "direct_danmaku",
+      "title": "Enhancing Online Learning through Time-sync Comment: A Knowledge-relevant Perspective",
+      "authors": [
+        "Tianyi Ma",
+        "Xiaoyu Yao",
+        "Gao, Renzhi",
+        "Qian Huang"
+      ],
+      "year": 2025,
+      "venue": "Journal of the Association for Information Systems",
+      "doi": "",
+      "url": "https://aisel.aisnet.org/icis2025/learn_curricula/learn_curricula/7",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4406371355",
@@ -1422,6 +1778,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4414031647",
+      "relevance": "direct_danmaku",
+      "title": "Interactive Dynamics of Bullet Comments in Agricultural Livestreaming: A Dual-Path Analysis of Conversion Efficiency in Rural China",
+      "authors": [
+        "Yirui Wang"
+      ],
+      "year": 2025,
+      "venue": "Accounting Marketing and Organization",
+      "doi": "https://doi.org/10.71204/p848kc56",
+      "url": "https://doi.org/10.71204/p848kc56",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4408264350",
       "relevance": "direct_danmaku",
       "title": "Is it beneficial for consumers to ask more questions in Danmaku? The inverted U-shaped effect of information-seeking Danmaku density on e-commerce livestream sales",
@@ -1502,6 +1875,40 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7117732398",
+      "relevance": "direct_danmaku",
+      "title": "Real-Time Sentiment Analysis and Sales Prediction Model of User Bullet Comments and Reviews in E-Commerce",
+      "authors": [
+        "刘承泽"
+      ],
+      "year": 2025,
+      "venue": "E-Commerce Letters",
+      "doi": "https://doi.org/10.12677/ecl.2025.14124485",
+      "url": "https://doi.org/10.12677/ecl.2025.14124485",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4415813479",
+      "relevance": "direct_danmaku",
+      "title": "Research on the Dissemination Paths in China of Bullet Comment Culture as a Cross-Cultural Communication Medium",
+      "authors": [
+        "Yingshan Deng"
+      ],
+      "year": 2025,
+      "venue": "Proceedings of the 2nd International Conference on Public Relations and Media Communication",
+      "doi": "https://doi.org/10.5220/0013990900004916",
+      "url": "https://doi.org/10.5220/0013990900004916",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4415167815",
       "relevance": "direct_danmaku",
       "title": "Research on The Influencing Factors of Knowledge Communication Effect of Instructional Danmaku Videos",
@@ -1538,6 +1945,59 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4409759802",
+      "relevance": "direct_danmaku",
+      "title": "Saliency-aware Bullet Comment for Virtual Reality Video",
+      "authors": [
+        "T.M. Ng",
+        "Fu-Lai Chung"
+      ],
+      "year": 2025,
+      "venue": "2025 IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW)",
+      "doi": "https://doi.org/10.1109/vrw66409.2025.00115",
+      "url": "https://doi.org/10.1109/vrw66409.2025.00115",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4411592853",
+      "relevance": "direct_danmaku",
+      "title": "Sentiment Analysis of Video Bullet Comments Based on Deep Learning",
+      "authors": [
+        "Lihua Tang"
+      ],
+      "year": 2025,
+      "venue": "Lecture notes in electrical engineering",
+      "doi": "https://doi.org/10.1007/978-981-96-8007-8_27",
+      "url": "https://doi.org/10.1007/978-981-96-8007-8_27",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4417315222",
+      "relevance": "direct_danmaku",
+      "title": "Stance-Taking in Bilibili Bullet-Screen Comments: How Chinese Youth Express Their Ideological Stances Online",
+      "authors": [
+        "Ru Liu",
+        "Zhang Hui-min"
+      ],
+      "year": 2025,
+      "venue": "Annals of economics and finance",
+      "doi": "https://doi.org/10.65281/660554",
+      "url": "https://doi.org/10.65281/660554",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4407531407",
@@ -1617,6 +2077,23 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4407276811",
+      "relevance": "direct_danmaku",
+      "title": "Text Information Analysis and Sentiment Analysis—A Case Study of Barrage Comments on Disney Animated Films",
+      "authors": [
+        "锡麟 蓝"
+      ],
+      "year": 2025,
+      "venue": "Applied and Computational Engineering",
+      "doi": "https://doi.org/10.54254/2755-2721/2025.20801",
+      "url": "https://doi.org/10.54254/2755-2721/2025.20801",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4414502612",
@@ -1709,6 +2186,25 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7117162342",
+      "relevance": "direct_danmaku",
+      "title": "The Impact of Negative Bullet Comments on Audiences’ Impulse Buying Intention in Fashion Livestreaming",
+      "authors": [
+        "Lulu Zheng",
+        "Zengrui Xiao",
+        "Wen Zhang"
+      ],
+      "year": 2025,
+      "venue": "Journal of theoretical and applied electronic commerce research",
+      "doi": "https://doi.org/10.3390/jtaer21010001",
+      "url": "https://doi.org/10.3390/jtaer21010001",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 1,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W7112477989",
       "relevance": "direct_danmaku",
       "title": "The Influence of Danmaku Quantity on Video Time Estimation An Eye-Tracking Study on Cognitive Load and Moderating Factors",
@@ -1749,6 +2245,24 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4411610513",
+      "relevance": "direct_danmaku",
+      "title": "Theorizing temporality in multimodal communication: linearity and non-linearity in bullet comments",
+      "authors": [
+        "Feifei Zhou",
+        "Yang Liu"
+      ],
+      "year": 2025,
+      "venue": "Language Sciences",
+      "doi": "https://doi.org/10.1016/j.langsci.2025.101740",
+      "url": "https://doi.org/10.1016/j.langsci.2025.101740",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4412053396",
@@ -1849,6 +2363,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7117175741",
+      "relevance": "direct_danmaku",
+      "title": "Youth creative writing on Chinese social media : a multimodal study of bullet comments on Bilibili from an integrated perspective",
+      "authors": [
+        "Liu YANG"
+      ],
+      "year": 2025,
+      "venue": "Digital Commons - Lingnan (Lingnan University)",
+      "doi": "",
+      "url": "https://commons.ln.edu.hk/otd/239",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4412182934",
       "relevance": "direct_danmaku",
       "title": "互动仪式链视角下线上弹幕信息的情感互动研究",
@@ -1865,6 +2396,25 @@
       "cited_by_count": 3,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4401416048",
+      "relevance": "direct_danmaku",
+      "title": "A Covert Communication Method Based on Time Attributes Shifting of Online Video Bullet Comment",
+      "authors": [
+        "Chun Mao",
+        "Zhenyu Li",
+        "Xiangyang Luo"
+      ],
+      "year": 2024,
+      "venue": "IEEE Transactions on Consumer Electronics",
+      "doi": "https://doi.org/10.1109/tce.2024.3439691",
+      "url": "https://doi.org/10.1109/tce.2024.3439691",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 3,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4391178105",
@@ -1884,6 +2434,42 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4392401908",
+      "relevance": "direct_danmaku",
+      "title": "A Study of Chinese Young Adults' Outlook on Marriage Based on the Framework of Hofstede's Cultural Dimensions Theory—An Interpretation of Bullet Screen Comments on Bilibili.com",
+      "authors": [
+        "GUO Qianqiu",
+        "HUANG Feng-qiu"
+      ],
+      "year": 2024,
+      "venue": "US-China Foreign Language",
+      "doi": "https://doi.org/10.17265/1539-8080/2024.02.005",
+      "url": "http://dx.doi.org/10.17265/1539-8080/2024.02.005",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4392206463",
+      "relevance": "direct_danmaku",
+      "title": "A Study on Semantic Shift of Uncivilized Words in Bullet-Screen Comments",
+      "authors": [
+        "Juanjuan Fan",
+        "Jianguo Yang"
+      ],
+      "year": 2024,
+      "venue": "Lecture notes in computer science",
+      "doi": "https://doi.org/10.1007/978-981-97-0583-2_19",
+      "url": "https://doi.org/10.1007/978-981-97-0583-2_19",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4403862553",
@@ -2197,6 +2783,26 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4404358129",
+      "relevance": "direct_danmaku",
+      "title": "Enhancing video rumor detection through multimodal deep feature fusion with time-sync comments",
+      "authors": [
+        "Ming Yin",
+        "Wei Chen",
+        "Dan Zhu",
+        "Jijiao Jiang"
+      ],
+      "year": 2024,
+      "venue": "Information Processing & Management",
+      "doi": "https://doi.org/10.1016/j.ipm.2024.103935",
+      "url": "https://doi.org/10.1016/j.ipm.2024.103935",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 12,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4400778466",
       "relevance": "direct_danmaku",
       "title": "Examining the Use of DanMu for Crowdsourcing Control in Virtual Gatherings",
@@ -2292,6 +2898,49 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7131862366",
+      "relevance": "direct_danmaku",
+      "title": "MRT: Multi-modal Short- and Long-range Temporal Convolutional Network for Time-sync Comment Video Behavior Prediction",
+      "authors": [
+        "Weihao Zhao",
+        "Weidong He",
+        "Hao Wang",
+        "Haoyang Bi",
+        "Han Wu",
+        "Chen Zhu",
+        "Tong Xu",
+        "Enhong Chen"
+      ],
+      "year": 2024,
+      "venue": "Proceedings of the Language Resources and Evaluation Conference",
+      "doi": "https://doi.org/10.63317/3yuthmd8gk56",
+      "url": "https://doi.org/10.63317/3yuthmd8gk56",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4393340456",
+      "relevance": "direct_danmaku",
+      "title": "Personalized time-sync comment generation based on a multimodal transformer",
+      "authors": [
+        "Hei‐Chia Wang",
+        "Martinus Maslim",
+        "Wei-Ting Hong"
+      ],
+      "year": 2024,
+      "venue": "Multimedia Systems",
+      "doi": "https://doi.org/10.1007/s00530-024-01301-3",
+      "url": "https://doi.org/10.1007/s00530-024-01301-3",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 2,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4401361806",
       "relevance": "direct_danmaku",
       "title": "Psychological Insights into Enhanced Online Learning: Investigating the Role of Danmaku Interaction and Cognitive Styles",
@@ -2369,6 +3018,28 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4405305045",
+      "relevance": "direct_danmaku",
+      "title": "Sentiment Analysis of Chinese Bullet Comments Based on Enhanced Deep Learning Model",
+      "authors": [
+        "Kai Zhao",
+        "Wang Qibo",
+        "Wan Lining",
+        "Zhang Linlin",
+        "Lu Xilei",
+        "Wang Zhiwei"
+      ],
+      "year": 2024,
+      "venue": "2024 IEEE 5th International Conference on Pattern Recognition and Machine Learning (PRML)",
+      "doi": "https://doi.org/10.1109/prml62565.2024.10779914",
+      "url": "https://doi.org/10.1109/prml62565.2024.10779914",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4392619213",
@@ -2457,6 +3128,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4392249867",
+      "relevance": "direct_danmaku",
+      "title": "The Development of Bilibili’s Bullet Comments",
+      "authors": [
+        "峻峰 许"
+      ],
+      "year": 2024,
+      "venue": "Modern Linguistics",
+      "doi": "https://doi.org/10.12677/ml.2024.122122",
+      "url": "https://doi.org/10.12677/ml.2024.122122",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4399454186",
       "relevance": "direct_danmaku",
       "title": "The Effect of Danmaku Font Size on Online Learning Outcomes for Learners with Different Cognitive Styles: Evidence from Eye Movements",
@@ -2502,6 +3190,24 @@
       "cited_by_count": 9,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4404425745",
+      "relevance": "direct_danmaku",
+      "title": "“Strike with visual bullets”: Digitalized deep play and floating emotional public sphere in the Bilibili bullet comments",
+      "authors": [
+        "Yeyang Cao",
+        "Weihua Wu"
+      ],
+      "year": 2024,
+      "venue": "Global Media and China",
+      "doi": "https://doi.org/10.1177/20594364241302183",
+      "url": "https://doi.org/10.1177/20594364241302183",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 4,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4402121579",
@@ -2570,6 +3276,65 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4387241062",
+      "relevance": "direct_danmaku",
+      "title": "A Covert Communication Method Adapted to Social Media Based on Time Modulation of Bullet Comments",
+      "authors": [
+        "Chun Mao",
+        "Zhenyu Li",
+        "Mingliang Zhang",
+        "Yi Zhang",
+        "Xiangyang Luo"
+      ],
+      "year": 2023,
+      "venue": "IEEE Transactions on Consumer Electronics",
+      "doi": "https://doi.org/10.1109/tce.2023.3277919",
+      "url": "https://doi.org/10.1109/tce.2023.3277919",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 7,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4315795520",
+      "relevance": "direct_danmaku",
+      "title": "A Study of the Language of Bullet Comments in Bilibili Auto-tune Remix-themed Content Videos",
+      "authors": [
+        "Pengyun Li"
+      ],
+      "year": 2023,
+      "venue": "SHS Web of Conferences",
+      "doi": "https://doi.org/10.1051/shsconf/202315502011",
+      "url": "http://dx.doi.org/10.1051/shsconf/202315502011",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4378652870",
+      "relevance": "direct_danmaku",
+      "title": "Aspect sentiment mining of short bullet screen comments from online TV series",
+      "authors": [
+        "Jiayue Liu",
+        "Ziyao Zhou",
+        "Ming Yu Gao",
+        "Jiafu Tang",
+        "Weiguo Fan"
+      ],
+      "year": 2023,
+      "venue": "Journal of the Association for Information Science and Technology",
+      "doi": "https://doi.org/10.1002/asi.24800",
+      "url": "https://doi.org/10.1002/asi.24800",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 12,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4321121288",
@@ -2888,6 +3653,48 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4386262187",
+      "relevance": "direct_danmaku",
+      "title": "Hierarchical Multi-Modal Attention Network for Time-Sync Comment Video Recommendation",
+      "authors": [
+        "Weihao Zhao",
+        "Han Wu",
+        "Weidong He",
+        "Haoyang Bi",
+        "Hao Wang",
+        "Chen Zhu",
+        "Tong Xu",
+        "Enhong Chen"
+      ],
+      "year": 2023,
+      "venue": "IEEE Transactions on Circuits and Systems for Video Technology",
+      "doi": "https://doi.org/10.1109/tcsvt.2023.3309768",
+      "url": "https://doi.org/10.1109/tcsvt.2023.3309768",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 10,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4380564127",
+      "relevance": "direct_danmaku",
+      "title": "How to Mine Business Value from Bullet Screen Comments in TV Series by Aspect Sentiment Analysis?",
+      "authors": [
+        "Jiayue Liu",
+        "Ming Yu Gao"
+      ],
+      "year": 2023,
+      "venue": "SSRN Electronic Journal",
+      "doi": "https://doi.org/10.2139/ssrn.4478592",
+      "url": "https://doi.org/10.2139/ssrn.4478592",
+      "extra_urls": [],
+      "type": "preprint",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4387426791",
       "relevance": "direct_danmaku",
       "title": "Insights from Danmaku Translation Criticism on Translation Pedagogy—A Case Study of BBC Documentaries",
@@ -3059,6 +3866,48 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4382981731",
+      "relevance": "direct_danmaku",
+      "title": "Sentiment Analysis on Online Videos by Time-Sync Comments",
+      "authors": [
+        "Jiangfeng Li",
+        "Ziyu Li",
+        "Xiaofeng Ma",
+        "Qinpei Zhao",
+        "Chenxi Zhang",
+        "Gang Yu"
+      ],
+      "year": 2023,
+      "venue": "Entropy",
+      "doi": "https://doi.org/10.3390/e25071016",
+      "url": "https://doi.org/10.3390/e25071016",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 4,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4388948815",
+      "relevance": "direct_danmaku",
+      "title": "Sentiment classification of time-sync comments: A semi-supervised hierarchical deep learning method",
+      "authors": [
+        "Renzhi Gao",
+        "Xiaoyu Yao",
+        "Zhao Wang",
+        "Mohammad Zoynul Abedin"
+      ],
+      "year": 2023,
+      "venue": "European Journal of Operational Research",
+      "doi": "https://doi.org/10.1016/j.ejor.2023.11.035",
+      "url": "https://doi.org/10.1016/j.ejor.2023.11.035",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 11,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4385220358",
       "relevance": "direct_danmaku",
       "title": "The Impact of Danmaku Information Quality on Consumers’ Impulsive Consumption Behavior",
@@ -3203,6 +4052,84 @@
       "cited_by_count": 1,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4301491252",
+      "relevance": "direct_danmaku",
+      "title": "An Autonomous Data Collection Pipeline for Online Time-Sync Comments",
+      "authors": [
+        "Jiachen Ma",
+        "Lin He",
+        "Sheikh Iqbal Ahamed",
+        "Piyush Saxena"
+      ],
+      "year": 2022,
+      "venue": "2022 IEEE 46th Annual Computers, Software, and Applications Conference (COMPSAC)",
+      "doi": "https://doi.org/10.1109/compsac54236.2022.00053",
+      "url": "https://doi.org/10.1109/compsac54236.2022.00053",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W3208926342",
+      "relevance": "direct_danmaku",
+      "title": "Attacking Video Recognition Models with Bullet-Screen Comments",
+      "authors": [
+        "Kai Chen",
+        "Zhipeng Wei",
+        "Jingjing Chen",
+        "Zuxuan Wu",
+        "Yu–Gang Jiang"
+      ],
+      "year": 2022,
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "doi": "https://doi.org/10.1609/aaai.v36i1.19907",
+      "url": "https://doi.org/10.1609/aaai.v36i1.19907",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 22,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4224254479",
+      "relevance": "direct_danmaku",
+      "title": "Bullet Comments for 360°Video",
+      "authors": [
+        "Yi-Jun Li",
+        "Jin-Chuan Shi",
+        "Fang‐Lue Zhang",
+        "Miao Wang"
+      ],
+      "year": 2022,
+      "venue": "2022 IEEE Conference on Virtual Reality and 3D User Interfaces (VR)",
+      "doi": "https://doi.org/10.1109/vr51125.2022.00017",
+      "url": "https://doi.org/10.1109/vr51125.2022.00017",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 20,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4313149647",
+      "relevance": "direct_danmaku",
+      "title": "Chinese Otaku Culture and Alternative Public Spheres: A Study of Bullet Comments and Bilibili",
+      "authors": [
+        "Dongli Chen"
+      ],
+      "year": 2022,
+      "venue": "Streaming and Screen Culture in Asia-Pacific",
+      "doi": "https://doi.org/10.1007/978-3-031-09374-6_10",
+      "url": "https://doi.org/10.1007/978-3-031-09374-6_10",
+      "extra_urls": [],
+      "type": "book-chapter",
+      "cited_by_count": 5,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4289781045",
@@ -3386,6 +4313,26 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4225555916",
+      "relevance": "direct_danmaku",
+      "title": "Encrypted Live Streaming Channel Identification With Time-Sync Comments",
+      "authors": [
+        "Mingkai Wang",
+        "Xiangdong Tang",
+        "Fei Chen",
+        "Qian Lu"
+      ],
+      "year": 2022,
+      "venue": "IEEE Access",
+      "doi": "https://doi.org/10.1109/access.2022.3157716",
+      "url": "https://doi.org/10.1109/access.2022.3157716",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 6,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4224233037",
       "relevance": "direct_danmaku",
       "title": "Exploiting Danmu Interactions for Optimizing Crowdsourced Livecast Services",
@@ -3535,6 +4482,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4297900546",
+      "relevance": "direct_danmaku",
+      "title": "Orality, multimodality and creativity in digital writing: Chinese users’ experiences and practices with bullet comments on Bilibili",
+      "authors": [
+        "Feifei Zhou"
+      ],
+      "year": 2022,
+      "venue": "Social Semiotics",
+      "doi": "https://doi.org/10.1080/10350330.2022.2120387",
+      "url": "https://doi.org/10.1080/10350330.2022.2120387",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 22,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4319998537",
       "relevance": "direct_danmaku",
       "title": "Participatory Video Platform : Factors Influencing the Perceived Value of Danmaku Function Users",
@@ -3591,6 +4555,43 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4288071560",
+      "relevance": "direct_danmaku",
+      "title": "Presentation and Diversion of Bullet Comment Culture in Red Film and TV Series—A Case Study of An Awakening Age",
+      "authors": [
+        "Shen Pengfei",
+        "Wu Yulan"
+      ],
+      "year": 2022,
+      "venue": "Film，Television and Theatre Review",
+      "doi": "https://doi.org/10.35534/fttr.0202008",
+      "url": "https://doi.org/10.35534/fttr.0202008",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4304091755",
+      "relevance": "direct_danmaku",
+      "title": "Representation Learning through Multimodal Attention and Time-Sync Comments for Affective Video Content Analysis",
+      "authors": [
+        "Jicai Pan",
+        "Shangfei Wang",
+        "Lin Fang"
+      ],
+      "year": 2022,
+      "venue": "Proceedings of the 30th ACM International Conference on Multimedia",
+      "doi": "https://doi.org/10.1145/3503161.3548018",
+      "url": "https://doi.org/10.1145/3503161.3548018",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 18,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4298416089",
       "relevance": "direct_danmaku",
       "title": "Research on the Correlation between Sentiment of Danmaku and the Gift Value across Different Types of Live Streamers Dictionary-based Sentiment Analysis and Regression Test",
@@ -3606,6 +4607,41 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4285393258",
+      "relevance": "direct_danmaku",
+      "title": "Sentiment Analysis: An ERNIE-BiLSTM Approach to Bullet Screen Comments",
+      "authors": [
+        "Yen‐Hao Hsieh",
+        "Xin-Ping Zeng"
+      ],
+      "year": 2022,
+      "venue": "Sensors",
+      "doi": "https://doi.org/10.3390/s22145223",
+      "url": "https://doi.org/10.3390/s22145223",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 31,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4285203855",
+      "relevance": "direct_danmaku",
+      "title": "The Medium is the Message: Exploring the Introduction of Bullet Comment Culture to China and Its Impact on the Identity Expression of Generation Z Individuals",
+      "authors": [
+        "Maoting Shi"
+      ],
+      "year": 2022,
+      "venue": "Advances in Social Science, Education and Humanities Research/Advances in social science, education and humanities research",
+      "doi": "https://doi.org/10.2991/assehr.k.220504.123",
+      "url": "https://doi.org/10.2991/assehr.k.220504.123",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4313298626",
@@ -3647,6 +4683,27 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4281566391",
+      "relevance": "direct_danmaku",
+      "title": "Video Content Classification Using Time-Sync Comments and Titles",
+      "authors": [
+        "Zeyu Hu",
+        "Jintao Cui",
+        "Weihua Wang",
+        "Feng Lu",
+        "Binhui Wang"
+      ],
+      "year": 2022,
+      "venue": "2022 7th International Conference on Cloud Computing and Big Data Analytics (ICCCBDA)",
+      "doi": "https://doi.org/10.1109/icccbda55098.2022.9778285",
+      "url": "https://doi.org/10.1109/icccbda55098.2022.9778285",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 3,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W4312823949",
@@ -3771,6 +4828,27 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4311304289",
+      "relevance": "direct_danmaku",
+      "title": "Attacking Video Recognition Models with Bullet-Screen Comments",
+      "authors": [
+        "Kai Chen",
+        "Zhipeng Wei",
+        "Jingjing Chen",
+        "Zuxuan Wu",
+        "Yu–Gang Jiang"
+      ],
+      "year": 2021,
+      "venue": "arXiv (Cornell University)",
+      "doi": "https://doi.org/10.48550/arxiv.2110.15629",
+      "url": "http://arxiv.org/abs/2110.15629",
+      "extra_urls": [],
+      "type": "preprint",
+      "cited_by_count": 4,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W3205011285",
       "relevance": "direct_danmaku",
       "title": "Beyond Entertainment: Unpacking Danmaku and Comments' Role of Information Sharing and Sentiment Expression in Online Crisis Videos",
@@ -3827,6 +4905,23 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W3206227350",
+      "relevance": "direct_danmaku",
+      "title": "Emergence and Development of Bullet Comments in China",
+      "authors": [
+        "Aiqing Wang"
+      ],
+      "year": 2021,
+      "venue": "Language Circle Journal of Language and Literature",
+      "doi": "https://doi.org/10.15294/lc.v16i1.30406",
+      "url": "https://doi.org/10.15294/lc.v16i1.30406",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 1,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W3127448204",
@@ -3995,6 +5090,46 @@
       "cited_by_count": 2,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W3195717272",
+      "relevance": "direct_danmaku",
+      "title": "Promoting Mental Well-Being for Audiences in a Live-Streaming Game by Highlight-Based Bullet Comments",
+      "authors": [
+        "Junjie H. Xu",
+        "Yulin Cai",
+        "Zhou Fang",
+        "Pujana Paliyawan"
+      ],
+      "year": 2021,
+      "venue": "2021 IEEE 10th Global Conference on Consumer Electronics (GCCE)",
+      "doi": "https://doi.org/10.1109/gcce53005.2021.9621853",
+      "url": "https://doi.org/10.1109/gcce53005.2021.9621853",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 6,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4287023481",
+      "relevance": "direct_danmaku",
+      "title": "Promoting Mental Well-Being for Audiences in a Live-Streaming Game by Highlight-Based Bullet Comments",
+      "authors": [
+        "Junjie H. Xu",
+        "Yulin Cai",
+        "Zhou Fang",
+        "Pujana Paliyawan"
+      ],
+      "year": 2021,
+      "venue": "arXiv (Cornell University)",
+      "doi": "https://doi.org/10.48550/arxiv.2108.08083",
+      "url": "http://arxiv.org/abs/2108.08083",
+      "extra_urls": [],
+      "type": "preprint",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W3197773812",
@@ -4408,6 +5543,45 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3014770839",
+      "relevance": "direct_danmaku",
+      "title": "The Governance and Construction of the “Refined and Popularized Environment” of the Bullet Comments in Webcast",
+      "authors": [
+        "Ke Zhou",
+        "Li Wang"
+      ],
+      "year": 2020,
+      "venue": "Proceedings of the 4th International Conference on Culture, Education and Economic Development of Modern Society (ICCESE 2020)",
+      "doi": "https://doi.org/10.2991/assehr.k.200316.342",
+      "url": "https://doi.org/10.2991/assehr.k.200316.342",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W3022522459",
+      "relevance": "direct_danmaku",
+      "title": "Time-sync comments denoising via graph convolutional and contextual encoding",
+      "authors": [
+        "Zhenyu Liao",
+        "Yikun Xian",
+        "Jiangfeng Li",
+        "Chenxi Zhang",
+        "Shengjie Zhao"
+      ],
+      "year": 2020,
+      "venue": "Pattern Recognition Letters",
+      "doi": "https://doi.org/10.1016/j.patrec.2020.05.004",
+      "url": "https://doi.org/10.1016/j.patrec.2020.05.004",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 12,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W3117942734",
       "relevance": "direct_danmaku",
       "title": "TSCREC: Time-sync Comment Recommendation in Danmu-Enabled Videos",
@@ -4570,6 +5744,49 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3004171588",
+      "relevance": "direct_danmaku",
+      "title": "Deep Semantic Representation of Time-Sync Comments for Videos",
+      "authors": [
+        "Wu Famin",
+        "Lü Guangyi",
+        "Liu Qi",
+        "Ming Xuan He",
+        "Biao Chang",
+        "Weidong He",
+        "Hui Zhong",
+        "Le Zhang"
+      ],
+      "year": 2019,
+      "venue": "Journal of Computer Research and Development",
+      "doi": "https://doi.org/10.7544/issn1000-1239.2019.20170752",
+      "url": "https://crad.ict.ac.cn/EN/10.7544/issn1000-1239.2019.20170752",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 3,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W2969971558",
+      "relevance": "direct_danmaku",
+      "title": "Detecting Temporal Sentiment-Oriented Difference for Crowdsourced Time-Sync Comments",
+      "authors": [
+        "Ruomiao Li",
+        "Yajun Du",
+        "Fei Ren"
+      ],
+      "year": 2019,
+      "venue": "Lecture notes in electrical engineering",
+      "doi": "https://doi.org/10.1007/978-981-32-9244-4_45",
+      "url": "https://doi.org/10.1007/978-981-32-9244-4_45",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W2981194786",
       "relevance": "direct_danmaku",
       "title": "Evaluations of Mock Impoliteness in a Chinese Online Talk Show:Insights from Audiences' Metapragmatic Comments in the Form of Danmaku",
@@ -4644,6 +5861,27 @@
       "cited_by_count": 15,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2967976101",
+      "relevance": "direct_danmaku",
+      "title": "Interactive Variance Attention based Online Spoiler Detection for Time-Sync Comments",
+      "authors": [
+        "Wenmian Yang",
+        "Weijia Jia",
+        "Wenyuan Gao",
+        "Xiaojie Zhou",
+        "Yutao Luo"
+      ],
+      "year": 2019,
+      "venue": "Proceedings of the 28th ACM International Conference on Information and Knowledge Management",
+      "doi": "https://doi.org/10.1145/3357384.3357872",
+      "url": "https://doi.org/10.1145/3357384.3357872",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 5,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W2927200064",
@@ -4740,6 +5978,26 @@
       "cited_by_count": 20,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2942981010",
+      "relevance": "direct_danmaku",
+      "title": "Video clip recommendation model by sentiment analysis of time-sync comments",
+      "authors": [
+        "Zhenggao Pan",
+        "Xianwei Li",
+        "Lin Cui",
+        "Zhiwei Zhang"
+      ],
+      "year": 2019,
+      "venue": "Multimedia Tools and Applications",
+      "doi": "https://doi.org/10.1007/s11042-019-7578-4",
+      "url": "https://doi.org/10.1007/s11042-019-7578-4",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 12,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W2979368787",
@@ -4910,6 +6168,27 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W2901185581",
+      "relevance": "direct_danmaku",
+      "title": "Learning from Audience Intelligence: Dynamic Labeled LDA Model for Time-Sync Commented Video Tagging",
+      "authors": [
+        "Zehua Zeng",
+        "Cong Xue",
+        "Neng Gao",
+        "Lei Wang",
+        "Zeyi Liu"
+      ],
+      "year": 2018,
+      "venue": "Lecture notes in computer science",
+      "doi": "https://doi.org/10.1007/978-3-030-04182-3_48",
+      "url": "https://doi.org/10.1007/978-3-030-04182-3_48",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 5,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W2885925498",
       "relevance": "direct_danmaku",
       "title": "Role of Danmu Function in User Experience and Engagement: A Double-edged Sword",
@@ -5067,6 +6346,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W2893261602",
+      "relevance": "direct_danmaku",
+      "title": "Video recommendation using crowdsourced time-sync comments",
+      "authors": [
+        "Qing Ping"
+      ],
+      "year": 2018,
+      "venue": "Proceedings of the 12th ACM Conference on Recommender Systems",
+      "doi": "https://doi.org/10.1145/3240323.3240329",
+      "url": "https://doi.org/10.1145/3240323.3240329",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 11,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W2901063069",
       "relevance": "direct_danmaku",
       "title": "Visual-Texual Emotion Analysis with Deep Coupled Video and Danmu Neural Networks",
@@ -5138,6 +6434,24 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2605324664",
+      "relevance": "direct_danmaku",
+      "title": "Bridging Video Content and Comments: Synchronized Video Description with Temporal Summarization of Crowdsourced Time-Sync Comments",
+      "authors": [
+        "Linli Xu",
+        "Chao Zhang"
+      ],
+      "year": 2017,
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "doi": "https://doi.org/10.1609/aaai.v31i1.10753",
+      "url": "https://doi.org/10.1609/aaai.v31i1.10753",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 18,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W2838188684",
@@ -5237,6 +6551,25 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W2616696930",
+      "relevance": "direct_danmaku",
+      "title": "Movie summarization using bullet screen comments",
+      "authors": [
+        "Shan Sun",
+        "Feng Wang",
+        "Liang He"
+      ],
+      "year": 2017,
+      "venue": "Multimedia Tools and Applications",
+      "doi": "https://doi.org/10.1007/s11042-017-4807-6",
+      "url": "https://doi.org/10.1007/s11042-017-4807-6",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 21,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W2790790019",
       "relevance": "direct_danmaku",
       "title": "Recommending highlights in Anime movies: Mining the real-time user comments “DanMaKu”",
@@ -5311,7 +6644,27 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
-      "id": "manual:ping-chen-2017",
+      "id": "openalex:W2742947535",
+      "relevance": "direct_danmaku",
+      "title": "Video Highlights Detection and Summarization with Lag-Calibration based on Concept-Emotion Mapping of Crowd-sourced Time-Sync Comments",
+      "authors": [
+        "Qing Ping",
+        "Chaomei Chen"
+      ],
+      "year": 2017,
+      "venue": "arXiv (Cornell University)",
+      "doi": "https://doi.org/10.48550/arxiv.1708.02210",
+      "url": "http://arxiv.org/abs/1708.02210",
+      "extra_urls": [
+        "https://github.com/ChanningPing/VideoHighlightDetection"
+      ],
+      "type": "preprint",
+      "cited_by_count": 7,
+      "note": "实现仓库未标注许可证。",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W2963834699",
       "relevance": "direct_danmaku",
       "title": "Video Highlights Detection and Summarization with Lag-Calibration based on Concept-Emotion Mapping of Crowdsourced Time-Sync Comments",
       "authors": [
@@ -5319,16 +6672,16 @@
         "Chaomei Chen"
       ],
       "year": 2017,
-      "venue": "Workshop on New Frontiers in Summarization",
-      "doi": "https://doi.org/10.18653/v1/W17-4501",
-      "url": "https://aclanthology.org/W17-4501/",
+      "venue": "Proceedings of the Workshop on New Frontiers in Summarization",
+      "doi": "https://doi.org/10.18653/v1/w17-4501",
+      "url": "https://doi.org/10.18653/v1/w17-4501",
       "extra_urls": [
         "https://github.com/ChanningPing/VideoHighlightDetection"
       ],
-      "type": "article",
-      "cited_by_count": null,
-      "note": "时间同步评论上的高光检测。题名没有 danmaku 一词，OpenAlex 题名检索未收入。代码仓库未标注许可证。",
-      "provenance": "ACL Anthology 页面，2026-09-28"
+      "type": "conference-paper",
+      "cited_by_count": 17,
+      "note": "实现仓库未标注许可证。",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W2578631665",
@@ -5387,6 +6740,26 @@
       "cited_by_count": 4,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2735561960",
+      "relevance": "direct_danmaku",
+      "title": "Event Detection on Online Videos Using Crowdsourced Time-Sync Comment",
+      "authors": [
+        "Jiangfeng Li",
+        "Zhenyu Liao",
+        "Chenxi Zhang",
+        "Jing Wang"
+      ],
+      "year": 2016,
+      "venue": "2016 7th International Conference on Cloud Computing and Big Data (CCBD)",
+      "doi": "https://doi.org/10.1109/ccbd.2016.021",
+      "url": "https://doi.org/10.1109/ccbd.2016.021",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 7,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W2483735592",
@@ -5448,6 +6821,25 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W2584960826",
+      "relevance": "direct_danmaku",
+      "title": "SmartVideoRanking: Video Search by Mining Emotions from Time-Synchronized Comments",
+      "authors": [
+        "Kosetsu Tsukuda",
+        "Masahiro Hamasaki",
+        "Masataka Goto"
+      ],
+      "year": 2016,
+      "venue": "2016 IEEE 16th International Conference on Data Mining Workshops (ICDMW)",
+      "doi": "https://doi.org/10.1109/icdmw.2016.0140",
+      "url": "https://doi.org/10.1109/icdmw.2016.0140",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 2,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
       "id": "openalex:W4206684805",
       "relevance": "direct_danmaku",
       "title": "The study of online Danmu's television use",
@@ -5484,6 +6876,23 @@
       "cited_by_count": 13,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2747228156",
+      "relevance": "direct_danmaku",
+      "title": "Utilization of Sentiment Analysis and Visualization in Online Video Bullet-screen Comments",
+      "authors": [
+        "Yangyang Xu"
+      ],
+      "year": 2016,
+      "venue": "Shuju fenxi yu zhishi faxian",
+      "doi": "https://doi.org/10.11925/infotech.1003-3513.2015.11.12",
+      "url": "http://manu44.magtech.com.cn/Jwk_infotech_wk3/EN/abstract/abstract4161.shtml",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 10,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W2467707473",
@@ -5730,6 +7139,26 @@
       "cited_by_count": 47,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2009096031",
+      "relevance": "direct_danmaku",
+      "title": "Video Highlight Shot Extraction with Time-Sync Comment",
+      "authors": [
+        "Yikun Xian",
+        "Jiangfeng Li",
+        "Chenxi Zhang",
+        "Zhenyu Liao"
+      ],
+      "year": 2015,
+      "venue": "Proceedings of the 7th International Workshop on Hot Topics in Planet-scale mObile computing and online Social neTworking",
+      "doi": "https://doi.org/10.1145/2757513.2757516",
+      "url": "https://doi.org/10.1145/2757513.2757516",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 25,
+      "note": "",
+      "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
       "id": "openalex:W2483594890",

@@ -11,13 +11,15 @@
 
 ## 这次怎么收
 
-检索日期是 2026-09-28。
+检索日期是 2026-09-28。合计 422 条，分项见 [catalog.json](catalog.json) 的 `sweep`。
 
-OpenAlex 下载了 1179 条去重后的记录，查询是题名或摘要里的 `danmaku`、`danmu`、`弹幕`，以及题名里的 `niconico`。摘要检索会把「弹」和「幕」拆开，命中导弹、幕墙、幕后和烟幕弹。那些题名里没有连续的弹幕、danmaku、danmu、bullet screen 或 time-sync 的记录没有写入目录，共 829 条。
+第一轮从 OpenAlex 下载了 1179 条去重后的记录。查询是题名或摘要里的 `danmaku`、`danmu`、`弹幕`，以及题名里的 `niconico`。摘要检索会把「弹」和「幕」拆开，命中导弹、幕墙、幕后和烟幕弹。题名里没有连续的弹幕、danmaku、danmu、bullet screen 或 time-sync 的记录没有写入目录。
 
-写入「直接：视频弹幕」的条件是题名含上述词，并且不是弹幕射击游戏，也不是中药胆木。这样排除了 12 条同名异义。同一 DOI，或同一题名加同一年，只留被引较高的一条。预印本和正式版本如果题名或年份不同，会各留一条。
+第二轮用题名短语再查 `time-sync comment`、`time-synchronized comment`、`bullet comment` 和 `comment barrage`。去重前补入 77 条。拒绝了 42 条：混沌系统的 synchronization、法语里表示「怎样」的 comment 配上水坝 barrage，以及 silver bullet 一类说法。
 
-题名不用这些词、但这次打开过页面的，另补在目录后部：DanmakuTPPBench、时间同步评论的高光论文、BERT-SVM 弹幕分析、弹幕工具、年度弹幕报道、BTM、突发主题、词汇规范化、Kleinberg 的流突发、AutoPhrase，以及 Twitch 聊天和表情。没有打开过页面的论文不补进去。
+写入「直接：视频弹幕」的条件是题名含上述词或短语，并且不是弹幕射击游戏，也不是中药胆木。同名异义排除了 12 条。同一 DOI，或同一题名加同一年，只留被引较高的一条。预印本和正式版本如果题名或年份不同，会各留一条。
+
+题名不用这些词、但这次打开过页面的，另补在目录后部：DanmakuTPPBench、BERT-SVM 弹幕分析、弹幕工具、年度弹幕报道、BTM、突发主题、词汇规范化、Kleinberg 的流突发、AutoPhrase，以及 Twitch 聊天和表情。时间同步评论的高光论文已在第二轮题名里。没有打开过页面的论文不补进去。
 
 这不是「世界上每一篇都已收齐」的证明。没写进目录的，只说明这次检索没有核到可引用的页面。
 
