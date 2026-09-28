@@ -1,18 +1,34 @@
 {
   "retrieved_on": "2026-09-28",
-  "what_this_is": "书目和链接。不收录论文全文。",
+  "what_this_is": "书目和链接。不收录论文全文。找思路时去读原文，原文不进仓库。",
   "sweep": {
     "retrieved_on": "2026-09-28",
     "openalex_works_downloaded": 1179,
     "direct_after_dedupe": 389,
     "niconico_after_dedupe": 17,
     "manual": 16,
-    "total": 422,
+    "total": 588,
     "dropped_homonym_title_matches": 12,
     "dropped_timesync_without_comment_or_video": 0,
     "openalex_works_not_included_because_title_lacked_keywords": 825,
     "phrase_search_added": 77,
-    "phrase_search_rejected": 42
+    "phrase_search_rejected": 42,
+    "rescan_on": "2026-09-28",
+    "rescan_added": 47,
+    "rescan_reread_dropped_without_title_keyword": 792,
+    "rescan_dropped_abstracts_nonempty": 763,
+    "full_text_in_repo": false,
+    "current_counts": {
+      "direct_danmaku": 550,
+      "tool": 8,
+      "platform_statistic": 1,
+      "niconico_platform": 20,
+      "live_chat": 3,
+      "method_source": 6
+    },
+    "note": "direct_after_dedupe、niconico_after_dedupe、manual、rescan_added 是前两轮留下的数。第二轮补遗看 rescan_round2_added。当前条目数以 total 和 current_counts 为准。全文不在仓库里。",
+    "rescan_round2_on": "2026-09-28",
+    "rescan_round2_added": 119
   },
   "records": [
     {
@@ -76,6 +92,24 @@
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
+      "id": "openalex:W7134932814",
+      "relevance": "direct_danmaku",
+      "title": "A sentiment analysis on bullet screen using machine learning bag of words algorithm",
+      "authors": [
+        "Yiyuan Wang",
+        "Jie Li"
+      ],
+      "year": 2026,
+      "venue": "ITM Web of Conferences",
+      "doi": "https://doi.org/10.1051/itmconf/20268301005",
+      "url": "https://doi.org/10.1051/itmconf/20268301005",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "用词袋模型给哔哩哔哩弹幕做情绪分类。读的是 OpenAlex 摘要。PDF 路径那条不另立。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W7127656029",
       "relevance": "direct_danmaku",
       "title": "A Study on the Factors Affecting User Satisfaction of the Ctrip Travel Platform-An Empirical Analysis Based on 460 Video Bullet Comments and Reviews",
@@ -112,6 +146,49 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W7169185462",
+      "relevance": "direct_danmaku",
+      "title": "An Early Malicious Users Prediction Benchmark for Chinese Esports via Bullet Chats",
+      "authors": [
+        "Xiang Xing",
+        "Han Wang",
+        "Yi Qing Zhu",
+        "Chaowei Zhang",
+        "Jipeng Qiang"
+      ],
+      "year": 2026,
+      "venue": "Lecture notes in computer science",
+      "doi": "https://doi.org/10.1007/978-981-92-3417-2_14",
+      "url": "https://doi.org/10.1007/978-981-92-3417-2_14",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "用弹幕聊天做中国电竞恶意用户的早期预测基准。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W7148450808",
+      "relevance": "direct_danmaku",
+      "title": "Analyzing bullet chats for recommendation intent identification: Dataset and method",
+      "authors": [
+        "Yi Zhu",
+        "Qinqin Han",
+        "Yunhao Yuan",
+        "Chaowei Zhang",
+        "Jipeng Qiang",
+        "Xindong Wu"
+      ],
+      "year": 2026,
+      "venue": "Artificial Intelligence",
+      "doi": "https://doi.org/10.1016/j.artint.2026.104528",
+      "url": "https://doi.org/10.1016/j.artint.2026.104528",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 1,
+      "note": "用 bullet chats 识别推荐意图，题名还称有数据集。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W7138871105",
@@ -188,6 +265,26 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7207646027",
+      "relevance": "direct_danmaku",
+      "title": "ClimaCS: A Multi-Genre Dataset of Timed Comments for Music Highlight Detection",
+      "authors": [
+        "Guerci Loïs",
+        "Laure Prétet"
+      ],
+      "year": 2026,
+      "venue": "Zenodo (CERN European Organization for Nuclear Research)",
+      "doi": "https://doi.org/10.5281/zenodo.22277018",
+      "url": "https://doi.org/10.5281/zenodo.22277018",
+      "extra_urls": [
+        "https://doi.org/10.5281/zenodo.22277019"
+      ],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "ClimaCS：用多风格音乐的 timed comments 检测高潮片段。摘要没写这些评论是否飞过画面。读的是 OpenAlex 摘要。另一条 Zenodo DOI 不另立。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W7164368129",
       "relevance": "direct_danmaku",
       "title": "Coherence through sedimentation: Temporal organization and emergent interaction in Danmaku",
@@ -205,6 +302,27 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7143908877",
+      "relevance": "direct_danmaku",
+      "title": "ComVi: Context-Aware Optimized Comment Display in Video Playback",
+      "authors": [
+        "Minsun Kim",
+        "Dawon Lee",
+        "Junyong Noh"
+      ],
+      "year": 2026,
+      "venue": "Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems",
+      "doi": "https://doi.org/10.1145/3772318.3791018",
+      "url": "https://doi.org/10.1145/3772318.3791018",
+      "extra_urls": [
+        "https://arxiv.org/abs/2603.26173"
+      ],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "ComVi 把普通评论按画面时刻排开，用户研究里和 YouTube、弹幕比。CHI 版本。预印本不另立一条。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W7211936703",
@@ -225,6 +343,23 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7122694375",
+      "relevance": "direct_danmaku",
+      "title": "Content Moderation Effect: How to Build the Video Influence of Bilibili Through Bullet Screen Interaction Types",
+      "authors": [
+        "Licheng Wang"
+      ],
+      "year": 2026,
+      "venue": "Communications in Humanities Research",
+      "doi": "https://doi.org/10.54254/2753-7064/2026.ht31227",
+      "url": "https://doi.org/10.54254/2753-7064/2026.ht31227",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "哔哩哔哩知识区弹幕互动类型和内容审核。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W7211919770",
@@ -373,6 +508,31 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7133525514",
+      "relevance": "direct_danmaku",
+      "title": "DLIOS: An LLM-Augmented Real-Time Multi-Modal Interactive Enhancement Overlay System for Douyin Live Streaming",
+      "authors": [
+        "Shuide Wen",
+        "Sungil Seok",
+        "Beier Ku",
+        "Richee Li",
+        "Yubin He",
+        "Bowen Qu",
+        "Yang Claire Yang",
+        "Ping Su",
+        "Can Jiao"
+      ],
+      "year": 2026,
+      "venue": "arXiv (Cornell University)",
+      "doi": "https://doi.org/10.48550/arxiv.2603.03060",
+      "url": "http://arxiv.org/abs/2603.03060",
+      "extra_urls": [],
+      "type": "preprint",
+      "cited_by_count": 0,
+      "note": "抖音直播上的透明叠加层：滚动弹幕、礼物、VIP 入场和关键词反应。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W7166536920",
       "relevance": "direct_danmaku",
       "title": "Educational Sentiment Analysis in Chinese Online Learning - Constructing Domain-Specific Dictionaries for Danmu Text",
@@ -408,6 +568,25 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7205005412",
+      "relevance": "direct_danmaku",
+      "title": "Enhancing Learning Experiences and Outcomes with i-Comments: Exploring and Validating the Effect of On-Screen Individualized Comments Model for On-Demand Video-Based Learning",
+      "authors": [
+        "Jiaqi Wang",
+        "Jian Chen",
+        "Qun Jin"
+      ],
+      "year": 2026,
+      "venue": "The Journal of Interactive Learning Research",
+      "doi": "https://doi.org/10.70725/761966ynkyyk",
+      "url": "https://doi.org/10.70725/761966ynkyyk",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "i-Comments 的后续：点播学习视频上的同步滚动评论。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W7151780021",
@@ -484,6 +663,28 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7154216611",
+      "relevance": "direct_danmaku",
+      "title": "LOLGORITHM: Funny Comment Generation Agent For Short Videos",
+      "authors": [
+        "Xuan Ouyang",
+        "Bouzhou Wang",
+        "Senan Wang",
+        "Siyuan Xiahou",
+        "Jinrong Zhou",
+        "Yuekang Li"
+      ],
+      "year": 2026,
+      "venue": "arXiv",
+      "doi": "https://doi.org/10.48550/arxiv.2604.09729",
+      "url": "https://arxiv.org/abs/2604.09729",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": null,
+      "note": "做的是短视频平台上的风格化评论。摘要写明现有的直播弹幕生成对不上这些平台的评论习惯。读的是 arXiv 摘要页。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W7211870666",
@@ -601,6 +802,41 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7161940024",
+      "relevance": "direct_danmaku",
+      "title": "Research on the Impact of Bullet Emotion on the Sales Volume of E-commerce Broadcast Room",
+      "authors": [
+        "Zhang Xiwen"
+      ],
+      "year": 2026,
+      "venue": "DEVELOPMENT ECONOMICS OF CHINA",
+      "doi": "https://doi.org/10.47297/wspdecwsp2515-797320.20261001",
+      "url": "https://doi.org/10.47297/wspdecwsp2515-797320.20261001",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "电商直播间里弹幕情绪和销量。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W7166552878",
+      "relevance": "direct_danmaku",
+      "title": "Sentiment Analysis System for Video Bullet-Screen Based on Deep Learning",
+      "authors": [
+        "Hairong Hao",
+        "Shuang Qiu"
+      ],
+      "year": 2026,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/isctis70043.2026.11572196",
+      "url": "https://doi.org/10.1109/isctis70043.2026.11572196",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "视频弹幕的深度学习情绪分析系统。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W7212173290",
       "relevance": "direct_danmaku",
       "title": "SOABC: saliency and object-aware bullet comments in virtual reality videos",
@@ -636,6 +872,24 @@
       "cited_by_count": 1,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W7162398458",
+      "relevance": "direct_danmaku",
+      "title": "Study on the visualization design and narrative strategies of science data videos: Taking Institute for Planets as an example(科普数据视频的可视化设计及叙事研究——以“星球研究所”为例)",
+      "authors": [
+        "HUANG Wenyue(黄文玥)",
+        "LAN Xingyu(蓝星宇)"
+      ],
+      "year": 2026,
+      "venue": "DOAJ (DOAJ: Directory of Open Access Journals)",
+      "doi": "https://doi.org/10.3785/1008-9497.25148",
+      "url": "https://doaj.org/article/dff2e5d1ec084433952cfde36c5edcb0",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "科普数据视频的可视化。摘要写明用了弹幕数据和访谈，不是只把网站称作弹幕站。读的是 OpenAlex 摘要。出处字段是 OpenAlex 给的 DOAJ。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W7133982812",
@@ -694,6 +948,23 @@
       "cited_by_count": 1,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7196952516",
+      "relevance": "direct_danmaku",
+      "title": "The impact of live-streaming e-commerce bullet-comments on consumer purchase decisions: A study on e-commerce retail giants in China",
+      "authors": [
+        "cthomas chen"
+      ],
+      "year": 2026,
+      "venue": "Harvard Dataverse",
+      "doi": "https://doi.org/10.7910/dvn/vi1xrw",
+      "url": "https://doi.org/10.7910/dvn/vi1xrw",
+      "extra_urls": [],
+      "type": "dataset",
+      "cited_by_count": 0,
+      "note": "哈佛 Dataverse 上的一份说明：直播电商里弹幕的数量、质量和情绪如何连到购买。不是期刊论文。读的是条目说明。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W7125612355",
@@ -881,6 +1152,24 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7204471821",
+      "relevance": "direct_danmaku",
+      "title": "Virtual Sensing for Real-time Emotion Monitoring in Interactive Media Systems Using Bullet Screen",
+      "authors": [
+        "Zhong-Jie Liu",
+        "Shih-Pang Tseng"
+      ],
+      "year": 2026,
+      "venue": "Sensors and Materials",
+      "doi": "https://doi.org/10.18494/sam6288",
+      "url": "https://doi.org/10.18494/sam6288",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "把互动视频上的弹幕当成实时情绪信号，做虚拟传感。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W7147100028",
@@ -1519,6 +1808,26 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4414057852",
+      "relevance": "direct_danmaku",
+      "title": "Do Bullet Chats Keep Viewers Watching? Estimating Heterogeneous Treatment Effects with a Control Function Approach",
+      "authors": [
+        "Yan Cheng",
+        "Jingbo Wang",
+        "Xinyu Cao",
+        "Zuo‐Jun Max Shen"
+      ],
+      "year": 2025,
+      "venue": "SSRN Electronic Journal",
+      "doi": "https://doi.org/10.2139/ssrn.5456675",
+      "url": "https://doi.org/10.2139/ssrn.5456675",
+      "extra_urls": [],
+      "type": "preprint",
+      "cited_by_count": 0,
+      "note": "问弹幕聊天会不会让人继续看。OpenAlex 没有摘要，正文没打开。SSRN。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4417433214",
       "relevance": "direct_danmaku",
       "title": "Drowning in Danmaku: The Dual Effects Community Interaction in Live Streaming Commerce",
@@ -1645,6 +1954,27 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4409347253",
+      "relevance": "direct_danmaku",
+      "title": "Enhancing Multimodal Affective Analysis with Learned Live Comment Features",
+      "authors": [
+        "Zhaoyuan Deng",
+        "Amith Ananthram",
+        "Kathleen R. McKeown"
+      ],
+      "year": 2025,
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "doi": "https://doi.org/10.1609/aaai.v39i15.33785",
+      "url": "https://doi.org/10.1609/aaai.v39i15.33785",
+      "extra_urls": [
+        "https://arxiv.org/abs/2410.16407"
+      ],
+      "type": "conference-paper",
+      "cited_by_count": 3,
+      "note": "弹幕是盖在视频上、和画面同步的观众消息。建了 LCAffect，并用它合成弹幕特征做情感分析。AAAI 版本。预印本不另立一条。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W7127251656",
       "relevance": "direct_danmaku",
       "title": "Enhancing Online Learning through Time-sync Comment: A Knowledge-relevant Perspective",
@@ -1722,6 +2052,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "manual:xu-2025-parallel-narrative",
+      "relevance": "direct_danmaku",
+      "title": "Facilitating Visual Media Exploration for Blind and Low Vision Users through AI-Powered Interactive Storytelling",
+      "authors": [
+        "Shuchang Xu"
+      ],
+      "year": 2025,
+      "venue": "arXiv",
+      "doi": "https://doi.org/10.48550/arxiv.2508.03061",
+      "url": "https://arxiv.org/abs/2508.03061",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": null,
+      "note": "博士研究陈述。三项目技术里，Parallel Narrative 提供对时间同步视频评论的访问。读的是 arXiv 摘要页。不是 DanmuA11y 那篇。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W7128409268",
       "relevance": "direct_danmaku",
       "title": "Flow in the Streams: How Danmaku–Video Congruence Shapes Viewer Engagement",
@@ -1741,6 +2088,27 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4417467011",
+      "relevance": "direct_danmaku",
+      "title": "From Praise to Sarcasm",
+      "authors": [
+        "Mengyuan Ge",
+        "Xin Ren Bao",
+        "Kai Yang",
+        "Shuocheng Wang",
+        "Raymond Y.K. Lau"
+      ],
+      "year": 2025,
+      "venue": "Journal of Global Information Management",
+      "doi": "https://doi.org/10.4018/jgim.395848",
+      "url": "https://doi.org/10.4018/jgim.395848",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 1,
+      "note": "直播弹幕里把反话和夸奖分开，再看打赏。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4415551195",
       "relevance": "direct_danmaku",
       "title": "From viewers to visitors: using Danmu to foster value co-creation in travel vlogs",
@@ -1757,6 +2125,24 @@
       "cited_by_count": 1,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4406371358",
+      "relevance": "direct_danmaku",
+      "title": "Happy Together in Cyberspace",
+      "authors": [
+        "Shiqing Liang",
+        "Jorge Díaz Cintas"
+      ],
+      "year": 2025,
+      "venue": "Danmu-mediated Communication and Audiovisual Translation in the Digital Age",
+      "doi": "https://doi.org/10.4324/9781003475422-3",
+      "url": "https://doi.org/10.4324/9781003475422-3",
+      "extra_urls": [],
+      "type": "book-chapter",
+      "cited_by_count": 1,
+      "note": "书中一章，写纪录片怎样变成哔哩哔哩上带弹幕的在线观看。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4407103176",
@@ -1778,6 +2164,25 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4413615530",
+      "relevance": "direct_danmaku",
+      "title": "How do different cognitive styles Learners deal with the bullet screen interruption in instructional videos? An eye-tracking study",
+      "authors": [
+        "Defang Mu",
+        "Mingxuan Zou",
+        "Yinghe Chen"
+      ],
+      "year": 2025,
+      "venue": "BMC Psychology",
+      "doi": "https://doi.org/10.1186/s40359-025-03182-1",
+      "url": "https://doi.org/10.1186/s40359-025-03182-1",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 4,
+      "note": "教学视频顶部的密集弹幕会不会打断不同认知风格的学习者。眼动实验。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4414031647",
       "relevance": "direct_danmaku",
       "title": "Interactive Dynamics of Bullet Comments in Agricultural Livestreaming: A Dual-Path Analysis of Conversion Efficiency in Rural China",
@@ -1793,6 +2198,23 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W7117705049",
+      "relevance": "direct_danmaku",
+      "title": "Interactive Ritual Chain in Esports Live Streaming: A Case Study of Bullet Screen Interaction During the 2025 Fearless Contract Toronto Masters",
+      "authors": [
+        "Zixuan Qiu"
+      ],
+      "year": 2025,
+      "venue": "Communications in Humanities Research",
+      "doi": "https://doi.org/10.54254/2753-7064/2026.ht31023",
+      "url": "https://doi.org/10.54254/2753-7064/2026.ht31023",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "无畏契约多伦多大师赛直播里的弹幕互动仪式，语料来自哔哩哔哩和 Twitch。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4408264350",
@@ -1858,6 +2280,50 @@
       "provenance": "PMLR 页面元数据，2026-09-28"
     },
     {
+      "id": "openalex:W4406593731",
+      "relevance": "direct_danmaku",
+      "title": "Optimisation Strategy of Live Streaming Barrage Based on Human Visual Habits",
+      "authors": [
+        "Yantu Ma",
+        "Dalbir Singh",
+        "Majed Radi Alzoubi",
+        "Nisreen Falaki",
+        "Muhammad Turki Alshurideh",
+        "Anber Abraheem Shlash Mohammad",
+        "Maali M. Al-mzary",
+        "Sulieman Ibraheem Shelash Al‐Hawary"
+      ],
+      "year": 2025,
+      "venue": "Studies in computational intelligence",
+      "doi": "https://doi.org/10.1007/978-3-031-74220-0_16",
+      "url": "https://doi.org/10.1007/978-3-031-74220-0_16",
+      "extra_urls": [],
+      "type": "book-chapter",
+      "cited_by_count": 0,
+      "note": "按人的视觉习惯优化直播弹幕。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4414307329",
+      "relevance": "direct_danmaku",
+      "title": "Optimization Study of a Pornographic Content Detection Model for Live Streaming Platforms Based on Improved TF-IDF and SVM: A Case Study of Bullet Screens",
+      "authors": [
+        "Yuhang Jing",
+        "Hengxiang Li",
+        "Yaxin Tan",
+        "Kehao Zhang"
+      ],
+      "year": 2025,
+      "venue": "",
+      "doi": "https://doi.org/10.1145/3756423.3756546",
+      "url": "https://doi.org/10.1145/3756423.3756546",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "直播平台色情内容检测，案例是弹幕文本。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4406371406",
       "relevance": "direct_danmaku",
       "title": "Participation and Reification of Virtual Community of Practice in Danmu Subtitling",
@@ -1890,6 +2356,41 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4411222509",
+      "relevance": "direct_danmaku",
+      "title": "Research on Intelligent Algorithm of Video Barrage Dataset Based on Multi-Dimensional Scale and Social Network Analysis",
+      "authors": [
+        "Li Tang"
+      ],
+      "year": 2025,
+      "venue": "International Journal of High Speed Electronics and Systems",
+      "doi": "https://doi.org/10.1142/s0129156425405807",
+      "url": "https://doi.org/10.1142/s0129156425405807",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "用 CNKI 上主题含弹幕或情感倾向的期刊论文做关键词聚类。这是文献地图，不是评论语料。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4408899520",
+      "relevance": "direct_danmaku",
+      "title": "Research on the characteristics of Chinese film bullet chat and audience's use motivation from the perspective of streaming media",
+      "authors": [
+        "Su Wan",
+        "Hadina Habil"
+      ],
+      "year": 2025,
+      "venue": "Edelweiss Applied Science and Technology",
+      "doi": "https://doi.org/10.55214/25768484.v9i3.5818",
+      "url": "https://doi.org/10.55214/25768484.v9i3.5818",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "流媒体视角下中国电影弹幕的特点和观众动机。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4415813479",
@@ -2114,6 +2615,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4413653741",
+      "relevance": "direct_danmaku",
+      "title": "The Effect of Bilibili Bullet Screen Culture on Brand Marketing: An Empirical Study Based on Interaction Mechanism and User Perception",
+      "authors": [
+        "Lingyang Zhou"
+      ],
+      "year": 2025,
+      "venue": "Finance & Economics",
+      "doi": "https://doi.org/10.61173/80dnyk38",
+      "url": "https://doi.org/10.61173/80dnyk38",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "哔哩哔哩弹幕文化对品牌营销，用问卷区分自然弹幕和固定弹幕。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4407753200",
       "relevance": "direct_danmaku",
       "title": "The Feasibility of Applying Danmaku to Video Learning of Young People and Its Impact on Learning Effect",
@@ -2148,6 +2666,24 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7124854669",
+      "relevance": "direct_danmaku",
+      "title": "The Impact of Barrage (Online Comments) on Consumer Purchase Intention in Live Streaming Sales",
+      "authors": [
+        "Xiaolei Zhu",
+        "Liping Yu"
+      ],
+      "year": 2025,
+      "venue": "Economic society and humanities.",
+      "doi": "https://doi.org/10.62381/e254513",
+      "url": "https://doi.org/10.62381/e254513",
+      "extra_urls": [],
+      "type": "",
+      "cited_by_count": 0,
+      "note": "直播带货里的弹幕：信息质量、互动密度、情绪和社会证明，问卷 486 份。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4411911279",
       "relevance": "direct_danmaku",
       "title": "The Impact of Bullet Screen on Consumer’s Purchase Decision in Live Streaming E-Commerce",
@@ -2163,6 +2699,23 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4412842562",
+      "relevance": "direct_danmaku",
+      "title": "The Impact of Bullet Screens on Knowledge Dissemination in Online Education Videos: A Case Study of Bilibili",
+      "authors": [
+        "Beilin Di"
+      ],
+      "year": 2025,
+      "venue": "Advances in Education Humanities and Social Science Research",
+      "doi": "https://doi.org/10.56028/aehssr.14.1.358.2025",
+      "url": "https://doi.org/10.56028/aehssr.14.1.358.2025",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "弹幕对在线教育视频里的知识传播，例子是哔哩哔哩。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4412926000",
@@ -2247,6 +2800,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7117537810",
+      "relevance": "direct_danmaku",
+      "title": "The Realization of Implicit Education in Colleges and Universities with \"Bullet Screen Culture\" as the Carrier",
+      "authors": [
+        "Zhengjian Wu"
+      ],
+      "year": 2025,
+      "venue": "International Journal of Management Science Research",
+      "doi": "https://doi.org/10.53469/ijomsr.2025.08(12).03",
+      "url": "https://doi.org/10.53469/ijomsr.2025.08(12).03",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "把弹幕文化当作高校隐性教育的载体。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4411610513",
       "relevance": "direct_danmaku",
       "title": "Theorizing temporality in multimodal communication: linearity and non-linearity in bullet comments",
@@ -2282,6 +2852,23 @@
       "cited_by_count": 4,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7165163269",
+      "relevance": "direct_danmaku",
+      "title": "Understanding Bullet Chat Moderation on Bilibili: Patterns, Effects, and Implications",
+      "authors": [
+        "Shen, Yang"
+      ],
+      "year": 2025,
+      "venue": "University of Chicago",
+      "doi": "https://doi.org/10.6082/60asr-3ga23",
+      "url": "https://doi.org/10.6082/60asr-3ga23",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "芝加哥大学文本：哔哩哔哩 bullet chat 是飘过视频的实时评论，并有审核分。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4415974559",
@@ -2320,6 +2907,26 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4413450987",
+      "relevance": "direct_danmaku",
+      "title": "Unwavering interests in influencers: Influencer-focused barrages in social media product review videos",
+      "authors": [
+        "Yanli Pei",
+        "Juntao Wu",
+        "Fang Wang",
+        "Shan Wang"
+      ],
+      "year": 2025,
+      "venue": "Journal of Retailing and Consumer Services",
+      "doi": "https://doi.org/10.1016/j.jretconser.2025.104485",
+      "url": "https://doi.org/10.1016/j.jretconser.2025.104485",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 5,
+      "note": "哔哩哔哩产品评测视频里，针对主播本人的弹幕。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4415979892",
@@ -2363,6 +2970,24 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "manual:zhu-li-2025-bullet-modes",
+      "relevance": "direct_danmaku",
+      "title": "What Does Bullet Screen Bring to Video Platform? A Theoretical Analysis Comparing Different Bullet Screen Modes",
+      "authors": [
+        "Xingzhen Zhu",
+        "Li Li"
+      ],
+      "year": 2025,
+      "venue": "Journal of Theoretical and Applied Electronic Commerce Research",
+      "doi": "https://doi.org/10.3390/jtaer20040338",
+      "url": "https://doi.org/10.3390/jtaer20040338",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": null,
+      "note": "用博弈比较视频平台该上哪种弹幕。Crossref 摘要。PDF 未打开。",
+      "provenance": "Crossref，2026-09-28。全文不进仓库。"
+    },
+    {
       "id": "openalex:W7117175741",
       "relevance": "direct_danmaku",
       "title": "Youth creative writing on Chinese social media : a multimodal study of bullet comments on Bilibili from an integrated perspective",
@@ -2378,6 +3003,23 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4407270468",
+      "relevance": "direct_danmaku",
+      "title": "“High energy ahead!”: exploring Chinese adolescents’ pragmatic identities in bullet-screen discourse",
+      "authors": [
+        "Jue Wu"
+      ],
+      "year": 2025,
+      "venue": "Humanities and Social Sciences Communications",
+      "doi": "https://doi.org/10.1057/s41599-025-04475-x",
+      "url": "https://doi.org/10.1057/s41599-025-04475-x",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 3,
+      "note": "哔哩哔哩弹幕话语里，中国青少年怎样做语用身份。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4412182934",
@@ -2396,6 +3038,46 @@
       "cited_by_count": 3,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4402656488",
+      "relevance": "direct_danmaku",
+      "title": "A brain network construction method for the assessment of functional quality of experience",
+      "authors": [
+        "Yifan Niu",
+        "Wei Tao",
+        "Yuan Zhang",
+        "Zhai Guangtao",
+        "Xia Wu"
+      ],
+      "year": 2024,
+      "venue": "Journal of Image and Graphics",
+      "doi": "https://doi.org/10.11834/jig.230500",
+      "url": "https://doi.org/10.11834/jig.230500",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "用弹幕覆盖率当作功能体验的一个参数，做脑网络评估。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4403301156",
+      "relevance": "direct_danmaku",
+      "title": "A Bullet Screen Sentiment Analysis Method That Integrates the Sentiment Lexicon with RoBERTa-CNN",
+      "authors": [
+        "Yupan Liu",
+        "Shuo Wang",
+        "Shengshi Yu"
+      ],
+      "year": 2024,
+      "venue": "Electronics",
+      "doi": "https://doi.org/10.3390/electronics13203984",
+      "url": "https://doi.org/10.3390/electronics13203984",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 8,
+      "note": "弹幕短文本长短不一、新词多，用词典加 RoBERTa-CNN 做情绪分类。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4401416048",
@@ -2526,6 +3208,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4401098744",
+      "relevance": "direct_danmaku",
+      "title": "An Analysis of Impoliteness Strategies in Bilibili’s Online Bullet Chatting Language",
+      "authors": [
+        "晶晶 吕"
+      ],
+      "year": 2024,
+      "venue": "Modern Linguistics",
+      "doi": "https://doi.org/10.12677/ml.2024.127612",
+      "url": "https://doi.org/10.12677/ml.2024.127612",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "哔哩哔哩弹幕聊天里的不礼貌策略。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4406606014",
       "relevance": "direct_danmaku",
       "title": "An Analysis of the Characteristics and Developmental Factors of Chinese Bullet Screen (弹幕) Language",
@@ -2579,6 +3278,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4399896117",
+      "relevance": "direct_danmaku",
+      "title": "Analysis of the Influence Path of E-commerce Direct Broadcast Room Bullet-screen Information on Consumers' Purchase Intention",
+      "authors": [
+        "Wenting Wang"
+      ],
+      "year": 2024,
+      "venue": "Lecture Notes in Education Psychology and Public Media",
+      "doi": "https://doi.org/10.54254/2753-7048/54/20241618",
+      "url": "https://doi.org/10.54254/2753-7048/54/20241618",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "电商直播间里，弹幕信息质量怎样走到购买意愿。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4393905040",
       "relevance": "direct_danmaku",
       "title": "Application of Danmaku Technology in Teaching Visual Analysis Based on Citespace",
@@ -2594,6 +3310,69 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4403476650",
+      "relevance": "direct_danmaku",
+      "title": "Boosting e-commerce sales with live streaming: the power of barrages",
+      "authors": [
+        "Jie Zhao",
+        "Jie Zhou",
+        "Peng Wu",
+        "Kun Liang"
+      ],
+      "year": 2024,
+      "venue": "Electronic Commerce Research",
+      "doi": "https://doi.org/10.1007/s10660-024-09913-7",
+      "url": "https://doi.org/10.1007/s10660-024-09913-7",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 13,
+      "note": "直播带货里弹幕对销售的作用。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4391941235",
+      "relevance": "direct_danmaku",
+      "title": "Bullet-screen engagement in videos and deindividualized online behavior: the chain mediating role of belonging and loneliness",
+      "authors": [
+        "Mingxuan Zou",
+        "Defang Mu"
+      ],
+      "year": 2024,
+      "venue": "Current Psychology",
+      "doi": "https://doi.org/10.1007/s12144-024-05746-7",
+      "url": "https://doi.org/10.1007/s12144-024-05746-7",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 5,
+      "note": "弹幕参与和去个体化的网络行为。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4402299865",
+      "relevance": "direct_danmaku",
+      "title": "Bullet-Screen-Emoji Attack With Temporal Difference Noise for Video Action Recognition",
+      "authors": [
+        "Yongkang Zhang",
+        "Han Zhang",
+        "Jun Li",
+        "Zhiping Shi",
+        "Jian Yang",
+        "Kaixin Yang",
+        "Shuo Yin",
+        "Qiuyan Liang",
+        "Xianglong Liu"
+      ],
+      "year": 2024,
+      "venue": "IEEE Transactions on Circuits and Systems for Video Technology",
+      "doi": "https://doi.org/10.1109/tcsvt.2024.3455799",
+      "url": "https://doi.org/10.1109/tcsvt.2024.3455799",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 2,
+      "note": "用弹幕式表情做视频动作识别的对抗样本。对象是攻击图案，不是观众写的弹幕语料。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4399753659",
@@ -2665,6 +3444,24 @@
       "cited_by_count": 17,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4409097490",
+      "relevance": "direct_danmaku",
+      "title": "Cross-Platform Emotion Analysis and Hot Word Mining Method Based on Live Broadcast Room Bullet Screen",
+      "authors": [
+        "N LI",
+        "Yucheng Meng"
+      ],
+      "year": 2024,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/iccc62609.2024.10941984",
+      "url": "https://doi.org/10.1109/iccc62609.2024.10941984",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "抖音、快手、小红书直播间弹幕的跨平台情绪和热词。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4400419343",
@@ -2743,6 +3540,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4402840138",
+      "relevance": "direct_danmaku",
+      "title": "Deep Learning-Based Analysis of Emotional and Content Relevance Between Bullet Screens and Subtitles as Movie Narrative Medium",
+      "authors": [
+        "Wang Hanmei"
+      ],
+      "year": 2024,
+      "venue": "SAGE Open",
+      "doi": "https://doi.org/10.1177/21582440241280840",
+      "url": "https://doi.org/10.1177/21582440241280840",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 5,
+      "note": "把电影弹幕和字幕当成两种叙事媒介，比情绪和内容是否相关。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4401383788",
       "relevance": "direct_danmaku",
       "title": "E-Commerce Live Streaming Danmaku Classification Through LDA-Enhanced BERT-TextCNN Model",
@@ -2803,6 +3617,25 @@
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
+      "id": "openalex:W4405447215",
+      "relevance": "direct_danmaku",
+      "title": "Evaluating Real-Time Emotional Responses Using Bullet Screen Sentiment Analysis: Evidence from Electrodermal Activity",
+      "authors": [
+        "Zhao Xu",
+        "Qingchuan Li",
+        "Song Yao"
+      ],
+      "year": 2024,
+      "venue": "Lecture notes in computer science",
+      "doi": "https://doi.org/10.1007/978-3-031-76806-4_18",
+      "url": "https://doi.org/10.1007/978-3-031-76806-4_18",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "用弹幕情绪分析看实时情绪反应，并拿到皮电数据。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4400778466",
       "relevance": "direct_danmaku",
       "title": "Examining the Use of DanMu for Crowdsourcing Control in Virtual Gatherings",
@@ -2839,6 +3672,115 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4402694008",
+      "relevance": "direct_danmaku",
+      "title": "Functional or social? Effect of bullet screen type on consumers' continuous watching intention in e-commerce live-streaming",
+      "authors": [
+        "Jiaxin Ma",
+        "Depeng Zhang",
+        "Lihong Fu",
+        "Wanli Zhou"
+      ],
+      "year": 2024,
+      "venue": "Journal of Research in Interactive Marketing",
+      "doi": "https://doi.org/10.1108/jrim-03-2024-0173",
+      "url": "https://doi.org/10.1108/jrim-03-2024-0173",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 10,
+      "note": "比较功能型和社会型弹幕会不会让人继续看电商直播。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4399205385",
+      "relevance": "direct_danmaku",
+      "title": "Games and Beyond: Analyzing the Bullet Chats of Esports Livestreaming",
+      "authors": [
+        "Yukun Jiang",
+        "Xinyue Shen",
+        "Rui Wen",
+        "Zeyang Sha",
+        "Junjie Chu",
+        "Yugeng Liu",
+        "Michael Backes",
+        "Yang Zhang"
+      ],
+      "year": 2024,
+      "venue": "Proceedings of the International AAAI Conference on Web and Social Media",
+      "doi": "https://doi.org/10.1609/icwsm.v18i1.31350",
+      "url": "https://doi.org/10.1609/icwsm.v18i1.31350",
+      "extra_urls": [
+        "https://doi.org/10.22028/d291-47273"
+      ],
+      "type": "conference-paper",
+      "cited_by_count": 3,
+      "note": "电竞直播的 bullet chats：跟着直播时间轴滚动、和普通评论不同。读的是 OpenAlex 摘要。萨尔大学公开页不另立条目。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4392693781",
+      "relevance": "direct_danmaku",
+      "title": "Generative Steganography via Live Comments on Streaming Video Frames",
+      "authors": [
+        "Yuling Liu",
+        "Cuilin Wang",
+        "Jie Wang",
+        "Bo Ou",
+        "Xin Liao"
+      ],
+      "year": 2024,
+      "venue": "IEEE Transactions on Computational Social Systems",
+      "doi": "https://doi.org/10.1109/tcss.2024.3352979",
+      "url": "https://doi.org/10.1109/tcss.2024.3352979",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 2,
+      "note": "摘要把直播评论定义成画面出现时飞过屏幕的字，并拿它做隐写信道。读的是 OpenAlex 摘要。这里只记研究对象，不记做法。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4403781092",
+      "relevance": "direct_danmaku",
+      "title": "HOTVCOM: Generating Buzzworthy Comments for Videos",
+      "authors": [
+        "Yuyan Chen",
+        "Qian Yu",
+        "Songzhou Yan",
+        "Jiyuan Jia",
+        "Zhixu Li",
+        "Yanghua Xiao",
+        "Xiaobo Li",
+        "Ming Hong Yang",
+        "Qingpei Guo"
+      ],
+      "year": 2024,
+      "venue": "arXiv (Cornell University)",
+      "doi": "https://doi.org/10.48550/arxiv.2409.15196",
+      "url": "http://arxiv.org/abs/2409.15196",
+      "extra_urls": [],
+      "type": "preprint",
+      "cited_by_count": 0,
+      "note": "做的是短视频热评，不是盖在画面上的弹幕；文中用弹幕生成当作对照。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4409890111",
+      "relevance": "direct_danmaku",
+      "title": "How Barrage Video Changes the Young Generation’s Viewing Habits? - Taking Bilibili Barrage Video Website as an Example",
+      "authors": [
+        "Zhicheng Wang"
+      ],
+      "year": 2024,
+      "venue": "Journal of new media and economics.",
+      "doi": "https://doi.org/10.62517/jnme.202410411",
+      "url": "https://doi.org/10.62517/jnme.202410411",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "哔哩哔哩这种弹幕视频站怎样改变年轻人的观看习惯。摘要写明实时评论盖在视频上。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4396624821",
@@ -2898,6 +3840,45 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4398225570",
+      "relevance": "direct_danmaku",
+      "title": "Influencer-Focused Barrages in Product Demo Videos: An Exploratory Study",
+      "authors": [
+        "Juntao Wu",
+        "Yanli Pei",
+        "Shan Wang",
+        "Fang Wang"
+      ],
+      "year": 2024,
+      "venue": "Lecture notes in business information processing",
+      "doi": "https://doi.org/10.1007/978-3-031-60264-1_24",
+      "url": "https://doi.org/10.1007/978-3-031-60264-1_24",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "产品演示视频里针对主播的弹幕。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4395010439",
+      "relevance": "direct_danmaku",
+      "title": "It pays to diversify: Effect of bullet‐screen comment diversity on payment",
+      "authors": [
+        "Mingyue Zhang",
+        "Xuejing Ma",
+        "Haipeng Allan Chen"
+      ],
+      "year": 2024,
+      "venue": "Psychology and Marketing",
+      "doi": "https://doi.org/10.1002/mar.22004",
+      "url": "https://doi.org/10.1002/mar.22004",
+      "extra_urls": [],
+      "type": "",
+      "cited_by_count": 10,
+      "note": "弹幕用词越多样，观众越愿意付钱；中间经过社会在场和信息丰富度。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W7131862366",
       "relevance": "direct_danmaku",
       "title": "MRT: Multi-modal Short- and Long-range Temporal Convolutional Network for Time-sync Comment Video Behavior Prediction",
@@ -2920,6 +3901,23 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4394877423",
+      "relevance": "direct_danmaku",
+      "title": "Participatory Culture, Social Media, and Text-on-ScreenSharing Emotions via the Use of Creative Titling",
+      "authors": [
+        "Ryoko Sasamoto"
+      ],
+      "year": 2024,
+      "venue": "Relevance and Text-on-Screen in Audiovisual Translation",
+      "doi": "https://doi.org/10.4324/9781003231752-7",
+      "url": "http://dx.doi.org/10.4324/9781003231752-7",
+      "extra_urls": [],
+      "type": "book-chapter",
+      "cited_by_count": 0,
+      "note": "视听翻译书中一章，对象包括弹幕和直播评论这种观众自己打到画面上的字。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4393340456",
@@ -2982,6 +3980,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4403001954",
+      "relevance": "direct_danmaku",
+      "title": "Research on Bullet Screen Discourse from the Perspective of Critical Discourse Analysis — A Case Study of Heaven Official’s Blessing on Bilibili.com",
+      "authors": [
+        "Mengjun Song"
+      ],
+      "year": 2024,
+      "venue": "Journal of Linguistics and Communication Studies",
+      "doi": "https://doi.org/10.56397/jlcs.2024.09.06",
+      "url": "https://doi.org/10.56397/jlcs.2024.09.06",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "用批评话语分析看《天官赐福》哔哩哔哩弹幕。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4408860708",
       "relevance": "direct_danmaku",
       "title": "Research on Emotion Classification Method of Bullet Screen Text Based on Video Topic Discovery",
@@ -2998,6 +4013,23 @@
       "cited_by_count": 1,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4391572556",
+      "relevance": "direct_danmaku",
+      "title": "Research on sentiment analysis based on the Bilibili video barrage",
+      "authors": [
+        "Junyu Bai"
+      ],
+      "year": 2024,
+      "venue": "Applied and Computational Engineering",
+      "doi": "https://doi.org/10.54254/2755-2721/38/20230551",
+      "url": "https://doi.org/10.54254/2755-2721/38/20230551",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "爬哔哩哔哩弹幕做情绪、高频词和词云。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4400143502",
@@ -3018,6 +4050,43 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4404257920",
+      "relevance": "direct_danmaku",
+      "title": "Research on User Classification of e-commerce Live Broadcast Platform Based on Bullet Screen——Take Beauty Live Streaming on Taobao as an Example",
+      "authors": [
+        "Wen Lei"
+      ],
+      "year": 2024,
+      "venue": "Advances in computer science research",
+      "doi": "https://doi.org/10.2991/978-94-6463-562-1_3",
+      "url": "https://doi.org/10.2991/978-94-6463-562-1_3",
+      "extra_urls": [],
+      "type": "book-chapter",
+      "cited_by_count": 0,
+      "note": "淘宝美妆直播的弹幕被用来给用户分类。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4392794149",
+      "relevance": "direct_danmaku",
+      "title": "Responding to subtitled K-drama: Artefact-orientation in timed comments",
+      "authors": [
+        "Thomas C. Messerli",
+        "Miriam A. Locher"
+      ],
+      "year": 2024,
+      "venue": "Discourse Context & Media",
+      "doi": "https://doi.org/10.1016/j.dcm.2024.100756",
+      "url": "https://doi.org/10.1016/j.dcm.2024.100756",
+      "extra_urls": [
+        "https://doi.org/10.1016/j.dcm.2026.101029"
+      ],
+      "type": "article",
+      "cited_by_count": 1,
+      "note": "Viki 上韩剧粉丝字幕旁边的 timed comments，看评论怎样指向字幕这个物件。读的是 OpenAlex 摘要。2026 年的勘误不另立条目。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4405305045",
@@ -3110,6 +4179,41 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W7126421114",
+      "relevance": "direct_danmaku",
+      "title": "Student Perceptions of Bullet Screens in Pre-Clinical Pharmacology: Acceptability, Effectiveness, and Entertainment Value",
+      "authors": [
+        "Sanne J. de Vries",
+        "Mark L. van Dijk"
+      ],
+      "year": 2024,
+      "venue": "Annals of Pharmacy Education Safety and Public Health Advocacy",
+      "doi": "https://doi.org/10.51847/qa9bnzgatq",
+      "url": "https://doi.org/10.51847/qa9bnzgatq",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 1,
+      "note": "药理课弹幕的接受度。摘要开头和 2022 年 BMC 那篇调查几乎同一套说法，正文没逐页对过，不把它写成另一项已核对的独立实验。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4394877509",
+      "relevance": "direct_danmaku",
+      "title": "Text-on-Screen",
+      "authors": [
+        "Ryoko Sasamoto"
+      ],
+      "year": 2024,
+      "venue": "Relevance and Text-on-Screen in Audiovisual Translation",
+      "doi": "https://doi.org/10.4324/9781003231752-1",
+      "url": "http://dx.doi.org/10.4324/9781003231752-1",
+      "extra_urls": [],
+      "type": "book-chapter",
+      "cited_by_count": 0,
+      "note": "同一本书的总述。弹幕是画面文字的一种，旁边还有 telop 和花式字幕。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4400829099",
       "relevance": "direct_danmaku",
       "title": "The danmu discourse of user engagement with cross-posted broadcast interviews in Chinese social media",
@@ -3164,6 +4268,70 @@
       "cited_by_count": 3,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4407885254",
+      "relevance": "direct_danmaku",
+      "title": "The influence of bullet screen on communication effect of knowledge videos: An ELM perspective",
+      "authors": [
+        "Tao Zhou",
+        "Xinjie Ma"
+      ],
+      "year": 2024,
+      "venue": "Data Science and Informetrics",
+      "doi": "https://doi.org/10.1016/j.dsim.2025.01.006",
+      "url": "https://doi.org/10.1016/j.dsim.2025.01.006",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 1,
+      "note": "知识视频的传播效果和弹幕信息量、互动、特殊弹幕。语料来自哔哩哔哩。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4402565189",
+      "relevance": "direct_danmaku",
+      "title": "To offer or not to offer? Bullet screen strategies for competing video platforms with vertical differentiation",
+      "authors": [
+        "Xingzhen Zhu",
+        "Li Li",
+        "Jing Li"
+      ],
+      "year": 2024,
+      "venue": "Journal of Retailing and Consumer Services",
+      "doi": "https://doi.org/10.1016/j.jretconser.2024.104083",
+      "url": "https://doi.org/10.1016/j.jretconser.2024.104083",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 2,
+      "note": "竞争的视频平台要不要提供弹幕。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4396832879",
+      "relevance": "direct_danmaku",
+      "title": "Towards Inclusive Video Commenting: Introducing Signmaku for the Deaf and Hard-of-Hearing",
+      "authors": [
+        "Si Chen",
+        "Haocong Cheng",
+        "Jason Situ",
+        "Desirée Kirst",
+        "Suzy Su",
+        "Saumya Malhotra",
+        "Lawrence Angrave",
+        "Qi Wang",
+        "Yun Huang"
+      ],
+      "year": 2024,
+      "venue": "Proceedings of the CHI Conference on Human Factors in Computing Systems",
+      "doi": "https://doi.org/10.1145/3613904.3642287",
+      "url": "https://doi.org/10.1145/3613904.3642287",
+      "extra_urls": [
+        "https://arxiv.org/abs/2403.17807"
+      ],
+      "type": "conference-paper",
+      "cited_by_count": 11,
+      "note": "给听障观众做的手语版弹幕 Signmaku，并和文字弹幕对照。CHI 版本。arXiv 预印本不另立一条。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4393285695",
@@ -3299,6 +4467,25 @@
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
+      "id": "openalex:W4385828846",
+      "relevance": "direct_danmaku",
+      "title": "A method for aggregating the features of bullet screen",
+      "authors": [
+        "Zijian Chen",
+        "Shaoshuai Li",
+        "Wenbin Yu"
+      ],
+      "year": 2023,
+      "venue": "",
+      "doi": "https://doi.org/10.1117/12.2685628",
+      "url": "http://dx.doi.org/10.1117/12.2685628",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "不把整段视频的弹幕一次算完，而是先聚合成视频特征再做情绪。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4315795520",
       "relevance": "direct_danmaku",
       "title": "A Study of the Language of Bullet Comments in Bilibili Auto-tune Remix-themed Content Videos",
@@ -3314,6 +4501,25 @@
       "cited_by_count": 1,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4383650178",
+      "relevance": "direct_danmaku",
+      "title": "A Study on the Effect of Teaching Effectiveness of Online Courses and the Number of Bullet Screen",
+      "authors": [
+        "Gengyi Wang",
+        "Wenda Tian",
+        "Qianhang Qin"
+      ],
+      "year": 2023,
+      "venue": "Lecture notes in computer science",
+      "doi": "https://doi.org/10.1007/978-3-031-35708-4_15",
+      "url": "https://doi.org/10.1007/978-3-031-35708-4_15",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "在线课教学效果和弹幕数量。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4378652870",
@@ -3378,6 +4584,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4385843857",
+      "relevance": "direct_danmaku",
+      "title": "Bullet-titling in twenty-first century China: bullet-like tactility, soft touch and diachronic simultaneity",
+      "authors": [
+        "Jianqing Chen"
+      ],
+      "year": 2023,
+      "venue": "Journal of Visual Culture",
+      "doi": "https://doi.org/10.1177/14704129231166845",
+      "url": "https://doi.org/10.1177/14704129231166845",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 1,
+      "note": "当代中国把横向滚动的评论打在运动影像上，并讨论伪实时。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4385432856",
       "relevance": "direct_danmaku",
       "title": "Can Social Presence Promote Meaningful Learning? Danmaku Video Learning to Enhance Social Presence and Meaningful Learning",
@@ -3414,6 +4637,29 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4385497271",
+      "relevance": "direct_danmaku",
+      "title": "Comprehending the Gossips: Meme Explanation in Time-Sync Video Comment via Multimodal Cues",
+      "authors": [
+        "Zheyong Xie",
+        "Weidong He",
+        "Tong Xu",
+        "Shiwei Wu",
+        "Chen Zhu",
+        "Ping Yang",
+        "Enhong Chen"
+      ],
+      "year": 2023,
+      "venue": "ACM Transactions on Asian and Low-Resource Language Information Processing",
+      "doi": "https://doi.org/10.1145/3612920",
+      "url": "https://doi.org/10.1145/3612920",
+      "extra_urls": [],
+      "type": "",
+      "cited_by_count": 3,
+      "note": "时间同步评论里的梗要靠视频的多模态上下文才能解释，于是做了 ProMDE。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4322764845",
@@ -3521,6 +4767,27 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4386159620",
+      "relevance": "direct_danmaku",
+      "title": "Data Mining and Analysis of Video Barrage By AI Algorithm",
+      "authors": [
+        "Daoqing Gong",
+        "Xinyan Gan",
+        "Xiaonian Tang",
+        "Hua Li",
+        "Xiang Gao"
+      ],
+      "year": 2023,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/ecbios57802.2023.10218597",
+      "url": "http://dx.doi.org/10.1109/ecbios57802.2023.10218597",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "爬了哔哩哔哩五类电影的弹幕，做词云和情绪分类。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4383874366",
       "relevance": "direct_danmaku",
       "title": "Development of Chinese Danmaku Video Sites based on Self-Directed Learning (CDSDL) Model for Undergraduate Students in TAM Model",
@@ -3574,6 +4841,25 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4383612931",
+      "relevance": "direct_danmaku",
+      "title": "Experimental Design and Validation of i-Comments for Online Learning Support",
+      "authors": [
+        "Jiaqi Wang",
+        "Jian Chen",
+        "Qun Jin"
+      ],
+      "year": 2023,
+      "venue": "Lecture notes in computer science",
+      "doi": "https://doi.org/10.1007/978-3-031-34411-4_15",
+      "url": "https://doi.org/10.1007/978-3-031-34411-4_15",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 2,
+      "note": "i-Comments 的实验设计。OpenAlex 没有摘要，正文没打开。同一组作者另有两篇界面评论论文。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4387859556",
@@ -3677,6 +4963,26 @@
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
+      "id": "openalex:W4318466204",
+      "relevance": "direct_danmaku",
+      "title": "How does online social interaction promote students’ continuous learning intentions?",
+      "authors": [
+        "Shunan Zhang",
+        "ShaoPeng Che",
+        "Dongyan Nan",
+        "Jang Hyun Kim"
+      ],
+      "year": 2023,
+      "venue": "Frontiers in Psychology",
+      "doi": "https://doi.org/10.3389/fpsyg.2023.1098110",
+      "url": "https://doi.org/10.3389/fpsyg.2023.1098110",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 24,
+      "note": "用同步弹幕视频看持续学习意愿。信息、社会在场和娱乐是动机，信息污染、走神和挡画面是阻碍。打开了 Frontiers 的 PDF，原文不进仓库。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4380564127",
       "relevance": "direct_danmaku",
       "title": "How to Mine Business Value from Bullet Screen Comments in TV Series by Aspect Sentiment Analysis?",
@@ -3693,6 +4999,25 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4386093696",
+      "relevance": "direct_danmaku",
+      "title": "Increasing Student Online Interactions: Applying the Video Timeline-Anchored Comment (VTC) Tool to Asynchronous Online Video Discussions",
+      "authors": [
+        "Xi Yu Lin",
+        "Qi Sun",
+        "Xiaoqiao Zhang"
+      ],
+      "year": 2023,
+      "venue": "International Journal of Human-Computer Interaction",
+      "doi": "https://doi.org/10.1080/10447318.2023.2247554",
+      "url": "https://doi.org/10.1080/10447318.2023.2247554",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 12,
+      "note": "VTC：异步课里把评论钉在视频时间上。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4387426791",
@@ -3747,6 +5072,24 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4389337490",
+      "relevance": "direct_danmaku",
+      "title": "Multimodal and Interactive Subtitling in Chinese Social Media",
+      "authors": [
+        "Xiaoping Wu",
+        "Richard Fitzgerald"
+      ],
+      "year": 2023,
+      "venue": "Multimodality in Translation Studies",
+      "doi": "https://doi.org/10.4324/9781032650975-3",
+      "url": "https://doi.org/10.4324/9781032650975-3",
+      "extra_urls": [],
+      "type": "book-chapter",
+      "cited_by_count": 2,
+      "note": "把弹幕字幕当成观众在未翻译视频上的互动翻译，语料来自哔哩哔哩。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4398457352",
       "relevance": "direct_danmaku",
       "title": "Original text for manuscript \"Simplicity-Genic Complexity: Danmaku-Based Analyses to Characteristics of Cyber Nationalism among Chinese Adolescent Netizens\"",
@@ -3762,6 +5105,25 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4379620424",
+      "relevance": "direct_danmaku",
+      "title": "PiEvE: A Dual-mode Game-based Plug-in Approach Applying Bullet Screen in Virtual Classrooms",
+      "authors": [
+        "Xiang Li",
+        "Ye Tian",
+        "Ling Xu"
+      ],
+      "year": 2023,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/icaie56796.2023.00027",
+      "url": "http://dx.doi.org/10.1109/icaie56796.2023.00027",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 2,
+      "note": "虚拟课堂插件，把弹幕和 PvE 玩法放在一起。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4365504421",
@@ -3829,6 +5191,30 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4382323266",
+      "relevance": "direct_danmaku",
+      "title": "PTVD: A Large-Scale Plot-Oriented Multimodal Dataset Based on Television Dramas",
+      "authors": [
+        "Chen Li",
+        "Xutan Peng",
+        "Teng Wang",
+        "Yixiao Ge",
+        "Mengyang Liu",
+        "Xuyuan Xu",
+        "Yexin Wang",
+        "Ying Shan"
+      ],
+      "year": 2023,
+      "venue": "arXiv",
+      "doi": "https://doi.org/10.48550/arxiv.2306.14644",
+      "url": "https://arxiv.org/abs/2306.14644",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": null,
+      "note": "剧情向多模态数据集。摘要称另有两千六百万条以上的弹幕评论用于预训练。数据集页面在摘要里是占位链接，这里不补一个没打开的地址。读的是 arXiv 摘要页。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4398750226",
       "relevance": "direct_danmaku",
       "title": "Replication Data for: Original Danmaku Comments",
@@ -3844,6 +5230,60 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4387090070",
+      "relevance": "direct_danmaku",
+      "title": "Research on Online Course Design Strategy Based on Text Analysis of Bullet Screen",
+      "authors": [
+        "Yuxi Chen",
+        "Peng Deng"
+      ],
+      "year": 2023,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/bdai59165.2023.10256858",
+      "url": "http://dx.doi.org/10.1109/bdai59165.2023.10256858",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "用哔哩哔哩一门数学课的弹幕文本改在线课设计。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4389315708",
+      "relevance": "direct_danmaku",
+      "title": "Research on Relationship Between Bullet Screen Attributes in Medical Popular Science Videos and The audience’s cognitive load",
+      "authors": [
+        "Wenjuan Xu",
+        "Tong Zheng"
+      ],
+      "year": 2023,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/ickii58656.2023.10332737",
+      "url": "http://dx.doi.org/10.1109/ickii58656.2023.10332737",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "医学科普视频里弹幕的不透明度和速度，怎样连到观众的认知负荷。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4386135169",
+      "relevance": "direct_danmaku",
+      "title": "Research on the Effect of Video Communication based on the Analysis of the Characteristics of the Bullet Screen - Take the \"Eating and Broadcasting\" Video as an Example",
+      "authors": [
+        "Wei Shi",
+        "Ming-Kai Xu"
+      ],
+      "year": 2023,
+      "venue": "International Journal of Computer Applications",
+      "doi": "https://doi.org/10.5120/ijca2023923036",
+      "url": "https://doi.org/10.5120/ijca2023923036",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 2,
+      "note": "哔哩哔哩吃播视频的弹幕特征怎样连到播放量。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4382541434",
@@ -3906,6 +5346,61 @@
       "cited_by_count": 11,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4361801071",
+      "relevance": "direct_danmaku",
+      "title": "Study on the Use Psychology of Bullet Screen Website Users",
+      "authors": [
+        "雨桐 蒋"
+      ],
+      "year": 2023,
+      "venue": "Journalism and Communications",
+      "doi": "https://doi.org/10.12677/jc.2023.111014",
+      "url": "https://doi.org/10.12677/jc.2023.111014",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "弹幕网站用户的使用心理。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4384559003",
+      "relevance": "direct_danmaku",
+      "title": "Teaching effects of using bullet-screen technology during classes on students’ learning: The mediating effect of perceived interactivity",
+      "authors": [
+        "Chenwei Ma",
+        "Fang Wang",
+        "Yang Lv"
+      ],
+      "year": 2023,
+      "venue": "Education and Information Technologies",
+      "doi": "https://doi.org/10.1007/s10639-023-12054-3",
+      "url": "https://doi.org/10.1007/s10639-023-12054-3",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 6,
+      "note": "课堂里使用弹幕技术的教学效果。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4383341555",
+      "relevance": "direct_danmaku",
+      "title": "The effects of live comments and advertisements on social media engagement: application to short-form online video",
+      "authors": [
+        "Xiaodan Zhang",
+        "Zhanbo Zhao",
+        "Kui Wang"
+      ],
+      "year": 2023,
+      "venue": "Journal of Research in Interactive Marketing",
+      "doi": "https://doi.org/10.1108/jrim-02-2023-0069",
+      "url": "https://doi.org/10.1108/jrim-02-2023-0069",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 46,
+      "note": "哔哩哔哩 2081 个视频上，随观看过程变化的 live comments 怎样影响互动。摘要没使用 danmaku 这个词，按钉在观看过程上的评论补入。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4385220358",
@@ -4000,6 +5495,78 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4317434265",
+      "relevance": "direct_danmaku",
+      "title": "Time-synchronic comments on video streaming website reveal core structures of audience engagement in movie viewing",
+      "authors": [
+        "Wenjing Ni",
+        "Christophe Coupé"
+      ],
+      "year": 2023,
+      "venue": "Frontiers in Psychology",
+      "doi": "https://doi.org/10.3389/fpsyg.2022.1040755",
+      "url": "https://doi.org/10.3389/fpsyg.2022.1040755",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 9,
+      "note": "视频网站上三百多万条时间同步评论，用来看观众看电影时的情绪和认知用词。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4387194195",
+      "relevance": "direct_danmaku",
+      "title": "Understanding Interaction Patterns of Bullet-Screen Videos: A Knowledge Building Perspective",
+      "authors": [
+        "Chingying Wong",
+        "Jingjing Zhang"
+      ],
+      "year": 2023,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/cste59648.2023.00056",
+      "url": "http://dx.doi.org/10.1109/cste59648.2023.00056",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "把哔哩哔哩弹幕视频的互动看成知识建构。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "manual:chen-gao-2023-timeline",
+      "relevance": "direct_danmaku",
+      "title": "Visualizing timeline-anchored comments enhanced social presence and information searching in video-based learning",
+      "authors": [
+        "Yue Chen",
+        "Qin Gao"
+      ],
+      "year": 2023,
+      "venue": "Computer Applications in Engineering Education",
+      "doi": "https://doi.org/10.1002/cae.22641",
+      "url": "https://doi.org/10.1002/cae.22641",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": null,
+      "note": "把钉在时间轴上的评论做成相关性、话题和难度的可视化。24 人实验里，社会在场和开卷检索更好。Crossref 摘要。PDF 未打开。",
+      "provenance": "Crossref，2026-09-28。全文不进仓库。"
+    },
+    {
+      "id": "manual:xu-zhao-2023-bullet-screening",
+      "relevance": "direct_danmaku",
+      "title": "WHAT ARE THEY BULLET-SCREENING ABOUT?",
+      "authors": [
+        "Xiaying Xu",
+        "Qingyuan Zhao"
+      ],
+      "year": 2023,
+      "venue": "Chinese TV in the Netflix Era",
+      "doi": "https://doi.org/10.2307/jj.2225645.6",
+      "url": "https://doi.org/10.2307/jj.2225645.6",
+      "extra_urls": [],
+      "type": "book-chapter",
+      "cited_by_count": null,
+      "note": "书中一章，题名是观众在刷什么弹幕。Crossref 没有摘要，PDF 未打开。",
+      "provenance": "Crossref，2026-09-28。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4376956667",
       "relevance": "direct_danmaku",
       "title": "You’re so mean but I like it – Metapragmatic evaluation of mock impoliteness in Danmaku comments",
@@ -4034,6 +5601,24 @@
       "cited_by_count": 11,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4327558019",
+      "relevance": "direct_danmaku",
+      "title": "“This is not the place to bother people about BTS”: Pseudo-synchronicity and interaction in timed comments by Hallyu fans on the video streaming platform Viki",
+      "authors": [
+        "Miriam A. Locher",
+        "Thomas C. Messerli"
+      ],
+      "year": 2023,
+      "venue": "Discourse Context & Media",
+      "doi": "https://doi.org/10.1016/j.dcm.2023.100686",
+      "url": "https://doi.org/10.1016/j.dcm.2023.100686",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 13,
+      "note": "Viki 上按时间对齐的评论。粉丝用 pseudo-synchronicity 聊天，对象不是哔哩哔哩。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4360995864",
@@ -4113,6 +5698,49 @@
       "cited_by_count": 20,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4310222655",
+      "relevance": "direct_danmaku",
+      "title": "Bullet screen in pre-clinical undergraduate pharmacology education: a survey study",
+      "authors": [
+        "Yaoxing Chen",
+        "Hong Yan Qi",
+        "Qiu Yu",
+        "Juan Li",
+        "Liang Zhu",
+        "Hao Wang",
+        "Xiaoling Gao",
+        "Gan Jiang"
+      ],
+      "year": 2022,
+      "venue": "BMC Medical Education",
+      "doi": "https://doi.org/10.1186/s12909-022-03906-6",
+      "url": "https://doi.org/10.1186/s12909-022-03906-6",
+      "extra_urls": [
+        "https://doi.org/10.21203/rs.3.rs-1496533/v1"
+      ],
+      "type": "article",
+      "cited_by_count": 5,
+      "note": "药理课引入弹幕后做调查。读的是 OpenAlex 摘要。Research Square 预印本不另立条目。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4285243709",
+      "relevance": "direct_danmaku",
+      "title": "Carnival Theoretical Analysis of the Bullet Screen Participation and Bilibili",
+      "authors": [
+        "Xinyi Zhang"
+      ],
+      "year": 2022,
+      "venue": "Advances in Social Science, Education and Humanities Research/Advances in social science, education and humanities research",
+      "doi": "https://doi.org/10.2991/assehr.k.220504.146",
+      "url": "https://doi.org/10.2991/assehr.k.220504.146",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 2,
+      "note": "用狂欢理论看哔哩哔哩弹幕参与。摘要把弹幕定义成嵌在视频里、跟着画面滚的即时评论。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4313149647",
@@ -4283,6 +5911,29 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4309048083",
+      "relevance": "direct_danmaku",
+      "title": "Do Real-Time Reviews Matter? Examining how Bullet Screen Influences Consumers’ Purchase Intention in Live Streaming Commerce",
+      "authors": [
+        "Qingfeng Zeng",
+        "Qian Guo",
+        "Wei Zhuang",
+        "Yu Zhang",
+        "Weiguo Fan"
+      ],
+      "year": 2022,
+      "venue": "Information Systems Frontiers",
+      "doi": "https://doi.org/10.1007/s10796-022-10356-4",
+      "url": "https://doi.org/10.1007/s10796-022-10356-4",
+      "extra_urls": [
+        "https://doi.org/10.1007/s10796-022-10361-7"
+      ],
+      "type": "article",
+      "cited_by_count": 69,
+      "note": "直播带货里的弹幕是否带动购买。OpenAlex 没有摘要，正文没打开。勘误不另立条目。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4223587997",
       "relevance": "direct_danmaku",
       "title": "Effectiveness and safety of Danmu extract syrup for acute upper respiratory tract infection in children: A real‐world, prospective cohort study",
@@ -4331,6 +5982,24 @@
       "cited_by_count": 6,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4210290724",
+      "relevance": "direct_danmaku",
+      "title": "Entextualizing high energy texts: an exploration of modal shift on a Chinese online video-sharing website Bilibili",
+      "authors": [
+        "Man Teng",
+        "Brian Hok-Shing Chan"
+      ],
+      "year": 2022,
+      "venue": "Text and Talk",
+      "doi": "https://doi.org/10.1515/text-2020-0042",
+      "url": "https://doi.org/10.1515/text-2020-0042",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 10,
+      "note": "一句动画台词被拿去哔哩哔哩各种画面里当评论打。读的是 OpenAlex 摘要。摘要说的是打在视频场景上的评论，没有使用弹幕这个词。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4224233037",
@@ -4387,6 +6056,25 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4312650353",
+      "relevance": "direct_danmaku",
+      "title": "i-Comments: On-screen Individualized Comments for Online Learning Support",
+      "authors": [
+        "Jiaqi Wang",
+        "Jian Chen",
+        "Qun Jin"
+      ],
+      "year": 2022,
+      "venue": "2022 IEEE Intl Conf on Dependable, Autonomic and Secure Computing, Intl Conf on Pervasive Intelligence and Computing, Intl Conf on Cloud and Big Data Computing, Intl Conf on Cyber Science and Technology Congress (DASC/PiCom/CBDCom/CyberSciTech)",
+      "doi": "https://doi.org/10.1109/dasc/picom/cbdcom/cy55231.2022.9927911",
+      "url": "https://doi.org/10.1109/dasc/picom/cbdcom/cy55231.2022.9927911",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 3,
+      "note": "i-Comments：在线学习画面上按时间、内容和数量出现的个别化评论。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4285117955",
       "relevance": "direct_danmaku",
       "title": "Influence of Danmaku in Informal Learning Videos on Foreign Language Learning Enjoyment",
@@ -4421,6 +6109,25 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4311770290",
+      "relevance": "direct_danmaku",
+      "title": "Integrating Video Timeline-Anchored Comments in Asynchronous Online Video-Based Presentation Lectures: Using Canvas Studio as an Example",
+      "authors": [
+        "Xi Yu Lin",
+        "Qi Sun",
+        "Xiaoqiao Zhang"
+      ],
+      "year": 2022,
+      "venue": "Lecture notes in networks and systems",
+      "doi": "https://doi.org/10.1007/978-3-031-21569-8_49",
+      "url": "https://doi.org/10.1007/978-3-031-21569-8_49",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "把时间轴评论接进 Canvas Studio 的异步视频课。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4312123676",
       "relevance": "direct_danmaku",
       "title": "Interactivity in learning instructional videos: Sending danmaku improved parasocial interaction but reduced learning performance",
@@ -4440,6 +6147,24 @@
       "cited_by_count": 21,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4281686184",
+      "relevance": "direct_danmaku",
+      "title": "Learning Alone Yet Together: Enhancing Between-Learner Social Connectivity at Scale",
+      "authors": [
+        "Yang Bo",
+        "Huyang He"
+      ],
+      "year": 2022,
+      "venue": "Proceedings of the Ninth ACM Conference on Learning @ Scale",
+      "doi": "https://doi.org/10.1145/3491140.3528294",
+      "url": "https://doi.org/10.1145/3491140.3528294",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 4,
+      "note": "慕课里按发送时间把聊天贴回播放进度，用来制造 pseudo-synchronicity，并和讨论区对照。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4285818286",
@@ -4592,6 +6317,24 @@
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
+      "id": "openalex:W4392806693",
+      "relevance": "direct_danmaku",
+      "title": "Research on the Carnival Ritual Construction of Special Effect Bullet Chat at Bilibili from the Perspective of Carnival Theory",
+      "authors": [
+        "yujia yang",
+        "kexin zheng"
+      ],
+      "year": 2022,
+      "venue": "Philosophy & Ideology Research",
+      "doi": "https://doi.org/10.37420/j.pir.2022.007",
+      "url": "http://dx.doi.org/10.37420/j.pir.2022.007",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "哔哩哔哩特殊效果弹幕的狂欢仪式。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4298416089",
       "relevance": "direct_danmaku",
       "title": "Research on the Correlation between Sentiment of Danmaku and the Gift Value across Different Types of Live Streamers Dictionary-based Sentiment Analysis and Regression Test",
@@ -4607,6 +6350,26 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4396231946",
+      "relevance": "direct_danmaku",
+      "title": "Research on User Interaction Experience in Participatory Websites Based on the Bullet Screen",
+      "authors": [
+        "Qian Yang",
+        "Diao Yajing",
+        "Jiaming Li",
+        "Shilun Ge"
+      ],
+      "year": 2022,
+      "venue": "DOAJ (DOAJ: Directory of Open Access Journals)",
+      "doi": "https://doi.org/10.13266/j.issn.2095-5472.2022.035",
+      "url": "https://doaj.org/article/24dab7163b7a4071942ab59c722f6fc9",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "参与式网站上的弹幕和用户体验，例子是哔哩哔哩。读的是 OpenAlex 摘要。出处字段是 OpenAlex 给的 DOAJ，不是期刊名。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4285393258",
@@ -4625,6 +6388,74 @@
       "cited_by_count": 31,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W4214503651",
+      "relevance": "direct_danmaku",
+      "title": "Study on Group Polarization in the Age of “Bullet Screen”",
+      "authors": [
+        "Zhou Jiawei"
+      ],
+      "year": 2022,
+      "venue": "Psychology of China",
+      "doi": "https://doi.org/10.35534/pc.0402016",
+      "url": "https://doi.org/10.35534/pc.0402016",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "OpenAlex 给的摘要是出版社征稿说明，不是论文摘要。正文没打开。题名讨论弹幕时代的群体极化。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4285203759",
+      "relevance": "direct_danmaku",
+      "title": "Study on Video Website Bullet Screen Based on Semiotics",
+      "authors": [
+        "雨桐 蒋"
+      ],
+      "year": 2022,
+      "venue": "Journalism and Communications",
+      "doi": "https://doi.org/10.12677/jc.2022.102010",
+      "url": "https://doi.org/10.12677/jc.2022.102010",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "用符号学研究视频网站弹幕。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4281781653",
+      "relevance": "direct_danmaku",
+      "title": "Taboo Language in Non-Professional Subtitling on Bilibili.com: A Corpus-Based Study",
+      "authors": [
+        "Xijinyan Chen"
+      ],
+      "year": 2022,
+      "venue": "Languages",
+      "doi": "https://doi.org/10.3390/languages7020138",
+      "url": "https://doi.org/10.3390/languages7020138",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 14,
+      "note": "对象是哔哩哔哩民间字幕里的禁忌语。弹幕和普通评论是观众对译法的反应，不是单独的弹幕分布研究。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4311943404",
+      "relevance": "direct_danmaku",
+      "title": "The impact of barrage system fluctuation on user interaction in digital video platforms: a perspective from signaling theory and social impact theory",
+      "authors": [
+        "Keshan Wei"
+      ],
+      "year": 2022,
+      "venue": "Journal of Research in Interactive Marketing",
+      "doi": "https://doi.org/10.1108/jrim-06-2022-0160",
+      "url": "https://doi.org/10.1108/jrim-06-2022-0160",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 17,
+      "note": "视频平台上和内容绑在一起的实时动态评论系统，看波动幅度和频率怎样影响互动。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4285203855",
@@ -4683,6 +6514,41 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4294416234",
+      "relevance": "direct_danmaku",
+      "title": "Topic mining of real-time discussions: what catches the attention of live-streaming esports viewers?",
+      "authors": [
+        "Wenche Wang",
+        "Jiajia Fan"
+      ],
+      "year": 2022,
+      "venue": "European Sport Management Quarterly",
+      "doi": "https://doi.org/10.1080/16184742.2022.2117397",
+      "url": "https://doi.org/10.1080/16184742.2022.2117397",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 19,
+      "note": "斗鱼两场职业联赛的实时观众评论，做主题挖掘。摘要没写评论是否盖在画面上。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W7165144507",
+      "relevance": "direct_danmaku",
+      "title": "Turning Playboys/Playgirls into the Cheerleaders of the National Leadership: Ideological Advocacy via a Recreational Channel in Contemporary China",
+      "authors": [
+        "Jingde Liu"
+      ],
+      "year": 2022,
+      "venue": "University of Chicago",
+      "doi": "https://doi.org/10.6082/xx9f5-v5950",
+      "url": "https://doi.org/10.6082/xx9f5-v5950",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "芝加哥大学的一份文本，把弹幕当作哔哩哔哩上的话语渠道做意识形态分析。读的是 OpenAlex 摘要，正文未打开。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4281566391",
@@ -4768,6 +6634,41 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4291138948",
+      "relevance": "direct_danmaku",
+      "title": "“Across Time and Space, I Am Together with Many, Many Others”: Digital Writing and Temporality on Chinese Social Media",
+      "authors": [
+        "Feifei Zhou",
+        "Xiyin Zhou"
+      ],
+      "year": 2022,
+      "venue": "Social Media + Society",
+      "doi": "https://doi.org/10.1177/20563051221117564",
+      "url": "https://doi.org/10.1177/20563051221117564",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 10,
+      "note": "访谈使用弹幕评论这一写作功能的中国用户，讨论社交媒体上的时间。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W4296672783",
+      "relevance": "direct_danmaku",
+      "title": "“Feel sorry for Miss translator!!!”",
+      "authors": [
+        "Yuhong Yang"
+      ],
+      "year": 2022,
+      "venue": "Interpreting International Journal of Research and Practice in Interpreting",
+      "doi": "https://doi.org/10.1075/intp.00086.yan",
+      "url": "https://doi.org/10.1075/intp.00086.yan",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 4,
+      "note": "孙杨听证会视频里，观众在弹幕上怎样和译员发生拟社会互动。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W3182528282",
       "relevance": "direct_danmaku",
       "title": "1인 미디어 인터넷 방송 사회적 시청이 시청자 반응에 미치는 영향 -탄막(弹幕) 사용정도 조절효과를 중심으로-",
@@ -4785,6 +6686,64 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W4205157853",
+      "relevance": "direct_danmaku",
+      "title": "A Comparative Analysis of the Impact of Barrage and Comments on Video Popularity",
+      "authors": [
+        "Fudong Wang",
+        "Xiayu Fu",
+        "Zengyao Sun"
+      ],
+      "year": 2021,
+      "venue": "IEEE Access",
+      "doi": "https://doi.org/10.1109/access.2021.3134104",
+      "url": "https://doi.org/10.1109/access.2021.3134104",
+      "extra_urls": [],
+      "type": "",
+      "cited_by_count": 19,
+      "note": "哔哩哔哩上比较弹幕和评论对视频热度的作用，并给弹幕情绪强度加了从众和衰减。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W3216469545",
+      "relevance": "direct_danmaku",
+      "title": "A Magic “Bullet”: Exploring Sport Fan Usage of On-Screen, Ephemeral Posts During Live Stream Sessions",
+      "authors": [
+        "Bo Li",
+        "Michael L. Naraine",
+        "Zhao Liang",
+        "Chenyang Li"
+      ],
+      "year": 2021,
+      "venue": "Communication & Sport",
+      "doi": "https://doi.org/10.1177/21674795211038949",
+      "url": "https://doi.org/10.1177/21674795211038949",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 33,
+      "note": "体育直播里盖在画面上、很快飘过的 bullet-screen。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W3157537046",
+      "relevance": "direct_danmaku",
+      "title": "Adjacent Display of Relevant Discussion Helps Resolve Confusion",
+      "authors": [
+        "Matin Yarmand",
+        "Srishti Palani",
+        "Scott R. Klemmer"
+      ],
+      "year": 2021,
+      "venue": "Proceedings of the ACM on Human-Computer Interaction",
+      "doi": "https://doi.org/10.1145/3449217",
+      "url": "https://doi.org/10.1145/3449217",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 7,
+      "note": "ADRD：讨论区的帖子贴在视频旁边，并跟着播放时间换内容。不是盖在画面上的弹幕，是钉在时间上的相邻讨论。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W3162515125",
@@ -4828,6 +6787,41 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3209918082",
+      "relevance": "direct_danmaku",
+      "title": "Analysis of Bullet Chats in User-Generated Content Advertisement on Bilibili Website: The Success of Madoka Magica’s Mobile Game Promotion",
+      "authors": [
+        "Feixue Mei"
+      ],
+      "year": 2021,
+      "venue": "International Journal of Social Science and Humanity",
+      "doi": "https://doi.org/10.18178/ijssh.2022.v12.1064",
+      "url": "https://doi.org/10.18178/ijssh.2022.v12.1064",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 2,
+      "note": "哔哩哔哩上《魔法少女小圆》手游二创广告里的三类弹幕聊天。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W3210195020",
+      "relevance": "direct_danmaku",
+      "title": "Analysis of We-media Marketing Based on Short Video Barrage Data: —A Case Study of Hua Nong Brothers",
+      "authors": [
+        "Yan Yixuan",
+        "Yiming Shao"
+      ],
+      "year": 2021,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/aeeca52519.2021.9574215",
+      "url": "https://doi.org/10.1109/aeeca52519.2021.9574215",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "华农兄弟短视频的弹幕数据，用来看自媒体营销。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4311304289",
       "relevance": "direct_danmaku",
       "title": "Attacking Video Recognition Models with Bullet-Screen Comments",
@@ -4869,6 +6863,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3199598869",
+      "relevance": "direct_danmaku",
+      "title": "Bullet chats in China: Bilibili, language, and interaction",
+      "authors": [
+        "Feixue Mei"
+      ],
+      "year": 2021,
+      "venue": "Transformative Works and Cultures",
+      "doi": "https://doi.org/10.3983/twc.2021.1939",
+      "url": "https://doi.org/10.3983/twc.2021.1939",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 10,
+      "note": "弹幕聊天从 niconico 的飞字盖到画面并跟时间轴对齐，再到哔哩哔哩。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W3211899820",
       "relevance": "direct_danmaku",
       "title": "Capítulo 30. La cultura danmu en las plataformas de vídeo en china",
@@ -4884,6 +6895,27 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W3167057046",
+      "relevance": "direct_danmaku",
+      "title": "Cold Start Problem For Automated Live Video Comments",
+      "authors": [
+        "Hao Wu",
+        "François Pitié",
+        "Gareth J. F. Jones"
+      ],
+      "year": 2021,
+      "venue": "Proceedings of the Third Workshop on Multimodal Artificial Intelligence",
+      "doi": "https://doi.org/10.18653/v1/2021.maiworkshop-1.8",
+      "url": "https://doi.org/10.18653/v1/2021.maiworkshop-1.8",
+      "extra_urls": [
+        "https://aclanthology.org/2021.maiworkshop-1.8.pdf"
+      ],
+      "type": "conference-paper",
+      "cited_by_count": 7,
+      "note": "视频几乎还没有弹幕时，用画面、字幕、声音和已有评论生成弹幕。打开了 Anthology PDF，原文不进仓库。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4200078349",
@@ -4905,6 +6937,27 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W3163873800",
+      "relevance": "direct_danmaku",
+      "title": "Design of an Interactive Classroom with Bullet Screen Function in University Teaching",
+      "authors": [
+        "Rui Yang",
+        "Cun Zhou",
+        "Mengjie Huang",
+        "Huiqing Wen",
+        "Hai‐Ning Liang"
+      ],
+      "year": 2021,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/iciet51873.2021.9419627",
+      "url": "https://doi.org/10.1109/iciet51873.2021.9419627",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 5,
+      "note": "大学课堂互动里加上弹幕功能。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W3206227350",
@@ -5002,6 +7055,25 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3177409388",
+      "relevance": "direct_danmaku",
+      "title": "Investigating Automated Mechanisms for Multi-Modal Prediction of User Online-Video Commenting Behaviour",
+      "authors": [
+        "Hao Wu",
+        "François Pitié",
+        "Gareth J. F. Jones"
+      ],
+      "year": 2021,
+      "venue": "2021 International Conference on Content-Based Multimedia Indexing (CBMI)",
+      "doi": "https://doi.org/10.1109/cbmi50038.2021.9461909",
+      "url": "https://doi.org/10.1109/cbmi50038.2021.9461909",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 4,
+      "note": "用画面、声音和字幕预测观众会在哪些时刻写弹幕。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W3183037216",
       "relevance": "direct_danmaku",
       "title": "Keiki: Towards Realistic Danmaku Generation via Sequential GANs",
@@ -5040,6 +7112,44 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3207154678",
+      "relevance": "direct_danmaku",
+      "title": "Knowing Where and What to Write in Automated Live Video Comments: A Unified Multi-Task Approach",
+      "authors": [
+        "Hao Wu",
+        "Gareth James Francis Jones",
+        "François Pitié"
+      ],
+      "year": 2021,
+      "venue": "Proceedings of the 2021 International Conference on Multimodal Interaction",
+      "doi": "https://doi.org/10.1145/3462244.3479942",
+      "url": "https://doi.org/10.1145/3462244.3479942",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 6,
+      "note": "同时预测弹幕写什么、插在时间轴的哪一点。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W3174237804",
+      "relevance": "direct_danmaku",
+      "title": "Live Comments Emotional Analysis based on EE-RNN",
+      "authors": [
+        "Pengcheng Tan",
+        "Hongguang Xu",
+        "Ke Xu"
+      ],
+      "year": 2021,
+      "venue": "2021 4th International Conference on Artificial Intelligence and Big Data (ICAIBD)",
+      "doi": "https://doi.org/10.1109/icaibd51990.2021.9459050",
+      "url": "https://doi.org/10.1109/icaibd51990.2021.9459050",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 2,
+      "note": "把直播弹幕当成视频弹幕，做五维情绪分类。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W3205878012",
       "relevance": "direct_danmaku",
       "title": "Making sense of the “raw meat”: A social semiotic interpretation of user translation on the danmu interface",
@@ -5073,6 +7183,25 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W3138116202",
+      "relevance": "direct_danmaku",
+      "title": "MEANINGFUL TEACHING BARRAGE SCREEN RECOGNITION FROM INTERACTIVE PERSPECTIVE",
+      "authors": [
+        "Li Wang",
+        "Hongwu Yang",
+        "Chunhui Shang"
+      ],
+      "year": 2021,
+      "venue": "INTED proceedings",
+      "doi": "https://doi.org/10.21125/inted.2021.0761",
+      "url": "https://doi.org/10.21125/inted.2021.0761",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "慕课互动不足，想从弹幕视频里识别有教学意义的弹幕屏。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W3192217646",
@@ -5152,6 +7281,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4226510128",
+      "relevance": "direct_danmaku",
+      "title": "Research on the influence of online bullet screen interactive teaching on high school students' art learning investment",
+      "authors": [
+        "Hongyan Xu"
+      ],
+      "year": 2021,
+      "venue": "",
+      "doi": "https://doi.org/10.1145/3510309.3510330",
+      "url": "https://doi.org/10.1145/3510309.3510330",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 4,
+      "note": "在线弹幕互动教学和高中美术课的学习投入。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W4205216466",
       "relevance": "direct_danmaku",
       "title": "Research on the Influence of Quantity and Emotion of Danmaku in Online Instructional Video on Learning",
@@ -5169,6 +7315,26 @@
       "cited_by_count": 3,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W3186418604",
+      "relevance": "direct_danmaku",
+      "title": "Research on the Influence of Uploaders’ Behavior on the Effect of Bullet Screen Video Dissemination",
+      "authors": [
+        "Yedan Li",
+        "Wei Qi",
+        "Xinzhe Zhang",
+        "Meng Wee Song"
+      ],
+      "year": 2021,
+      "venue": "Lecture notes on data engineering and communications technologies",
+      "doi": "https://doi.org/10.1007/978-3-030-81007-8_91",
+      "url": "https://doi.org/10.1007/978-3-030-81007-8_91",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "上传者行为对弹幕视频传播效果。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4206806269",
@@ -5226,6 +7392,25 @@
       "cited_by_count": 3,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W7141773574",
+      "relevance": "direct_danmaku",
+      "title": "Sentiment classification model for bullet screen based on self-attention mechanism",
+      "authors": [
+        "ZHAO Shuxu",
+        "LIU Lijiao",
+        "MA Qinjing"
+      ],
+      "year": 2021,
+      "venue": "DOAJ (DOAJ: Directory of Open Access Journals)",
+      "doi": "",
+      "url": "https://doaj.org/article/0c5e4cdbd26a4043afb1b3c88456eca1",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "弹幕情绪分类，用多头注意力的卷积网络。读的是 OpenAlex 摘要。没有 DOI。出处字段是 OpenAlex 给的 DOAJ。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4404051808",
@@ -5321,6 +7506,60 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3207005142",
+      "relevance": "direct_danmaku",
+      "title": "Timeline-Anchored Comments in Video-Based Learning: The Impact of Visual Layout and Content Depth",
+      "authors": [
+        "Yue Chen",
+        "Qin Gao",
+        "Ge Gao"
+      ],
+      "year": 2021,
+      "venue": "International Journal of Human-Computer Interaction",
+      "doi": "https://doi.org/10.1080/10447318.2021.1976505",
+      "url": "https://doi.org/10.1080/10447318.2021.1976505",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 12,
+      "note": "学习视频上钉在时间点的评论：嵌入画面还是分开显示。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W3134874269",
+      "relevance": "direct_danmaku",
+      "title": "Understanding context in computer-mediated communication",
+      "authors": [
+        "Jennifer Yameng Liang"
+      ],
+      "year": 2021,
+      "venue": "Functions of Language",
+      "doi": "https://doi.org/10.1075/fol.20041.lia",
+      "url": "https://doi.org/10.1075/fol.20041.lia",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 8,
+      "note": "用系统功能语言学看哔哩哔哩弹幕的语境，点名匿名、看不见人、会动和 pseudo-synchronicity。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W3180973212",
+      "relevance": "direct_danmaku",
+      "title": "User Experience Redesign Based on the Emotional Interaction Needs of Bullet Screen",
+      "authors": [
+        "Xin Chen",
+        "Xuanlin Zhu"
+      ],
+      "year": 2021,
+      "venue": "Lecture notes in networks and systems",
+      "doi": "https://doi.org/10.1007/978-3-030-80091-8_74",
+      "url": "https://doi.org/10.1007/978-3-030-80091-8_74",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "按弹幕的情绪互动需求改界面。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W3156038738",
       "relevance": "direct_danmaku",
       "title": "Virtual gifting and danmaku: What motivates people to interact in game live streaming?",
@@ -5376,6 +7615,27 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3127984247",
+      "relevance": "direct_danmaku",
+      "title": "A Comparative Study on the Application Effect of Live Comments in Different Types of Classroom Teaching",
+      "authors": [
+        "Shurui Gao",
+        "Shufan Jiang",
+        "Qianru Chen",
+        "Yanhua Ding",
+        "Heng Luo"
+      ],
+      "year": 2020,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/eitt50754.2020.00046",
+      "url": "https://doi.org/10.1109/eitt50754.2020.00046",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 0,
+      "note": "大学课堂里用名为 Good Barrage 的软件发直播评论，比较两种课型。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W3119550360",
       "relevance": "direct_danmaku",
       "title": "A Sentiment Analysis Algorithm of Danmaku Based on Building a Mixed Fine-grained Sentiment Lexicon",
@@ -5429,6 +7689,43 @@
       "cited_by_count": 6,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W3039107066",
+      "relevance": "direct_danmaku",
+      "title": "Bullet Screen Short Text Sentiment Analysis Algorithm",
+      "authors": [
+        "Li-jiao Liu",
+        "Shuxu Zhao"
+      ],
+      "year": 2020,
+      "venue": "2020 3rd International Conference on Advanced Electronic Materials, Computers and Software Engineering (AEMCSE)",
+      "doi": "https://doi.org/10.1109/aemcse50948.2020.00123",
+      "url": "https://doi.org/10.1109/aemcse50948.2020.00123",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 9,
+      "note": "弹幕短文本情绪分类，把表情符号和文字放在一起看。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W3095428690",
+      "relevance": "direct_danmaku",
+      "title": "Effect of Exposure to Body Image in Media and Bullet Screen on Weight Loss Intention - Focused on Bilibili, a Video Sharing Website of China",
+      "authors": [
+        "Shuang Liang",
+        "Hee Jung Cho",
+        "Hye Eun Lee"
+      ],
+      "year": 2020,
+      "venue": "The Journal of the Korea Contents Association",
+      "doi": "https://doi.org/10.5392/jkca.2020.20.10.268",
+      "url": "http://koreascience.or.kr:80/article/JAKO202031458603903.pdf",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "媒体身体形象和弹幕对减肥意愿，站点是哔哩哔哩。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W3043429676",
@@ -5505,6 +7802,30 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3089949707",
+      "relevance": "direct_danmaku",
+      "title": "Multimodal Matching Transformer for Live Commenting",
+      "authors": [
+        "Chaoqun Duan",
+        "Lei Cui",
+        "Shuming Ma",
+        "Furu Wei",
+        "Conghui Zhu",
+        "Tiejun Zhao"
+      ],
+      "year": 2020,
+      "venue": "arXiv (Cornell University)",
+      "doi": "https://doi.org/10.48550/arxiv.2002.02649",
+      "url": "http://arxiv.org/abs/2002.02649",
+      "extra_urls": [
+        "https://doi.org/10.3233/faia200320"
+      ],
+      "type": "preprint",
+      "cited_by_count": 11,
+      "note": "自动直播评论：给正在看的视频实时写评论。读的是 OpenAlex 摘要。正式版本不另立条目。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W3025519047",
       "relevance": "direct_danmaku",
       "title": "Research on Danmaku Knowledge Discovery Service Under Computational Communication",
@@ -5522,6 +7843,45 @@
       "cited_by_count": 1,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W3029194327",
+      "relevance": "direct_danmaku",
+      "title": "Research on Video Recommendation Algorithm Based on Bullet Screen",
+      "authors": [
+        "Yongxia Zhao",
+        "ZhuoWei Wang",
+        "Bo Zhang",
+        "Li Jiang"
+      ],
+      "year": 2020,
+      "venue": "2020 International Conference on Computer Engineering and Application (ICCEA)",
+      "doi": "https://doi.org/10.1109/iccea50009.2020.00197",
+      "url": "https://doi.org/10.1109/iccea50009.2020.00197",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 2,
+      "note": "用弹幕做视频推荐。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W3023815311",
+      "relevance": "direct_danmaku",
+      "title": "Selecting Representative Thumbnail Image and Video Clip from a Video via Bullet Screen",
+      "authors": [
+        "Yun-Ya Huang",
+        "Tong-Yi Kuo",
+        "Hung‐Hsuan Chen"
+      ],
+      "year": 2020,
+      "venue": "Companion Proceedings of the Web Conference 2020",
+      "doi": "https://doi.org/10.1145/3366424.3382691",
+      "url": "https://doi.org/10.1145/3366424.3382691",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 4,
+      "note": "用弹幕选代表缩略图和高光片段。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W3015647315",
@@ -5543,6 +7903,46 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3091702048",
+      "relevance": "direct_danmaku",
+      "title": "SmartBullets: A Cloud-Assisted Bullet Screen Filter based on Deep Learning",
+      "authors": [
+        "Haoran Niu",
+        "Jiangnan Li",
+        "Yu Zhao"
+      ],
+      "year": 2020,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/icccn49398.2020.9209649",
+      "url": "https://doi.org/10.1109/icccn49398.2020.9209649",
+      "extra_urls": [
+        "https://arxiv.org/abs/1905.05925"
+      ],
+      "type": "conference-paper",
+      "cited_by_count": 4,
+      "note": "SmartBullets：用深度学习滤掉低质量弹幕。读的是 OpenAlex 摘要。arXiv 预印本不另立条目。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W3040601215",
+      "relevance": "direct_danmaku",
+      "title": "The Analysis of Influence Factors of User Experience in Bullet Screen",
+      "authors": [
+        "Zhizheng Zhang",
+        "Li Zhang",
+        "Yajun Li"
+      ],
+      "year": 2020,
+      "venue": "Advances in intelligent systems and computing",
+      "doi": "https://doi.org/10.1007/978-3-030-51828-8_36",
+      "url": "https://doi.org/10.1007/978-3-030-51828-8_36",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 8,
+      "note": "弹幕使用体验的影响因素。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W3014770839",
       "relevance": "direct_danmaku",
       "title": "The Governance and Construction of the “Refined and Popularized Environment” of the Bullet Comments in Webcast",
@@ -5559,6 +7959,24 @@
       "cited_by_count": 1,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W3041270554",
+      "relevance": "direct_danmaku",
+      "title": "The Influence of Video Barrage on the Emotion of Young Users",
+      "authors": [
+        "Shanang He",
+        "Fumie Muroi"
+      ],
+      "year": 2020,
+      "venue": "Advances in intelligent systems and computing",
+      "doi": "https://doi.org/10.1007/978-3-030-51194-4_134",
+      "url": "https://doi.org/10.1007/978-3-030-51194-4_134",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 1,
+      "note": "视频弹幕对年轻用户情绪的影响。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W3022522459",
@@ -5619,6 +8037,25 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3093187109",
+      "relevance": "direct_danmaku",
+      "title": "VideoIC: A Video Interactive Comments Dataset and Multimodal Multitask Learning for Comments Generation",
+      "authors": [
+        "Weiying Wang",
+        "Jieting Chen",
+        "Qin Jin"
+      ],
+      "year": 2020,
+      "venue": "Proceedings of the 28th ACM International Conference on Multimedia",
+      "doi": "https://doi.org/10.1145/3394171.3413890",
+      "url": "https://doi.org/10.1145/3394171.3413890",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 26,
+      "note": "VideoIC：哔哩哔哩 4951 个视频、约 500 万条弹幕，并做评论生成。读的是 OpenAlex 摘要，数据集文件未下载。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W3087291428",
       "relevance": "direct_danmaku",
       "title": "阅读还是社交：电子书弹幕的困局、进路与前景",
@@ -5653,6 +8090,43 @@
       "cited_by_count": 2,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2917275325",
+      "relevance": "direct_danmaku",
+      "title": "Barrage participation and feedback in travel reality shows: The effects of media on destination image among Generation Y",
+      "authors": [
+        "Xiaofei Hao",
+        "Shuojing Xu",
+        "Xiaoming Zhang"
+      ],
+      "year": 2019,
+      "venue": "Journal of Destination Marketing & Management",
+      "doi": "https://doi.org/10.1016/j.jdmm.2019.02.004",
+      "url": "https://doi.org/10.1016/j.jdmm.2019.02.004",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 47,
+      "note": "旅游真人秀里的弹幕参与和目的地形象。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W2985145749",
+      "relevance": "direct_danmaku",
+      "title": "Between the marked and the unmarked: twin semiotic paradoxes of the barrage in China’s livestreaming fandom",
+      "authors": [
+        "Xinru Chen",
+        "Zhuo Chen"
+      ],
+      "year": 2019,
+      "venue": "Media Culture & Society",
+      "doi": "https://doi.org/10.1177/0163443719876617",
+      "url": "https://doi.org/10.1177/0163443719876617",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 14,
+      "note": "中国直播粉丝文化里的弹幕，讨论被标记和未被标记的两套符号。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W2982456494",
@@ -5706,6 +8180,27 @@
       "cited_by_count": 3,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2941465088",
+      "relevance": "direct_danmaku",
+      "title": "Crowdsourced Time-Sync Video Recommendation via Semantic-Aware Neural Collaborative Filtering",
+      "authors": [
+        "Zhanpeng Wu",
+        "Yan Zhou",
+        "Di Wu",
+        "Yipeng Zhou",
+        "Jing Qin"
+      ],
+      "year": 2019,
+      "venue": "Lecture notes in computer science",
+      "doi": "https://doi.org/10.1007/978-3-030-19274-7_13",
+      "url": "https://doi.org/10.1007/978-3-030-19274-7_13",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 3,
+      "note": "题名是众包时间同步视频推荐。OpenAlex 没有摘要，正文没打开，不能从题名确认用的是评论还是别的时间标签。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W2952687932",
@@ -5823,6 +8318,26 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W2915621908",
+      "relevance": "direct_danmaku",
+      "title": "Facilitating Students’ Interaction in MOOCs through Timeline-Anchored Discussion",
+      "authors": [
+        "Yue Chen",
+        "Qin Gao",
+        "Quan Yuan",
+        "Yuanli Tang"
+      ],
+      "year": 2019,
+      "venue": "International Journal of Human-Computer Interaction",
+      "doi": "https://doi.org/10.1080/10447318.2019.1574056",
+      "url": "https://doi.org/10.1080/10447318.2019.1574056",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 47,
+      "note": "DanMOOC：把课程论坛的线程讨论和弹幕叠到视频时间上，实验室里和原论坛比。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W2993219068",
       "relevance": "direct_danmaku",
       "title": "From the “cinema of attractions” to danmu",
@@ -5863,6 +8378,30 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W2943770669",
+      "relevance": "direct_danmaku",
+      "title": "Herding Effect Based Attention for Personalized Time-Sync Video Recommendation",
+      "authors": [
+        "Wenmian Yang",
+        "Wenyuan Gao",
+        "Xiaojie Zhou",
+        "Weijia Jia",
+        "Shaohua Zhang",
+        "Yutao Luo"
+      ],
+      "year": 2019,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/icme.2019.00085",
+      "url": "https://doi.org/10.1109/icme.2019.00085",
+      "extra_urls": [
+        "https://arxiv.org/abs/1905.00579"
+      ],
+      "type": "conference-paper",
+      "cited_by_count": 10,
+      "note": "时间同步评论被当成视频推荐的数据，并提出从众效应注意力。读的是 OpenAlex 摘要。摘要里的提升数字是原文自称，这里没有重跑。arXiv 预印本不另立条目。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W2967976101",
       "relevance": "direct_danmaku",
       "title": "Interactive Variance Attention based Online Spoiler Detection for Time-Sync Comments",
@@ -5882,6 +8421,89 @@
       "cited_by_count": 5,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W2962944176",
+      "relevance": "direct_danmaku",
+      "title": "LiveBot: Generating Live Video Comments Based on Visual and Textual Contexts",
+      "authors": [
+        "Shuming Ma",
+        "Lei Cui",
+        "Damai Dai",
+        "Furu Wei",
+        "Xu Sun"
+      ],
+      "year": 2019,
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "doi": "https://doi.org/10.1609/aaai.v33i01.33016810",
+      "url": "https://doi.org/10.1609/aaai.v33i01.33016810",
+      "extra_urls": [
+        "https://arxiv.org/abs/1809.04938"
+      ],
+      "type": "conference-paper",
+      "cited_by_count": 54,
+      "note": "LiveBot：自动直播评论，摘要写明也叫 video barrage，评论像子弹一样飞过画面或滚在右侧。读的是 OpenAlex 摘要。arXiv 预印本不另立条目。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W2946541400",
+      "relevance": "direct_danmaku",
+      "title": "Online social viewing: Cross-cultural adoption and uses of bullet-screen videos",
+      "authors": [
+        "Anan Wan",
+        "Leigh M. Moscowitz",
+        "Linwan Wu"
+      ],
+      "year": 2019,
+      "venue": "Journal of International and Intercultural Communication",
+      "doi": "https://doi.org/10.1080/17513057.2019.1610187",
+      "url": "https://doi.org/10.1080/17513057.2019.1610187",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 20,
+      "note": "中美观众怎样使用盖在视频上的 bullet-screen。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W2973060515",
+      "relevance": "direct_danmaku",
+      "title": "Research on the Influence of Online Video Bullet-screen Advertising Marketing on Consumers' Purchasing Intention",
+      "authors": [
+        "Gao-fu Liu",
+        "Le-lin Li",
+        "Huiming Xu",
+        "Meng-qiu Luo"
+      ],
+      "year": 2019,
+      "venue": "Proceedings of the 2019 5th International Conference on Social Science and Higher Education (ICSSHE 2019)",
+      "doi": "https://doi.org/10.2991/icsshe-19.2019.193",
+      "url": "https://doi.org/10.2991/icsshe-19.2019.193",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 8,
+      "note": "在线视频里的弹幕广告对购买意愿。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W3006183529",
+      "relevance": "direct_danmaku",
+      "title": "Sentiment-Aware Short Text Classification Based on Convolutional Neural Network and Attention",
+      "authors": [
+        "Zeyu Chen",
+        "Yan Tang",
+        "Zuowei Zhang",
+        "Chengyang Zhang",
+        "Luwei Wang"
+      ],
+      "year": 2019,
+      "venue": "2019 IEEE 31st International Conference on Tools with Artificial Intelligence (ICTAI)",
+      "doi": "https://doi.org/10.1109/ictai.2019.00162",
+      "url": "https://doi.org/10.1109/ictai.2019.00162",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 11,
+      "note": "把弹幕按情绪和语言类型做短文本分类。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W2927200064",
@@ -5955,6 +8577,49 @@
       "cited_by_count": 79,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2980196695",
+      "relevance": "direct_danmaku",
+      "title": "The sociability of Millennials in cyberspace",
+      "authors": [
+        "Seio Nakajima"
+      ],
+      "year": 2019,
+      "venue": "China’s Youth Cultures and Collective Spaces",
+      "doi": "https://doi.org/10.4324/9780429056093-6",
+      "url": "https://doi.org/10.4324/9780429056093-6",
+      "extra_urls": [],
+      "type": "book-chapter",
+      "cited_by_count": 18,
+      "note": "比较哔哩哔哩弹幕和 niconico 弹幕，把它们当成一起看的社交，而不是事先做好的翻译字幕。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W2955519369",
+      "relevance": "direct_danmaku",
+      "title": "Time-Sync Video Tag Extraction Using Semantic Association Graph",
+      "authors": [
+        "Wenmian Yang",
+        "Kun Wang",
+        "Na Ruan",
+        "Wenyuan Gao",
+        "Weijia Jia",
+        "Wei Zhao",
+        "Nan Liu",
+        "Yunyong Zhang"
+      ],
+      "year": 2019,
+      "venue": "ACM Transactions on Knowledge Discovery from Data",
+      "doi": "https://doi.org/10.1145/3332932",
+      "url": "https://doi.org/10.1145/3332932",
+      "extra_urls": [
+        "https://arxiv.org/abs/1905.01053"
+      ],
+      "type": "article",
+      "cited_by_count": 8,
+      "note": "用时间同步评论的语义图抽视频标签，并区分对话聚类和话题中心聚类。作者名按 arXiv 摘要页核对。读的是 OpenAlex 摘要和 arXiv 摘要页。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W2986586324",
@@ -6094,6 +8759,27 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W2904093201",
+      "relevance": "direct_danmaku",
+      "title": "Affective Content Analysis of Online Video Clips with Live Comments in Chinese",
+      "authors": [
+        "Jianwei Niu",
+        "Shijie Li",
+        "Shasha Mo",
+        "Sen Yang",
+        "Boyu Fan"
+      ],
+      "year": 2018,
+      "venue": "2018 IEEE SmartWorld, Ubiquitous Intelligence &amp; Computing, Advanced &amp; Trusted Computing, Scalable Computing &amp; Communications, Cloud &amp; Big Data Computing, Internet of People and Smart City Innovation (SmartWorld/SCALCOM/UIC/ATC/CBDCom/IOP/SCI)",
+      "doi": "https://doi.org/10.1109/smartworld.2018.00156",
+      "url": "https://doi.org/10.1109/smartworld.2018.00156",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 9,
+      "note": "DaLC：204 段带直播评论的视频，评论也被叫做 danmaku、barrage、bullet comment，用来做视频情绪。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W2889641335",
       "relevance": "direct_danmaku",
       "title": "An exploratory study: using Danmaku in online video-based lectures",
@@ -6111,6 +8797,26 @@
       "cited_by_count": 44,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2807097525",
+      "relevance": "direct_danmaku",
+      "title": "Co-viewing Experience in Video Websites: The Effect of Social Presence on E-Loyalty",
+      "authors": [
+        "Jiaming Fang",
+        "Lei Chen",
+        "Chao Wen",
+        "Victor R. Prybutok"
+      ],
+      "year": 2018,
+      "venue": "International Journal of Electronic Commerce",
+      "doi": "https://doi.org/10.1080/10864415.2018.1462929",
+      "url": "https://doi.org/10.1080/10864415.2018.1462929",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 151,
+      "note": "视频网站上的弹幕（DanMu / danmaku）如何经由社会在场影响沉浸和回访。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W2902127568",
@@ -6151,6 +8857,23 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W4398800762",
+      "relevance": "direct_danmaku",
+      "title": "douyu-data",
+      "authors": [
+        "Ye Tian"
+      ],
+      "year": 2018,
+      "venue": "Harvard Dataverse",
+      "doi": "https://doi.org/10.7910/dvn/x5scpm",
+      "url": "https://doi.org/10.7910/dvn/x5scpm",
+      "extra_urls": [],
+      "type": "dataset",
+      "cited_by_count": 2,
+      "note": "斗鱼直播弹幕、礼物和在线人数的 Dataverse 数据包。弹幕会从右往左滑过画面。读的是条目说明，数据包未下载。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W2788079807",
       "relevance": "direct_danmaku",
       "title": "How danmaku influences emotional responses : exploring the effects of co-viewing and copresence",
@@ -6187,6 +8910,42 @@
       "cited_by_count": 5,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W2887561040",
+      "relevance": "direct_danmaku",
+      "title": "Live Video Comment Generation Based on Surrounding Frames and Live Comments",
+      "authors": [
+        "Damai Dai"
+      ],
+      "year": 2018,
+      "venue": "arXiv (Cornell University)",
+      "doi": "https://doi.org/10.48550/arxiv.1808.04091",
+      "url": "http://arxiv.org/abs/1808.04091",
+      "extra_urls": [],
+      "type": "preprint",
+      "cited_by_count": 0,
+      "note": "把直播评论定义成评论和聊天的混合，既要贴着画面，也要接上别人的评论，并做生成。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W2898968806",
+      "relevance": "direct_danmaku",
+      "title": "Reacting to Political Videos",
+      "authors": [
+        "Bingjie Yu",
+        "Ryan Kelly",
+        "Leon A. Watts"
+      ],
+      "year": 2018,
+      "venue": "Companion of the 2018 ACM Conference on Computer Supported Cooperative Work and Social Computing",
+      "doi": "https://doi.org/10.1145/3272973.3274040",
+      "url": "https://doi.org/10.1145/3272973.3274040",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 3,
+      "note": "政治视频上比较弹幕和底下的评论列表：弹幕更卷入，也更分神。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W2885925498",
@@ -6454,6 +9213,28 @@
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
     },
     {
+      "id": "openalex:W2752791813",
+      "relevance": "direct_danmaku",
+      "title": "Crowdsourced time-sync video tagging using semantic association graph",
+      "authors": [
+        "Wenmian Yang",
+        "Na Ruan",
+        "Wenyuan Gao",
+        "Kun Wang",
+        "Wensheng Ran",
+        "Weijia Jia"
+      ],
+      "year": 2017,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/icme.2017.8019364",
+      "url": "https://doi.org/10.1109/icme.2017.8019364",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 24,
+      "note": "用时间同步评论的语义图做无监督视频标签。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W2838188684",
       "relevance": "direct_danmaku",
       "title": "Danmaku Videos Questionnaire",
@@ -6493,6 +9274,63 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "manual:danmooc-2017",
+      "relevance": "direct_danmaku",
+      "title": "DanMOOC: Enhancing Content and Social Interaction in MOOCs with Synchronized Commenting",
+      "authors": [
+        "Yue Chen",
+        "Qin Gao",
+        "Quan Yuan"
+      ],
+      "year": 2017,
+      "venue": "Lecture Notes in Computer Science",
+      "doi": "https://doi.org/10.1007/978-3-319-57931-3_40",
+      "url": "https://doi.org/10.1007/978-3-319-57931-3_40",
+      "extra_urls": [],
+      "type": "book-chapter",
+      "cited_by_count": null,
+      "note": "Crossref 没有摘要，PDF 未打开。同一组作者 2019 年写明 DanMOOC 把线程讨论和弹幕叠到视频时间上。本条只凭题名和这条对照补入。",
+      "provenance": "Crossref，2026-09-28。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W2782243843",
+      "relevance": "direct_danmaku",
+      "title": "Demands in qExistenceq and Carnival from qTrash Talkingq Analysis on the Audience's Psychology of Bullet-screen Movie",
+      "authors": [
+        "Xiaoping Liu",
+        "Linlang Lu"
+      ],
+      "year": 2017,
+      "venue": "",
+      "doi": "https://doi.org/10.2991/icelaic-17.2017.107",
+      "url": "https://doi.org/10.2991/icelaic-17.2017.107",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 3,
+      "note": "弹幕电影观众心理：身份、在场和狂欢。OpenAlex 题名里的引号被拆碎了。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W2622802593",
+      "relevance": "direct_danmaku",
+      "title": "Designing Commenting Mechanisms for Dynamic Media: Synchronous Overlay and Adjacent Scrollable",
+      "authors": [
+        "Bingjie Yu",
+        "Leon A. Watts"
+      ],
+      "year": 2017,
+      "venue": "Proceedings of the 2017 ACM Conference Companion Publication on Designing Interactive Systems",
+      "doi": "https://doi.org/10.1145/3064857.3079111",
+      "url": "https://doi.org/10.1145/3064857.3079111",
+      "extra_urls": [
+        "https://purehost.bath.ac.uk/ws/files/157792070/p18_yu.pdf"
+      ],
+      "type": "conference-paper",
+      "cited_by_count": 6,
+      "note": "同一段政治演讲，比较盖在画面上的弹幕和贴在播放器旁边的评论。打开了巴斯大学的 PDF，原文不进仓库。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W2888860045",
       "relevance": "direct_danmaku",
       "title": "Evaluation Study of Danmaku Video Website Information Construction Based on Analytic Hierarchy Process",
@@ -6508,6 +9346,27 @@
       "cited_by_count": 0,
       "note": "",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2749929993",
+      "relevance": "direct_danmaku",
+      "title": "Exploring the Emerging Type of Comment for Online Videos",
+      "authors": [
+        "Ming Xuan He",
+        "Yong Ge",
+        "Enhong Chen",
+        "Qi Liu",
+        "Xuesong Wang"
+      ],
+      "year": 2017,
+      "venue": "ACM Transactions on the Web",
+      "doi": "https://doi.org/10.1145/3098885",
+      "url": "https://doi.org/10.1145/3098885",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 44,
+      "note": "把 DanMu 定义成对齐播放时间、盖在画面上的滚动字幕，并和站外评论比分布、从众和多次突发。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W2948754293",
@@ -6568,6 +9427,26 @@
       "cited_by_count": 21,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W2741338407",
+      "relevance": "direct_danmaku",
+      "title": "Natural language processing in “Bullet Screen” application",
+      "authors": [
+        "Yang Xu",
+        "Binglu Wang",
+        "Huang Junjie",
+        "Liu Shuwen"
+      ],
+      "year": 2017,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/icsssm.2017.7996219",
+      "url": "https://doi.org/10.1109/icsssm.2017.7996219",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 10,
+      "note": "把弹幕定义成看电影时打到画面上的实时评论，并讨论自然语言处理。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W2790790019",
@@ -6682,6 +9561,24 @@
       "cited_by_count": 17,
       "note": "实现仓库未标注许可证。",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W2588531557",
+      "relevance": "direct_danmaku",
+      "title": "Video-based Evanescent, Anonymous, Asynchronous Social Interaction",
+      "authors": [
+        "Xiaojuan Ma",
+        "Nan Cao"
+      ],
+      "year": 2017,
+      "venue": "Proceedings of the 2017 ACM Conference on Computer Supported Cooperative Work and Social Computing",
+      "doi": "https://doi.org/10.1145/2998181.2998256",
+      "url": "https://doi.org/10.1145/2998181.2998256",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 53,
+      "note": "问滚动、匿名、不同时写下的弹幕还能不能当成社交。用问卷和存档，不是只报密度。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W2578631665",
@@ -6800,6 +9697,40 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W3009987430",
+      "relevance": "direct_danmaku",
+      "title": "International Audience's Timed Comment Use on Viki: Talking about a K-Drama while Still Watching It",
+      "authors": [
+        "Liche Ellian Eunjae"
+      ],
+      "year": 2016,
+      "venue": "Seoul National University Open Repository (Seoul National University)",
+      "doi": "",
+      "url": "https://hdl.handle.net/10371/134308",
+      "extra_urls": [],
+      "type": "dissertation",
+      "cited_by_count": 0,
+      "note": "国际观众边看韩剧边在 Viki 上写 timed comment。OpenAlex 没有摘要，正文没打开。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W7169963181",
+      "relevance": "direct_danmaku",
+      "title": "Music Summarization Using Social Timed Comment",
+      "authors": [
+        "강하림"
+      ],
+      "year": 2016,
+      "venue": "Seoul National University Open Repository (Seoul National University)",
+      "doi": "",
+      "url": "https://hdl.handle.net/10371/133222",
+      "extra_urls": [],
+      "type": "dissertation",
+      "cited_by_count": 0,
+      "note": "OpenAlex 只给了首尔大学学位论文的目录句，正文没打开。题名是用社交化的 timed comment 做音乐摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W2506342487",
       "relevance": "direct_danmaku",
       "title": "Predicting the Popularity of DanMu-enabled Videos: A Multi-factor View",
@@ -6821,6 +9752,27 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W2562476021",
+      "relevance": "direct_danmaku",
+      "title": "Reading the Videos: Temporal Labeling for Crowdsourced Time-Sync Videos Based on Semantic Embedding",
+      "authors": [
+        "Guangyi Lv",
+        "Tong Xu",
+        "Enhong Chen",
+        "Qi Liu",
+        "Yi Zheng"
+      ],
+      "year": 2016,
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "doi": "https://doi.org/10.1609/aaai.v30i1.10383",
+      "url": "https://doi.org/10.1609/aaai.v30i1.10383",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 54,
+      "note": "用时间同步评论（摘要里也叫 bullet-screen comments）给众包视频打时间标签。读的是 OpenAlex 摘要。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W2584960826",
       "relevance": "direct_danmaku",
       "title": "SmartVideoRanking: Video Search by Mining Emotions from Time-Synchronized Comments",
@@ -6838,6 +9790,44 @@
       "cited_by_count": 2,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W2293004784",
+      "relevance": "direct_danmaku",
+      "title": "Social Viewing, Bullet Screen, and User Experience: A First Look",
+      "authors": [
+        "Soussan Djamasbi",
+        "Adrienne Hall‐Phillips",
+        "Zaozao Liu",
+        "Wenting Li",
+        "Jing Bian"
+      ],
+      "year": 2016,
+      "venue": "",
+      "doi": "https://doi.org/10.1109/hicss.2016.86",
+      "url": "https://doi.org/10.1109/hicss.2016.86",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 26,
+      "note": "2016 年把 bullet screen 说成视频加上即时文字，并和普通在线视频比观看体验。读的是 OpenAlex 摘要。出处字段是空的，DOI 指向 HICSS。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W2548744434",
+      "relevance": "direct_danmaku",
+      "title": "The postmodern aesthetic of Chinese online comment cultures",
+      "authors": [
+        "Yizhou Xu"
+      ],
+      "year": 2016,
+      "venue": "Communication and the Public",
+      "doi": "https://doi.org/10.1177/2057047316677839",
+      "url": "https://doi.org/10.1177/2057047316677839",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 15,
+      "note": "盖楼和弹幕两种中文评论文化，评论盖过正文。读的是 OpenAlex 摘要。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4206684805",
@@ -6893,6 +9883,28 @@
       "cited_by_count": 10,
       "note": "",
       "provenance": "OpenAlex 题名短语 time-sync / bullet / barrage comment，2026-09-28"
+    },
+    {
+      "id": "openalex:W2558844495",
+      "relevance": "direct_danmaku",
+      "title": "VideoForest: Interactive Visual Summarization of Video Streams Based on Danmu Data",
+      "authors": [
+        "Zhida Sun",
+        "Mingfei Sun",
+        "Nan Cao",
+        "Xiaojuan Ma"
+      ],
+      "year": 2016,
+      "venue": "SA '16 Symposium on Visualization",
+      "doi": "https://doi.org/10.1145/3002151.3002159",
+      "url": "https://doi.org/10.1145/3002151.3002159",
+      "extra_urls": [
+        "https://zhdsun.github.io/papers/sun_siggraphasia16_paper_revised.pdf"
+      ],
+      "type": "conference-paper",
+      "cited_by_count": 12,
+      "note": "OpenAlex 题名只有 VideoForest。完整题名和弹幕可视化摘要来自作者 PDF 首页。原文不进仓库。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W2467707473",
@@ -7105,6 +10117,24 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W2271798195",
+      "relevance": "direct_danmaku",
+      "title": "A New Viewing Experience in the Living Room - Bullet Screens in Vogue",
+      "authors": [
+        "Verena",
+        "Menzel"
+      ],
+      "year": 2015,
+      "venue": "今日中国：英文版",
+      "doi": "",
+      "url": "http://www.cqvip.com/QK/86870X/201508/665682495.html",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 1,
+      "note": "客厅里的弹幕观看。OpenAlex 没有摘要，正文没打开。出处是《今日中国》英文版。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W2308045896",
       "relevance": "direct_danmaku",
       "title": "The verbal art oftucaoand face-threatening acts indanmuscreening",
@@ -7284,6 +10314,46 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W2060505035",
+      "relevance": "direct_danmaku",
+      "title": "Crowdsourced time-sync video tagging using temporal and personalized topic modeling",
+      "authors": [
+        "Bin Wu",
+        "Erheng Zhong",
+        "Ben Tan",
+        "Andrew Horner",
+        "Qiang Yang"
+      ],
+      "year": 2014,
+      "venue": "",
+      "doi": "https://doi.org/10.1145/2623330.2623625",
+      "url": "https://doi.org/10.1145/2623330.2623625",
+      "extra_urls": [],
+      "type": "conference-paper",
+      "cited_by_count": 63,
+      "note": "从 niconico 那种按时间写上的众包评论里抽时间同步标签。读的是 OpenAlex 摘要。对象是时间同步评论，不是中文弹幕语料论文。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
+      "id": "openalex:W65667946",
+      "relevance": "direct_danmaku",
+      "title": "Let the Comments Fly: The Effects of Flying Commentary Presentation on Consumer Judgment",
+      "authors": [
+        "Yi Shen",
+        "Hock Chuan Chan",
+        "Iris W. Hung"
+      ],
+      "year": 2014,
+      "venue": "Journal of the Association for Information Systems",
+      "doi": "",
+      "url": "http://aisel.aisnet.org/cgi/viewcontent.cgi?article=1106&context=icis2014",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 12,
+      "note": "比较弹幕式飞过评论和分开显示的评论。OpenAlex 无 DOI，链接指向 ICIS 2014；摘要写的是实验设计，不是已跑完的结果表。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W2309039100",
       "relevance": "direct_danmaku",
       "title": "“弹幕”电影,一场娱乐的狂欢",
@@ -7458,6 +10528,57 @@
       "provenance": "GitHub API，2026-09-28"
     },
     {
+      "id": "manual:danmaku2ass",
+      "relevance": "tool",
+      "title": "danmaku2ass",
+      "authors": [
+        "m13253"
+      ],
+      "year": null,
+      "venue": "GitHub",
+      "doi": "",
+      "url": "https://github.com/m13253/danmaku2ass",
+      "extra_urls": [],
+      "type": "software",
+      "cited_by_count": null,
+      "note": "把 niconico、AcFun、哔哩哔哩评论转成 ASS。GitHub API 返回的许可证是 GPL-3.0。",
+      "provenance": "GitHub API，2026-09-28"
+    },
+    {
+      "id": "manual:danmaku-factory",
+      "relevance": "tool",
+      "title": "DanmakuFactory",
+      "authors": [
+        "hihkm"
+      ],
+      "year": null,
+      "venue": "GitHub",
+      "doi": "",
+      "url": "https://github.com/hihkm/DanmakuFactory",
+      "extra_urls": [],
+      "type": "software",
+      "cited_by_count": null,
+      "note": "弹幕文件转换，简介写明支持特殊弹幕，从 xml 转到 ass。GitHub API 返回的许可证是 MIT。",
+      "provenance": "GitHub API，2026-09-28"
+    },
+    {
+      "id": "manual:danmaku-flame-master",
+      "relevance": "tool",
+      "title": "DanmakuFlameMaster",
+      "authors": [
+        "bilibili"
+      ],
+      "year": null,
+      "venue": "GitHub",
+      "doi": "",
+      "url": "https://github.com/bilibili/DanmakuFlameMaster",
+      "extra_urls": [],
+      "type": "software",
+      "cited_by_count": null,
+      "note": "Android 弹幕绘制引擎。GitHub API 返回的简介是「Android开源弹幕引擎·烈焰弹幕使」，许可证是 Apache-2.0。",
+      "provenance": "GitHub API，2026-09-28"
+    },
+    {
       "id": "manual:danmakuscope",
       "relevance": "tool",
       "title": "DanmakuScope",
@@ -7494,6 +10615,23 @@
       "provenance": "GitHub API，2026-09-28"
     },
     {
+      "id": "manual:weizhenye-danmaku",
+      "relevance": "tool",
+      "title": "weizhenye/Danmaku",
+      "authors": [
+        "weizhenye"
+      ],
+      "year": null,
+      "venue": "GitHub",
+      "doi": "",
+      "url": "https://github.com/weizhenye/Danmaku",
+      "extra_urls": [],
+      "type": "software",
+      "cited_by_count": null,
+      "note": "浏览器里的弹幕绘制引擎。GitHub API 返回的简介是高性能 JavaScript danmaku engine，许可证是 MIT。",
+      "provenance": "GitHub API，2026-09-28"
+    },
+    {
       "id": "manual:bilibili-annual-danmaku",
       "relevance": "platform_statistic",
       "title": "哔哩哔哩年度弹幕",
@@ -7511,6 +10649,23 @@
       "cited_by_count": null,
       "note": "京报网 2024-12-09：年度弹幕自 2017 年起，首个为「囍」；2021 至 2023 年为「破防」「优雅」「啊？」；2024 年「接」发送超过 576 万次。京报网 2025-12-27：2025 年「致敬」发送超过 2282 万次，发送用户超过 459 万，其中 80% 为 00 后。",
       "provenance": "京报网两篇报道，2026-09-28"
+    },
+    {
+      "id": "openalex:W4398789245",
+      "relevance": "niconico_platform",
+      "title": "Animated Writing",
+      "authors": [
+        "Daniel H. Johnson"
+      ],
+      "year": 2023,
+      "venue": "Cornell University Press eBooks",
+      "doi": "https://doi.org/10.7591/cornell/9781501772252.003.0002",
+      "url": "http://dx.doi.org/10.7591/cornell/9781501772252.003.0002",
+      "extra_urls": [],
+      "type": "book-chapter",
+      "cited_by_count": 0,
+      "note": "书中一章，讨论 niconico 一类弹幕界面上的动画书写和错字玩法。读的是 OpenAlex 摘要，书页未打开。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W4405187525",
@@ -7674,6 +10829,25 @@
       "provenance": "OpenAlex，2026-09-28"
     },
     {
+      "id": "openalex:W2565166361",
+      "relevance": "niconico_platform",
+      "title": "A method of generating indicative summary thumbnails of Nicovideo using image features and comments",
+      "authors": [
+        "松原宏和",
+        "新妻弘崇",
+        "太田学"
+      ],
+      "year": 2014,
+      "venue": "IPSJ SIG Notes",
+      "doi": "",
+      "url": "http://ci.nii.ac.jp/naid/110009842513",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 0,
+      "note": "用 niconico 的画面特征和评论生成指示性缩略图。OpenAlex 没有摘要，正文没打开。不是中文弹幕语料论文。",
+      "provenance": "补遗第二轮，2026-09-28。读摘要或题名后补入。全文不进仓库。"
+    },
+    {
       "id": "openalex:W2532554366",
       "relevance": "niconico_platform",
       "title": "Estimation of inheritance relationship between contents on social media — Case study of Niconico as a video-sharing site",
@@ -7743,6 +10917,23 @@
       "cited_by_count": 0,
       "note": "视频网站 niconico 本身。弹幕界面源自这里，这条不是中文弹幕语料论文。",
       "provenance": "OpenAlex，2026-09-28"
+    },
+    {
+      "id": "openalex:W2091580991",
+      "relevance": "niconico_platform",
+      "title": "Polyphonic/Pseudo-synchronic: Animated Writing in the Comment Feed of Nicovideo",
+      "authors": [
+        "Daniel H. Johnson"
+      ],
+      "year": 2013,
+      "venue": "Japanese Studies",
+      "doi": "https://doi.org/10.1080/10371397.2013.859982",
+      "url": "https://doi.org/10.1080/10371397.2013.859982",
+      "extra_urls": [],
+      "type": "article",
+      "cited_by_count": 108,
+      "note": "niconico 评论飞过画面，并据此提出 pseudo-synchronicity。不是中文弹幕语料论文。读的是 OpenAlex 摘要，期刊 PDF 未打开。",
+      "provenance": "补遗，2026-09-28。题名检索未收入，读摘要后补入。全文不进仓库。"
     },
     {
       "id": "openalex:W2325072450",
