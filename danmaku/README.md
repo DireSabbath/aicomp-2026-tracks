@@ -23,3 +23,10 @@ python danmaku/crawl.py --collections danmaku/collections.json --only yuanshen-p
 2026-09-26 拉下来的结果记在 `danmaku/lists/coverage.json`。1037 个视频，1290180 条弹幕，没有失败。罗翔说刑法是 453 条，该账号投稿大约 502，搜索接口看不全。其余四套与清单一致：原神前瞻 48、吐槽新三国 297、小约翰可汗四个专栏 214、黑神话官方 25。五个压缩包的校验和在 `danmaku/lists/release-sha256.txt`。弹幕压缩包在 Release [danmaku-2026-09-26](https://github.com/DireSabbath/aicomp-2026-tracks/releases/tag/danmaku-2026-09-26)，不在 git 历史里。页面能打开不等于这些文字可以再分发或拿去训练。
 
 脚本启动时向 `finger/spi` 要一个匿名 buvid，合集分页不带它会返回 -352。不保存登录态。空间投稿搜索在部分网络下会返回 -412，所以全账号列表走合集和站内搜索，不走那个接口。
+
+`pool_structure.py` 只统计时间结构，不打印正文。输入是本地的 `.zip` 或 `.jsonl.gz`：
+
+```bash
+python danmaku/pool_structure.py danmaku_out/heishenhua.zip
+python danmaku/test_pool_structure.py
+```
