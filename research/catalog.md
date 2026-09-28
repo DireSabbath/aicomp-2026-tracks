@@ -2,7 +2,7 @@
 
 机器可读的同一份目录是 [catalog.json](catalog.json)。这里只有题名、作者、年份、出处和链接，没有论文正文。
 
-检索日期：2026-09-28。合计 469 条。其中 47 条是同日补遗：上次因题名不含关键词被丢掉，或题名用了别的说法。视频弹幕、工具、平台公布、niconico、直播聊天和方法源头的分项见各节。
+检索日期：2026-09-28。合计 588 条。同日第一轮补遗 47 条，第二轮补遗 119 条。视频弹幕、工具、平台公布、niconico、直播聊天和方法源头的分项见各节。
 
 ## 直接：视频弹幕
 
@@ -12,9 +12,18 @@
 
 - 2026. A Multimodal Learning Analytics Study on the Role of Bullet Comment Sentiment in Online Video Learning. Jingjing Li、Xue Yuan、Xinyuan Shao、Cong Zhao、Honghong Yang、Ya Wang. 2026 8th International Conference on Computer Science and Technologies in Education (CSTE). [https://doi.org/10.1109/cste69562.2026.11649749](https://doi.org/10.1109/cste69562.2026.11649749)
 
+- 2026. A sentiment analysis on bullet screen using machine learning bag of words algorithm. Yiyuan Wang、Jie Li. ITM Web of Conferences. [https://doi.org/10.1051/itmconf/20268301005](https://doi.org/10.1051/itmconf/20268301005)
+  用词袋模型给哔哩哔哩弹幕做情绪分类。读的是 OpenAlex 摘要。PDF 路径那条不另立。
+
 - 2026. A Study on the Factors Affecting User Satisfaction of the Ctrip Travel Platform-An Empirical Analysis Based on 460 Video Bullet Comments and Reviews. Gong Jingtong、Nie Rujiao、Lin Jiaxiang. Global Journal of Tourism Leisure and Hospitality Management. [https://doi.org/10.19080/gjtlh.2026.03.555624](https://doi.org/10.19080/gjtlh.2026.03.555624)
 
 - 2026. A Study on the Factors Affecting User Satisfaction of the Ctrip Travel Platform-An Empirical Analysis Based on 460 Video Bullet Comments and Reviews. Gong Jingtong、Nie Rujiao、Lin Jiaxiang. Global Journal of Tourism Leisure and Hospitality Management. [https://doi.org/10.19080/gjtlh.2025.03.555624](https://doi.org/10.19080/gjtlh.2025.03.555624)
+
+- 2026. An Early Malicious Users Prediction Benchmark for Chinese Esports via Bullet Chats. Xiang Xing、Han Wang、Yi Qing Zhu、Chaowei Zhang、Jipeng Qiang. Lecture notes in computer science. [https://doi.org/10.1007/978-981-92-3417-2_14](https://doi.org/10.1007/978-981-92-3417-2_14)
+  用弹幕聊天做中国电竞恶意用户的早期预测基准。OpenAlex 没有摘要，正文没打开。
+
+- 2026. Analyzing bullet chats for recommendation intent identification: Dataset and method. Yi Zhu、Qinqin Han、Yunhao Yuan、Chaowei Zhang、Jipeng Qiang、Xindong Wu. Artificial Intelligence. [https://doi.org/10.1016/j.artint.2026.104528](https://doi.org/10.1016/j.artint.2026.104528)
+  用 bullet chats 识别推荐意图，题名还称有数据集。OpenAlex 没有摘要，正文没打开。
 
 - 2026. Battle of the voices: the effects of inconsistent sentiment valence between video content and danmaku. Alton Y.K. Chua、Jiayu Han. Information Research. [https://doi.org/10.47989/ir31iconf64270](https://doi.org/10.47989/ir31iconf64270)
 
@@ -24,6 +33,10 @@
 
 - 2026. Chinese danmuers’ perception of sex‑related language in the American TV sitcom Friends. Huabin Wang、Jia Zhang、Ying Wang. Pragmatics and Society. [https://doi.org/10.1075/ps.25101.wan](https://doi.org/10.1075/ps.25101.wan)
 
+- 2026. ClimaCS: A Multi-Genre Dataset of Timed Comments for Music Highlight Detection. Guerci Loïs、Laure Prétet. Zenodo (CERN European Organization for Nuclear Research). [https://doi.org/10.5281/zenodo.22277018](https://doi.org/10.5281/zenodo.22277018)
+  ClimaCS：用多风格音乐的 timed comments 检测高潮片段。摘要没写这些评论是否飞过画面。读的是 OpenAlex 摘要。另一条 Zenodo DOI 不另立。
+  另见 [https://doi.org/10.5281/zenodo.22277019](https://doi.org/10.5281/zenodo.22277019)
+
 - 2026. Coherence through sedimentation: Temporal organization and emergent interaction in Danmaku. Yang Bo、Oskar Lindwall、Christian Licoppe. Discourse Context & Media. [https://doi.org/10.1016/j.dcm.2026.101033](https://doi.org/10.1016/j.dcm.2026.101033)
 
 - 2026. ComVi: Context-Aware Optimized Comment Display in Video Playback. Minsun Kim、Dawon Lee、Junyong Noh. Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems. [https://doi.org/10.1145/3772318.3791018](https://doi.org/10.1145/3772318.3791018)
@@ -31,6 +44,9 @@
   另见 [https://arxiv.org/abs/2603.26173](https://arxiv.org/abs/2603.26173)
 
 - 2026. Connecting Generations in the Digital Age: A Sentiment Analysis of Affective Bonds Between Senior Influencers and Young Audiences on a Chinese Danmaku Video Site. Yalun Wei、Keyu Zhang、Tianli Liu、Yong Hu. Journal of Cross-Cultural Gerontology. [https://doi.org/10.1007/s10823-026-09598-5](https://doi.org/10.1007/s10823-026-09598-5)
+
+- 2026. Content Moderation Effect: How to Build the Video Influence of Bilibili Through Bullet Screen Interaction Types. Licheng Wang. Communications in Humanities Research. [https://doi.org/10.54254/2753-7064/2026.ht31227](https://doi.org/10.54254/2753-7064/2026.ht31227)
+  哔哩哔哩知识区弹幕互动类型和内容审核。读的是 OpenAlex 摘要。
 
 - 2026. Corrigendum to “Reinventing Fashion as an Affective Apparatus by China&#x27;s Youth: Bilibili, Danmaku Commentaries, and the Online Hanfu Ceremony During the COVID-19 Outbreak”. Emerging Media. [https://doi.org/10.1177/27523543261481707](https://doi.org/10.1177/27523543261481707)
 
@@ -48,9 +64,15 @@
 
 - 2026. Diverse Danmaku Guidance for Facial Emotion Learning in Autistic Individuals — study materials, aggregated results and analysis code. Yaojie Liu、Yussy Chinchay、Nicolás Araya Quintar、Javier Gómez、Germán Montoro. Zenodo (CERN European Organization for Nuclear Research). [https://doi.org/10.5281/zenodo.22897734](https://doi.org/10.5281/zenodo.22897734)
 
+- 2026. DLIOS: An LLM-Augmented Real-Time Multi-Modal Interactive Enhancement Overlay System for Douyin Live Streaming. Shuide Wen、Sungil Seok、Beier Ku、Richee Li、Yubin He、Bowen Qu、Yang Claire Yang、Ping Su等. arXiv (Cornell University). [http://arxiv.org/abs/2603.03060](http://arxiv.org/abs/2603.03060)
+  抖音直播上的透明叠加层：滚动弹幕、礼物、VIP 入场和关键词反应。读的是 OpenAlex 摘要。
+
 - 2026. Educational Sentiment Analysis in Chinese Online Learning - Constructing Domain-Specific Dictionaries for Danmu Text. Yang Yang、Carmen Wang Er Chai、Sivachandran Chandrasekaran、Kwan Yong Sim. 2026 IEEE 16th Symposium on Computer Applications &amp;amp; Industrial Electronics (ISCAIE). [https://doi.org/10.1109/iscaie68866.2026.11576393](https://doi.org/10.1109/iscaie68866.2026.11576393)
 
 - 2026. Emotional Contagion of “Danmaku Comments” and Impulse Consumption in Live-Streaming E-Commerce. You You. E-Commerce Letters. [https://doi.org/10.12677/ecl.2026.154460](https://doi.org/10.12677/ecl.2026.154460)
+
+- 2026. Enhancing Learning Experiences and Outcomes with i-Comments: Exploring and Validating the Effect of On-Screen Individualized Comments Model for On-Demand Video-Based Learning. Jiaqi Wang、Jian Chen、Qun Jin. The Journal of Interactive Learning Research. [https://doi.org/10.70725/761966ynkyyk](https://doi.org/10.70725/761966ynkyyk)
+  i-Comments 的后续：点播学习视频上的同步滚动评论。读的是 OpenAlex 摘要。
 
 - 2026. Eudaimonic or Hedonic? The Collective Memory of “China–Africa Friendship” Represented in Entertainised Danmu Discourse in China. Lixin Wan、Junsong Liao. Critical Arts. [https://doi.org/10.1080/02560046.2025.2587129](https://doi.org/10.1080/02560046.2025.2587129)
 
@@ -59,6 +81,9 @@
 - 2026. Immersion in Online Interaction Rituals: The Paradoxical Role of Time-Synchronized Comments on Video Platforms. Yijing Li. OSF Preprints (OSF Preprints). [https://osf.io/r9t8d](https://osf.io/r9t8d)
 
 - 2026. Let the Bullets Fly: Multimodal Fake News Detection with Temporal-Aligned Generative Danmaku. Xiansheng Luo、Chaowei Zhang、Zewei Zhang、Yi Zhu、Jipeng Qiang. arXiv (Cornell University). [https://arxiv.org/abs/2608.22832](https://arxiv.org/abs/2608.22832)
+
+- 2026. LOLGORITHM: Funny Comment Generation Agent For Short Videos. Xuan Ouyang、Bouzhou Wang、Senan Wang、Siyuan Xiahou、Jinrong Zhou、Yuekang Li. arXiv. [https://arxiv.org/abs/2604.09729](https://arxiv.org/abs/2604.09729)
+  做的是短视频平台上的风格化评论。摘要写明现有的直播弹幕生成对不上这些平台的评论习惯。读的是 arXiv 摘要页。
 
 - 2026. Multi-Dimensional Behavioral Signature Analysis for Video Bullet Comment Steganography Detection. Yitong Liu、Hongwei Zhao. Entropy. [https://doi.org/10.3390/e28090999](https://doi.org/10.3390/e28090999)
 
@@ -71,6 +96,12 @@
 - 2026. Research on Live Streaming E-commerce Bullet Comment Content Generation System Based on LSTM Model. Jingyi Zeng、Xinlin Xiao、Chenghan Wang、Sheng Jie Cao. Proceedings of the 2026 7th International Conference on Computer Information and Big Data Applications. [https://doi.org/10.1145/3813822.3814192](https://doi.org/10.1145/3813822.3814192)
 
 - 2026. Research on product iteration direction prediction method based on perceptual-cognitive data of Danmaku. Zhuen Guo、Li Lin、Chongbing Liu、Chenyue Wang、Wenlong Bi、Wei Zhou. Journal of Engineering Design. [https://doi.org/10.1080/09544828.2026.2680615](https://doi.org/10.1080/09544828.2026.2680615)
+
+- 2026. Research on the Impact of Bullet Emotion on the Sales Volume of E-commerce Broadcast Room. Zhang Xiwen. DEVELOPMENT ECONOMICS OF CHINA. [https://doi.org/10.47297/wspdecwsp2515-797320.20261001](https://doi.org/10.47297/wspdecwsp2515-797320.20261001)
+  电商直播间里弹幕情绪和销量。读的是 OpenAlex 摘要。
+
+- 2026. Sentiment Analysis System for Video Bullet-Screen Based on Deep Learning. Hairong Hao、Shuang Qiu. [https://doi.org/10.1109/isctis70043.2026.11572196](https://doi.org/10.1109/isctis70043.2026.11572196)
+  视频弹幕的深度学习情绪分析系统。OpenAlex 没有摘要，正文没打开。
 
 - 2026. SOABC: saliency and object-aware bullet comments in virtual reality videos. Tsz-lok Ng、Fu-Lai Chung. Virtual Reality. [https://doi.org/10.1007/s10055-026-01479-z](https://doi.org/10.1007/s10055-026-01479-z)
 
@@ -107,6 +138,9 @@
 - 2026. User-Collaborative Construction of Informal Learning Spaces on Bilibili: A Study of Danmu and Comment Interactions. Xinyu Gao、Zangcao Ga. Atlantis highlights in social sciences, education and humanities/Atlantis Highlights in Social Sciences, Education and Humanities. [https://doi.org/10.2991/978-94-6239-733-0_27](https://doi.org/10.2991/978-94-6239-733-0_27)
 
 - 2026. Using Prompt Classification to Filter Danmaku. Luyao Yang. Theory and Practice of Science and Technology. [https://doi.org/10.47297/taposatwsp2633-456923.20260705](https://doi.org/10.47297/taposatwsp2633-456923.20260705)
+
+- 2026. Virtual Sensing for Real-time Emotion Monitoring in Interactive Media Systems Using Bullet Screen. Zhong-Jie Liu、Shih-Pang Tseng. Sensors and Materials. [https://doi.org/10.18494/sam6288](https://doi.org/10.18494/sam6288)
+  把互动视频上的弹幕当成实时情绪信号，做虚拟传感。读的是 OpenAlex 摘要。
 
 - 2026. What if virtual influencer’s empathic anthropomorphism is creepy? The moderating role of positive Danmu. Feng Frederic Deng、Yitian Tang、László Sajtos、Qing Huang、Si Chen. Asia Pacific Journal of Marketing and Logistics. [https://doi.org/10.1108/apjml-11-2025-2351](https://doi.org/10.1108/apjml-11-2025-2351)
 
@@ -178,6 +212,9 @@
 
 - 2025. DanmuA11y: Making Time-Synced On-Screen Video Comments (Danmu) Accessible to Blind and Low Vision Users via Multi-Viewer Audio Discussions. Shuchang Xu、Xiaofu Jin、Huamin Qu、Yukang Yan. Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems. [https://doi.org/10.1145/3706598.3713496](https://doi.org/10.1145/3706598.3713496)
 
+- 2025. Do Bullet Chats Keep Viewers Watching? Estimating Heterogeneous Treatment Effects with a Control Function Approach. Yan Cheng、Jingbo Wang、Xinyu Cao、Zuo‐Jun Max Shen. SSRN Electronic Journal. [https://doi.org/10.2139/ssrn.5456675](https://doi.org/10.2139/ssrn.5456675)
+  问弹幕聊天会不会让人继续看。OpenAlex 没有摘要，正文没打开。SSRN。
+
 - 2025. Drowning in Danmaku: The Dual Effects Community Interaction in Live Streaming Commerce. Yujun Xu、Sommer Kapitan、Megan Phillips. Australasian Marketing Journal (AMJ). [https://doi.org/10.1177/14413582251399643](https://doi.org/10.1177/14413582251399643)
 
 - 2025. Dual-Channel ADCMix–BiLSTM Model with Attention Mechanisms for Multi-Dimensional Sentiment Analysis of Danmu. Wenhao Ping、Zhihui Bai、Yubo Tao. Technologies. [https://doi.org/10.3390/technologies13080353](https://doi.org/10.3390/technologies13080353)
@@ -202,6 +239,9 @@
 
 - 2025. Exploring the impacts of Danmu on online video consumption behaviour: A data-driven method. N. Li、Fan Li、Weiqing Lai. Journal of Information Science. [https://doi.org/10.1177/01655515251362299](https://doi.org/10.1177/01655515251362299)
 
+- 2025. Facilitating Visual Media Exploration for Blind and Low Vision Users through AI-Powered Interactive Storytelling. Shuchang Xu. arXiv. [https://arxiv.org/abs/2508.03061](https://arxiv.org/abs/2508.03061)
+  博士研究陈述。三项目技术里，Parallel Narrative 提供对时间同步视频评论的访问。读的是 arXiv 摘要页。不是 DanmuA11y 那篇。
+
 - 2025. Flow in the Streams: How Danmaku–Video Congruence Shapes Viewer Engagement. Qinghe Gui、Li, Yijing、Kai Lim. Journal of the Association for Information Systems. [https://aisel.aisnet.org/sighci2025/9](https://aisel.aisnet.org/sighci2025/9)
 
 - 2025. From Praise to Sarcasm. Mengyuan Ge、Xin Ren Bao、Kai Yang、Shuocheng Wang、Raymond Y.K. Lau. Journal of Global Information Management. [https://doi.org/10.4018/jgim.395848](https://doi.org/10.4018/jgim.395848)
@@ -214,7 +254,13 @@
 
 - 2025. Healthy or skinny? The negotiation between fear appeal and danmu in anorexia awareness videos. Mengsu Shi、Shuang Chen、Kexin Wang. Journal of Eating Disorders. [https://doi.org/10.1186/s40337-025-01200-6](https://doi.org/10.1186/s40337-025-01200-6)
 
+- 2025. How do different cognitive styles Learners deal with the bullet screen interruption in instructional videos? An eye-tracking study. Defang Mu、Mingxuan Zou、Yinghe Chen. BMC Psychology. [https://doi.org/10.1186/s40359-025-03182-1](https://doi.org/10.1186/s40359-025-03182-1)
+  教学视频顶部的密集弹幕会不会打断不同认知风格的学习者。眼动实验。读的是 OpenAlex 摘要。
+
 - 2025. Interactive Dynamics of Bullet Comments in Agricultural Livestreaming: A Dual-Path Analysis of Conversion Efficiency in Rural China. Yirui Wang. Accounting Marketing and Organization. [https://doi.org/10.71204/p848kc56](https://doi.org/10.71204/p848kc56)
+
+- 2025. Interactive Ritual Chain in Esports Live Streaming: A Case Study of Bullet Screen Interaction During the 2025 Fearless Contract Toronto Masters. Zixuan Qiu. Communications in Humanities Research. [https://doi.org/10.54254/2753-7064/2026.ht31023](https://doi.org/10.54254/2753-7064/2026.ht31023)
+  无畏契约多伦多大师赛直播里的弹幕互动仪式，语料来自哔哩哔哩和 Twitch。读的是 OpenAlex 摘要。
 
 - 2025. Is it beneficial for consumers to ask more questions in Danmaku? The inverted U-shaped effect of information-seeking Danmaku density on e-commerce livestream sales. Geng Peng、Xiaoxi Wang、Jingyan Li、Jie Wu. Electronic Commerce Research. [https://doi.org/10.1007/s10660-025-09959-1](https://doi.org/10.1007/s10660-025-09959-1)
 
@@ -223,9 +269,21 @@
 - 2025. Multidimensional Danmaku Analytics via a BERT-SVM Fusion Model. Ya Lin、Xudong Zhang、Guangbin Peng、Xiang He、Yuanxia Deng. PMLR 278, International Conference on Machine Learning and Intelligent Computing. [https://proceedings.mlr.press/v278/lin25a.html](https://proceedings.mlr.press/v278/lin25a.html)
   BERT-SVM 做弹幕情感，再用嵌入、K-means 和 LDA 看主题。页码 379–394。
 
+- 2025. Optimisation Strategy of Live Streaming Barrage Based on Human Visual Habits. Yantu Ma、Dalbir Singh、Majed Radi Alzoubi、Nisreen Falaki、Muhammad Turki Alshurideh、Anber Abraheem Shlash Mohammad、Maali M. Al-mzary、Sulieman Ibraheem Shelash Al‐Hawary. Studies in computational intelligence. [https://doi.org/10.1007/978-3-031-74220-0_16](https://doi.org/10.1007/978-3-031-74220-0_16)
+  按人的视觉习惯优化直播弹幕。OpenAlex 没有摘要，正文没打开。
+
+- 2025. Optimization Study of a Pornographic Content Detection Model for Live Streaming Platforms Based on Improved TF-IDF and SVM: A Case Study of Bullet Screens. Yuhang Jing、Hengxiang Li、Yaxin Tan、Kehao Zhang. [https://doi.org/10.1145/3756423.3756546](https://doi.org/10.1145/3756423.3756546)
+  直播平台色情内容检测，案例是弹幕文本。读的是 OpenAlex 摘要。
+
 - 2025. Participation and Reification of Virtual Community of Practice in Danmu Subtitling. Yan Qin. Danmu-mediated Communication and Audiovisual Translation in the Digital Age. [https://doi.org/10.4324/9781003475422-6](https://doi.org/10.4324/9781003475422-6)
 
 - 2025. Real-Time Sentiment Analysis and Sales Prediction Model of User Bullet Comments and Reviews in E-Commerce. 刘承泽. E-Commerce Letters. [https://doi.org/10.12677/ecl.2025.14124485](https://doi.org/10.12677/ecl.2025.14124485)
+
+- 2025. Research on Intelligent Algorithm of Video Barrage Dataset Based on Multi-Dimensional Scale and Social Network Analysis. Li Tang. International Journal of High Speed Electronics and Systems. [https://doi.org/10.1142/s0129156425405807](https://doi.org/10.1142/s0129156425405807)
+  用 CNKI 上主题含弹幕或情感倾向的期刊论文做关键词聚类。这是文献地图，不是评论语料。读的是 OpenAlex 摘要。
+
+- 2025. Research on the characteristics of Chinese film bullet chat and audience&#x27;s use motivation from the perspective of streaming media. Su Wan、Hadina Habil. Edelweiss Applied Science and Technology. [https://doi.org/10.55214/25768484.v9i3.5818](https://doi.org/10.55214/25768484.v9i3.5818)
+  流媒体视角下中国电影弹幕的特点和观众动机。读的是 OpenAlex 摘要。
 
 - 2025. Research on the Dissemination Paths in China of Bullet Comment Culture as a Cross-Cultural Communication Medium. Yingshan Deng. Proceedings of the 2nd International Conference on Public Relations and Media Communication. [https://doi.org/10.5220/0013990900004916](https://doi.org/10.5220/0013990900004916)
 
@@ -251,6 +309,9 @@
 
 - 2025. The Danmu Interface–Supported Translational Remix on Bilibili. Dingkun Wang、Jiahua Bu. The Routledge Handbook of Fan Video and Digital Authorship. [https://doi.org/10.4324/9781032717401-5](https://doi.org/10.4324/9781032717401-5)
 
+- 2025. The Effect of Bilibili Bullet Screen Culture on Brand Marketing: An Empirical Study Based on Interaction Mechanism and User Perception. Lingyang Zhou. Finance & Economics. [https://doi.org/10.61173/80dnyk38](https://doi.org/10.61173/80dnyk38)
+  哔哩哔哩弹幕文化对品牌营销，用问卷区分自然弹幕和固定弹幕。读的是 OpenAlex 摘要。
+
 - 2025. The Feasibility of Applying Danmaku to Video Learning of Young People and Its Impact on Learning Effect. 梦阳 李. Advances in Psychology. [https://doi.org/10.12677/ap.2025.152071](https://doi.org/10.12677/ap.2025.152071)
 
 - 2025. The Generation and Dissolution of Adversarial Discourse: An Analysis of Medical Documentary Danmaku from Encoding-Decoding Theory Perspective. Zihan Zheng. Journal of Education and Educational Research. [https://doi.org/10.54097/05kn8x75](https://doi.org/10.54097/05kn8x75)
@@ -260,6 +321,9 @@
 
 - 2025. The Impact of Bullet Screen on Consumer’s Purchase Decision in Live Streaming E-Commerce. 庆宁 陆. E-Commerce Letters. [https://doi.org/10.12677/ecl.2025.1462119](https://doi.org/10.12677/ecl.2025.1462119)
 
+- 2025. The Impact of Bullet Screens on Knowledge Dissemination in Online Education Videos: A Case Study of Bilibili. Beilin Di. Advances in Education Humanities and Social Science Research. [https://doi.org/10.56028/aehssr.14.1.358.2025](https://doi.org/10.56028/aehssr.14.1.358.2025)
+  弹幕对在线教育视频里的知识传播，例子是哔哩哔哩。读的是 OpenAlex 摘要。
+
 - 2025. The Impact of Danmaku Ritual Types on User Digital Engagement in Video‐Based Social Media: The Moderating Role of Influencer Types and Domains. Xuebing Dong、Biao Wang、Wenting Chu、Raffaele Filieri、Junyun Liao. Psychology and Marketing. [https://doi.org/10.1002/mar.70003](https://doi.org/10.1002/mar.70003)
 
 - 2025. The Impact of Negative Bullet Comments on Audiences’ Impulse Buying Intention in Fashion Livestreaming. Lulu Zheng、Zengrui Xiao、Wen Zhang. Journal of theoretical and applied electronic commerce research. [https://doi.org/10.3390/jtaer21010001](https://doi.org/10.3390/jtaer21010001)
@@ -268,13 +332,22 @@
 
 - 2025. The Influence of Danmaku Quantity on Video Time Estimation An Eye-Tracking Study on Cognitive Load and Moderating Factors. Jiayu Bao、Xuzhen Shi、Yiran Deng、Yuanyuan Ju、Zeyang Yang. [https://doi.org/10.31219/osf.io/dupyn_v1](https://doi.org/10.31219/osf.io/dupyn_v1)
 
+- 2025. The Realization of Implicit Education in Colleges and Universities with &quot;Bullet Screen Culture&quot; as the Carrier. Zhengjian Wu. International Journal of Management Science Research. [https://doi.org/10.53469/ijomsr.2025.08(12).03](https://doi.org/10.53469/ijomsr.2025.08(12).03)
+  把弹幕文化当作高校隐性教育的载体。读的是 OpenAlex 摘要。
+
 - 2025. Theorizing temporality in multimodal communication: linearity and non-linearity in bullet comments. Feifei Zhou、Yang Liu. Language Sciences. [https://doi.org/10.1016/j.langsci.2025.101740](https://doi.org/10.1016/j.langsci.2025.101740)
 
 - 2025. Time versus timing in social cognition: How concurrent viewer cues and plot-aligned Danmaku affect narrative outcomes on online video platforms. Xinzhi Zhang、Hye Kyung Kim、Shuhua Zhou. Computers in Human Behavior. [https://doi.org/10.1016/j.chb.2025.108748](https://doi.org/10.1016/j.chb.2025.108748)
 
+- 2025. Understanding Bullet Chat Moderation on Bilibili: Patterns, Effects, and Implications. Shen, Yang. University of Chicago. [https://doi.org/10.6082/60asr-3ga23](https://doi.org/10.6082/60asr-3ga23)
+  芝加哥大学文本：哔哩哔哩 bullet chat 是飘过视频的实时评论，并有审核分。读的是 OpenAlex 摘要。
+
 - 2025. Understanding Danmaku and Comment Interactions Through Content Features and Video Popularity. Qiao Wang、Liang Liu、Kazumasa Omote、Mitsuo Yoshida. Procedia Computer Science. [https://doi.org/10.1016/j.procs.2025.09.550](https://doi.org/10.1016/j.procs.2025.09.550)
 
 - 2025. Understanding How Danmaku Platform Amplifies Emotional Responses of Users that Leads to Platform Engagement: Based on Social Presence Theory Combined with SOR model. Chen Li、Jung Suk Lee. International Journal of Electronic Commerce Studies. [https://doi.org/10.7903/ijecs.2544](https://doi.org/10.7903/ijecs.2544)
+
+- 2025. Unwavering interests in influencers: Influencer-focused barrages in social media product review videos. Yanli Pei、Juntao Wu、Fang Wang、Shan Wang. Journal of Retailing and Consumer Services. [https://doi.org/10.1016/j.jretconser.2025.104485](https://doi.org/10.1016/j.jretconser.2025.104485)
+  哔哩哔哩产品评测视频里，针对主播本人的弹幕。读的是 OpenAlex 摘要。
 
 - 2025. Using danmaku to analyze student cognitive behaviors in online classrooms. Jilan Wu、Huifang Qu、Fanchao Meng、Xin Xu、Pei Chen、Zhifang Shao. Expert Systems with Applications. [https://doi.org/10.1016/j.eswa.2025.130279](https://doi.org/10.1016/j.eswa.2025.130279)
 
@@ -285,10 +358,16 @@
 
 - 2025. Youth creative writing on Chinese social media : a multimodal study of bullet comments on Bilibili from an integrated perspective. Liu YANG. Digital Commons - Lingnan (Lingnan University). [https://commons.ln.edu.hk/otd/239](https://commons.ln.edu.hk/otd/239)
 
+- 2025. “High energy ahead!”: exploring Chinese adolescents’ pragmatic identities in bullet-screen discourse. Jue Wu. Humanities and Social Sciences Communications. [https://doi.org/10.1057/s41599-025-04475-x](https://doi.org/10.1057/s41599-025-04475-x)
+  哔哩哔哩弹幕话语里，中国青少年怎样做语用身份。读的是 OpenAlex 摘要。
+
 - 2025. 互动仪式链视角下线上弹幕信息的情感互动研究. 袁子怡、蒋佳宏. 社会科学研究与实践. [https://doi.org/10.63887/ssrp.2025.1.3.27](https://doi.org/10.63887/ssrp.2025.1.3.27)
 
 - 2024. A brain network construction method for the assessment of functional quality of experience. Yifan Niu、Wei Tao、Yuan Zhang、Zhai Guangtao、Xia Wu. Journal of Image and Graphics. [https://doi.org/10.11834/jig.230500](https://doi.org/10.11834/jig.230500)
   用弹幕覆盖率当作功能体验的一个参数，做脑网络评估。读的是 OpenAlex 摘要。
+
+- 2024. A Bullet Screen Sentiment Analysis Method That Integrates the Sentiment Lexicon with RoBERTa-CNN. Yupan Liu、Shuo Wang、Shengshi Yu. Electronics. [https://doi.org/10.3390/electronics13203984](https://doi.org/10.3390/electronics13203984)
+  弹幕短文本长短不一、新词多，用词典加 RoBERTa-CNN 做情绪分类。读的是 OpenAlex 摘要。
 
 - 2024. A Covert Communication Method Based on Time Attributes Shifting of Online Video Bullet Comment. Chun Mao、Zhenyu Li、Xiangyang Luo. IEEE Transactions on Consumer Electronics. [https://doi.org/10.1109/tce.2024.3439691](https://doi.org/10.1109/tce.2024.3439691)
 
@@ -304,13 +383,28 @@
 
 - 2024. Ambient identity construction via massive anonymous danmu comments. Qingxin Xu、Yi Jing. Language Sciences. [https://doi.org/10.1016/j.langsci.2024.101631](https://doi.org/10.1016/j.langsci.2024.101631)
 
+- 2024. An Analysis of Impoliteness Strategies in Bilibili’s Online Bullet Chatting Language. 晶晶 吕. Modern Linguistics. [https://doi.org/10.12677/ml.2024.127612](https://doi.org/10.12677/ml.2024.127612)
+  哔哩哔哩弹幕聊天里的不礼貌策略。OpenAlex 没有摘要，正文没打开。
+
 - 2024. An Analysis of the Characteristics and Developmental Factors of Chinese Bullet Screen (弹幕) Language. mi seong Kim. The Journal of Society for Humanities Studies in East Asia. [https://doi.org/10.52639/jeah.2024.12.69.209](https://doi.org/10.52639/jeah.2024.12.69.209)
 
 - 2024. An Experimental Study on Viewing Perception and Gratification of Danmu Subtitled Online Video Streaming. Sijing Lu、Xijinyan Chen. The Journal of Specialised Translation. [https://doi.org/10.26034/cm.jostrans.2024.5990](https://doi.org/10.26034/cm.jostrans.2024.5990)
 
 - 2024. An Integrated Study on Interactive Factors for the Design of Danmaku Comment Interfaces in Educational Videos. Xi Nan Yang、Dong Min Cho. The Korean Society of Science & Art. [http://dx.doi.org/10.17548/ksaf.2024.03.30.185](http://dx.doi.org/10.17548/ksaf.2024.03.30.185)
 
+- 2024. Analysis of the Influence Path of E-commerce Direct Broadcast Room Bullet-screen Information on Consumers&#x27; Purchase Intention. Wenting Wang. Lecture Notes in Education Psychology and Public Media. [https://doi.org/10.54254/2753-7048/54/20241618](https://doi.org/10.54254/2753-7048/54/20241618)
+  电商直播间里，弹幕信息质量怎样走到购买意愿。读的是 OpenAlex 摘要。
+
 - 2024. Application of Danmaku Technology in Teaching Visual Analysis Based on Citespace. &lt;p&gt;Han Ziyi&lt;/p&gt;. Frontiers in Educational Research. [http://dx.doi.org/10.25236/fer.2024.070330](http://dx.doi.org/10.25236/fer.2024.070330)
+
+- 2024. Boosting e-commerce sales with live streaming: the power of barrages. Jie Zhao、Jie Zhou、Peng Wu、Kun Liang. Electronic Commerce Research. [https://doi.org/10.1007/s10660-024-09913-7](https://doi.org/10.1007/s10660-024-09913-7)
+  直播带货里弹幕对销售的作用。OpenAlex 没有摘要，正文没打开。
+
+- 2024. Bullet-screen engagement in videos and deindividualized online behavior: the chain mediating role of belonging and loneliness. Mingxuan Zou、Defang Mu. Current Psychology. [https://doi.org/10.1007/s12144-024-05746-7](https://doi.org/10.1007/s12144-024-05746-7)
+  弹幕参与和去个体化的网络行为。OpenAlex 没有摘要，正文没打开。
+
+- 2024. Bullet-Screen-Emoji Attack With Temporal Difference Noise for Video Action Recognition. Yongkang Zhang、Han Zhang、Jun Li、Zhiping Shi、Jian Yang、Kaixin Yang、Shuo Yin、Qiuyan Liang等. IEEE Transactions on Circuits and Systems for Video Technology. [https://doi.org/10.1109/tcsvt.2024.3455799](https://doi.org/10.1109/tcsvt.2024.3455799)
+  用弹幕式表情做视频动作识别的对抗样本。对象是攻击图案，不是观众写的弹幕语料。读的是 OpenAlex 摘要。
 
 - 2024. Carnival and Loneliness: Embodiment of Emotion in Chinese Youth Internet Subculture (Based on Danmu Culture). Zhang Haichao. Izvestia Ural Federal University Journal Series 1 Issues in Education Science and Culture. [http://dx.doi.org/10.15826/izv1.2024.30.2.034](http://dx.doi.org/10.15826/izv1.2024.30.2.034)
 
@@ -320,6 +414,9 @@
 
 - 2024. Constant or inconstant? The time-varying effect of danmaku on user engagement in online video platforms. Haixia Yuan、Kevin Lü、Ali Ausaf、Mohan Zhu. Internet Research. [https://doi.org/10.1108/intr-06-2023-0479](https://doi.org/10.1108/intr-06-2023-0479)
 
+- 2024. Cross-Platform Emotion Analysis and Hot Word Mining Method Based on Live Broadcast Room Bullet Screen. N LI、Yucheng Meng. [https://doi.org/10.1109/iccc62609.2024.10941984](https://doi.org/10.1109/iccc62609.2024.10941984)
+  抖音、快手、小红书直播间弹幕的跨平台情绪和热词。读的是 OpenAlex 摘要。
+
 - 2024. Danmaku consistency reduces consumer purchases during live streaming: A dual‐process model. Nan Zhang、Chenhan Ruan. Psychology and Marketing. [https://doi.org/10.1002/mar.22074](https://doi.org/10.1002/mar.22074)
 
 - 2024. Danmaku-Based Automatic Analysis of Real-Time Online Learning Engagement. Linzhou Zeng、Zhibang Tan、Yougang Ke、Lingling Xia. International Journal of Interactive Mobile Technologies (iJIM). [http://dx.doi.org/10.3991/ijim.v18i08.48025](http://dx.doi.org/10.3991/ijim.v18i08.48025)
@@ -328,24 +425,46 @@
 
 - 2024. Danmu as Parasocial Audience Engagement: A Textual Analysis Based on Television Interviews With Women Athletes. Zizhong Zhang. Communication & Sport. [https://doi.org/10.1177/21674795241303424](https://doi.org/10.1177/21674795241303424)
 
+- 2024. Deep Learning-Based Analysis of Emotional and Content Relevance Between Bullet Screens and Subtitles as Movie Narrative Medium. Wang Hanmei. SAGE Open. [https://doi.org/10.1177/21582440241280840](https://doi.org/10.1177/21582440241280840)
+  把电影弹幕和字幕当成两种叙事媒介，比情绪和内容是否相关。读的是 OpenAlex 摘要。
+
 - 2024. E-Commerce Live Streaming Danmaku Classification Through LDA-Enhanced BERT-TextCNN Model. Qing Shen、Yi han Wen、Ubaldo Comite. International Journal of Information Technologies and Systems Approach. [https://doi.org/10.4018/ijitsa.350301](https://doi.org/10.4018/ijitsa.350301)
 
 - 2024. Effects of real-time danmaku interaction on student engagement in live video-streaming teaching: analyzing the mediating roles of social, teaching, and cognitive presences. Min Zhang、Qiang Jiang、Weiyan Xiong、Qi Li、Wei Zhao. Interactive Learning Environments. [https://doi.org/10.1080/10494820.2024.2388766](https://doi.org/10.1080/10494820.2024.2388766)
 
 - 2024. Enhancing video rumor detection through multimodal deep feature fusion with time-sync comments. Ming Yin、Wei Chen、Dan Zhu、Jijiao Jiang. Information Processing & Management. [https://doi.org/10.1016/j.ipm.2024.103935](https://doi.org/10.1016/j.ipm.2024.103935)
 
+- 2024. Evaluating Real-Time Emotional Responses Using Bullet Screen Sentiment Analysis: Evidence from Electrodermal Activity. Zhao Xu、Qingchuan Li、Song Yao. Lecture notes in computer science. [https://doi.org/10.1007/978-3-031-76806-4_18](https://doi.org/10.1007/978-3-031-76806-4_18)
+  用弹幕情绪分析看实时情绪反应，并拿到皮电数据。OpenAlex 没有摘要，正文没打开。
+
 - 2024. Examining the Use of DanMu for Crowdsourcing Control in Virtual Gatherings. Yue Li、Teng Ma、Ziming Li、Hai‐Ning Liang. International Journal of Human-Computer Interaction. [https://doi.org/10.1080/10447318.2024.2375700](https://doi.org/10.1080/10447318.2024.2375700)
 
 - 2024. Exploring the Danmaku Content Moderation on Video-Sharing Platforms: Existing Limitations, Challenges, and Design Opportunities. Siying Hu、Zhicong Lu. arXiv (Cornell University). [http://arxiv.org/abs/2411.04529](http://arxiv.org/abs/2411.04529)
 
+- 2024. Functional or social? Effect of bullet screen type on consumers&#x27; continuous watching intention in e-commerce live-streaming. Jiaxin Ma、Depeng Zhang、Lihong Fu、Wanli Zhou. Journal of Research in Interactive Marketing. [https://doi.org/10.1108/jrim-03-2024-0173](https://doi.org/10.1108/jrim-03-2024-0173)
+  比较功能型和社会型弹幕会不会让人继续看电商直播。读的是 OpenAlex 摘要。
+
+- 2024. Games and Beyond: Analyzing the Bullet Chats of Esports Livestreaming. Yukun Jiang、Xinyue Shen、Rui Wen、Zeyang Sha、Junjie Chu、Yugeng Liu、Michael Backes、Yang Zhang. Proceedings of the International AAAI Conference on Web and Social Media. [https://doi.org/10.1609/icwsm.v18i1.31350](https://doi.org/10.1609/icwsm.v18i1.31350)
+  电竞直播的 bullet chats：跟着直播时间轴滚动、和普通评论不同。读的是 OpenAlex 摘要。萨尔大学公开页不另立条目。
+  另见 [https://doi.org/10.22028/d291-47273](https://doi.org/10.22028/d291-47273)
+
+- 2024. Generative Steganography via Live Comments on Streaming Video Frames. Yuling Liu、Cuilin Wang、Jie Wang、Bo Ou、Xin Liao. IEEE Transactions on Computational Social Systems. [https://doi.org/10.1109/tcss.2024.3352979](https://doi.org/10.1109/tcss.2024.3352979)
+  摘要把直播评论定义成画面出现时飞过屏幕的字，并拿它做隐写信道。读的是 OpenAlex 摘要。这里只记研究对象，不记做法。
+
 - 2024. HOTVCOM: Generating Buzzworthy Comments for Videos. Yuyan Chen、Qian Yu、Songzhou Yan、Jiyuan Jia、Zhixu Li、Yanghua Xiao、Xiaobo Li、Ming Hong Yang等. arXiv (Cornell University). [http://arxiv.org/abs/2409.15196](http://arxiv.org/abs/2409.15196)
   做的是短视频热评，不是盖在画面上的弹幕；文中用弹幕生成当作对照。读的是 OpenAlex 摘要。
+
+- 2024. How Barrage Video Changes the Young Generation’s Viewing Habits? - Taking Bilibili Barrage Video Website as an Example. Zhicheng Wang. Journal of new media and economics.. [https://doi.org/10.62517/jnme.202410411](https://doi.org/10.62517/jnme.202410411)
+  哔哩哔哩这种弹幕视频站怎样改变年轻人的观看习惯。摘要写明实时评论盖在视频上。读的是 OpenAlex 摘要。
 
 - 2024. How Danmaku influences college students’ attitudes toward characters in TV series: evidence from ERPs. Ding Hanqing、Lichao Xiu、Cai Huali. International Communication of Chinese Culture. [https://doi.org/10.1007/s40636-024-00279-x](https://doi.org/10.1007/s40636-024-00279-x)
 
 - 2024. How real-time interaction and sentiment influence online sales? Understanding the role of live streaming danmaku. Yihan Zhang、Kai Li、Chen Qian、Xiaotong Li、Qinjian Yuan. Journal of Retailing and Consumer Services. [https://doi.org/10.1016/j.jretconser.2024.103793](https://doi.org/10.1016/j.jretconser.2024.103793)
 
 - 2024. Incorporating progress bar and danmaku in MOOCs: effect on learning motivation through psychological distance. Diqiao Liang. Nanyang Technological University. [https://doi.org/10.32657/10356/182133](https://doi.org/10.32657/10356/182133)
+
+- 2024. Influencer-Focused Barrages in Product Demo Videos: An Exploratory Study. Juntao Wu、Yanli Pei、Shan Wang、Fang Wang. Lecture notes in business information processing. [https://doi.org/10.1007/978-3-031-60264-1_24](https://doi.org/10.1007/978-3-031-60264-1_24)
+  产品演示视频里针对主播的弹幕。OpenAlex 没有摘要，正文没打开。
 
 - 2024. It pays to diversify: Effect of bullet‐screen comment diversity on payment. Mingyue Zhang、Xuejing Ma、Haipeng Allan Chen. Psychology and Marketing. [https://doi.org/10.1002/mar.22004](https://doi.org/10.1002/mar.22004)
   弹幕用词越多样，观众越愿意付钱；中间经过社会在场和信息丰富度。读的是 OpenAlex 摘要。
@@ -361,9 +480,22 @@
 
 - 2024. Reinventing Fashion as an Affective Apparatus by China&#x27;s Youth: Bilibili, Danmaku Commentaries, and the Online Hanfu Ceremony During the COVID-19 Outbreak. Penn Tsz Ting Ip、Chen Fan. Emerging Media. [https://doi.org/10.1177/27523543241231823](https://doi.org/10.1177/27523543241231823)
 
+- 2024. Research on Bullet Screen Discourse from the Perspective of Critical Discourse Analysis — A Case Study of Heaven Official’s Blessing on Bilibili.com. Mengjun Song. Journal of Linguistics and Communication Studies. [https://doi.org/10.56397/jlcs.2024.09.06](https://doi.org/10.56397/jlcs.2024.09.06)
+  用批评话语分析看《天官赐福》哔哩哔哩弹幕。读的是 OpenAlex 摘要。
+
 - 2024. Research on Emotion Classification Method of Bullet Screen Text Based on Video Topic Discovery. Songlin Han、Gang Gan. 2024 5th International Conference on Computer, Big Data and Artificial Intelligence (ICCBD+AI). [https://doi.org/10.1109/iccbd-ai65562.2024.00054](https://doi.org/10.1109/iccbd-ai65562.2024.00054)
 
+- 2024. Research on sentiment analysis based on the Bilibili video barrage. Junyu Bai. Applied and Computational Engineering. [https://doi.org/10.54254/2755-2721/38/20230551](https://doi.org/10.54254/2755-2721/38/20230551)
+  爬哔哩哔哩弹幕做情绪、高频词和词云。读的是 OpenAlex 摘要。
+
 - 2024. Research on the Influencing Factors of Knowledge Communication Effect of Instructional Danmaku Videos. Dan Xia、Yu Zhang、Xiaoxiong Zhao、Qiusha Min. SSRN Electronic Journal. [http://doi.org/10.2139/ssrn.4880685](http://doi.org/10.2139/ssrn.4880685)
+
+- 2024. Research on User Classification of e-commerce Live Broadcast Platform Based on Bullet Screen——Take Beauty Live Streaming on Taobao as an Example. Wen Lei. Advances in computer science research. [https://doi.org/10.2991/978-94-6463-562-1_3](https://doi.org/10.2991/978-94-6463-562-1_3)
+  淘宝美妆直播的弹幕被用来给用户分类。读的是 OpenAlex 摘要。
+
+- 2024. Responding to subtitled K-drama: Artefact-orientation in timed comments. Thomas C. Messerli、Miriam A. Locher. Discourse Context & Media. [https://doi.org/10.1016/j.dcm.2024.100756](https://doi.org/10.1016/j.dcm.2024.100756)
+  Viki 上韩剧粉丝字幕旁边的 timed comments，看评论怎样指向字幕这个物件。读的是 OpenAlex 摘要。2026 年的勘误不另立条目。
+  另见 [https://doi.org/10.1016/j.dcm.2026.101029](https://doi.org/10.1016/j.dcm.2026.101029)
 
 - 2024. Sentiment Analysis of Chinese Bullet Comments Based on Enhanced Deep Learning Model. Kai Zhao、Wang Qibo、Wan Lining、Zhang Linlin、Lu Xilei、Wang Zhiwei. 2024 IEEE 5th International Conference on Pattern Recognition and Machine Learning (PRML). [https://doi.org/10.1109/prml62565.2024.10779914](https://doi.org/10.1109/prml62565.2024.10779914)
 
@@ -373,6 +505,9 @@
 
 - 2024. Sentiment time series clustering of Danmu videos based on BERT fine-tuning and SBD-K-shape. Ruoxi Zhang、Chenhan Ren. The Electronic Library. [https://doi.org/10.1108/el-10-2023-0243](https://doi.org/10.1108/el-10-2023-0243)
 
+- 2024. Student Perceptions of Bullet Screens in Pre-Clinical Pharmacology: Acceptability, Effectiveness, and Entertainment Value. Sanne J. de Vries、Mark L. van Dijk. Annals of Pharmacy Education Safety and Public Health Advocacy. [https://doi.org/10.51847/qa9bnzgatq](https://doi.org/10.51847/qa9bnzgatq)
+  药理课弹幕的接受度。摘要开头和 2022 年 BMC 那篇调查几乎同一套说法，正文没逐页对过，不把它写成另一项已核对的独立实验。
+
 - 2024. Text-on-Screen. Ryoko Sasamoto. Relevance and Text-on-Screen in Audiovisual Translation. [http://dx.doi.org/10.4324/9781003231752-1](http://dx.doi.org/10.4324/9781003231752-1)
   同一本书的总述。弹幕是画面文字的一种，旁边还有 telop 和花式字幕。读的是 OpenAlex 摘要。
 
@@ -381,6 +516,12 @@
 - 2024. The Development of Bilibili’s Bullet Comments. 峻峰 许. Modern Linguistics. [https://doi.org/10.12677/ml.2024.122122](https://doi.org/10.12677/ml.2024.122122)
 
 - 2024. The Effect of Danmaku Font Size on Online Learning Outcomes for Learners with Different Cognitive Styles: Evidence from Eye Movements. Fengqiang Gao、Chunze Xu、Qing Lv、Zhong Liu、Lei Han. International Journal of Human-Computer Interaction. [https://doi.org/10.1080/10447318.2024.2361207](https://doi.org/10.1080/10447318.2024.2361207)
+
+- 2024. The influence of bullet screen on communication effect of knowledge videos: An ELM perspective. Tao Zhou、Xinjie Ma. Data Science and Informetrics. [https://doi.org/10.1016/j.dsim.2025.01.006](https://doi.org/10.1016/j.dsim.2025.01.006)
+  知识视频的传播效果和弹幕信息量、互动、特殊弹幕。语料来自哔哩哔哩。读的是 OpenAlex 摘要。
+
+- 2024. To offer or not to offer? Bullet screen strategies for competing video platforms with vertical differentiation. Xingzhen Zhu、Li Li、Jing Li. Journal of Retailing and Consumer Services. [https://doi.org/10.1016/j.jretconser.2024.104083](https://doi.org/10.1016/j.jretconser.2024.104083)
+  竞争的视频平台要不要提供弹幕。OpenAlex 没有摘要，正文没打开。
 
 - 2024. Towards Inclusive Video Commenting: Introducing Signmaku for the Deaf and Hard-of-Hearing. Si Chen、Haocong Cheng、Jason Situ、Desirée Kirst、Suzy Su、Saumya Malhotra、Lawrence Angrave、Qi Wang等. Proceedings of the CHI Conference on Human Factors in Computing Systems. [https://doi.org/10.1145/3613904.3642287](https://doi.org/10.1145/3613904.3642287)
   给听障观众做的手语版弹幕 Signmaku，并和文字弹幕对照。CHI 版本。arXiv 预印本不另立一条。读的是 OpenAlex 摘要。
@@ -400,13 +541,22 @@
 
 - 2023. A Covert Communication Method Adapted to Social Media Based on Time Modulation of Bullet Comments. Chun Mao、Zhenyu Li、Mingliang Zhang、Yi Zhang、Xiangyang Luo. IEEE Transactions on Consumer Electronics. [https://doi.org/10.1109/tce.2023.3277919](https://doi.org/10.1109/tce.2023.3277919)
 
+- 2023. A method for aggregating the features of bullet screen. Zijian Chen、Shaoshuai Li、Wenbin Yu. [http://dx.doi.org/10.1117/12.2685628](http://dx.doi.org/10.1117/12.2685628)
+  不把整段视频的弹幕一次算完，而是先聚合成视频特征再做情绪。读的是 OpenAlex 摘要。
+
 - 2023. A Study of the Language of Bullet Comments in Bilibili Auto-tune Remix-themed Content Videos. Pengyun Li. SHS Web of Conferences. [http://dx.doi.org/10.1051/shsconf/202315502011](http://dx.doi.org/10.1051/shsconf/202315502011)
+
+- 2023. A Study on the Effect of Teaching Effectiveness of Online Courses and the Number of Bullet Screen. Gengyi Wang、Wenda Tian、Qianhang Qin. Lecture notes in computer science. [https://doi.org/10.1007/978-3-031-35708-4_15](https://doi.org/10.1007/978-3-031-35708-4_15)
+  在线课教学效果和弹幕数量。OpenAlex 没有摘要，正文没打开。
 
 - 2023. Aspect sentiment mining of short bullet screen comments from online TV series. Jiayue Liu、Ziyao Zhou、Ming Yu Gao、Jiafu Tang、Weiguo Fan. Journal of the Association for Information Science and Technology. [https://doi.org/10.1002/asi.24800](https://doi.org/10.1002/asi.24800)
 
 - 2023. Behavior Analytics, Sentiment Analysis, and Topic Detection of Danmaku from Online Electronics Courses on Bilibili. Linzhou Zeng、Zhibang Tan、Lingling Xia、Yu&#x27;an Xiang、Yougang Ke. International Journal of Information and Education Technology. [http://dx.doi.org/10.18178/ijiet.2023.13.2.1800](http://dx.doi.org/10.18178/ijiet.2023.13.2.1800)
 
 - 2023. Blibug: AI Vtuber Based on Bilibili Danmuku Interaction. Yihua Li、Yuqian Sun、Ying Xu、YU Ji-hong. Creativity and Cognition. [https://doi.org/10.1145/3591196.3596618](https://doi.org/10.1145/3591196.3596618)
+
+- 2023. Bullet-titling in twenty-first century China: bullet-like tactility, soft touch and diachronic simultaneity. Jianqing Chen. Journal of Visual Culture. [https://doi.org/10.1177/14704129231166845](https://doi.org/10.1177/14704129231166845)
+  当代中国把横向滚动的评论打在运动影像上，并讨论伪实时。读的是 OpenAlex 摘要。
 
 - 2023. Can Social Presence Promote Meaningful Learning? Danmaku Video Learning to Enhance Social Presence and Meaningful Learning. Tzu-Hsiang Peng、Tzu‐Hua Wang. Pedagogy and Psychology in Digital Education. [https://doi.org/10.1007/978-981-99-2107-2_12](https://doi.org/10.1007/978-981-99-2107-2_12)
 
@@ -427,11 +577,17 @@
 
 - 2023. Danmu- assisted learning through back translation. Xuemei Chen. Babel Revue internationale de la traduction / International Journal of Translation / Revista Internacional de Traducción. [https://doi.org/10.1075/babel.00338.che](https://doi.org/10.1075/babel.00338.che)
 
+- 2023. Data Mining and Analysis of Video Barrage By AI Algorithm. Daoqing Gong、Xinyan Gan、Xiaonian Tang、Hua Li、Xiang Gao. [http://dx.doi.org/10.1109/ecbios57802.2023.10218597](http://dx.doi.org/10.1109/ecbios57802.2023.10218597)
+  爬了哔哩哔哩五类电影的弹幕，做词云和情绪分类。读的是 OpenAlex 摘要。
+
 - 2023. Development of Chinese Danmaku Video Sites based on Self-Directed Learning (CDSDL) Model for Undergraduate Students in TAM Model. Bin Lin、Mohd Nazir Bin Zabit、Shiqin Huang. International Journal of Computing and Information Technology. [http://dx.doi.org/10.56028/ijcit.1.3.1.2023](http://dx.doi.org/10.56028/ijcit.1.3.1.2023)
 
 - 2023. Effective Language Representations for Danmaku Comment Classification in Nicovideo. Hiroyoshi Nagao、Koshiro Tamura、Marie Katsurai. IEICE Transactions on Information and Systems. [https://doi.org/10.1587/transinf.2022dap0010](https://doi.org/10.1587/transinf.2022dap0010)
 
 - 2023. Estimating the General Trend of the Danmaku in League of Legends eSports Based on Multivariate Regression. Shihao Qiu. 2023 2nd International Conference on Artificial Intelligence and Computer Information Technology (AICIT). [http://dx.doi.org/10.1109/aicit59054.2023.10277910](http://dx.doi.org/10.1109/aicit59054.2023.10277910)
+
+- 2023. Experimental Design and Validation of i-Comments for Online Learning Support. Jiaqi Wang、Jian Chen、Qun Jin. Lecture notes in computer science. [https://doi.org/10.1007/978-3-031-34411-4_15](https://doi.org/10.1007/978-3-031-34411-4_15)
+  i-Comments 的实验设计。OpenAlex 没有摘要，正文没打开。同一组作者另有两篇界面评论论文。
 
 - 2023. Exploring the Information Cues of Danmaku Comments to Stimulate Users&#x27; Affective Generation in Reaction Videos. Xujie Ye、Yuxiang  Chris Zhao、Jinhao Li、Yan Zhang、Preben Hansen. Proceedings of the Association for Information Science and Technology. [https://doi.org/10.1002/pra2.847](https://doi.org/10.1002/pra2.847)
 
@@ -448,6 +604,9 @@
 
 - 2023. How to Mine Business Value from Bullet Screen Comments in TV Series by Aspect Sentiment Analysis?. Jiayue Liu、Ming Yu Gao. SSRN Electronic Journal. [https://doi.org/10.2139/ssrn.4478592](https://doi.org/10.2139/ssrn.4478592)
 
+- 2023. Increasing Student Online Interactions: Applying the Video Timeline-Anchored Comment (VTC) Tool to Asynchronous Online Video Discussions. Xi Yu Lin、Qi Sun、Xiaoqiao Zhang. International Journal of Human-Computer Interaction. [https://doi.org/10.1080/10447318.2023.2247554](https://doi.org/10.1080/10447318.2023.2247554)
+  VTC：异步课里把评论钉在视频时间上。读的是 OpenAlex 摘要。
+
 - 2023. Insights from Danmaku Translation Criticism on Translation Pedagogy—A Case Study of BBC Documentaries. 雅婷 张. Modern Linguistics. [https://doi.org/10.12677/ml.2023.1110570](https://doi.org/10.12677/ml.2023.1110570)
 
 - 2023. Let’s Play Together through Channels: Understanding the Practices and Experience of Danmaku Participation Game Players in China. Piaohong Wang、Zhicong Lu. Proceedings of the ACM on Human-Computer Interaction. [https://doi.org/10.1145/3611059](https://doi.org/10.1145/3611059)
@@ -459,19 +618,43 @@
 
 - 2023. Original text for manuscript &quot;Simplicity-Genic Complexity: Danmaku-Based Analyses to Characteristics of Cyber Nationalism among Chinese Adolescent Netizens&quot;. Anonymize Anonymize. Harvard Dataverse. [https://doi.org/10.7910/dvn/5ndwe3](https://doi.org/10.7910/dvn/5ndwe3)
 
+- 2023. PiEvE: A Dual-mode Game-based Plug-in Approach Applying Bullet Screen in Virtual Classrooms. Xiang Li、Ye Tian、Ling Xu. [http://dx.doi.org/10.1109/icaie56796.2023.00027](http://dx.doi.org/10.1109/icaie56796.2023.00027)
+  虚拟课堂插件，把弹幕和 PvE 玩法放在一起。读的是 OpenAlex 摘要。
+
 - 2023. Predicting Moral Elevation Conveyed in Danmaku Comments Using EEGs. Chenhao Bao、Xin Hu、Dan Zhang、Zhao Lv、Jingjing Chen. Cyborg and Bionic Systems. [https://doi.org/10.34133/cbsystems.0028](https://doi.org/10.34133/cbsystems.0028)
 
 - 2023. Prediction Model of Short Video Danmaku Emotion Recognition. Yifei Li、Shan Chen. 2023 International Seminar on Computer Science and Engineering Technology (SCSET). [http://dx.doi.org/10.1109/scset58950.2023.00072](http://dx.doi.org/10.1109/scset58950.2023.00072)
 
 - 2023. Protective Effects of Danmu Extract Syrup on Acute Lung Injury Induced by Lipopolysaccharide in Mice through Endothelial Barrier Repair. Xu Han、Sicong Xu、Liyan Li、Yu-huang Wu、Yinfeng Tan、Long Chen、Pei‐Shan Liu、Changfu Liang等. Chinese Journal of Integrative Medicine. [https://doi.org/10.1007/s11655-023-3604-5](https://doi.org/10.1007/s11655-023-3604-5)
 
+- 2023. PTVD: A Large-Scale Plot-Oriented Multimodal Dataset Based on Television Dramas. Chen Li、Xutan Peng、Teng Wang、Yixiao Ge、Mengyang Liu、Xuyuan Xu、Yexin Wang、Ying Shan. arXiv. [https://arxiv.org/abs/2306.14644](https://arxiv.org/abs/2306.14644)
+  剧情向多模态数据集。摘要称另有两千六百万条以上的弹幕评论用于预训练。数据集页面在摘要里是占位链接，这里不补一个没打开的地址。读的是 arXiv 摘要页。
+
 - 2023. Replication Data for: Original Danmaku Comments. ­ Anonymous. Harvard Dataverse. [https://doi.org/10.7910/dvn/e47qmb](https://doi.org/10.7910/dvn/e47qmb)
+
+- 2023. Research on Online Course Design Strategy Based on Text Analysis of Bullet Screen. Yuxi Chen、Peng Deng. [http://dx.doi.org/10.1109/bdai59165.2023.10256858](http://dx.doi.org/10.1109/bdai59165.2023.10256858)
+  用哔哩哔哩一门数学课的弹幕文本改在线课设计。读的是 OpenAlex 摘要。
+
+- 2023. Research on Relationship Between Bullet Screen Attributes in Medical Popular Science Videos and The audience’s cognitive load. Wenjuan Xu、Tong Zheng. [http://dx.doi.org/10.1109/ickii58656.2023.10332737](http://dx.doi.org/10.1109/ickii58656.2023.10332737)
+  医学科普视频里弹幕的不透明度和速度，怎样连到观众的认知负荷。读的是 OpenAlex 摘要。
+
+- 2023. Research on the Effect of Video Communication based on the Analysis of the Characteristics of the Bullet Screen - Take the &quot;Eating and Broadcasting&quot; Video as an Example. Wei Shi、Ming-Kai Xu. International Journal of Computer Applications. [https://doi.org/10.5120/ijca2023923036](https://doi.org/10.5120/ijca2023923036)
+  哔哩哔哩吃播视频的弹幕特征怎样连到播放量。读的是 OpenAlex 摘要。
 
 - 2023. Research on the Influencing Factors of Online Video Danmaku Watching and Participation. Junfeng Liao、Rundong Li、Huizhong Liao、Junkai Huang. Atlantis Highlights in Computer Sciences/Atlantis highlights in computer sciences. [https://doi.org/10.2991/978-94-6463-172-2_75](https://doi.org/10.2991/978-94-6463-172-2_75)
 
 - 2023. Sentiment Analysis on Online Videos by Time-Sync Comments. Jiangfeng Li、Ziyu Li、Xiaofeng Ma、Qinpei Zhao、Chenxi Zhang、Gang Yu. Entropy. [https://doi.org/10.3390/e25071016](https://doi.org/10.3390/e25071016)
 
 - 2023. Sentiment classification of time-sync comments: A semi-supervised hierarchical deep learning method. Renzhi Gao、Xiaoyu Yao、Zhao Wang、Mohammad Zoynul Abedin. European Journal of Operational Research. [https://doi.org/10.1016/j.ejor.2023.11.035](https://doi.org/10.1016/j.ejor.2023.11.035)
+
+- 2023. Study on the Use Psychology of Bullet Screen Website Users. 雨桐 蒋. Journalism and Communications. [https://doi.org/10.12677/jc.2023.111014](https://doi.org/10.12677/jc.2023.111014)
+  弹幕网站用户的使用心理。OpenAlex 没有摘要，正文没打开。
+
+- 2023. Teaching effects of using bullet-screen technology during classes on students’ learning: The mediating effect of perceived interactivity. Chenwei Ma、Fang Wang、Yang Lv. Education and Information Technologies. [https://doi.org/10.1007/s10639-023-12054-3](https://doi.org/10.1007/s10639-023-12054-3)
+  课堂里使用弹幕技术的教学效果。OpenAlex 没有摘要，正文没打开。
+
+- 2023. The effects of live comments and advertisements on social media engagement: application to short-form online video. Xiaodan Zhang、Zhanbo Zhao、Kui Wang. Journal of Research in Interactive Marketing. [https://doi.org/10.1108/jrim-02-2023-0069](https://doi.org/10.1108/jrim-02-2023-0069)
+  哔哩哔哩 2081 个视频上，随观看过程变化的 live comments 怎样影响互动。摘要没使用 danmaku 这个词，按钉在观看过程上的评论补入。读的是 OpenAlex 摘要。
 
 - 2023. The Impact of Danmaku Information Quality on Consumers’ Impulsive Consumption Behavior. Mingyue Fan、Dragana Ostic、Keyu Han、Sanaullah Shar. Academy of Management Proceedings. [https://doi.org/10.5465/amproc.2023.10474abstract](https://doi.org/10.5465/amproc.2023.10474abstract)
 
@@ -482,6 +665,12 @@
 - 2023. The Influence Factors of User Review Behavior in DANMAKU based on the Uses &amp; Gratifications Theory. X. Jessie Yang、Dong Min Cho. Journal of Korea Multimedia Society. [http://dx.doi.org/10.9717/kmms.2023.26.9.1171](http://dx.doi.org/10.9717/kmms.2023.26.9.1171)
 
 - 2023. The Social Impact from Danmu—Insights from Esports Online Videos. Fan Li、Wenche Wang、Weiqing Lai. Journal of theoretical and applied electronic commerce research. [https://doi.org/10.3390/jtaer18010023](https://doi.org/10.3390/jtaer18010023)
+
+- 2023. Time-synchronic comments on video streaming website reveal core structures of audience engagement in movie viewing. Wenjing Ni、Christophe Coupé. Frontiers in Psychology. [https://doi.org/10.3389/fpsyg.2022.1040755](https://doi.org/10.3389/fpsyg.2022.1040755)
+  视频网站上三百多万条时间同步评论，用来看观众看电影时的情绪和认知用词。读的是 OpenAlex 摘要。
+
+- 2023. Understanding Interaction Patterns of Bullet-Screen Videos: A Knowledge Building Perspective. Chingying Wong、Jingjing Zhang. [http://dx.doi.org/10.1109/cste59648.2023.00056](http://dx.doi.org/10.1109/cste59648.2023.00056)
+  把哔哩哔哩弹幕视频的互动看成知识建构。读的是 OpenAlex 摘要。
 
 - 2023. Visualizing timeline-anchored comments enhanced social presence and information searching in video-based learning. Yue Chen、Qin Gao. Computer Applications in Engineering Education. [https://doi.org/10.1002/cae.22641](https://doi.org/10.1002/cae.22641)
   把钉在时间轴上的评论做成相关性、话题和难度的可视化。24 人实验里，社会在场和开卷检索更好。Crossref 摘要。PDF 未打开。
@@ -504,6 +693,13 @@
 
 - 2022. Bullet Comments for 360°Video. Yi-Jun Li、Jin-Chuan Shi、Fang‐Lue Zhang、Miao Wang. 2022 IEEE Conference on Virtual Reality and 3D User Interfaces (VR). [https://doi.org/10.1109/vr51125.2022.00017](https://doi.org/10.1109/vr51125.2022.00017)
 
+- 2022. Bullet screen in pre-clinical undergraduate pharmacology education: a survey study. Yaoxing Chen、Hong Yan Qi、Qiu Yu、Juan Li、Liang Zhu、Hao Wang、Xiaoling Gao、Gan Jiang. BMC Medical Education. [https://doi.org/10.1186/s12909-022-03906-6](https://doi.org/10.1186/s12909-022-03906-6)
+  药理课引入弹幕后做调查。读的是 OpenAlex 摘要。Research Square 预印本不另立条目。
+  另见 [https://doi.org/10.21203/rs.3.rs-1496533/v1](https://doi.org/10.21203/rs.3.rs-1496533/v1)
+
+- 2022. Carnival Theoretical Analysis of the Bullet Screen Participation and Bilibili. Xinyi Zhang. Advances in Social Science, Education and Humanities Research/Advances in social science, education and humanities research. [https://doi.org/10.2991/assehr.k.220504.146](https://doi.org/10.2991/assehr.k.220504.146)
+  用狂欢理论看哔哩哔哩弹幕参与。摘要把弹幕定义成嵌在视频里、跟着画面滚的即时评论。读的是 OpenAlex 摘要。
+
 - 2022. Chinese Otaku Culture and Alternative Public Spheres: A Study of Bullet Comments and Bilibili. Dongli Chen. Streaming and Screen Culture in Asia-Pacific. [https://doi.org/10.1007/978-3-031-09374-6_10](https://doi.org/10.1007/978-3-031-09374-6_10)
 
 - 2022. Civic engagement in China against misinformation using danmu during the initial COVID-19 outbreak. Jackie J. Xu、David C. Jeong. The Routledge Handbook of Media Education Futures Post-Pandemic. [https://doi.org/10.4324/9781003283737-62](https://doi.org/10.4324/9781003283737-62)
@@ -522,9 +718,16 @@
 
 - 2022. DanmuVis: Visualizing Danmu Content Dynamics and Associated Viewer Behaviors in Online Videos. Shuai Chen、Sihang Li、Y. Li、Junlin Zhu、Juanjuan Long、Siming Chen、Jiawan Zhang、Xiaoru Yuan. Computer Graphics Forum. [https://doi.org/10.1111/cgf.14552](https://doi.org/10.1111/cgf.14552)
 
+- 2022. Do Real-Time Reviews Matter? Examining how Bullet Screen Influences Consumers’ Purchase Intention in Live Streaming Commerce. Qingfeng Zeng、Qian Guo、Wei Zhuang、Yu Zhang、Weiguo Fan. Information Systems Frontiers. [https://doi.org/10.1007/s10796-022-10356-4](https://doi.org/10.1007/s10796-022-10356-4)
+  直播带货里的弹幕是否带动购买。OpenAlex 没有摘要，正文没打开。勘误不另立条目。
+  另见 [https://doi.org/10.1007/s10796-022-10361-7](https://doi.org/10.1007/s10796-022-10361-7)
+
 - 2022. Effectiveness and safety of Danmu extract syrup for acute upper respiratory tract infection in children: A real‐world, prospective cohort study. Linan Zeng、Hailong Li、Chuan Zhang、Deying Kang、Guanjian Liu、Xihong Li、Lina Chen、Min Zeng等. Journal of Evidence-Based Medicine. [https://doi.org/10.1111/jebm.12464](https://doi.org/10.1111/jebm.12464)
 
 - 2022. Encrypted Live Streaming Channel Identification With Time-Sync Comments. Mingkai Wang、Xiangdong Tang、Fei Chen、Qian Lu. IEEE Access. [https://doi.org/10.1109/access.2022.3157716](https://doi.org/10.1109/access.2022.3157716)
+
+- 2022. Entextualizing high energy texts: an exploration of modal shift on a Chinese online video-sharing website Bilibili. Man Teng、Brian Hok-Shing Chan. Text and Talk. [https://doi.org/10.1515/text-2020-0042](https://doi.org/10.1515/text-2020-0042)
+  一句动画台词被拿去哔哩哔哩各种画面里当评论打。读的是 OpenAlex 摘要。摘要说的是打在视频场景上的评论，没有使用弹幕这个词。
 
 - 2022. Exploiting Danmu Interactions for Optimizing Crowdsourced Livecast Services. Lan Ding、Qinkai Wang、Ye Tian. 2022 7th International Conference on Big Data Analytics (ICBDA). [https://doi.org/10.1109/icbda55095.2022.9760307](https://doi.org/10.1109/icbda55095.2022.9760307)
 
@@ -532,9 +735,15 @@
 
 - 2022. From ‘It’s Your Funeral’ to ‘Mouse Tail Juice’: A Quantitative Study of the Mishearings in Danmu Videos. Yihan Zhou. Lecture notes in computer science. [https://doi.org/10.1007/978-3-031-06703-7_33](https://doi.org/10.1007/978-3-031-06703-7_33)
 
+- 2022. i-Comments: On-screen Individualized Comments for Online Learning Support. Jiaqi Wang、Jian Chen、Qun Jin. 2022 IEEE Intl Conf on Dependable, Autonomic and Secure Computing, Intl Conf on Pervasive Intelligence and Computing, Intl Conf on Cloud and Big Data Computing, Intl Conf on Cyber Science and Technology Congress (DASC/PiCom/CBDCom/CyberSciTech). [https://doi.org/10.1109/dasc/picom/cbdcom/cy55231.2022.9927911](https://doi.org/10.1109/dasc/picom/cbdcom/cy55231.2022.9927911)
+  i-Comments：在线学习画面上按时间、内容和数量出现的个别化评论。读的是 OpenAlex 摘要。
+
 - 2022. Influence of Danmaku in Informal Learning Videos on Foreign Language Learning Enjoyment. Yaguang Li. AERA 2022. [https://doi.org/10.3102/ip.22.1883291](https://doi.org/10.3102/ip.22.1883291)
 
 - 2022. Influence of Danmaku in Informal Learning Videos on Foreign Language Learning Enjoyment. Yaguang Li. Proceedings of the 2022 AERA Annual Meeting. [https://doi.org/10.3102/1883291](https://doi.org/10.3102/1883291)
+
+- 2022. Integrating Video Timeline-Anchored Comments in Asynchronous Online Video-Based Presentation Lectures: Using Canvas Studio as an Example. Xi Yu Lin、Qi Sun、Xiaoqiao Zhang. Lecture notes in networks and systems. [https://doi.org/10.1007/978-3-031-21569-8_49](https://doi.org/10.1007/978-3-031-21569-8_49)
+  把时间轴评论接进 Canvas Studio 的异步视频课。OpenAlex 没有摘要，正文没打开。
 
 - 2022. Interactivity in learning instructional videos: Sending danmaku improved parasocial interaction but reduced learning performance. Ya Mou、Bin Jing、Yi-Chun Li、Nanyang Fang、Changcheng Wu. Frontiers in Psychology. [https://doi.org/10.3389/fpsyg.2022.1066164](https://doi.org/10.3389/fpsyg.2022.1066164)
 
@@ -557,18 +766,36 @@
 
 - 2022. Representation Learning through Multimodal Attention and Time-Sync Comments for Affective Video Content Analysis. Jicai Pan、Shangfei Wang、Lin Fang. Proceedings of the 30th ACM International Conference on Multimedia. [https://doi.org/10.1145/3503161.3548018](https://doi.org/10.1145/3503161.3548018)
 
+- 2022. Research on the Carnival Ritual Construction of Special Effect Bullet Chat at Bilibili from the Perspective of Carnival Theory. yujia yang、kexin zheng. Philosophy & Ideology Research. [http://dx.doi.org/10.37420/j.pir.2022.007](http://dx.doi.org/10.37420/j.pir.2022.007)
+  哔哩哔哩特殊效果弹幕的狂欢仪式。读的是 OpenAlex 摘要。
+
 - 2022. Research on the Correlation between Sentiment of Danmaku and the Gift Value across Different Types of Live Streamers Dictionary-based Sentiment Analysis and Regression Test. Yuming Hu. Proceedings of the International Conference on Big Data Economy and Digital Management. [https://doi.org/10.5220/0011178400003440](https://doi.org/10.5220/0011178400003440)
+
+- 2022. Research on User Interaction Experience in Participatory Websites Based on the Bullet Screen. Qian Yang、Diao Yajing、Jiaming Li、Shilun Ge. DOAJ (DOAJ: Directory of Open Access Journals). [https://doaj.org/article/24dab7163b7a4071942ab59c722f6fc9](https://doaj.org/article/24dab7163b7a4071942ab59c722f6fc9)
+  参与式网站上的弹幕和用户体验，例子是哔哩哔哩。读的是 OpenAlex 摘要。出处字段是 OpenAlex 给的 DOAJ，不是期刊名。
 
 - 2022. Sentiment Analysis: An ERNIE-BiLSTM Approach to Bullet Screen Comments. Yen‐Hao Hsieh、Xin-Ping Zeng. Sensors. [https://doi.org/10.3390/s22145223](https://doi.org/10.3390/s22145223)
 
+- 2022. Study on Group Polarization in the Age of “Bullet Screen”. Zhou Jiawei. Psychology of China. [https://doi.org/10.35534/pc.0402016](https://doi.org/10.35534/pc.0402016)
+  OpenAlex 给的摘要是出版社征稿说明，不是论文摘要。正文没打开。题名讨论弹幕时代的群体极化。
+
+- 2022. Study on Video Website Bullet Screen Based on Semiotics. 雨桐 蒋. Journalism and Communications. [https://doi.org/10.12677/jc.2022.102010](https://doi.org/10.12677/jc.2022.102010)
+  用符号学研究视频网站弹幕。OpenAlex 没有摘要，正文没打开。
+
 - 2022. Taboo Language in Non-Professional Subtitling on Bilibili.com: A Corpus-Based Study. Xijinyan Chen. Languages. [https://doi.org/10.3390/languages7020138](https://doi.org/10.3390/languages7020138)
   对象是哔哩哔哩民间字幕里的禁忌语。弹幕和普通评论是观众对译法的反应，不是单独的弹幕分布研究。读的是 OpenAlex 摘要。
+
+- 2022. The impact of barrage system fluctuation on user interaction in digital video platforms: a perspective from signaling theory and social impact theory. Keshan Wei. Journal of Research in Interactive Marketing. [https://doi.org/10.1108/jrim-06-2022-0160](https://doi.org/10.1108/jrim-06-2022-0160)
+  视频平台上和内容绑在一起的实时动态评论系统，看波动幅度和频率怎样影响互动。读的是 OpenAlex 摘要。
 
 - 2022. The Medium is the Message: Exploring the Introduction of Bullet Comment Culture to China and Its Impact on the Identity Expression of Generation Z Individuals. Maoting Shi. Advances in Social Science, Education and Humanities Research/Advances in social science, education and humanities research. [https://doi.org/10.2991/assehr.k.220504.123](https://doi.org/10.2991/assehr.k.220504.123)
 
 - 2022. The Role of Group Interaction in Danmu Comments for Live E-Commerce. Jingjing Zhou、Liangbo Zhang、Jifan Ren. Atlantis Highlights in Intelligent Systems/Atlantis highlights in intelligent systems. [https://doi.org/10.2991/978-94-6463-010-7_39](https://doi.org/10.2991/978-94-6463-010-7_39)
 
 - 2022. The Topic Evolution of Danmaku Text Based on BTM -- Taking the Context of COVID-19 as an Example. Xin Chen、Yixin Zhang、Junchao Wu、Lingyu Guo、Jiaxuan Chen、Jing Yang. 2022 IEEE 5th International Conference on Big Data and Artificial Intelligence (BDAI). [https://doi.org/10.1109/bdai56143.2022.9862758](https://doi.org/10.1109/bdai56143.2022.9862758)
+
+- 2022. Topic mining of real-time discussions: what catches the attention of live-streaming esports viewers?. Wenche Wang、Jiajia Fan. European Sport Management Quarterly. [https://doi.org/10.1080/16184742.2022.2117397](https://doi.org/10.1080/16184742.2022.2117397)
+  斗鱼两场职业联赛的实时观众评论，做主题挖掘。摘要没写评论是否盖在画面上。读的是 OpenAlex 摘要。
 
 - 2022. Turning Playboys/Playgirls into the Cheerleaders of the National Leadership: Ideological Advocacy via a Recreational Channel in Contemporary China. Jingde Liu. University of Chicago. [https://doi.org/10.6082/xx9f5-v5950](https://doi.org/10.6082/xx9f5-v5950)
   芝加哥大学的一份文本，把弹幕当作哔哩哔哩上的话语渠道做意识形态分析。读的是 OpenAlex 摘要，正文未打开。
@@ -581,6 +808,9 @@
 
 - 2022. Within a Carnivalesque Space: The Textual Identity of Danmu and the Rise of Mass Writing. Huimin Deng、Di Zhan. The Journal of Arts Management Law and Society. [https://doi.org/10.1080/10632921.2022.2030271](https://doi.org/10.1080/10632921.2022.2030271)
 
+- 2022. “Across Time and Space, I Am Together with Many, Many Others”: Digital Writing and Temporality on Chinese Social Media. Feifei Zhou、Xiyin Zhou. Social Media + Society. [https://doi.org/10.1177/20563051221117564](https://doi.org/10.1177/20563051221117564)
+  访谈使用弹幕评论这一写作功能的中国用户，讨论社交媒体上的时间。读的是 OpenAlex 摘要。
+
 - 2022. “Feel sorry for Miss translator!!!”. Yuhong Yang. Interpreting International Journal of Research and Practice in Interpreting. [https://doi.org/10.1075/intp.00086.yan](https://doi.org/10.1075/intp.00086.yan)
   孙杨听证会视频里，观众在弹幕上怎样和译员发生拟社会互动。读的是 OpenAlex 摘要。
 
@@ -589,13 +819,28 @@
 - 2021. A Comparative Analysis of the Impact of Barrage and Comments on Video Popularity. Fudong Wang、Xiayu Fu、Zengyao Sun. IEEE Access. [https://doi.org/10.1109/access.2021.3134104](https://doi.org/10.1109/access.2021.3134104)
   哔哩哔哩上比较弹幕和评论对视频热度的作用，并给弹幕情绪强度加了从众和衰减。读的是 OpenAlex 摘要。
 
+- 2021. A Magic “Bullet”: Exploring Sport Fan Usage of On-Screen, Ephemeral Posts During Live Stream Sessions. Bo Li、Michael L. Naraine、Zhao Liang、Chenyang Li. Communication & Sport. [https://doi.org/10.1177/21674795211038949](https://doi.org/10.1177/21674795211038949)
+  体育直播里盖在画面上、很快飘过的 bullet-screen。读的是 OpenAlex 摘要。
+
+- 2021. Adjacent Display of Relevant Discussion Helps Resolve Confusion. Matin Yarmand、Srishti Palani、Scott R. Klemmer. Proceedings of the ACM on Human-Computer Interaction. [https://doi.org/10.1145/3449217](https://doi.org/10.1145/3449217)
+  ADRD：讨论区的帖子贴在视频旁边，并跟着播放时间换内容。不是盖在画面上的弹幕，是钉在时间上的相邻讨论。读的是 OpenAlex 摘要。
+
 - 2021. Aligned variational autoencoder for matching danmaku and video storylines. Qingchun Bai、Yuanbin Wu、Jie Zhou、Liang He. Neurocomputing. [https://doi.org/10.1016/j.neucom.2021.04.118](https://doi.org/10.1016/j.neucom.2021.04.118)
 
 - 2021. An improved algorithm of video quality assessment by danmaku analysis. Hanyun Zhang、Dongliang Guo、Wei Liu、Junlan Nie、Shuo Li. Multimedia Systems. [https://doi.org/10.1007/s00530-021-00858-7](https://doi.org/10.1007/s00530-021-00858-7)
 
+- 2021. Analysis of Bullet Chats in User-Generated Content Advertisement on Bilibili Website: The Success of Madoka Magica’s Mobile Game Promotion. Feixue Mei. International Journal of Social Science and Humanity. [https://doi.org/10.18178/ijssh.2022.v12.1064](https://doi.org/10.18178/ijssh.2022.v12.1064)
+  哔哩哔哩上《魔法少女小圆》手游二创广告里的三类弹幕聊天。读的是 OpenAlex 摘要。
+
+- 2021. Analysis of We-media Marketing Based on Short Video Barrage Data: —A Case Study of Hua Nong Brothers. Yan Yixuan、Yiming Shao. [https://doi.org/10.1109/aeeca52519.2021.9574215](https://doi.org/10.1109/aeeca52519.2021.9574215)
+  华农兄弟短视频的弹幕数据，用来看自媒体营销。读的是 OpenAlex 摘要。
+
 - 2021. Attacking Video Recognition Models with Bullet-Screen Comments. Kai Chen、Zhipeng Wei、Jingjing Chen、Zuxuan Wu、Yu–Gang Jiang. arXiv (Cornell University). [http://arxiv.org/abs/2110.15629](http://arxiv.org/abs/2110.15629)
 
 - 2021. Beyond Entertainment: Unpacking Danmaku and Comments&#x27; Role of Information Sharing and Sentiment Expression in Online Crisis Videos. Changyang He、Lu He、Tun Lu、Bo Li. Proceedings of the ACM on Human-Computer Interaction. [https://doi.org/10.1145/3479555](https://doi.org/10.1145/3479555)
+
+- 2021. Bullet chats in China: Bilibili, language, and interaction. Feixue Mei. Transformative Works and Cultures. [https://doi.org/10.3983/twc.2021.1939](https://doi.org/10.3983/twc.2021.1939)
+  弹幕聊天从 niconico 的飞字盖到画面并跟时间轴对齐，再到哔哩哔哩。读的是 OpenAlex 摘要。
 
 - 2021. Capítulo 30. La cultura danmu en las plataformas de vídeo en china. Sergio Jesús Villén Higueras. Dialnet (Universidad de la Rioja). [https://dialnet.unirioja.es/servlet/articulo?codigo=8139806](https://dialnet.unirioja.es/servlet/articulo?codigo=8139806)
 
@@ -604,6 +849,9 @@
   另见 [https://aclanthology.org/2021.maiworkshop-1.8.pdf](https://aclanthology.org/2021.maiworkshop-1.8.pdf)
 
 - 2021. Correction to: An improved algorithm of video quality assessment by danmaku analysis. Hanyun Zhang、Dongliang Guo、Wei Liu、Junlan Nie、Shuo Li. Multimedia Systems. [https://doi.org/10.1007/s00530-021-00870-x](https://doi.org/10.1007/s00530-021-00870-x)
+
+- 2021. Design of an Interactive Classroom with Bullet Screen Function in University Teaching. Rui Yang、Cun Zhou、Mengjie Huang、Huiqing Wen、Hai‐Ning Liang. [https://doi.org/10.1109/iciet51873.2021.9419627](https://doi.org/10.1109/iciet51873.2021.9419627)
+  大学课堂互动里加上弹幕功能。读的是 OpenAlex 摘要。
 
 - 2021. Emergence and Development of Bullet Comments in China. Aiqing Wang. Language Circle Journal of Language and Literature. [https://doi.org/10.15294/lc.v16i1.30406](https://doi.org/10.15294/lc.v16i1.30406)
 
@@ -632,6 +880,9 @@
 
 - 2021. Marketing Strategies of Danmaku Online Video Platform based on Bimodal Sentiment Analysis. Zhi Li、Zhu Chun-Gong. Advances in Psychological Science. [http://journal.psych.ac.cn/xlkxjz/EN/abstract/abstract5470.shtml](http://journal.psych.ac.cn/xlkxjz/EN/abstract/abstract5470.shtml)
 
+- 2021. MEANINGFUL TEACHING BARRAGE SCREEN RECOGNITION FROM INTERACTIVE PERSPECTIVE. Li Wang、Hongwu Yang、Chunhui Shang. INTED proceedings. [https://doi.org/10.21125/inted.2021.0761](https://doi.org/10.21125/inted.2021.0761)
+  慕课互动不足，想从弹幕视频里识别有教学意义的弹幕屏。读的是 OpenAlex 摘要。
+
 - 2021. Meaningfulness and Unit of Zipf’s Law: Evidence from Danmu Comments. Yihan Zhou. Lecture notes in computer science. [https://doi.org/10.1007/978-3-030-84186-7_16](https://doi.org/10.1007/978-3-030-84186-7_16)
 
 - 2021. Promoting Mental Well-Being for Audiences in a Live-Streaming Game by Highlight-Based Bullet Comments. Junjie H. Xu、Yulin Cai、Zhou Fang、Pujana Paliyawan. 2021 IEEE 10th Global Conference on Consumer Electronics (GCCE). [https://doi.org/10.1109/gcce53005.2021.9621853](https://doi.org/10.1109/gcce53005.2021.9621853)
@@ -640,13 +891,22 @@
 
 - 2021. QoS-Aware Network Energy Optimization for Danmu Video Streaming in WiFi Networks. Nan Jiang、Mehmet Can Vuran、Sheng Wei、Lisong Xu. 2021 IEEE/ACM 29th International Symposium on Quality of Service (IWQOS). [https://doi.org/10.1109/iwqos52092.2021.9521338](https://doi.org/10.1109/iwqos52092.2021.9521338)
 
+- 2021. Research on the influence of online bullet screen interactive teaching on high school students&#x27; art learning investment. Hongyan Xu. [https://doi.org/10.1145/3510309.3510330](https://doi.org/10.1145/3510309.3510330)
+  在线弹幕互动教学和高中美术课的学习投入。读的是 OpenAlex 摘要。
+
 - 2021. Research on the Influence of Quantity and Emotion of Danmaku in Online Instructional Video on Learning. Yu Cheng、Qing Li、Xue Wang. Artificial Intelligence in Education and Teaching Assessment. [https://doi.org/10.1007/978-981-16-6502-8_5](https://doi.org/10.1007/978-981-16-6502-8_5)
+
+- 2021. Research on the Influence of Uploaders’ Behavior on the Effect of Bullet Screen Video Dissemination. Yedan Li、Wei Qi、Xinzhe Zhang、Meng Wee Song. Lecture notes on data engineering and communications technologies. [https://doi.org/10.1007/978-3-030-81007-8_91](https://doi.org/10.1007/978-3-030-81007-8_91)
+  上传者行为对弹幕视频传播效果。OpenAlex 没有摘要，正文没打开。
 
 - 2021. Selective Classification of Danmaku Comments Using Distributed Representations. Koshiro Tamura、Marie Katsurai. The 23rd International Conference on Information Integration and Web Intelligence. [https://doi.org/10.1145/3487664.3487682](https://doi.org/10.1145/3487664.3487682)
 
 - 2021. Sending or not? A multimodal framework for Danmaku comment prediction. Dinghao Xi、Wei Xiang Xu、Runyu Chen、Yuhang Zhou、Zhan Yang. Information Processing & Management. [https://doi.org/10.1016/j.ipm.2021.102687](https://doi.org/10.1016/j.ipm.2021.102687)
 
 - 2021. Sentiment Classification Algorithm of Danmaku Comment Based on Modified Bayes Model. Ziyi Wang、Guanying Huang. 2021 4th International Conference on Artificial Intelligence and Big Data (ICAIBD). [https://doi.org/10.1109/icaibd51990.2021.9459035](https://doi.org/10.1109/icaibd51990.2021.9459035)
+
+- 2021. Sentiment classification model for bullet screen based on self-attention mechanism. ZHAO Shuxu、LIU Lijiao、MA Qinjing. DOAJ (DOAJ: Directory of Open Access Journals). [https://doaj.org/article/0c5e4cdbd26a4043afb1b3c88456eca1](https://doaj.org/article/0c5e4cdbd26a4043afb1b3c88456eca1)
+  弹幕情绪分类，用多头注意力的卷积网络。读的是 OpenAlex 摘要。没有 DOI。出处字段是 OpenAlex 给的 DOAJ。
 
 - 2021. Study on quality standard of Danmu exract syrup. Xiangyi Li、Wei- Yong Lai、Wei-Wei Guan. DOAJ (DOAJ: Directory of Open Access Journals). [https://doaj.org/article/c29300be7e204981b427e9daca0c8a84](https://doaj.org/article/c29300be7e204981b427e9daca0c8a84)
 
@@ -658,8 +918,14 @@
 
 - 2021. The marketing strategy of online video based on danmaku-video: A bimodal analysis. Zhi Li、Chunhong Zhu. Advances in Psychological Science. [https://doi.org/10.3724/sp.j.1042.2021.01561](https://doi.org/10.3724/sp.j.1042.2021.01561)
 
+- 2021. Timeline-Anchored Comments in Video-Based Learning: The Impact of Visual Layout and Content Depth. Yue Chen、Qin Gao、Ge Gao. International Journal of Human-Computer Interaction. [https://doi.org/10.1080/10447318.2021.1976505](https://doi.org/10.1080/10447318.2021.1976505)
+  学习视频上钉在时间点的评论：嵌入画面还是分开显示。读的是 OpenAlex 摘要。
+
 - 2021. Understanding context in computer-mediated communication. Jennifer Yameng Liang. Functions of Language. [https://doi.org/10.1075/fol.20041.lia](https://doi.org/10.1075/fol.20041.lia)
   用系统功能语言学看哔哩哔哩弹幕的语境，点名匿名、看不见人、会动和 pseudo-synchronicity。读的是 OpenAlex 摘要。
+
+- 2021. User Experience Redesign Based on the Emotional Interaction Needs of Bullet Screen. Xin Chen、Xuanlin Zhu. Lecture notes in networks and systems. [https://doi.org/10.1007/978-3-030-80091-8_74](https://doi.org/10.1007/978-3-030-80091-8_74)
+  按弹幕的情绪互动需求改界面。OpenAlex 没有摘要，正文没打开。
 
 - 2021. Virtual gifting and danmaku: What motivates people to interact in game live streaming?. Yi Li、Yunjun Guo. Telematics and Informatics. [https://doi.org/10.1016/j.tele.2021.101624](https://doi.org/10.1016/j.tele.2021.101624)
 
@@ -667,11 +933,20 @@
 
 - 2021. Китайские видеоплатформы Danmaku и становление сетевой субкультуры поколения Z на примере Bilibili.com. факультет журналистики МГУ имени М. В. Ломоносова、Хань Цзинь. Mediascope. [https://doi.org/10.30547/mediascope.3.2021.10](https://doi.org/10.30547/mediascope.3.2021.10)
 
+- 2020. A Comparative Study on the Application Effect of Live Comments in Different Types of Classroom Teaching. Shurui Gao、Shufan Jiang、Qianru Chen、Yanhua Ding、Heng Luo. [https://doi.org/10.1109/eitt50754.2020.00046](https://doi.org/10.1109/eitt50754.2020.00046)
+  大学课堂里用名为 Good Barrage 的软件发直播评论，比较两种课型。读的是 OpenAlex 摘要。
+
 - 2020. A Sentiment Analysis Algorithm of Danmaku Based on Building a Mixed Fine-grained Sentiment Lexicon. Fulian Yin、Yuwei She、Rui Xiong、Yanyan Wang. Proceedings of the 2020 9th International Conference on Computing and Pattern Recognition. [https://doi.org/10.1145/3436369.3437406](https://doi.org/10.1145/3436369.3437406)
 
 - 2020. An Exploratory Study on The Effects of Using Digital Danmu on Users’ Perceived Interactivity, Viewing Engagement And Viewing Satisfaction. Hong Yan、Sungbok Park. Journal of Digital Contents Society. [https://doi.org/10.9728/dcs.2020.21.1.99](https://doi.org/10.9728/dcs.2020.21.1.99)
 
 - 2020. Assembling via ‘Danmu’. Wenhao Bi. A Peer-Reviewed Journal About. [https://doi.org/10.7146/aprja.v9i1.121493](https://doi.org/10.7146/aprja.v9i1.121493)
+
+- 2020. Bullet Screen Short Text Sentiment Analysis Algorithm. Li-jiao Liu、Shuxu Zhao. 2020 3rd International Conference on Advanced Electronic Materials, Computers and Software Engineering (AEMCSE). [https://doi.org/10.1109/aemcse50948.2020.00123](https://doi.org/10.1109/aemcse50948.2020.00123)
+  弹幕短文本情绪分类，把表情符号和文字放在一起看。读的是 OpenAlex 摘要。
+
+- 2020. Effect of Exposure to Body Image in Media and Bullet Screen on Weight Loss Intention - Focused on Bilibili, a Video Sharing Website of China. Shuang Liang、Hee Jung Cho、Hye Eun Lee. The Journal of the Korea Contents Association. [http://koreascience.or.kr:80/article/JAKO202031458603903.pdf](http://koreascience.or.kr:80/article/JAKO202031458603903.pdf)
+  媒体身体形象和弹幕对减肥意愿，站点是哔哩哔哩。OpenAlex 没有摘要，正文没打开。
 
 - 2020. How and why people are impolite in danmu?. Jiayi Wang. Internet Pragmatics. [https://doi.org/10.1075/ip.00057.wan](https://doi.org/10.1075/ip.00057.wan)
 
@@ -681,11 +956,31 @@
 
 - 2020. Making sense of danmu : Coherence in massive anonymous chats on Bilibili.com. Leticia-Tian Zhang、Daniel Cassany. Discourse Studies. [https://doi.org/10.1177/1461445620940051](https://doi.org/10.1177/1461445620940051)
 
+- 2020. Multimodal Matching Transformer for Live Commenting. Chaoqun Duan、Lei Cui、Shuming Ma、Furu Wei、Conghui Zhu、Tiejun Zhao. arXiv (Cornell University). [http://arxiv.org/abs/2002.02649](http://arxiv.org/abs/2002.02649)
+  自动直播评论：给正在看的视频实时写评论。读的是 OpenAlex 摘要。正式版本不另立条目。
+  另见 [https://doi.org/10.3233/faia200320](https://doi.org/10.3233/faia200320)
+
 - 2020. Research on Danmaku Knowledge Discovery Service Under Computational Communication. Li Wang、Zhihui Liu、Hongqi Han. Proceedings of the 6th International Conference on Humanities and Social Science Research (ICHSSR2020). [https://doi.org/10.2991/assehr.k.200428.107](https://doi.org/10.2991/assehr.k.200428.107)
+
+- 2020. Research on Video Recommendation Algorithm Based on Bullet Screen. Yongxia Zhao、ZhuoWei Wang、Bo Zhang、Li Jiang. 2020 International Conference on Computer Engineering and Application (ICCEA). [https://doi.org/10.1109/iccea50009.2020.00197](https://doi.org/10.1109/iccea50009.2020.00197)
+  用弹幕做视频推荐。读的是 OpenAlex 摘要。
+
+- 2020. Selecting Representative Thumbnail Image and Video Clip from a Video via Bullet Screen. Yun-Ya Huang、Tong-Yi Kuo、Hung‐Hsuan Chen. Companion Proceedings of the Web Conference 2020. [https://doi.org/10.1145/3366424.3382691](https://doi.org/10.1145/3366424.3382691)
+  用弹幕选代表缩略图和高光片段。读的是 OpenAlex 摘要。
 
 - 2020. Sentiment Analysis of Danmaku Videos Based on Naïve Bayes and Sentiment Dictionary. Zhi Li、Rui Li、Jin Guanghao. IEEE Access. [https://doi.org/10.1109/access.2020.2986582](https://doi.org/10.1109/access.2020.2986582)
 
+- 2020. SmartBullets: A Cloud-Assisted Bullet Screen Filter based on Deep Learning. Haoran Niu、Jiangnan Li、Yu Zhao. [https://doi.org/10.1109/icccn49398.2020.9209649](https://doi.org/10.1109/icccn49398.2020.9209649)
+  SmartBullets：用深度学习滤掉低质量弹幕。读的是 OpenAlex 摘要。arXiv 预印本不另立条目。
+  另见 [https://arxiv.org/abs/1905.05925](https://arxiv.org/abs/1905.05925)
+
+- 2020. The Analysis of Influence Factors of User Experience in Bullet Screen. Zhizheng Zhang、Li Zhang、Yajun Li. Advances in intelligent systems and computing. [https://doi.org/10.1007/978-3-030-51828-8_36](https://doi.org/10.1007/978-3-030-51828-8_36)
+  弹幕使用体验的影响因素。OpenAlex 没有摘要，正文没打开。
+
 - 2020. The Governance and Construction of the “Refined and Popularized Environment” of the Bullet Comments in Webcast. Ke Zhou、Li Wang. Proceedings of the 4th International Conference on Culture, Education and Economic Development of Modern Society (ICCESE 2020). [https://doi.org/10.2991/assehr.k.200316.342](https://doi.org/10.2991/assehr.k.200316.342)
+
+- 2020. The Influence of Video Barrage on the Emotion of Young Users. Shanang He、Fumie Muroi. Advances in intelligent systems and computing. [https://doi.org/10.1007/978-3-030-51194-4_134](https://doi.org/10.1007/978-3-030-51194-4_134)
+  视频弹幕对年轻用户情绪的影响。OpenAlex 没有摘要，正文没打开。
 
 - 2020. Time-sync comments denoising via graph convolutional and contextual encoding. Zhenyu Liao、Yikun Xian、Jiangfeng Li、Chenxi Zhang、Shengjie Zhao. Pattern Recognition Letters. [https://doi.org/10.1016/j.patrec.2020.05.004](https://doi.org/10.1016/j.patrec.2020.05.004)
 
@@ -700,11 +995,20 @@
 
 - 2019. A public opinion analysis model based on Danmu data monitoring and sentiment classification. Jian Ye、Hui Zhao. Huadong Shifan Daxue xuebao. Ziran kexue ban. [https://xblk.ecnu.edu.cn/EN/10.3969/j.issn.1000-5641.2019.03.010](https://xblk.ecnu.edu.cn/EN/10.3969/j.issn.1000-5641.2019.03.010)
 
+- 2019. Barrage participation and feedback in travel reality shows: The effects of media on destination image among Generation Y. Xiaofei Hao、Shuojing Xu、Xiaoming Zhang. Journal of Destination Marketing & Management. [https://doi.org/10.1016/j.jdmm.2019.02.004](https://doi.org/10.1016/j.jdmm.2019.02.004)
+  旅游真人秀里的弹幕参与和目的地形象。OpenAlex 没有摘要，正文没打开。
+
+- 2019. Between the marked and the unmarked: twin semiotic paradoxes of the barrage in China’s livestreaming fandom. Xinru Chen、Zhuo Chen. Media Culture & Society. [https://doi.org/10.1177/0163443719876617](https://doi.org/10.1177/0163443719876617)
+  中国直播粉丝文化里的弹幕，讨论被标记和未被标记的两套符号。读的是 OpenAlex 摘要。
+
 - 2019. Bullet Screens ( Danmu ): Texting, Online Streaming, and the Spectacle of Social Inequality on Chinese Social Networks. Xuenan Cao. Theory Culture & Society. [https://doi.org/10.1177/0263276419877675](https://doi.org/10.1177/0263276419877675)
 
 - 2019. Communication Framework AND Emojis-Danmaku Applied To Cooperation Workshops. Yi-Sin Wu、Teng-Wen Chang. Proceedings of the International Conference on Computer-Aided Architectural Design Research in Asia. [https://doi.org/10.52842/conf.caadria.2019.2.091](https://doi.org/10.52842/conf.caadria.2019.2.091)
 
 - 2019. Constructing Dictionary to Analyze Features Sentiment of a Movie Based on Danmakus. Jie Li、Yukun Li. Lecture notes in computer science. [https://doi.org/10.1007/978-3-030-35231-8_34](https://doi.org/10.1007/978-3-030-35231-8_34)
+
+- 2019. Crowdsourced Time-Sync Video Recommendation via Semantic-Aware Neural Collaborative Filtering. Zhanpeng Wu、Yan Zhou、Di Wu、Yipeng Zhou、Jing Qin. Lecture notes in computer science. [https://doi.org/10.1007/978-3-030-19274-7_13](https://doi.org/10.1007/978-3-030-19274-7_13)
+  题名是众包时间同步视频推荐。OpenAlex 没有摘要，正文没打开，不能从题名确认用的是评论还是别的时间标签。
 
 - 2019. Danmaku. Qunfang Wu、Yisi Sang、Yun Kuei Huang. ACM Transactions on Social Computing. [https://doi.org/10.1145/3329485](https://doi.org/10.1145/3329485)
 
@@ -725,7 +1029,21 @@
 
 - 2019. Gossiping the Videos: An Embedding-Based Generative Adversarial Framework for Time-Sync Comments Generation. Guangyi Lv、Tong Xu、Qi Liu、Enhong Chen、Weidong He、Mingxiao An、Zhongming Chen. Lecture notes in computer science. [https://doi.org/10.1007/978-3-030-16142-2_32](https://doi.org/10.1007/978-3-030-16142-2_32)
 
+- 2019. Herding Effect Based Attention for Personalized Time-Sync Video Recommendation. Wenmian Yang、Wenyuan Gao、Xiaojie Zhou、Weijia Jia、Shaohua Zhang、Yutao Luo. [https://doi.org/10.1109/icme.2019.00085](https://doi.org/10.1109/icme.2019.00085)
+  时间同步评论被当成视频推荐的数据，并提出从众效应注意力。读的是 OpenAlex 摘要。摘要里的提升数字是原文自称，这里没有重跑。arXiv 预印本不另立条目。
+  另见 [https://arxiv.org/abs/1905.00579](https://arxiv.org/abs/1905.00579)
+
 - 2019. Interactive Variance Attention based Online Spoiler Detection for Time-Sync Comments. Wenmian Yang、Weijia Jia、Wenyuan Gao、Xiaojie Zhou、Yutao Luo. Proceedings of the 28th ACM International Conference on Information and Knowledge Management. [https://doi.org/10.1145/3357384.3357872](https://doi.org/10.1145/3357384.3357872)
+
+- 2019. LiveBot: Generating Live Video Comments Based on Visual and Textual Contexts. Shuming Ma、Lei Cui、Damai Dai、Furu Wei、Xu Sun. Proceedings of the AAAI Conference on Artificial Intelligence. [https://doi.org/10.1609/aaai.v33i01.33016810](https://doi.org/10.1609/aaai.v33i01.33016810)
+  LiveBot：自动直播评论，摘要写明也叫 video barrage，评论像子弹一样飞过画面或滚在右侧。读的是 OpenAlex 摘要。arXiv 预印本不另立条目。
+  另见 [https://arxiv.org/abs/1809.04938](https://arxiv.org/abs/1809.04938)
+
+- 2019. Online social viewing: Cross-cultural adoption and uses of bullet-screen videos. Anan Wan、Leigh M. Moscowitz、Linwan Wu. Journal of International and Intercultural Communication. [https://doi.org/10.1080/17513057.2019.1610187](https://doi.org/10.1080/17513057.2019.1610187)
+  中美观众怎样使用盖在视频上的 bullet-screen。读的是 OpenAlex 摘要。
+
+- 2019. Research on the Influence of Online Video Bullet-screen Advertising Marketing on Consumers&#x27; Purchasing Intention. Gao-fu Liu、Le-lin Li、Huiming Xu、Meng-qiu Luo. Proceedings of the 2019 5th International Conference on Social Science and Higher Education (ICSSHE 2019). [https://doi.org/10.2991/icsshe-19.2019.193](https://doi.org/10.2991/icsshe-19.2019.193)
+  在线视频里的弹幕广告对购买意愿。读的是 OpenAlex 摘要。
 
 - 2019. Sentiment-Aware Short Text Classification Based on Convolutional Neural Network and Attention. Zeyu Chen、Yan Tang、Zuowei Zhang、Chengyang Zhang、Luwei Wang. 2019 IEEE 31st International Conference on Tools with Artificial Intelligence (ICTAI). [https://doi.org/10.1109/ictai.2019.00162](https://doi.org/10.1109/ictai.2019.00162)
   把弹幕按情绪和语言类型做短文本分类。读的是 OpenAlex 摘要。
@@ -740,6 +1058,10 @@
 
 - 2019. The sociability of Millennials in cyberspace. Seio Nakajima. China’s Youth Cultures and Collective Spaces. [https://doi.org/10.4324/9780429056093-6](https://doi.org/10.4324/9780429056093-6)
   比较哔哩哔哩弹幕和 niconico 弹幕，把它们当成一起看的社交，而不是事先做好的翻译字幕。读的是 OpenAlex 摘要。
+
+- 2019. Time-Sync Video Tag Extraction Using Semantic Association Graph. Wenmian Yang、Kun Wang、Na Ruan、Wenyuan Gao、Weijia Jia、Wei Zhao、Nan Liu、Yunyong Zhang. ACM Transactions on Knowledge Discovery from Data. [https://doi.org/10.1145/3332932](https://doi.org/10.1145/3332932)
+  用时间同步评论的语义图抽视频标签，并区分对话聚类和话题中心聚类。作者名按 arXiv 摘要页核对。读的是 OpenAlex 摘要和 arXiv 摘要页。
+  另见 [https://arxiv.org/abs/1905.01053](https://arxiv.org/abs/1905.01053)
 
 - 2019. Understanding the Users and Videos by Mining a Novel Danmu Dataset. Guangyi Lv、Kun Zhang、Le Wu、Enhong Chen、Tong Xu、Qi Liu、Weidong He. IEEE Transactions on Big Data. [https://doi.org/10.1109/tbdata.2019.2950411](https://doi.org/10.1109/tbdata.2019.2950411)
 
@@ -774,6 +1096,9 @@
 
 - 2018. Learning from Audience Intelligence: Dynamic Labeled LDA Model for Time-Sync Commented Video Tagging. Zehua Zeng、Cong Xue、Neng Gao、Lei Wang、Zeyi Liu. Lecture notes in computer science. [https://doi.org/10.1007/978-3-030-04182-3_48](https://doi.org/10.1007/978-3-030-04182-3_48)
 
+- 2018. Live Video Comment Generation Based on Surrounding Frames and Live Comments. Damai Dai. arXiv (Cornell University). [http://arxiv.org/abs/1808.04091](http://arxiv.org/abs/1808.04091)
+  把直播评论定义成评论和聊天的混合，既要贴着画面，也要接上别人的评论，并做生成。读的是 OpenAlex 摘要。
+
 - 2018. Reacting to Political Videos. Bingjie Yu、Ryan Kelly、Leon A. Watts. Companion of the 2018 ACM Conference on Computer Supported Cooperative Work and Social Computing. [https://doi.org/10.1145/3272973.3274040](https://doi.org/10.1145/3272973.3274040)
   政治视频上比较弹幕和底下的评论列表：弹幕更卷入，也更分神。读的是 OpenAlex 摘要。
 
@@ -805,12 +1130,18 @@
 
 - 2017. Bridging Video Content and Comments: Synchronized Video Description with Temporal Summarization of Crowdsourced Time-Sync Comments. Linli Xu、Chao Zhang. Proceedings of the AAAI Conference on Artificial Intelligence. [https://doi.org/10.1609/aaai.v31i1.10753](https://doi.org/10.1609/aaai.v31i1.10753)
 
+- 2017. Crowdsourced time-sync video tagging using semantic association graph. Wenmian Yang、Na Ruan、Wenyuan Gao、Kun Wang、Wensheng Ran、Weijia Jia. [https://doi.org/10.1109/icme.2017.8019364](https://doi.org/10.1109/icme.2017.8019364)
+  用时间同步评论的语义图做无监督视频标签。读的是 OpenAlex 摘要。
+
 - 2017. Danmaku Videos Questionnaire. Yue Chen、Qin Gao、Pei‐Luen Patrick Rau. PsycTESTS Dataset. [https://doi.org/10.1037/t67605-000](https://doi.org/10.1037/t67605-000)
 
 - 2017. Danmaku vs. Forum Comments. Qunfang Wu、Yisi Sang、Shan Zhang、Yun Kuei Huang. Proceedings of the 2018 ACM Conference on Supporting Groupwork. [https://doi.org/10.1145/3148330.3148344](https://doi.org/10.1145/3148330.3148344)
 
 - 2017. DanMOOC: Enhancing Content and Social Interaction in MOOCs with Synchronized Commenting. Yue Chen、Qin Gao、Quan Yuan. Lecture Notes in Computer Science. [https://doi.org/10.1007/978-3-319-57931-3_40](https://doi.org/10.1007/978-3-319-57931-3_40)
   Crossref 没有摘要，PDF 未打开。同一组作者 2019 年写明 DanMOOC 把线程讨论和弹幕叠到视频时间上。本条只凭题名和这条对照补入。
+
+- 2017. Demands in qExistenceq and Carnival from qTrash Talkingq Analysis on the Audience&#x27;s Psychology of Bullet-screen Movie. Xiaoping Liu、Linlang Lu. [https://doi.org/10.2991/icelaic-17.2017.107](https://doi.org/10.2991/icelaic-17.2017.107)
+  弹幕电影观众心理：身份、在场和狂欢。OpenAlex 题名里的引号被拆碎了。读的是 OpenAlex 摘要。
 
 - 2017. Designing Commenting Mechanisms for Dynamic Media: Synchronous Overlay and Adjacent Scrollable. Bingjie Yu、Leon A. Watts. Proceedings of the 2017 ACM Conference Companion Publication on Designing Interactive Systems. [https://doi.org/10.1145/3064857.3079111](https://doi.org/10.1145/3064857.3079111)
   同一段政治演讲，比较盖在画面上的弹幕和贴在播放器旁边的评论。打开了巴斯大学的 PDF，原文不进仓库。
@@ -826,6 +1157,9 @@
 - 2017. Is Danmaku an Effective Way for Promoting Event based Social Network?. Yan Tang、Yibing Gong、Li Xu、Qingheng Zhang、Huaxin Liu、Sheng Wang、Qian Wang、Xiaofeng Gao. Companion of the 2017 ACM Conference on Computer Supported Cooperative Work and Social Computing. [https://doi.org/10.1145/3022198.3026347](https://doi.org/10.1145/3022198.3026347)
 
 - 2017. Movie summarization using bullet screen comments. Shan Sun、Feng Wang、Liang He. Multimedia Tools and Applications. [https://doi.org/10.1007/s11042-017-4807-6](https://doi.org/10.1007/s11042-017-4807-6)
+
+- 2017. Natural language processing in “Bullet Screen” application. Yang Xu、Binglu Wang、Huang Junjie、Liu Shuwen. [https://doi.org/10.1109/icsssm.2017.7996219](https://doi.org/10.1109/icsssm.2017.7996219)
+  把弹幕定义成看电影时打到画面上的实时评论，并讨论自然语言处理。读的是 OpenAlex 摘要。
 
 - 2017. Recommending highlights in Anime movies: Mining the real-time user comments “DanMaKu”. Yifan He、Tiffany Y. Tang. 2017 Intelligent Systems Conference (IntelliSys). [https://doi.org/10.1109/intellisys.2017.8324311](https://doi.org/10.1109/intellisys.2017.8324311)
 
@@ -858,9 +1192,21 @@
 
 - 2016. Identifying the Potential of Danmaku Video from Eye Gaze Data. Jing Leng、Jiayu Zhu、Xiaoting Wang、Xiaoqing Gu. 2016 IEEE 16th International Conference on Advanced Learning Technologies (ICALT). [https://doi.org/10.1109/icalt.2016.155](https://doi.org/10.1109/icalt.2016.155)
 
+- 2016. International Audience&#x27;s Timed Comment Use on Viki: Talking about a K-Drama while Still Watching It. Liche Ellian Eunjae. Seoul National University Open Repository (Seoul National University). [https://hdl.handle.net/10371/134308](https://hdl.handle.net/10371/134308)
+  国际观众边看韩剧边在 Viki 上写 timed comment。OpenAlex 没有摘要，正文没打开。
+
+- 2016. Music Summarization Using Social Timed Comment. 강하림. Seoul National University Open Repository (Seoul National University). [https://hdl.handle.net/10371/133222](https://hdl.handle.net/10371/133222)
+  OpenAlex 只给了首尔大学学位论文的目录句，正文没打开。题名是用社交化的 timed comment 做音乐摘要。
+
 - 2016. Predicting the Popularity of DanMu-enabled Videos: A Multi-factor View. Ming Xuan He、Yong Ge、Le Wu、Enhong Chen、Chang Wei Tan. Lecture notes in computer science. [https://doi.org/10.1007/978-3-319-32049-6_22](https://doi.org/10.1007/978-3-319-32049-6_22)
 
+- 2016. Reading the Videos: Temporal Labeling for Crowdsourced Time-Sync Videos Based on Semantic Embedding. Guangyi Lv、Tong Xu、Enhong Chen、Qi Liu、Yi Zheng. Proceedings of the AAAI Conference on Artificial Intelligence. [https://doi.org/10.1609/aaai.v30i1.10383](https://doi.org/10.1609/aaai.v30i1.10383)
+  用时间同步评论（摘要里也叫 bullet-screen comments）给众包视频打时间标签。读的是 OpenAlex 摘要。
+
 - 2016. SmartVideoRanking: Video Search by Mining Emotions from Time-Synchronized Comments. Kosetsu Tsukuda、Masahiro Hamasaki、Masataka Goto. 2016 IEEE 16th International Conference on Data Mining Workshops (ICDMW). [https://doi.org/10.1109/icdmw.2016.0140](https://doi.org/10.1109/icdmw.2016.0140)
+
+- 2016. Social Viewing, Bullet Screen, and User Experience: A First Look. Soussan Djamasbi、Adrienne Hall‐Phillips、Zaozao Liu、Wenting Li、Jing Bian. [https://doi.org/10.1109/hicss.2016.86](https://doi.org/10.1109/hicss.2016.86)
+  2016 年把 bullet screen 说成视频加上即时文字，并和普通在线视频比观看体验。读的是 OpenAlex 摘要。出处字段是空的，DOI 指向 HICSS。
 
 - 2016. The postmodern aesthetic of Chinese online comment cultures. Yizhou Xu. Communication and the Public. [https://doi.org/10.1177/2057047316677839](https://doi.org/10.1177/2057047316677839)
   盖楼和弹幕两种中文评论文化，评论盖过正文。读的是 OpenAlex 摘要。
@@ -899,6 +1245,9 @@
 
 - 2016. 非主流音乐＋弹幕,或许是一块新的土壤. 夏毅鸣. 创业邦. [http://www.cqvip.com/QK/70996X/201601/667922962.html](http://www.cqvip.com/QK/70996X/201601/667922962.html)
 
+- 2015. A New Viewing Experience in the Living Room - Bullet Screens in Vogue. Verena、Menzel. 今日中国：英文版. [http://www.cqvip.com/QK/86870X/201508/665682495.html](http://www.cqvip.com/QK/86870X/201508/665682495.html)
+  客厅里的弹幕观看。OpenAlex 没有摘要，正文没打开。出处是《今日中国》英文版。
+
 - 2015. The verbal art oftucaoand face-threatening acts indanmuscreening. Chi-hua Hsiao. Chinese Language and Discourse An International and Interdisciplinary Journal. [https://doi.org/10.1075/cld.6.2.01hsi](https://doi.org/10.1075/cld.6.2.01hsi)
 
 - 2015. Understanding Gratifications of Watching Danmaku Videos – Videos with Overlaid Comments. Yue Chen、Qin Gao、Pei‐Luen Patrick Rau. Lecture notes in computer science. [https://doi.org/10.1007/978-3-319-20907-4_14](https://doi.org/10.1007/978-3-319-20907-4_14)
@@ -918,6 +1267,9 @@
 - 2015. 弹幕网站受众的参与度及“弹幕”信息传播的特点. 解文峰. 北方文学：下. [http://www.cqvip.com/QK/71034X/201504/665368806.html](http://www.cqvip.com/QK/71034X/201504/665368806.html)
 
 - 2014. Analysis of Japanese Animation&#x27;s Overlaid Comment(danmu):A Perspective of Parasocial Interaction. MA Zhiha. Guoji xinwenjie. [https://en.cnki.com.cn/Article_en/CJFDTOTAL-GJXW201408008.htm](https://en.cnki.com.cn/Article_en/CJFDTOTAL-GJXW201408008.htm)
+
+- 2014. Crowdsourced time-sync video tagging using temporal and personalized topic modeling. Bin Wu、Erheng Zhong、Ben Tan、Andrew Horner、Qiang Yang. [https://doi.org/10.1145/2623330.2623625](https://doi.org/10.1145/2623330.2623625)
+  从 niconico 那种按时间写上的众包评论里抽时间同步标签。读的是 OpenAlex 摘要。对象是时间同步评论，不是中文弹幕语料论文。
 
 - 2014. Let the Comments Fly: The Effects of Flying Commentary Presentation on Consumer Judgment. Yi Shen、Hock Chuan Chan、Iris W. Hung. Journal of the Association for Information Systems. [http://aisel.aisnet.org/cgi/viewcontent.cgi?article=1106&context=icis2014](http://aisel.aisnet.org/cgi/viewcontent.cgi?article=1106&context=icis2014)
   比较弹幕式飞过评论和分开显示的评论。OpenAlex 无 DOI，链接指向 ICIS 2014；摘要写的是实验设计，不是已跑完的结果表。
@@ -946,12 +1298,24 @@
 - 年份未记. bilive. timerring. GitHub. [https://github.com/timerring/bilive](https://github.com/timerring/bilive)
   直播录制、按弹幕密度切片并渲染。GitHub API 返回的许可证是 Apache-2.0。介绍里的切片标题流程指向商业多模态接口。
 
+- 年份未记. danmaku2ass. m13253. GitHub. [https://github.com/m13253/danmaku2ass](https://github.com/m13253/danmaku2ass)
+  把 niconico、AcFun、哔哩哔哩评论转成 ASS。GitHub API 返回的许可证是 GPL-3.0。
+
+- 年份未记. DanmakuFactory. hihkm. GitHub. [https://github.com/hihkm/DanmakuFactory](https://github.com/hihkm/DanmakuFactory)
+  弹幕文件转换，简介写明支持特殊弹幕，从 xml 转到 ass。GitHub API 返回的许可证是 MIT。
+
+- 年份未记. DanmakuFlameMaster. bilibili. GitHub. [https://github.com/bilibili/DanmakuFlameMaster](https://github.com/bilibili/DanmakuFlameMaster)
+  Android 弹幕绘制引擎。GitHub API 返回的简介是「Android开源弹幕引擎·烈焰弹幕使」，许可证是 Apache-2.0。
+
 - 年份未记. DanmakuScope. NekoXi. GitCode. [https://gitcode.com/NekoXi/DanmakuScope](https://gitcode.com/NekoXi/DanmakuScope)
   哔哩哔哩弹幕的社会语言学命令行工具。本次打开了介绍页，没有取到许可证文件正文。
 
 - 年份未记. hotclip. xixihhhh. GitHub. [https://github.com/xixihhhh/hotclip](https://github.com/xixihhhh/hotclip)
   用弹幕密度峰值辅助高光判断。GitHub API 返回的许可证是 AGPL-3.0。
   另见 [https://github.com/xixihhhh/hotclip/blob/a09f89f1/src/core/danmaku.ts](https://github.com/xixihhhh/hotclip/blob/a09f89f1/src/core/danmaku.ts)
+
+- 年份未记. weizhenye/Danmaku. weizhenye. GitHub. [https://github.com/weizhenye/Danmaku](https://github.com/weizhenye/Danmaku)
+  浏览器里的弹幕绘制引擎。GitHub API 返回的简介是高性能 JavaScript danmaku engine，许可证是 MIT。
 
 ## 平台公布
 
@@ -990,6 +1354,9 @@
 
 - 2015. Illegal Movie Detection by Using Comment Distribution Based on Temporal Correlation in NicoNico Douga. Hayato Shimizu、Matsumoto Kazuyuki、Yoshida Minoru、Kenji Kita. IEICE Technical Report; IEICE Tech. Rep.. [https://www.ieice.org/ken/paper/20150806zb1Z/eng/](https://www.ieice.org/ken/paper/20150806zb1Z/eng/)
   视频网站 niconico 本身。弹幕界面源自这里，这条不是中文弹幕语料论文。
+
+- 2014. A method of generating indicative summary thumbnails of Nicovideo using image features and comments. 松原宏和、新妻弘崇、太田学. IPSJ SIG Notes. [http://ci.nii.ac.jp/naid/110009842513](http://ci.nii.ac.jp/naid/110009842513)
+  用 niconico 的画面特征和评论生成指示性缩略图。OpenAlex 没有摘要，正文没打开。不是中文弹幕语料论文。
 
 - 2014. Estimation of inheritance relationship between contents on social media — Case study of Niconico as a video-sharing site. Hitoyoshi Ohta、Akio Kobayashi、Shigeru Masuyama. 2014 International Conference of Advanced Informatics: Concept, Theory and Application (ICAICTA). [https://doi.org/10.1109/icaicta.2014.7005939](https://doi.org/10.1109/icaicta.2014.7005939)
   视频网站 niconico 本身。弹幕界面源自这里，这条不是中文弹幕语料论文。
