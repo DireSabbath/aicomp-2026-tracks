@@ -16,7 +16,9 @@ python danmaku/crawl.py --collections danmaku/collections.json --only yuanshen-p
 
 `danmaku/lists/` 里是已经列好的视频。爬取默认读这份清单。`--refresh-list` 会丢掉清单，重新向接口要列表。中断后重跑会跳过已经写好的视频。弹幕输出在 `danmaku_out/`，不进 git。每个视频一个 `.jsonl.gz`，合集汇总是 `_collection.json`。
 
-`collections.json` 里的五套是：罗翔说刑法（账号合集、系列，加上搜索里这个账号的视频）、原神官方标题含「前瞻」的视频、吃蛋挞的折棒「吐槽新三国」合集、小约翰可汗四个专栏、黑神话官方合集及搜索到的该账号视频。
+脚本不限主题。`--bvid` 可以拉任意视频；`collections.json` 可以追加别的账号、合集或搜索说明。
+
+`collections.json` 里已经列入的五套是：罗翔说刑法（账号合集、系列，加上搜索里这个账号的视频）、原神官方标题含「前瞻」的视频、吃蛋挞的折棒「吐槽新三国」合集、小约翰可汗四个专栏、黑神话官方合集及搜索到的该账号视频。
 
 2026-09-26 拉下来的结果记在 `danmaku/lists/coverage.json`。1037 个视频，1290180 条弹幕，没有失败。罗翔说刑法是 453 条，该账号投稿大约 502，搜索接口看不全。其余四套与清单一致：原神前瞻 48、吐槽新三国 297、小约翰可汗四个专栏 214、黑神话官方 25。五个压缩包的校验和在 `danmaku/lists/release-sha256.txt`。弹幕压缩包在 Release [danmaku-2026-09-26](https://github.com/DireSabbath/aicomp-2026-tracks/releases/tag/danmaku-2026-09-26)，不在 git 历史里。页面能打开不等于这些文字可以再分发或拿去训练。
 
