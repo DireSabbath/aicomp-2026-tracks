@@ -4,6 +4,8 @@
 
 弹幕清单和爬取脚本在 `danmaku/`。相关研究见 [research/README.md](research/README.md)。自己手里的人、数据和接口见 [资源清单.md](资源清单.md)。
 
+试点把一个类型里字面接近的弹幕收成几件事，铺在从片头到片尾的带子上。再拿另一个类型对齐：`python -m reception 甲.zip 乙.zip --out demo_out/reception`。余弦用已经装好的 scikit-learn，不另外下载模型。同义不同字先不并。
+
 ## 保留范围
 
 | 范围 | 页面 | 说明 |
