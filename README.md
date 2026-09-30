@@ -2,7 +2,7 @@
 
 从 [aicomp.cn](https://www.aicomp.cn/) 保留算法主题赛中的 AI+开源，以及全大赛共用的章程、报名和宣传资料。
 
-弹幕清单和爬取脚本在 `danmaku/`。相关研究见 [research/README.md](research/README.md)。当天能用的人、数据、模型和接口见 [资源清单.md](资源清单.md)。
+弹幕清单和爬取脚本在 `danmaku/`。相关研究见 [research/README.md](research/README.md)。自己手里的人、数据和接口见 [资源清单.md](资源清单.md)。
 
 ## 保留范围
 
