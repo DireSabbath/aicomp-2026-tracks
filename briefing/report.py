@@ -60,6 +60,7 @@ def _public_type(item: dict) -> dict:
         "solo_phrase_count": item["solo_phrase_count"],
         "phases": item.get("phases") or [],
         "crowd_readings": item.get("crowd_readings") or [],
+        "arc_reading": item.get("arc_reading") or "",
     }
 
 

@@ -1,11 +1,11 @@
-"""简报只从结构表填空。句子说的是片子的进度，不是内部段号。"""
+"""简报只从结构表填空。先写这一类说明了什么，再用片子上的位置把这句话钉住。"""
 
 from __future__ import annotations
 
-from briefing.protocol import BRIEFING_CLAIMS_PER_TYPE, BRIEFING_PHASES, DIFF_ITEMS
+from briefing.protocol import BRIEFING_PHASES, DIFF_ITEMS
 from briefing.structure import _leader_at, label_buckets
 
-PURPOSE = "给文化研究者和政策制定者看某一类视频的观众弹幕：哪些词和短句在片子的什么位置出现，哪些视频里没有。只描述弹幕，不评价，也不给建议。"
+PURPOSE = "给文化研究者和政策制定者看某一类视频的观众弹幕：人多的地方在重复哪一句，这句自己的高峰是不是就在那里，沿片长怎样换说法，和另一类比哪些共享、哪些错开、哪些只属于一边。只描述弹幕，不评价，也不给建议。"
 SIGNOFF = "这些视频算不算同一类，还没有人签字。"
 CLAIM_RULE = "词按分词归并，完整说法按去掉标点后的整条弹幕归并。同一个字连写的不单独成说法。同义不同词没有合并。只在一条视频里出现的单独列出，不写入类型结论。"
 
@@ -35,12 +35,11 @@ def _decorate_claim(claim: dict, n_videos: int) -> None:
     claim["span_where"] = stretch(claim["entry_start_pct"], claim["exit_end_pct"])
     name = "这个词" if claim.get("unit") == "word" else "这句"
     if claim["absent_videos"]:
-        gap = f"，另外{claim['absent_videos']}条里没有"
+        cover = f"这一类{n_videos}条里，另外{claim['absent_videos']}条没有{name}"
     else:
-        gap = "，这一类的每条视频里都有"
+        cover = f"这一类的每条视频里都有{name}"
     claim["reading"] = (
-        f"「{claim['text']}」在{n_videos}条视频里，有{claim['n_videos']}条出现过，一共{claim['n_rows']}次{gap}。"
-        f"{claim['span_where']}都能看到{name}，最密在{claim['peak_where']}。"
+        f"「{claim['text']}」{claim['span_where']}都能看到，最密在{claim['peak_where']}。{cover}，一共{claim['n_rows']}次。"
     )
     claim["summary"] = (
         f"{claim['n_videos']} 条里出现过 · {claim['n_rows']} 次 · 另外 {claim['absent_videos']} 条没有 · 最密在{claim['peak_where']}"
@@ -59,16 +58,41 @@ def _decorate_phase(phase: dict) -> None:
     )
 
 
+def selected_phases(phases: list[dict]) -> list[dict]:
+    ranked = sorted(phases, key=lambda row: (-row["span_rows"], row["start_segment"], row["text"]))
+    return sorted(ranked[:BRIEFING_PHASES], key=lambda row: (row["start_segment"], row["text"]))
+
+
+def arc_reading(phases: list[dict]) -> str:
+    """沿片长换领头句。只写次数最多的几截，按片子的先后连成一句。"""
+    chosen = selected_phases(phases)
+    if not chosen:
+        return ""
+    bits = []
+    for index, phase in enumerate(chosen):
+        where = stretch(phase["start_pct"], phase["end_pct"])
+        quoted = f"「{phase['text']}」"
+        if len(chosen) == 1:
+            bits.append(f"由{quoted}领着，{where}")
+        elif index == 0:
+            bits.append(f"先是{quoted}，{where}")
+        elif index == len(chosen) - 1:
+            bits.append(f"随后换成{quoted}，{where}")
+        else:
+            bits.append(f"再到{quoted}，{where}")
+    return "沿片长" + "，".join(bits) + "。"
+
+
 def _crowd_reading(item: dict, segment: int, start: int, end: int) -> str:
     where = place(start, end)
     leader = _leader_at(item["phrases"], segment)
     if leader is None:
         return f"人多的地方在{where}。这里没有写入结论的完整说法。"
     peak_where = place(leader["peak_start_pct"], leader["peak_end_pct"])
-    head = f"人多的地方在{where}。那里反复出现的整句里「{leader['text']}」最多。"
+    lead = f"人多的地方在{where}，当时领着的整句是「{leader['text']}」"
     if leader["peak_segment"] == segment:
-        return head + f"「{leader['text']}」自己最密也在{peak_where}。"
-    return head + f"「{leader['text']}」自己最密在{peak_where}，和人多的地方不是同一处。"
+        return f"{lead}，这句自己最密也在{peak_where}。"
+    return f"{lead}。这句自己最密在{peak_where}，和人多的地方不是同一处。"
 
 
 def decorate(types: list[dict]) -> None:
@@ -82,7 +106,7 @@ def decorate(types: list[dict]) -> None:
             for start, end in zip(item["volume_peak_starts"], item["volume_peak_ends"])
         )
         item["volume_reading"] = (
-            f"{item['title']}共有{item['n_videos']}条视频、{item['n_rows']}条弹幕。弹幕最密的地方在{places}。"
+            f"{item['title']}的弹幕最密在{places}。这一类有{item['n_videos']}条视频、{item['n_rows']}条弹幕。"
         )
         where = place(item["baseline_start_pct"], item["baseline_end_pct"])
         if item["baseline_peak_segment"] in item["volume_tied_segments"]:
@@ -99,6 +123,7 @@ def decorate(types: list[dict]) -> None:
                 item["volume_peak_ends"],
             )
         ]
+        item["arc_reading"] = arc_reading(item.get("phases") or [])
 
 
 def _claim_row(item: dict, claim: dict, bucket: str, titles: list[str]) -> dict:
@@ -193,6 +218,7 @@ def table_rows(types: list[dict], word_diff: dict, phrase_diff: dict, protocol: 
                 "volume_reading": item["volume_reading"],
                 "baseline_reading": item["baseline_reading"],
                 "crowd_readings": item["crowd_readings"],
+                "arc_reading": item.get("arc_reading") or "",
             }
         )
         word_map = word_left if index == 0 else word_right
@@ -263,45 +289,33 @@ def briefing_from_table(rows: list[dict]) -> list[str]:
         sentences.append(item["baseline_reading"])
         for sentence in item.get("crowd_readings") or []:
             sentences.append(sentence)
-        phases = [
-            row for row in rows if row["kind"] == "phase" and row["type_id"] == item["type_id"]
-        ]
-        ranked = sorted(phases, key=lambda row: (-row["span_rows"], row["start_segment"], row["text"]))
-        chosen = sorted(ranked[:BRIEFING_PHASES], key=lambda row: (row["start_segment"], row["text"]))
-        for phase in chosen:
-            sentences.append(phase["reading"])
-        for layer in ("word", "phrase"):
-            claims = [
-                row
-                for row in rows
-                if row["kind"] == "claim" and row["type_id"] == item["type_id"] and row["layer"] == layer
-            ]
-            for claim in claims[:BRIEFING_CLAIMS_PER_TYPE]:
-                sentences.append(claim["reading"])
+        if item.get("arc_reading"):
+            sentences.append(item["arc_reading"])
         solos = {
             row["layer"]: row["count"]
             for row in rows
             if row["kind"] == "solo" and row["type_id"] == item["type_id"]
         }
         sentences.append(
-            f"只在一条视频里出现、因此不写入这一类结论的词有{solos.get('word', 0)}个，完整说法有{solos.get('phrase', 0)}句。"
+            f"只出现在一条视频里的说法代表不了这一类，所以没有写入结论。这样的词有{solos.get('word', 0)}个，完整说法有{solos.get('phrase', 0)}句。"
         )
     if len(titles) >= 2:
         sentences.append(f"对照的是{titles[0]}和{titles[1]}。")
     unit_name = {"word": "词", "phrase": "完整说法"}
-    unit_measure = {"word": "个", "phrase": "句"}
     for layer in ("phrase", "word"):
         labels = {
-            "same_peak": f"两边都有，而且最密的地方差不多的{unit_name[layer]}",
-            "shifted": f"两边都有，但最密的地方错开了的{unit_name[layer]}",
-            "only_a": f"只在{titles[0]}里反复出现的{unit_name[layer]}" if titles else "",
-            "only_b": f"只在{titles[1]}里反复出现的{unit_name[layer]}" if len(titles) > 1 else "",
+            "same_peak": f"两类都有，而且最密的地方差不多的{unit_name[layer]}",
+            "shifted": f"两类都有，但最密的地方错开了的{unit_name[layer]}",
+            "only_a": f"只属于{titles[0]}的{unit_name[layer]}" if titles else "",
+            "only_b": f"只属于{titles[1]}的{unit_name[layer]}" if len(titles) > 1 else "",
         }
+        if layer == "word":
+            sentences.append("分出来的词仍把说话用的架子留在计数里，没有按内容删掉，所以这一层的栏会偏大。")
         for key, label in labels.items():
-            bucket = next(row for row in rows if row["kind"] == "diff" and row["layer"] == layer and row["diff"] == key)
+            next(row for row in rows if row["kind"] == "diff" and row["layer"] == layer and row["diff"] == key)
             examples = [row for row in rows if row["kind"] == "diff_item" and row["layer"] == layer and row["diff"] == key]
             if examples:
-                sentences.append(f"{label}有{bucket['count']}{unit_measure[layer]}，例如「{examples[0]['text']}」。")
+                sentences.append(f"{label}，例如「{examples[0]['text']}」。")
             else:
-                sentences.append(f"{label}有{bucket['count']}{unit_measure[layer]}。")
+                sentences.append(f"{label}，这一栏是空的。")
     return sentences
