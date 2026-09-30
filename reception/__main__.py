@@ -23,6 +23,7 @@ def _public_thing(thing: dict) -> dict:
         "n_videos": thing["n_videos"],
         "n_rows": thing["n_rows"],
         "mode": thing["mode"],
+        "rank": thing.get("rank", 0),
         "evidence": thing["evidence"],
     }
 
@@ -35,6 +36,7 @@ def _public_side(built: dict) -> dict:
         "n_skipped": built["n_skipped"],
         "crowded": built["crowded"],
         "shown": [_public_thing(thing) for thing in built["shown"]],
+        "layers": [_public_thing(thing) for thing in built.get("layers") or built["shown"]],
         "things": [_public_thing(thing) for thing in built["things"]],
         "hidden": built["hidden"],
         "solo_count": built["solo_count"],
