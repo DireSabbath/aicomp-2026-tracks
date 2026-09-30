@@ -307,7 +307,7 @@ function phaseRibbon(typeIndex, phases, phrases) {
       band.addEventListener("click", () => { location.hash = `phrase-${typeIndex}-${known}`; });
     }
     svg.appendChild(band);
-    if (x2 - x1 > 72) {
+    if (x2 - x1 > phase.text.length * 12 + 16) {
       const clip = document.createElementNS("http://www.w3.org/2000/svg", "clipPath");
       clip.setAttribute("id", `ribbon-${typeIndex}-${index}`);
       const clipRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
