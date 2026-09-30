@@ -1,32 +1,22 @@
-"""从已定位的弹幕算出接收结构。说法按原文完全相同计数。"""
+"""从已定位的弹幕算出接收结构。说法是词，或去掉标点后的整句。"""
 
 from __future__ import annotations
 
-import re
 from collections import defaultdict
 
 from briefing.protocol import (
     DIFF_ITEMS,
     EVIDENCE_SAMPLE,
-    MAX_CHARS,
-    MIN_CHARS,
     MIN_ROWS,
     MIN_VIDEOS,
+    NEIGHBOR_ITEMS,
     PEAK_TOLERANCE,
     SEGMENTS,
+    SOLO_ITEMS,
     TOP_CLAIMS,
+    TOP_PHRASES,
 )
-
-_KEEP = re.compile(r"[\u4e00-\u9fffA-Za-z0-9]")
-
-
-def normalize(content: str) -> str | None:
-    text = re.sub(r"\s+", "", content or "")
-    if not (MIN_CHARS <= len(text) <= MAX_CHARS):
-        return None
-    if _KEEP.search(text) is None:
-        return None
-    return text
+from briefing.units import display_raw, split_units
 
 
 def _bounds(segment: int, segments: int) -> tuple[int, int]:
@@ -67,7 +57,7 @@ def locate(video, segments: int) -> list[dict]:
                 "segment": _segment_of(int(progress), offset, total, segments),
                 "progress_ms": int(progress),
                 "ctime": int(ctime) if isinstance(ctime, int) else None,
-                "text": normalize(str(row.get("content") or "")),
+                "raw": display_raw(str(row.get("content") or "")),
             }
         )
     return located
@@ -97,6 +87,116 @@ def _median(columns: list[list[int]]) -> list[float]:
     return out
 
 
+def _new_agg(segments: int) -> dict:
+    return {
+        "rows": defaultdict(int),
+        "videos": defaultdict(set),
+        "segs": defaultdict(lambda: [0] * segments),
+        "samples": defaultdict(list),
+        "ctime_min": {},
+        "ctime_max": {},
+    }
+
+
+def _touch(agg: dict, key: str, item: dict, bvid: str, segments: int, seen: set[str]) -> None:
+    agg["rows"][key] += 1
+    agg["segs"][key][item["segment"]] += 1
+    if key not in seen:
+        agg["videos"][key].add(bvid)
+        seen.add(key)
+    if len(agg["samples"][key]) < EVIDENCE_SAMPLE:
+        start_pct, end_pct = _bounds(item["segment"] + 1, segments)
+        agg["samples"][key].append(
+            {
+                "bvid": bvid,
+                "segment": item["segment"] + 1,
+                "start_pct": start_pct,
+                "end_pct": end_pct,
+                "progress_ms": item["progress_ms"],
+                "ctime": item["ctime"],
+                "text": item["raw"],
+            }
+        )
+    if item["ctime"] is not None:
+        agg["ctime_min"][key] = item["ctime"] if key not in agg["ctime_min"] else min(agg["ctime_min"][key], item["ctime"])
+        agg["ctime_max"][key] = item["ctime"] if key not in agg["ctime_max"] else max(agg["ctime_max"][key], item["ctime"])
+
+
+def _record(text: str, agg: dict, n_type: int, segments: int, unit: str) -> dict:
+    counts = agg["segs"][text]
+    nvideos = len(agg["videos"][text])
+    nrows = agg["rows"][text]
+    peak = _peak(counts)
+    entry = next(index for index, value in enumerate(counts) if value > 0)
+    exit_ = max(index for index, value in enumerate(counts) if value > 0)
+    if text in agg["ctime_min"]:
+        span_days = int((agg["ctime_max"][text] - agg["ctime_min"][text]) // 86400)
+    else:
+        span_days = None
+    entry_segment = entry + 1
+    peak_segment = peak + 1
+    exit_segment = exit_ + 1
+    entry_start_pct, _entry_end = _bounds(entry_segment, segments)
+    peak_start_pct, peak_end_pct = _bounds(peak_segment, segments)
+    _exit_start, exit_end_pct = _bounds(exit_segment, segments)
+    return {
+        "text": text,
+        "unit": unit,
+        "n_videos": nvideos,
+        "n_rows": nrows,
+        "entry_segment": entry_segment,
+        "peak_segment": peak_segment,
+        "exit_segment": exit_segment,
+        "entry_start_pct": entry_start_pct,
+        "peak_start_pct": peak_start_pct,
+        "peak_end_pct": peak_end_pct,
+        "exit_end_pct": exit_end_pct,
+        "absent_videos": n_type - nvideos,
+        "span_days": span_days,
+        "segment_counts": counts,
+        "evidence": agg["samples"][text],
+        "neighbors": [],
+        "neighbor_count": 0,
+    }
+
+
+def _finish(agg: dict, n_type: int, segments: int, min_videos: int, min_rows: int, unit: str) -> tuple[list[dict], list[dict]]:
+    claims = []
+    solos = []
+    for text in agg["rows"]:
+        nvideos = len(agg["videos"][text])
+        nrows = agg["rows"][text]
+        if nvideos >= min_videos and nrows >= min_rows:
+            claims.append(_record(text, agg, n_type, segments, unit))
+        elif nvideos == 1 and nrows >= min_rows:
+            solos.append(_record(text, agg, n_type, segments, unit))
+    claims.sort(key=lambda item: (-item["n_videos"], -item["n_rows"], item["text"]))
+    solos.sort(key=lambda item: (-item["n_rows"], item["text"]))
+    return claims, solos
+
+
+def _attach_neighbors(claims: list[dict], tolerance: int, limit: int) -> None:
+    for claim in claims:
+        near = [
+            other
+            for other in claims
+            if other["text"] != claim["text"] and abs(other["peak_segment"] - claim["peak_segment"]) <= tolerance
+        ]
+        near.sort(key=lambda item: (-item["n_videos"], -item["n_rows"], item["text"]))
+        claim["neighbor_count"] = len(near)
+        claim["neighbors"] = [
+            {
+                "text": other["text"],
+                "n_videos": other["n_videos"],
+                "n_rows": other["n_rows"],
+                "peak_segment": other["peak_segment"],
+                "peak_start_pct": other["peak_start_pct"],
+                "peak_end_pct": other["peak_end_pct"],
+            }
+            for other in near[:limit]
+        ]
+
+
 def build_type(
     type_id: str,
     title: str,
@@ -105,49 +205,30 @@ def build_type(
     min_videos: int = MIN_VIDEOS,
     min_rows: int = MIN_ROWS,
     top_claims: int = TOP_CLAIMS,
+    top_phrases: int = TOP_PHRASES,
+    solo_items: int = SOLO_ITEMS,
+    tolerance: int = PEAK_TOLERANCE,
 ) -> dict:
     per_video_counts: list[list[int]] = []
     per_video_bvid: list[str] = []
-    row_counts: dict[str, int] = defaultdict(int)
-    video_hits: dict[str, set[str]] = defaultdict(set)
-    segment_counts: dict[str, list[int]] = defaultdict(lambda: [0] * segments)
-    samples: dict[str, list[dict]] = defaultdict(list)
-    ctime_min: dict[str, int] = {}
-    ctime_max: dict[str, int] = {}
+    words = _new_agg(segments)
+    phrases = _new_agg(segments)
     usable = 0
     raw_rows = 0
     videos = sorted(videos, key=lambda video: video.bvid)
     for video in videos:
         raw_rows += len(video.rows)
         counts = [0] * segments
-        seen: set[str] = set()
+        seen_words: set[str] = set()
+        seen_phrases: set[str] = set()
         for item in locate(video, segments):
             usable += 1
             counts[item["segment"]] += 1
-            text = item["text"]
-            if text is None:
-                continue
-            row_counts[text] += 1
-            segment_counts[text][item["segment"]] += 1
-            if text not in seen:
-                video_hits[text].add(video.bvid)
-                seen.add(text)
-            if len(samples[text]) < EVIDENCE_SAMPLE:
-                start_pct, end_pct = _bounds(item["segment"] + 1, segments)
-                samples[text].append(
-                    {
-                        "bvid": video.bvid,
-                        "segment": item["segment"] + 1,
-                        "start_pct": start_pct,
-                        "end_pct": end_pct,
-                        "progress_ms": item["progress_ms"],
-                        "ctime": item["ctime"],
-                        "text": text,
-                    }
-                )
-            if item["ctime"] is not None:
-                ctime_min[text] = item["ctime"] if text not in ctime_min else min(ctime_min[text], item["ctime"])
-                ctime_max[text] = item["ctime"] if text not in ctime_max else max(ctime_max[text], item["ctime"])
+            phrase, tokens = split_units(item["raw"])
+            if phrase is not None:
+                _touch(phrases, phrase, item, video.bvid, segments, seen_phrases)
+            for token in tokens:
+                _touch(words, token, item, video.bvid, segments, seen_words)
         per_video_counts.append(counts)
         per_video_bvid.append(video.bvid)
     median = _median(per_video_counts)
@@ -165,44 +246,10 @@ def build_type(
         volume_peak_starts.append(start_pct)
         volume_peak_ends.append(end_pct)
     baseline_start_pct, baseline_end_pct = _bounds(baseline_peak + 1, segments)
-    claims = []
-    for text, nrows in row_counts.items():
-        nvideos = len(video_hits[text])
-        if nvideos < min_videos or nrows < min_rows:
-            continue
-        counts = segment_counts[text]
-        peak = _peak(counts)
-        entry = next(index for index, value in enumerate(counts) if value > 0)
-        exit_ = max(index for index, value in enumerate(counts) if value > 0)
-        if text in ctime_min:
-            span_days = int((ctime_max[text] - ctime_min[text]) // 86400)
-        else:
-            span_days = None
-        entry_segment = entry + 1
-        peak_segment = peak + 1
-        exit_segment = exit_ + 1
-        entry_start_pct, _entry_end = _bounds(entry_segment, segments)
-        peak_start_pct, peak_end_pct = _bounds(peak_segment, segments)
-        _exit_start, exit_end_pct = _bounds(exit_segment, segments)
-        claims.append(
-            {
-                "text": text,
-                "n_videos": nvideos,
-                "n_rows": nrows,
-                "entry_segment": entry_segment,
-                "peak_segment": peak_segment,
-                "exit_segment": exit_segment,
-                "entry_start_pct": entry_start_pct,
-                "peak_start_pct": peak_start_pct,
-                "peak_end_pct": peak_end_pct,
-                "exit_end_pct": exit_end_pct,
-                "absent_videos": len(videos) - nvideos,
-                "span_days": span_days,
-                "segment_counts": counts,
-                "evidence": samples[text],
-            }
-        )
-    claims.sort(key=lambda item: (-item["n_rows"], -item["n_videos"], item["text"]))
+    word_claims, solo_words = _finish(words, len(videos), segments, min_videos, min_rows, "word")
+    phrase_claims, solo_phrases = _finish(phrases, len(videos), segments, min_videos, min_rows, "phrase")
+    _attach_neighbors(word_claims, tolerance, NEIGHBOR_ITEMS)
+    _attach_neighbors(phrase_claims, tolerance, NEIGHBOR_ITEMS)
     return {
         "id": type_id,
         "title": title,
@@ -221,14 +268,21 @@ def build_type(
             {"bvid": bvid, "counts": counts}
             for bvid, counts in zip(per_video_bvid, per_video_counts)
         ],
-        "claims": claims,
-        "shown_claims": claims[:top_claims],
+        "claims": word_claims,
+        "shown_claims": word_claims[:top_claims],
+        "phrases": phrase_claims,
+        "shown_phrases": phrase_claims[:top_phrases],
+        "solo_words": solo_words[:solo_items],
+        "solo_word_count": len(solo_words),
+        "solo_phrases": solo_phrases[:solo_items],
+        "solo_phrase_count": len(solo_phrases),
     }
 
 
 def _item(claim: dict, other: dict | None = None) -> dict:
     payload = {
         "text": claim["text"],
+        "unit": claim.get("unit", ""),
         "n_videos": claim["n_videos"],
         "n_rows": claim["n_rows"],
         "entry_segment": claim["entry_segment"],
@@ -246,6 +300,8 @@ def _item(claim: dict, other: dict | None = None) -> dict:
         "span_days": claim["span_days"],
         "segment_counts": claim["segment_counts"],
         "evidence": claim["evidence"],
+        "neighbors": claim.get("neighbors", []),
+        "neighbor_count": claim.get("neighbor_count", 0),
     }
     if other is not None:
         payload["other_peak_segment"] = other["peak_segment"]
@@ -280,6 +336,27 @@ def compare_types(left: dict, right: dict, tolerance: int = PEAK_TOLERANCE, limi
     }
     out = {}
     for key, items in buckets.items():
-        items.sort(key=lambda item: (-item["n_rows"], item["text"]))
+        items.sort(key=lambda item: (-item["n_videos"], -item["n_rows"], item["text"]))
         out[key] = {"count": len(items), "items": items[:limit]}
     return out
+
+
+def label_buckets(left_claims: list[dict], right_claims: list[dict], tolerance: int) -> tuple[dict[str, str], dict[str, str]]:
+    """每一条跨视频说法落入四栏中的一栏。显示时再截断，计数不截断。"""
+    by_right = {claim["text"]: claim for claim in right_claims}
+    left: dict[str, str] = {}
+    right: dict[str, str] = {}
+    seen: set[str] = set()
+    for claim in left_claims:
+        seen.add(claim["text"])
+        other = by_right.get(claim["text"])
+        if other is None:
+            left[claim["text"]] = "only_a"
+            continue
+        key = "same_peak" if abs(claim["peak_segment"] - other["peak_segment"]) <= tolerance else "shifted"
+        left[claim["text"]] = key
+        right[claim["text"]] = key
+    for claim in right_claims:
+        if claim["text"] not in seen:
+            right[claim["text"]] = "only_b"
+    return left, right
