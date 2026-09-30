@@ -7,6 +7,7 @@ import json
 from reception.analyze import (
     CROWD_RATIO,
     DENSITY_BINS,
+    LAYER,
     SIMILAR,
     TIME_GAP,
     WINDOWS,
@@ -87,7 +88,7 @@ def readings(built: dict) -> list[str]:
     if built["solo_count"]:
         lines.append(f"只在一条视频里的事有{built['solo_count']}件，没有写进这一类。")
     if built["hidden"]:
-        lines.append(f"这一类里还有{built['hidden']}件事。带子上每一段只放出现在最多条视频里的那一件。")
+        lines.append(f"这一类里还有{built['hidden']}件事，没有放到带子上。")
     return lines
 
 
@@ -114,7 +115,7 @@ def method_text() -> str:
         f"两句的中位位置相差超过片长的 {round(TIME_GAP * 100)}%，就不再并成一件事。"
         f"先把片长分成 {WINDOWS} 段：段里条数高于各段中位的，围着连接最多的那句收；其余段里，字面接得上的收到一起。"
         f"人多是把片长分成 {DENSITY_BINS} 格，连在一起、并且达到这一类峰值 {round(CROWD_RATIO * 100)}% 的那些格。"
-        f"带子上每一段只放一件，也就是这一段里出现在最多条视频上的那句原话。"
+        f"带子上每一段放视频数最多的 {LAYER} 句原话，字越大，视频越多。"
     )
 
 
@@ -143,6 +144,7 @@ def _page_thing(thing: dict) -> dict:
         "n_videos": thing["n_videos"],
         "n_rows": thing["n_rows"],
         "mode": thing["mode"],
+        "rank": thing.get("rank", 0),
         "evidence": thing["evidence"],
     }
 
@@ -156,6 +158,7 @@ def _page_report(report: dict) -> dict:
             "n_skipped": built.get("n_skipped", 0),
             "crowded": built["crowded"],
             "shown": [_page_thing(thing) for thing in built["shown"]],
+            "layers": [_page_thing(thing) for thing in built.get("layers") or built["shown"]],
             "hidden": built["hidden"],
             "solo_count": built["solo_count"],
         }
@@ -164,7 +167,6 @@ def _page_report(report: dict) -> dict:
         "left": side(report["left"]),
         "right": side(report["right"]),
         "match": report["match"],
-        "readings": report["readings"],
         "note": report["note"],
         "method": report["method"],
     }
@@ -181,51 +183,60 @@ def render_page(report: dict) -> str:
 <style>
 body {{ margin: 0; font: 16px/1.5 "WenQuanYi Micro Hei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif; background: #f6f1e7; color: #241c16; }}
 main {{ max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; }}
-h1 {{ font-size: 28px; margin: 0 0 8px; }}
-.note, .method, .legend, .read {{ margin: 8px 0; }}
-.method, .legend {{ color: #6d6256; }}
-.strip-wrap {{ margin: 28px 0; }}
+h1 {{ font-size: 28px; margin: 0 0 20px; }}
+.strip-wrap {{ margin: 8px 0 22px; }}
 .strip-title {{ font-weight: 700; margin-bottom: 8px; }}
 .strip {{ background: #efe6d6; border-radius: 12px; padding: 12px 0 8px; }}
 .film {{ position: relative; min-height: 72px; margin: 0 80px; }}
-.crowd {{ position: absolute; top: 0; bottom: 0; background: rgba(196, 92, 46, 0.28); }}
-.word {{ position: absolute; transform: translateX(-50%); max-width: 8em; padding: 4px 8px; border: 0; border-radius: 999px; background: #fffdf8; cursor: pointer; font: inherit; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+.crowd {{ position: absolute; top: 0; bottom: 0; background: rgba(196, 92, 46, 0.34); }}
+.word {{ position: absolute; transform: translateX(-50%); max-width: 140px; padding: 2px 8px; border: 0; border-radius: 999px; background: #fffdf8; cursor: pointer; font: inherit; line-height: 1.25; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
 .word.topic {{ box-shadow: inset 0 0 0 2px #8c3a2f; }}
 .word.dialogue {{ box-shadow: inset 0 0 0 2px #2f5d50; }}
 .word.shared {{ background: #f3e1b5; }}
 .word.shifted {{ outline: 2px dashed #8a6a1f; }}
 .word.open {{ background: #241c16; color: #fffdf8; }}
 .axis {{ display: flex; justify-content: space-between; color: #6d6256; font-size: 13px; margin: 4px 80px 0; }}
+.key {{ display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 12px 0; color: #6d6256; font-size: 14px; }}
+.chip {{ padding: 2px 8px; border-radius: 999px; background: #fffdf8; white-space: nowrap; }}
+.chip.topic {{ box-shadow: inset 0 0 0 2px #8c3a2f; }}
+.chip.dialogue {{ box-shadow: inset 0 0 0 2px #2f5d50; }}
+.chip.shared {{ background: #f3e1b5; }}
+.chip.shifted {{ outline: 2px dashed #8a6a1f; }}
+.note {{ margin: 8px 0 0; }}
+details {{ margin-top: 18px; color: #6d6256; }}
+summary {{ cursor: pointer; }}
+.method {{ margin: 8px 0; }}
 .evidence {{ margin-top: 12px; background: #fffdf8; border-radius: 12px; padding: 12px 16px; }}
 .evidence li {{ margin: 6px 0; }}
 .meta {{ color: #6d6256; font-size: 13px; }}
 @media (max-width: 700px) {{
   h1 {{ font-size: 22px; }}
-  .film, .axis {{ margin-left: 36px; margin-right: 36px; }}
-  .word {{ max-width: 6.2em; }}
+  .film, .axis {{ margin-left: 28px; margin-right: 28px; }}
+  .word {{ max-width: 108px; }}
 }}
 </style>
 </head>
 <body>
 <main>
 <h1>一类视频的观众接收</h1>
-<p class="note" id="note"></p>
-<p class="method" id="method"></p>
-<p class="legend">色带是人多的位置。红边是围着一件事，绿边是接话。浅底是两边都有，虚线是位置错开。点一下看原话。</p>
-<div id="readings"></div>
 <div id="strips"></div>
+<div class="key">
+  <span>字越大，出现在越多条视频里</span>
+  <span class="chip topic">人密处</span>
+  <span class="chip dialogue">人疏处</span>
+  <span class="chip shared">两边都有</span>
+  <span class="chip shared shifted">位置错开</span>
+</div>
+<p class="note" id="note"></p>
+<details>
+<summary>这张图怎么来的</summary>
+<p class="method" id="method"></p>
+</details>
 </main>
 <script>
 const report = {payload};
 document.getElementById("note").textContent = report.note;
 document.getElementById("method").textContent = report.method;
-const readings = document.getElementById("readings");
-report.readings.forEach((line) => {{
-  const p = document.createElement("p");
-  p.className = "read";
-  p.textContent = line;
-  readings.appendChild(p);
-}});
 const shared = new Set();
 const shifted = new Set();
 report.match.pairs.forEach((pair) => {{
@@ -257,24 +268,27 @@ function layout(film) {{
     }}
   }});
   const lanes = [];
+  let pitch = 32;
   buttons.forEach((button) => {{
+    pitch = Math.max(pitch, button.offsetHeight + 8);
     const rect = button.getBoundingClientRect();
     let lane = 0;
     while (lanes[lane] && lanes[lane].some((other) => rect.left < other.right - 2 && rect.right > other.left + 2)) lane += 1;
     if (!lanes[lane]) lanes[lane] = [];
     lanes[lane].push(rect);
-    button.style.top = (8 + lane * 42) + "px";
+    button.dataset.lane = String(lane);
   }});
-  film.style.height = (24 + Math.max(1, buttons.length ? lanes.length : 1, 1) * 42) + "px";
+  buttons.forEach((button) => {{
+    button.style.top = (8 + Number(button.dataset.lane) * pitch) + "px";
+  }});
+  film.style.height = (16 + Math.max(1, lanes.length) * pitch) + "px";
 }}
 function mount(built) {{
   const wrap = document.createElement("section");
   wrap.className = "strip-wrap";
   const title = document.createElement("div");
   title.className = "strip-title";
-  let caption = built.title + " · " + built.n_videos + " 条视频 · 能定位 " + built.n_placed + " 条";
-  if (built.n_skipped) caption += " · " + built.n_skipped + " 条对不上片长";
-  title.textContent = caption;
+  title.textContent = built.title;
   wrap.appendChild(title);
   const strip = document.createElement("div");
   strip.className = "strip";
@@ -287,11 +301,17 @@ function mount(built) {{
     band.style.width = ((span.end - span.start) * 100) + "%";
     film.appendChild(band);
   }});
-  built.shown.forEach((thing) => {{
+  const words = built.layers || built.shown;
+  const maxVideos = Math.max(...words.map((thing) => thing.n_videos), 1);
+  words.forEach((thing) => {{
     const button = document.createElement("button");
     button.type = "button";
     button.className = "word " + thing.mode + (shared.has(thing.text) ? " shared" : "") + (shifted.has(thing.text) ? " shifted" : "");
     button.style.left = (thing.median * 100) + "%";
+    const weight = thing.n_videos / maxVideos;
+    button.style.fontSize = Math.round(13 + 18 * weight) + "px";
+    button.style.fontWeight = thing.rank ? "500" : "700";
+    button.style.zIndex = String(10 + thing.n_videos);
     button.dataset.median = String(thing.median);
     button.textContent = thing.text;
     button.addEventListener("click", () => {{
@@ -324,8 +344,7 @@ function mount(built) {{
     box.appendChild(head);
     const meta = document.createElement("div");
     meta.className = "meta";
-    const kind = thing.mode === "topic" ? "人多的地方围着这件事" : "人少的地方在接话";
-    meta.textContent = kind + " · 出现在 " + thing.n_videos + " 条视频里";
+    meta.textContent = thing.n_videos + " 条视频";
     box.appendChild(meta);
     const list = document.createElement("ul");
     thing.evidence.forEach((row) => {{
