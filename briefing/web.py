@@ -34,7 +34,7 @@ _PAGE = r"""<!DOCTYPE html>
   .chart { background: white; border: 1px solid var(--line); padding: 12px; overflow-x: auto; }
   svg { width: 100%; height: auto; }
   .claims { display: grid; gap: 8px; margin-top: 16px; }
-  .claim { display: grid; grid-template-columns: 160px 1fr; gap: 8px; align-items: center; background: white; border: 1px solid var(--line); padding: 8px; cursor: pointer; }
+  .claim { display: grid; grid-template-columns: minmax(240px, 320px) 1fr; gap: 8px; align-items: center; background: white; border: 1px solid var(--line); padding: 8px; cursor: pointer; }
   .claim strong { font-weight: 600; }
   .cells { display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px; height: 36px; align-items: end; }
   .cells i { display: block; width: 100%; background: var(--accent); }
@@ -77,6 +77,7 @@ function show(name) {
   document.querySelectorAll("main section").forEach((section) => {
     section.classList.toggle("active", section.id === name);
   });
+  window.scrollTo(0, 0);
 }
 document.querySelectorAll("nav button").forEach((button) => {
   button.addEventListener("click", () => {
