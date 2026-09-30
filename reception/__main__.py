@@ -23,7 +23,11 @@ def _public_thing(thing: dict) -> dict:
         "n_videos": thing["n_videos"],
         "n_rows": thing["n_rows"],
         "mode": thing["mode"],
+        "role": thing.get("role", ""),
         "rank": thing.get("rank", 0),
+        "p25": thing.get("p25", thing["median"]),
+        "p75": thing.get("p75", thing["median"]),
+        "marks": thing.get("marks") or [thing["median"]],
         "evidence": thing["evidence"],
     }
 

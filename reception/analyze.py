@@ -3,6 +3,9 @@
 人多的位置用全部能定位的弹幕。至少出现两次的字面才能成为一件事，字面接近的再并到一起。
 密集的一段里，围着连接最多的那句收成一件事。稀疏的一段里，互相接得上的原话收成一件事。
 只出现在一条视频里的，不写进这一类。
+
+一件事自己的弹幕有多少落在中位位置附近，用来把它画成两种样子：
+收在一处的，每段只留视频最多的那句；顺着片子走的，先把视频最多的几句标成到处在说，其余每段再留一句。
 """
 
 from __future__ import annotations
@@ -197,12 +200,17 @@ def _thing(norms: list[str], grouped: dict[str, list[Row]], crowded: list[dict],
         ),
     )
     mode = "topic" if _inside(median, crowded) else "dialogue"
+    near = sum(1 for percent in percents if abs(percent - median) <= TIME_GAP)
+    p25, p75 = (float(value) for value in np.percentile(percents, [25, 75]))
     return {
         "text": representative,
         "norms": norms,
         "start": min(percents),
         "end": max(percents),
         "median": median,
+        "p25": p25,
+        "p75": p75,
+        "local": near / len(percents),
         "n_videos": len(videos),
         "n_rows": len(rows),
         "videos": videos,
@@ -259,8 +267,7 @@ def build_type(pool: Pool) -> dict:
             )
     things.sort(key=lambda item: (-item["n_videos"], -item["n_rows"], item["text"]))
     solos.sort(key=lambda item: (-item["n_rows"], item["text"]))
-    layers = _per_window(things, LAYER)
-    shown = [thing for thing in layers if thing["rank"] == 0]
+    layers = _arrange(things)
     return {
         "title": pool.title,
         "n_videos": len(pool.videos),
@@ -269,7 +276,7 @@ def build_type(pool: Pool) -> dict:
         "n_skipped": pool.skipped,
         "crowded": crowded,
         "things": things,
-        "shown": shown,
+        "shown": layers,
         "layers": layers,
         "hidden": max(0, len(things) - len(layers)),
         "solos": solos[:SHOW],
@@ -277,19 +284,61 @@ def build_type(pool: Pool) -> dict:
     }
 
 
-def _per_window(things: list[dict], depth: int) -> list[dict]:
-    """每一段留下视频数最多的几句。rank 0 是这一段最大的那句。"""
-    buckets: dict[int, list[dict]] = defaultdict(list)
-    for thing in things:
-        buckets[min(WINDOWS - 1, int(thing["median"] * WINDOWS))].append(thing)
-    picked = []
-    for items in buckets.values():
-        ordered = sorted(items, key=lambda item: (-item["n_videos"], -item["n_rows"], item["text"]))
-        for rank, thing in enumerate(ordered[:depth]):
-            thing["rank"] = rank
-            picked.append(thing)
-    picked.sort(key=lambda item: (item["median"], item["rank"], item["text"]))
-    return picked
+def _window(thing: dict) -> int:
+    return min(WINDOWS - 1, int(thing["median"] * WINDOWS))
+
+
+def _coverage(thing: dict):
+    return (-thing["n_videos"], -thing["n_rows"], thing["text"])
+
+
+def _marks(thing: dict) -> list[float]:
+    """四分位拉开了，才沿着片子重复写这句。挤在一处的淡字只写一次。"""
+    if thing["p75"] - thing["p25"] <= TIME_GAP:
+        return [thing["median"]]
+    return [thing["p25"], thing["median"], thing["p75"]]
+
+
+def _arrange(things: list[dict]) -> list[dict]:
+    """收在一处的每段留一句。顺着片子走的，视频最多的几句是到处在说，其余每段再留一句。
+
+    分界是这一类自己的中位紧密程度，不是另定的一条线。
+    """
+    if not things:
+        return []
+    cut = float(np.median([thing["local"] for thing in things]))
+    loose = [thing for thing in things if thing["local"] < cut]
+    tight = [thing for thing in things if thing["local"] >= cut]
+    chorus = sorted(loose, key=_coverage)[:LAYER]
+    chorus_ids = {id(thing) for thing in chorus}
+    drawn = []
+    for rank, thing in enumerate(chorus):
+        thing["role"] = "chorus"
+        thing["rank"] = rank
+        thing["marks"] = _marks(thing)
+        drawn.append(thing)
+    tight_buckets: dict[int, list[dict]] = defaultdict(list)
+    for thing in tight:
+        tight_buckets[_window(thing)].append(thing)
+    for items in tight_buckets.values():
+        thing = sorted(items, key=_coverage)[0]
+        thing["role"] = "place"
+        thing["rank"] = 0
+        thing["marks"] = [thing["median"]]
+        drawn.append(thing)
+    loose_buckets: dict[int, list[dict]] = defaultdict(list)
+    for thing in loose:
+        if id(thing) in chorus_ids:
+            continue
+        loose_buckets[_window(thing)].append(thing)
+    for items in loose_buckets.values():
+        thing = sorted(items, key=_coverage)[0]
+        thing["role"] = "travel"
+        thing["rank"] = 0
+        thing["marks"] = [thing["median"]]
+        drawn.append(thing)
+    drawn.sort(key=lambda item: (item["median"], item["role"] != "place", item["text"]))
+    return drawn
 
 
 def match_types(left: dict, right: dict) -> dict:
