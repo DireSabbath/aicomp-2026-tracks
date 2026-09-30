@@ -5,10 +5,10 @@ from __future__ import annotations
 import re
 import unittest
 
-from briefing.ethics import blocked
 from briefing.load import Video
 from briefing.report import build_report
 from briefing.structure import build_type
+from briefing.text import place, stretch
 
 
 def video(bvid: str, comments: list[tuple[str, int]]) -> Video:
@@ -80,10 +80,9 @@ class BriefingTest(unittest.TestCase):
         claims = {claim["text"] for item in report["types"] for claim in item["claims"]}
         self.assertIn("同款", claims)
         self.assertIn("甲边", claims)
+        self.assertIn("台独口号", claims)
         self.assertNotIn("只此", claims)
-        self.assertNotIn("台独口号", claims)
-        self.assertTrue(blocked("人民万岁"))
-        self.assertTrue(blocked("玉宇澄清万里埃"))
+        self.assertNotIn("段", "\n".join(report["briefing"]))
         self.assertIn("同款", {item["text"] for item in report["diff"]["same_peak"]["items"]})
         self.assertIn("错位", {item["text"] for item in report["diff"]["shifted"]["items"]})
         self.assertIn("甲边", {item["text"] for item in report["diff"]["only_a"]["items"]})
@@ -100,9 +99,8 @@ class BriefingTest(unittest.TestCase):
         for sentence in report["briefing"]:
             for number in integers_outside_quotes(sentence):
                 self.assertIn(number, grounded, sentence)
-        self.assertNotIn("人民万岁", "\n".join(report["briefing"]))
 
-    def test_blocked_text_stays_in_volume_and_off_the_page(self) -> None:
+    def test_repeated_sentence_stays_in_the_briefing(self) -> None:
         left = [
             video("a1", [("普通说法", 1000)] * 3 + [("人民万岁", 90000)] * 4),
             video("a2", [("普通说法", 2000)] * 3 + [("人民万岁", 91000)] * 4),
@@ -119,18 +117,18 @@ class BriefingTest(unittest.TestCase):
             min_rows=2,
         )
         self.assertEqual(report["types"][0]["volume_peak_segment"], 4)
-        visible = []
-        for item in report["types"]:
-            for claim in item["claims"]:
-                visible.append(claim["text"])
-                visible.extend(row["text"] for row in claim["evidence"])
-        for bucket in report["diff"].values():
-            for item in bucket["items"]:
-                visible.append(item["text"])
-                visible.extend(row["text"] for row in item["evidence"])
-        visible.extend(report["briefing"])
-        self.assertTrue(visible)
-        self.assertFalse(any("人民万岁" in text or "玉宇澄清万里埃" in text for text in visible))
+        claims = {claim["text"] for claim in report["types"][0]["claims"]}
+        self.assertIn("人民万岁", claims)
+        self.assertIn("人民万岁", "\n".join(report["briefing"]))
+        self.assertTrue(any("片尾" in sentence or "片长" in sentence for sentence in report["briefing"]))
+
+    def test_place_names_the_video(self) -> None:
+        self.assertEqual(place(0, 5), "开头的5%")
+        self.assertEqual(place(45, 50), "片长的45%到50%")
+        self.assertEqual(place(75, 100), "片长的75%到片尾")
+        self.assertEqual(stretch(0, 100), "从开头一直到片尾")
+        self.assertEqual(stretch(55, 90), "从片长的55%到90%")
+        self.assertNotIn("段", place(45, 50))
 
     def test_median_peak_keeps_the_fraction(self) -> None:
         built = build_type(
@@ -147,6 +145,8 @@ class BriefingTest(unittest.TestCase):
         self.assertEqual(built["volume_median"][0], 1.0)
         self.assertEqual(built["volume_median"][1], 1.5)
         self.assertEqual(built["volume_peak_segment"], 2)
+        self.assertEqual(built["volume_peak_starts"], [25])
+        self.assertEqual(built["volume_peak_ends"], [50])
 
     def test_second_page_offset_and_end_clamp(self) -> None:
         def paged(bvid: str, progress: int) -> Video:

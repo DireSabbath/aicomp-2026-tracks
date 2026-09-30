@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 
-from briefing.ethics import blocked
 from briefing.protocol import (
     DIFF_ITEMS,
     EVIDENCE_SAMPLE,
@@ -27,9 +26,11 @@ def normalize(content: str) -> str | None:
         return None
     if _KEEP.search(text) is None:
         return None
-    if blocked(text):
-        return None
     return text
+
+
+def _bounds(segment: int, segments: int) -> tuple[int, int]:
+    return (segment - 1) * 100 // segments, segment * 100 // segments
 
 
 def _segment_of(progress_ms: int, offset_ms: int, total_ms: int, segments: int) -> int:
@@ -132,10 +133,13 @@ def build_type(
                 video_hits[text].add(video.bvid)
                 seen.add(text)
             if len(samples[text]) < EVIDENCE_SAMPLE:
+                start_pct, end_pct = _bounds(item["segment"] + 1, segments)
                 samples[text].append(
                     {
                         "bvid": video.bvid,
                         "segment": item["segment"] + 1,
+                        "start_pct": start_pct,
+                        "end_pct": end_pct,
                         "progress_ms": item["progress_ms"],
                         "ctime": item["ctime"],
                         "text": text,
@@ -153,8 +157,14 @@ def build_type(
         tied = [index + 1 for index, value in enumerate(median) if value == top]
     else:
         tied = [1]
-    baseline_index = 0
     baseline_peak = _peak(per_video_counts[0]) if per_video_counts else 0
+    volume_peak_starts = []
+    volume_peak_ends = []
+    for segment in tied:
+        start_pct, end_pct = _bounds(segment, segments)
+        volume_peak_starts.append(start_pct)
+        volume_peak_ends.append(end_pct)
+    baseline_start_pct, baseline_end_pct = _bounds(baseline_peak + 1, segments)
     claims = []
     for text, nrows in row_counts.items():
         nvideos = len(video_hits[text])
@@ -168,14 +178,24 @@ def build_type(
             span_days = int((ctime_max[text] - ctime_min[text]) // 86400)
         else:
             span_days = None
+        entry_segment = entry + 1
+        peak_segment = peak + 1
+        exit_segment = exit_ + 1
+        entry_start_pct, _entry_end = _bounds(entry_segment, segments)
+        peak_start_pct, peak_end_pct = _bounds(peak_segment, segments)
+        _exit_start, exit_end_pct = _bounds(exit_segment, segments)
         claims.append(
             {
                 "text": text,
                 "n_videos": nvideos,
                 "n_rows": nrows,
-                "entry_segment": entry + 1,
-                "peak_segment": peak + 1,
-                "exit_segment": exit_ + 1,
+                "entry_segment": entry_segment,
+                "peak_segment": peak_segment,
+                "exit_segment": exit_segment,
+                "entry_start_pct": entry_start_pct,
+                "peak_start_pct": peak_start_pct,
+                "peak_end_pct": peak_end_pct,
+                "exit_end_pct": exit_end_pct,
                 "absent_videos": len(videos) - nvideos,
                 "span_days": span_days,
                 "segment_counts": counts,
@@ -192,7 +212,11 @@ def build_type(
         "volume_median": median,
         "volume_peak_segment": volume_peak + 1,
         "volume_tied_segments": tied,
+        "volume_peak_starts": volume_peak_starts,
+        "volume_peak_ends": volume_peak_ends,
         "baseline_peak_segment": baseline_peak + 1,
+        "baseline_start_pct": baseline_start_pct,
+        "baseline_end_pct": baseline_end_pct,
         "volume_lines": [
             {"bvid": bvid, "counts": counts}
             for bvid, counts in zip(per_video_bvid, per_video_counts)
@@ -210,6 +234,14 @@ def _item(claim: dict, other: dict | None = None) -> dict:
         "entry_segment": claim["entry_segment"],
         "peak_segment": claim["peak_segment"],
         "exit_segment": claim["exit_segment"],
+        "entry_start_pct": claim["entry_start_pct"],
+        "peak_start_pct": claim["peak_start_pct"],
+        "peak_end_pct": claim["peak_end_pct"],
+        "exit_end_pct": claim["exit_end_pct"],
+        "peak_where": claim.get("peak_where", ""),
+        "span_where": claim.get("span_where", ""),
+        "reading": claim.get("reading", ""),
+        "summary": claim.get("summary", ""),
         "absent_videos": claim["absent_videos"],
         "span_days": claim["span_days"],
         "segment_counts": claim["segment_counts"],
@@ -217,6 +249,9 @@ def _item(claim: dict, other: dict | None = None) -> dict:
     }
     if other is not None:
         payload["other_peak_segment"] = other["peak_segment"]
+        payload["other_peak_start_pct"] = other["peak_start_pct"]
+        payload["other_peak_end_pct"] = other["peak_end_pct"]
+        payload["other_peak_where"] = other.get("peak_where", "")
         payload["other_n_videos"] = other["n_videos"]
         payload["other_n_rows"] = other["n_rows"]
     return payload

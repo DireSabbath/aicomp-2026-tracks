@@ -58,7 +58,7 @@ _PAGE = r"""<!DOCTYPE html>
 <main>
   <nav>
     <button type="button" data-view="type" aria-pressed="true">类型</button>
-    <button type="button" data-view="claim" aria-pressed="false">说法</button>
+    <button type="button" data-view="claim" aria-pressed="false">原话</button>
     <button type="button" data-view="compare" aria-pressed="false">对照</button>
   </nav>
   <section id="type" class="active"></section>
@@ -68,7 +68,11 @@ _PAGE = r"""<!DOCTYPE html>
 <script>
 const report = /*__DATA__*/;
 const signoff = document.getElementById("signoff");
-signoff.textContent = report.protocol.signoff + " " + report.protocol.claim_rule;
+signoff.textContent = report.protocol.purpose;
+const rule = document.createElement("p");
+rule.className = "note";
+rule.textContent = report.protocol.signoff + report.protocol.claim_rule;
+signoff.after(rule);
 
 function show(name) {
   document.querySelectorAll("nav button").forEach((button) => {
@@ -100,15 +104,18 @@ function seriesSvg(series, peakSegment, yMax) {
   const y = (value) => height - padBottom - (Math.min(value, max) / max) * (height - padTop - padBottom);
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-  const peak = Math.max(0, Math.min(segs - 1, peakSegment - 1));
-  const mark = document.createElementNS("http://www.w3.org/2000/svg", "line");
-  mark.setAttribute("x1", String(x(peak)));
-  mark.setAttribute("x2", String(x(peak)));
-  mark.setAttribute("y1", String(padTop));
-  mark.setAttribute("y2", String(height - padBottom));
-  mark.setAttribute("stroke", "#8c3a2f");
-  mark.setAttribute("stroke-dasharray", "3 3");
-  svg.appendChild(mark);
+  const peaks = Array.isArray(peakSegment) ? peakSegment : [peakSegment];
+  peaks.forEach((segment) => {
+    const peak = Math.max(0, Math.min(segs - 1, segment - 1));
+    const mark = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    mark.setAttribute("x1", String(x(peak)));
+    mark.setAttribute("x2", String(x(peak)));
+    mark.setAttribute("y1", String(padTop));
+    mark.setAttribute("y2", String(height - padBottom));
+    mark.setAttribute("stroke", "#8c3a2f");
+    mark.setAttribute("stroke-dasharray", "3 3");
+    svg.appendChild(mark);
+  });
   series.forEach((line) => {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
     path.setAttribute("fill", "none");
@@ -117,18 +124,16 @@ function seriesSvg(series, peakSegment, yMax) {
     path.setAttribute("points", line.counts.map((value, index) => `${x(index)},${y(value)}`).join(" "));
     svg.appendChild(path);
   });
-  for (let index = 0; index < segs; index++) {
-    const number = index + 1;
-    if (segs > 8 && number !== 1 && number !== segs && number % 5 !== 0) continue;
+  [0, 25, 50, 75, 100].forEach((pct) => {
     const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    label.setAttribute("x", String(x(index)));
+    label.setAttribute("x", String(x((pct / 100) * (segs - 1))));
     label.setAttribute("y", String(height - 10));
     label.setAttribute("text-anchor", "middle");
     label.setAttribute("font-size", "12");
     label.setAttribute("fill", "#5c564c");
-    label.textContent = String(number);
+    label.textContent = pct === 0 ? "开头" : pct === 100 ? "片尾" : `${pct}%`;
     svg.appendChild(label);
-  }
+  });
   return svg;
 }
 
@@ -144,7 +149,7 @@ function typeChart(type) {
   const yMax = Math.max(1, ...type.volume_median) * 1.25;
   const lines = type.volume_lines.map((line) => ({ counts: line.counts, stroke: "#c4b8a8", width: "1" }));
   lines.push({ counts: type.volume_median, stroke: "#1c1915", width: "2.5" });
-  return seriesSvg(lines, type.volume_peak_segment, yMax);
+  return seriesSvg(lines, type.volume_tied_segments, yMax);
 }
 
 function cells(counts) {
@@ -176,18 +181,20 @@ function openClaim(typeTitle, claim) {
   pane.replaceChildren();
   pane.appendChild(el("h2", typeTitle));
   pane.appendChild(el("p", claim.text));
-  const meta = el("p");
-  meta.className = "meta";
-  const span = claim.span_days == null ? "没有发送时间" : `发送时间跨度 ${claim.span_days} 天`;
-  meta.textContent = `覆盖 ${claim.n_videos} 条视频、${claim.n_rows} 条弹幕。进入第 ${claim.entry_segment} 段，高峰在第 ${claim.peak_segment} 段，退出第 ${claim.exit_segment} 段。缺席 ${claim.absent_videos} 条视频。${span}。`;
-  pane.appendChild(meta);
+  pane.appendChild(el("p", claim.reading));
+  if (claim.span_days != null) {
+    const span = el("p");
+    span.className = "meta";
+    span.textContent = `这些原话最早和最晚相隔 ${claim.span_days} 天。`;
+    pane.appendChild(span);
+  }
   const list = el("ul");
   claim.evidence.forEach((item) => {
-    const when = item.ctime == null ? "无发送时间" : new Date((item.ctime + 8 * 3600) * 1000).toISOString().slice(0, 10);
-    list.appendChild(el("li", `${item.bvid} 第 ${item.segment} 段 ${item.progress_ms} 毫秒 ${when} ${item.text}`));
+    const when = item.ctime == null ? "没有发送日期" : new Date((item.ctime + 8 * 3600) * 1000).toISOString().slice(0, 10);
+    list.appendChild(el("li", `${item.bvid} · ${item.where} · ${when} · ${item.text}`));
   });
   pane.appendChild(list);
-  pane.appendChild(el("p", "名单只列出抽查用的一小批依据，条数以覆盖数字为准。日期按北京时间。不显示发言者。"));
+  pane.appendChild(el("p", "这里只列出一小批原话，方便回去核对。总数以上面的次数为准。日期是北京时间。不显示是谁发的。"));
 }
 
 const typePane = document.getElementById("type");
@@ -202,19 +209,15 @@ report.types.forEach((type) => {
   const block = el("div");
   block.appendChild(el("h2", type.title));
   const baseline = type.volume_lines[0];
-  block.appendChild(el("h3", "单条热度"));
+  block.appendChild(el("h3", "只看一条"));
   block.appendChild(el("p", baseline
-    ? `清单按视频号排序后的第一条是 ${baseline.bvid}。只看这一条，数量高峰在第 ${type.baseline_peak_segment} 段。纵轴按这一条自己的最高点撑开。`
+    ? `清单里按视频号排在最前的是 ${baseline.bvid}。${type.baseline_reading}这一条图的高低按它自己的最高点来画。`
     : "这一类没有可定位的视频。"));
   if (baseline) block.appendChild(chartBox(oneChart(baseline.counts, type.baseline_peak_segment)));
-  block.appendChild(el("h3", "这一类"));
-  const tied = type.volume_tied_segments || [type.volume_peak_segment];
-  const peakText = tied.length > 1
-    ? `中位数最高的是第 ${tied.join("、")} 段。并列时高峰记在先出现的段，也就是第 ${type.volume_peak_segment} 段。`
-    : `数量高峰在第 ${type.volume_peak_segment} 段。`;
-  block.appendChild(el("p", `${type.n_videos} 条视频，${type.n_rows} 条弹幕。${peakText}细线是各视频，粗线是各段中位数。纵轴按中位数撑开，超出的细线在顶端截断。虚线标出记下的高峰段。横轴从左到右是片长百分比。`));
+  block.appendChild(el("h3", "这一类放在一起"));
+  block.appendChild(el("p", `${type.volume_reading}细线是每一条视频，粗线是这些视频的中间水平。粗线高的地方，就是这一类通常比较热闹的位置。横轴是片子从开头到结尾。特别冲的细线会在图顶被截断，免得一条视频把整类压扁。`));
   block.appendChild(chartBox(typeChart(type)));
-  block.appendChild(el("p", "下面是去掉空白后原文完全相同、且达到门槛后条数最多的说法。柱高是该说法在该段的条数。点开一条可看覆盖、进入、高峰、退出、缺席和依据。"));
+  block.appendChild(el("p", "下面每行是一句被原样重复的原话。柱子从左到右是片子的进度，柱高是这句在那个位置的次数。点开能看到它出现在哪条视频、片子的什么位置、哪一天发出。"));
   const claims = el("div");
   claims.className = "claims";
   type.claims.forEach((claim) => {
@@ -224,7 +227,7 @@ report.types.forEach((type) => {
     name.appendChild(claimButton(claim, type.title));
     const small = el("div");
     small.className = "meta";
-    small.textContent = `${claim.n_videos} 条视频 · ${claim.n_rows} 条 · 高峰第 ${claim.peak_segment} 段`;
+    small.textContent = claim.summary;
     name.appendChild(small);
     row.appendChild(name);
     row.appendChild(cells(claim.segment_counts));
@@ -235,16 +238,17 @@ report.types.forEach((type) => {
 });
 
 const claimPane = document.getElementById("claim");
-claimPane.appendChild(el("p", "在类型页点开一条说法，这里列出它的覆盖、起伏和依据弹幕。"));
+claimPane.appendChild(el("p", "在类型页点开一句原话，这里写出它出现在哪些视频、片子的什么位置。"));
 
 const compare = document.getElementById("compare");
 const labels = {
-  same_peak: "共享且高峰段相同",
-  shifted: "共享但高峰段错开",
+  same_peak: "两边都有，位置差不多",
+  shifted: "两边都有，位置错开了",
   only_a: `只在${report.types[0].title}`,
   only_b: `只在${report.types[1].title}`,
 };
-compare.appendChild(el("p", `共享栏里，斜线前是${report.types[0].title}的高峰段，斜线后是${report.types[1].title}的高峰段。`));
+const near = report.protocol.peak_tolerance * (100 / report.protocol.segments);
+compare.appendChild(el("p", `同一句原话在两个类型里怎么分布。位置差不多，是指两边最密的地方相差不超过片长的${near}%。斜线前是${report.types[0].title}，斜线后是${report.types[1].title}。`));
 const grid = el("div");
 grid.className = "diff";
 Object.keys(labels).forEach((key) => {
@@ -258,9 +262,9 @@ Object.keys(labels).forEach((key) => {
     li.appendChild(claimButton(item, owner.title));
     const extra = el("div");
     extra.className = "meta";
-    extra.textContent = item.other_peak_segment
-      ? `高峰第 ${item.peak_segment} 段 / 第 ${item.other_peak_segment} 段`
-      : `高峰第 ${item.peak_segment} 段 · ${item.n_rows} 条`;
+    extra.textContent = item.other_peak_where
+      ? `最密在${item.peak_where} / ${item.other_peak_where}`
+      : `最密在${item.peak_where} · ${item.n_rows} 次`;
     li.appendChild(extra);
     list.appendChild(li);
   });
