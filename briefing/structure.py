@@ -250,6 +250,7 @@ def build_type(
     phrase_claims, solo_phrases = _finish(phrases, len(videos), segments, min_videos, min_rows, "phrase")
     _attach_neighbors(word_claims, tolerance, NEIGHBOR_ITEMS)
     _attach_neighbors(phrase_claims, tolerance, NEIGHBOR_ITEMS)
+    phases = build_phases(phrase_claims, segments)
     return {
         "id": type_id,
         "title": title,
@@ -276,7 +277,70 @@ def build_type(
         "solo_word_count": len(solo_words),
         "solo_phrases": solo_phrases[:solo_items],
         "solo_phrase_count": len(solo_phrases),
+        "phases": phases,
     }
+
+
+def _leader_at(claims: list[dict], segment: int) -> dict | None:
+    index = segment - 1
+    best = None
+    best_key = None
+    for claim in claims:
+        counts = claim["segment_counts"]
+        if index < 0 or index >= len(counts):
+            continue
+        count = counts[index]
+        if count <= 0:
+            continue
+        key = (count, claim["n_videos"], claim["text"])
+        if best_key is None or key > best_key:
+            best_key = key
+            best = claim
+    return best
+
+
+def build_phases(claims: list[dict], segments: int) -> list[dict]:
+    """沿片长看哪一句完整说法在这一截里最多。相邻且是同一句的并成一截。"""
+    if not claims or segments <= 0:
+        return []
+    leaders = [_leader_at(claims, index + 1) for index in range(segments)]
+    phases: list[dict] = []
+    start = None
+    current = None
+    for index, leader in enumerate(leaders + [None]):
+        if current is None:
+            if leader is not None:
+                start = index
+                current = leader
+            continue
+        if leader is current:
+            continue
+        end = index - 1
+        start_pct, _start_end = _bounds(start + 1, segments)
+        _end_start, end_pct = _bounds(end + 1, segments)
+        phases.append(
+            {
+                "text": current["text"],
+                "unit": current.get("unit", "phrase"),
+                "start_segment": start + 1,
+                "end_segment": end + 1,
+                "start_pct": start_pct,
+                "end_pct": end_pct,
+                "span_rows": sum(current["segment_counts"][start : end + 1]),
+                "n_videos": current["n_videos"],
+                "n_rows": current["n_rows"],
+                "peak_segment": current["peak_segment"],
+                "peak_start_pct": current["peak_start_pct"],
+                "peak_end_pct": current["peak_end_pct"],
+            }
+        )
+        if leader is None:
+            current = None
+            start = None
+        else:
+            current = leader
+            start = index
+    return phases
 
 
 def _item(claim: dict, other: dict | None = None) -> dict:

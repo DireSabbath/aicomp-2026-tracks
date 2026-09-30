@@ -58,6 +58,8 @@ def _public_type(item: dict) -> dict:
         "solo_word_count": item["solo_word_count"],
         "solo_phrases": item["solo_phrases"],
         "solo_phrase_count": item["solo_phrase_count"],
+        "phases": item.get("phases") or [],
+        "crowd_readings": item.get("crowd_readings") or [],
     }
 
 

@@ -288,7 +288,48 @@ class BriefingTest(unittest.TestCase):
         self.assertNotIn("民意", html)
         self.assertNotIn("政策建议", html)
         self.assertIn("阶段性成果", html)
+        self.assertIn("沿片长换说法", html)
         self.assertNotIn("段", outside_quotes("\n".join(report["briefing"])))
+
+    def test_phases_follow_the_film(self) -> None:
+        left = [
+            video("a1", [("阶段性成果", 10000)] * 2 + [("前方高能预警", 80000)] * 2),
+            video("a2", [("阶段性成果", 12000)] * 2 + [("前方高能预警", 82000)] * 2),
+        ]
+        right = [
+            video("b1", [("其他句子在这里", 10000)] * 2),
+            video("b2", [("其他句子在这里", 11000)] * 2),
+        ]
+        report = build_report(
+            [("jia", "甲类型", left), ("yi", "乙类型", right)],
+            segments=4,
+            tolerance=0,
+            min_videos=2,
+            min_rows=2,
+        )
+        phases = report["types"][0]["phases"]
+        self.assertEqual([item["text"] for item in phases], ["阶段性成果", "前方高能预警"])
+        self.assertEqual((phases[0]["start_pct"], phases[0]["end_pct"]), (0, 25))
+        self.assertEqual((phases[1]["start_pct"], phases[1]["end_pct"]), (75, 100))
+        self.assertEqual(phases[0]["span_rows"], 4)
+        crowds = report["types"][0]["crowd_readings"]
+        self.assertEqual(len(crowds), 2)
+        self.assertTrue(all("自己最密也在" in sentence for sentence in crowds))
+        briefing = "\n".join(report["briefing"])
+        self.assertIn("人多的地方", briefing)
+        self.assertIn("阶段性成果", briefing)
+        self.assertIn("前方高能预警", briefing)
+        self.assertNotIn("段", outside_quotes(briefing))
+        grounded = table_integers(report["table"])
+        for sentence in report["briefing"]:
+            for number in integers_outside_quotes(sentence):
+                self.assertIn(number, grounded, sentence)
+        quoted = re.findall(r"「([^」]*)」", briefing)
+        known = {row["text"] for row in report["table"] if row["kind"] in {"claim", "diff_item"}}
+        self.assertTrue(set(quoted) <= known)
+        html = render_page(report)
+        self.assertIn("自己最密也在", html)
+        self.assertIn("沿片长换说法", html)
 
 
 if __name__ == "__main__":

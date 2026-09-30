@@ -34,7 +34,9 @@ _PAGE = r"""<!DOCTYPE html>
   section.active { display: block; }
   .chart { background: white; border: 1px solid var(--line); padding: 12px; overflow-x: auto; }
   svg { width: 100%; height: auto; }
-  .stream { background: white; border: 1px solid var(--line); padding: 8px 12px; margin-top: 8px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; }
+  .legend button { font: inherit; background: white; border: 1px solid var(--line); padding: 4px 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 12px; height: 12px; display: inline-block; }
   .detail, .brief, .card { background: white; border: 1px solid var(--line); padding: 12px 16px; margin-top: 12px; }
   .diff { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
   .diff h3 { font-size: 16px; margin: 0 0 8px; }
@@ -140,13 +142,202 @@ function seriesSvg(series, peakSegment, yMax, height) {
   return svg;
 }
 
-function oneChart(counts, peakSegment, height) {
-  return seriesSvg(
-    [{ counts, stroke: "#8c3a2f", width: "2.5" }],
-    peakSegment,
-    Math.max(...counts, 1),
-    height || 220,
-  );
+const PALETTE = ["#8c3a2f", "#2f5d50", "#c47b2b", "#3d4c7a", "#6b4c7a", "#3f6f8c", "#8a5a44", "#4e6b3a"];
+
+function sampleCatmull(points, steps) {
+  if (points.length <= 1) return points.slice();
+  const out = [];
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[Math.max(0, i - 1)];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = points[Math.min(points.length - 1, i + 2)];
+    for (let s = 0; s < steps; s++) {
+      if (i > 0 && s === 0) continue;
+      const t = s / steps;
+      const t2 = t * t;
+      const t3 = t2 * t;
+      const x = 0.5 * ((2 * p1.x) + (-p0.x + p2.x) * t + (2 * p0.x - 5 * p1.x + 4 * p2.x - p3.x) * t2 + (-p0.x + 3 * p1.x - 3 * p2.x + p3.x) * t3);
+      const y = 0.5 * ((2 * p1.y) + (-p0.y + p2.y) * t + (2 * p0.y - 5 * p1.y + 4 * p2.y - p3.y) * t2 + (-p0.y + 3 * p1.y - 3 * p2.y + p3.y) * t3);
+      out.push({ x, y });
+    }
+  }
+  out.push(points[points.length - 1]);
+  return out;
+}
+
+function streamChart(claims, height, peakSegment) {
+  const width = 800;
+  height = height || 280;
+  const padX = 36;
+  const padTop = 16;
+  const padBottom = 36;
+  const segs = claims[0].segment_counts.length;
+  const inner = width - padX * 2;
+  const plotH = height - padTop - padBottom;
+  const xOf = (pct) => padX + (pct / 100) * inner;
+  const centers = [];
+  for (let i = 0; i < segs; i++) {
+    const a = Math.floor((i * 100) / segs);
+    const b = Math.floor(((i + 1) * 100) / segs);
+    centers.push((a + b) / 2);
+  }
+  const levels = [Array(segs).fill(0)];
+  claims.forEach((claim) => {
+    const prev = levels[levels.length - 1];
+    levels.push(prev.map((value, index) => value + claim.segment_counts[index]));
+  });
+  const max = Math.max(1, ...levels[levels.length - 1]);
+  const yOf = (value) => height - padBottom - (value / max) * plotH;
+  const samples = levels.map((values) => sampleCatmull(
+    [
+      { x: xOf(0), y: yOf(values[0]) },
+      ...centers.map((pct, index) => ({ x: xOf(pct), y: yOf(values[index]) })),
+      { x: xOf(100), y: yOf(values[values.length - 1]) },
+    ],
+    8,
+  ));
+  const count = samples[0].length;
+  for (let index = 0; index < count; index++) {
+    for (let layer = 0; layer < samples.length; layer++) {
+      if (samples[layer][index].y < padTop) samples[layer][index].y = padTop;
+    }
+    for (let layer = 1; layer < samples.length; layer++) {
+      if (samples[layer][index].y > samples[layer - 1][index].y) {
+        samples[layer][index].y = samples[layer - 1][index].y;
+      }
+    }
+  }
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  const axis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  axis.setAttribute("x1", String(padX));
+  axis.setAttribute("x2", String(width - padX));
+  axis.setAttribute("y1", String(height - padBottom));
+  axis.setAttribute("y2", String(height - padBottom));
+  axis.setAttribute("stroke", "#d9d2c5");
+  svg.appendChild(axis);
+  for (let layer = 1; layer < samples.length; layer++) {
+    const upper = samples[layer];
+    const lower = samples[layer - 1];
+    let d = `M ${upper[0].x} ${upper[0].y}`;
+    for (let index = 1; index < upper.length; index++) d += ` L ${upper[index].x} ${upper[index].y}`;
+    for (let index = lower.length - 1; index >= 0; index--) d += ` L ${lower[index].x} ${lower[index].y}`;
+    d += " Z";
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", d);
+    path.setAttribute("fill", PALETTE[(layer - 1) % PALETTE.length]);
+    path.setAttribute("fill-opacity", "0.92");
+    svg.appendChild(path);
+  }
+  if (peakSegment) {
+    const a = Math.floor(((peakSegment - 1) * 100) / segs);
+    const b = Math.floor((peakSegment * 100) / segs);
+    const mark = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    mark.setAttribute("x1", String(xOf((a + b) / 2)));
+    mark.setAttribute("x2", String(xOf((a + b) / 2)));
+    mark.setAttribute("y1", String(padTop));
+    mark.setAttribute("y2", String(height - padBottom));
+    mark.setAttribute("stroke", "#1c1915");
+    mark.setAttribute("stroke-dasharray", "3 3");
+    svg.appendChild(mark);
+  }
+  [0, 25, 50, 75, 100].forEach((pct) => {
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("x", String(xOf(pct)));
+    label.setAttribute("y", String(height - 12));
+    label.setAttribute("text-anchor", "middle");
+    label.setAttribute("font-size", "12");
+    label.setAttribute("fill", "#5c564c");
+    label.textContent = pct === 0 ? "开头" : pct === 100 ? "片尾" : `${pct}%`;
+    svg.appendChild(label);
+  });
+  return svg;
+}
+
+function areaChart(counts, peakSegment, height) {
+  return streamChart([{ segment_counts: counts }], height || 180, peakSegment);
+}
+
+function legendRow(typeIndex, layer, claims) {
+  const row = el("div");
+  row.className = "legend";
+  claims.forEach((claim, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    const swatch = document.createElement("i");
+    swatch.style.background = PALETTE[index % PALETTE.length];
+    button.appendChild(swatch);
+    button.appendChild(document.createTextNode(claim.text));
+    button.addEventListener("click", () => { location.hash = `${layer}-${typeIndex}-${index}`; });
+    row.appendChild(button);
+  });
+  return row;
+}
+
+function phaseRibbon(typeIndex, phases, phrases) {
+  const width = 800;
+  const height = 64;
+  const padX = 36;
+  const inner = width - padX * 2;
+  const xOf = (pct) => padX + (pct / 100) * inner;
+  const colorOf = {};
+  phrases.forEach((claim, index) => { colorOf[claim.text] = PALETTE[index % PALETTE.length]; });
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  const track = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  track.setAttribute("x", String(padX));
+  track.setAttribute("y", "8");
+  track.setAttribute("width", String(inner));
+  track.setAttribute("height", "28");
+  track.setAttribute("fill", "#efeae2");
+  svg.appendChild(track);
+  phases.forEach((phase, index) => {
+    const x1 = xOf(phase.start_pct);
+    const x2 = xOf(phase.end_pct);
+    const band = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    band.setAttribute("x", String(x1));
+    band.setAttribute("y", "8");
+    band.setAttribute("width", String(Math.max(0, x2 - x1)));
+    band.setAttribute("height", "28");
+    band.setAttribute("fill", colorOf[phase.text] || "#a39888");
+    const known = phrases.findIndex((item) => item.text === phase.text);
+    if (known >= 0) {
+      band.style.cursor = "pointer";
+      band.addEventListener("click", () => { location.hash = `phrase-${typeIndex}-${known}`; });
+    }
+    svg.appendChild(band);
+    if (x2 - x1 > 72) {
+      const clip = document.createElementNS("http://www.w3.org/2000/svg", "clipPath");
+      clip.setAttribute("id", `ribbon-${typeIndex}-${index}`);
+      const clipRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      clipRect.setAttribute("x", String(x1));
+      clipRect.setAttribute("y", "8");
+      clipRect.setAttribute("width", String(Math.max(0, x2 - x1)));
+      clipRect.setAttribute("height", "28");
+      clip.appendChild(clipRect);
+      svg.appendChild(clip);
+      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      label.setAttribute("x", String(x1 + 6));
+      label.setAttribute("y", "27");
+      label.setAttribute("font-size", "12");
+      label.setAttribute("fill", "#f6f3ec");
+      label.setAttribute("clip-path", `url(#ribbon-${typeIndex}-${index})`);
+      label.textContent = phase.text;
+      svg.appendChild(label);
+    }
+  });
+  [0, 25, 50, 75, 100].forEach((pct) => {
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("x", String(xOf(pct)));
+    label.setAttribute("y", String(height - 8));
+    label.setAttribute("text-anchor", "middle");
+    label.setAttribute("font-size", "12");
+    label.setAttribute("fill", "#5c564c");
+    label.textContent = pct === 0 ? "开头" : pct === 100 ? "片尾" : `${pct}%`;
+    svg.appendChild(label);
+  });
+  return svg;
 }
 
 function typeChart(type) {
@@ -194,7 +385,7 @@ function renderClaim(typeTitle, claim) {
     pane.appendChild(span);
   }
   pane.appendChild(el("p", neighborLine(claim)));
-  pane.appendChild(chartBox(oneChart(claim.segment_counts, claim.peak_segment, 180)));
+  pane.appendChild(chartBox(areaChart(claim.segment_counts, claim.peak_segment, 180)));
   pane.appendChild(el("h3", "依据弹幕"));
   const list = el("ul");
   claim.evidence.forEach((item) => {
@@ -226,22 +417,6 @@ function jumpToClaim(typeIndex, layer, text, fallback) {
   renderClaim(type.title, fallback);
 }
 
-function streamBlock(typeIndex, layer, claim, index) {
-  const box = el("div");
-  box.className = "stream";
-  const button = document.createElement("button");
-  button.type = "button";
-  button.className = "link";
-  button.textContent = claim.text;
-  button.addEventListener("click", () => { location.hash = `${layer}-${typeIndex}-${index}`; });
-  box.appendChild(button);
-  const meta = el("p", claim.summary);
-  meta.className = "meta";
-  box.appendChild(meta);
-  box.appendChild(chartBox(oneChart(claim.segment_counts, claim.peak_segment, 150)));
-  return box;
-}
-
 const typePane = document.getElementById("type");
 report.types.forEach((type, typeIndex) => {
   const block = el("div");
@@ -251,16 +426,34 @@ report.types.forEach((type, typeIndex) => {
   block.appendChild(el("p", baseline
     ? `清单里按视频号排在最前的是 ${baseline.bvid}。${type.baseline_reading}这一条图的高低按它自己的最高点来画。`
     : "这一类没有可定位的视频。"));
-  if (baseline) block.appendChild(chartBox(oneChart(baseline.counts, type.baseline_peak_segment, 220)));
+  if (baseline) block.appendChild(chartBox(areaChart(baseline.counts, type.baseline_peak_segment, 220)));
   block.appendChild(el("h3", "这一类放在一起"));
-  block.appendChild(el("p", `${type.volume_reading}细线是每一条视频，粗线是这些视频的中间水平。粗线高的地方，就是这一类通常比较热闹的位置。横轴是片子从开头到结尾。特别冲的细线会在图顶被截断，免得一条视频把整类压扁。`));
+  block.appendChild(el("p", `${type.volume_reading}细线是每一条视频，粗线是这些视频的中间水平。粗线高的地方，就是这一类通常比较热闹的位置。横轴是片子从开头到片尾。特别冲的细线会在图顶被截断，免得一条视频把整类压扁。`));
   block.appendChild(chartBox(typeChart(type)));
-  block.appendChild(el("h3", "反复提到的词"));
-  block.appendChild(el("p", "线从左到右是片子的进度，高低是这个词在那个位置出现的次数。点开能看到它盖住多少条视频、哪些视频里没有，以及原话。"));
-  type.words.forEach((claim, index) => block.appendChild(streamBlock(typeIndex, "word", claim, index)));
-  block.appendChild(el("h3", "重复的完整说法"));
-  block.appendChild(el("p", "这是去掉标点之后、整条弹幕都是这一句的次数。书名号、逗号不同而剩下的字相同，算同一句。"));
-  type.phrases.forEach((claim, index) => block.appendChild(streamBlock(typeIndex, "phrase", claim, index)));
+  block.appendChild(el("h3", "人多的地方在说什么"));
+  (type.crowd_readings || []).forEach((sentence) => block.appendChild(el("p", sentence)));
+  if (!(type.crowd_readings || []).length) block.appendChild(el("p", "这一类还没有可定位的数量高峰。"));
+  block.appendChild(el("h3", "沿片长换说法"));
+  block.appendChild(el("p", "横轴是片子从开头到片尾。色带贴在轴上往上叠，厚度是这句完整说法在那个位置出现的次数。下面一条色带标出哪一句在哪一截进度上最多。点色块能回到原话。"));
+  if (type.phrases.length) {
+    block.appendChild(chartBox(streamChart(type.phrases, 300)));
+    block.appendChild(legendRow(typeIndex, "phrase", type.phrases));
+    block.appendChild(chartBox(phaseRibbon(typeIndex, type.phases || [], type.phrases)));
+    const ribbonNote = el("p", "色带盖住的进度里，这句是反复出现的整句中最多的一句。空出来的进度没有写入结论的完整说法。灰色是没有画进上面这几句里的句子。");
+    ribbonNote.className = "meta";
+    block.appendChild(ribbonNote);
+  } else {
+    block.appendChild(el("p", "这一类还没有写入结论的完整说法。"));
+  }
+  (type.phases || []).forEach((phase) => block.appendChild(el("p", phase.reading)));
+  block.appendChild(el("h3", "分出来的词"));
+  block.appendChild(el("p", "同样贴在轴上。厚度是这个词在那个位置出现的次数。"));
+  if (type.words.length) {
+    block.appendChild(chartBox(streamChart(type.words, 240)));
+    block.appendChild(legendRow(typeIndex, "word", type.words));
+  } else {
+    block.appendChild(el("p", "这一类还没有写入结论的词。"));
+  }
   typePane.appendChild(block);
 });
 

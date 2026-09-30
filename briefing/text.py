@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from briefing.protocol import BRIEFING_CLAIMS_PER_TYPE, DIFF_ITEMS
-from briefing.structure import label_buckets
+from briefing.protocol import BRIEFING_CLAIMS_PER_TYPE, BRIEFING_PHASES, DIFF_ITEMS
+from briefing.structure import _leader_at, label_buckets
 
 PURPOSE = "给文化研究者和政策制定者看某一类视频的观众弹幕：哪些词和短句在片子的什么位置出现，哪些视频里没有。只描述弹幕，不评价，也不给建议。"
 SIGNOFF = "这些视频算不算同一类，还没有人签字。"
@@ -51,10 +51,32 @@ def _decorate_claim(claim: dict, n_videos: int) -> None:
         neighbor["peak_where"] = place(neighbor["peak_start_pct"], neighbor["peak_end_pct"])
 
 
+def _decorate_phase(phase: dict) -> None:
+    phase["span_where"] = stretch(phase["start_pct"], phase["end_pct"])
+    phase["peak_where"] = place(phase["peak_start_pct"], phase["peak_end_pct"])
+    phase["reading"] = (
+        f"{phase['span_where']}，反复出现的整句里「{phase['text']}」最多，共{phase['span_rows']}次。"
+    )
+
+
+def _crowd_reading(item: dict, segment: int, start: int, end: int) -> str:
+    where = place(start, end)
+    leader = _leader_at(item["phrases"], segment)
+    if leader is None:
+        return f"人多的地方在{where}。这里没有写入结论的完整说法。"
+    peak_where = place(leader["peak_start_pct"], leader["peak_end_pct"])
+    head = f"人多的地方在{where}。那里反复出现的整句里「{leader['text']}」最多。"
+    if leader["peak_segment"] == segment:
+        return head + f"「{leader['text']}」自己最密也在{peak_where}。"
+    return head + f"「{leader['text']}」自己最密在{peak_where}，和人多的地方不是同一处。"
+
+
 def decorate(types: list[dict]) -> None:
     for item in types:
         for claim in item["claims"] + item["phrases"] + item["solo_words"] + item["solo_phrases"]:
             _decorate_claim(claim, item["n_videos"])
+        for phase in item.get("phases") or []:
+            _decorate_phase(phase)
         places = "，以及".join(
             place(start, end)
             for start, end in zip(item["volume_peak_starts"], item["volume_peak_ends"])
@@ -69,6 +91,14 @@ def decorate(types: list[dict]) -> None:
             item["baseline_reading"] = (
                 f"只看清单里按视频号排在最前的一条，最密的地方在{where}，和这一类不是同一个位置。"
             )
+        item["crowd_readings"] = [
+            _crowd_reading(item, segment, start, end)
+            for segment, start, end in zip(
+                item["volume_tied_segments"],
+                item["volume_peak_starts"],
+                item["volume_peak_ends"],
+            )
+        ]
 
 
 def _claim_row(item: dict, claim: dict, bucket: str, titles: list[str]) -> dict:
@@ -162,6 +192,7 @@ def table_rows(types: list[dict], word_diff: dict, phrase_diff: dict, protocol: 
                 "baseline_end_pct": item["baseline_end_pct"],
                 "volume_reading": item["volume_reading"],
                 "baseline_reading": item["baseline_reading"],
+                "crowd_readings": item["crowd_readings"],
             }
         )
         word_map = word_left if index == 0 else word_right
@@ -170,6 +201,26 @@ def table_rows(types: list[dict], word_diff: dict, phrase_diff: dict, protocol: 
             rows.append(_claim_row(item, claim, word_map.get(claim["text"], ""), titles))
         for claim in item["phrases"]:
             rows.append(_claim_row(item, claim, phrase_map.get(claim["text"], ""), titles))
+        for phase in item.get("phases") or []:
+            rows.append(
+                {
+                    "kind": "phase",
+                    "layer": "phrase",
+                    "type_id": item["id"],
+                    "text": phase["text"],
+                    "start_segment": phase["start_segment"],
+                    "end_segment": phase["end_segment"],
+                    "start_pct": phase["start_pct"],
+                    "end_pct": phase["end_pct"],
+                    "span_rows": phase["span_rows"],
+                    "n_videos": phase["n_videos"],
+                    "n_rows": phase["n_rows"],
+                    "peak_segment": phase["peak_segment"],
+                    "peak_start_pct": phase["peak_start_pct"],
+                    "peak_end_pct": phase["peak_end_pct"],
+                    "reading": phase["reading"],
+                }
+            )
         rows.append({"kind": "solo", "type_id": item["id"], "layer": "word", "count": item["solo_word_count"]})
         rows.append({"kind": "solo", "type_id": item["id"], "layer": "phrase", "count": item["solo_phrase_count"]})
         for claim in item["solo_words"]:
@@ -210,6 +261,15 @@ def briefing_from_table(rows: list[dict]) -> list[str]:
     for item in types:
         sentences.append(item["volume_reading"])
         sentences.append(item["baseline_reading"])
+        for sentence in item.get("crowd_readings") or []:
+            sentences.append(sentence)
+        phases = [
+            row for row in rows if row["kind"] == "phase" and row["type_id"] == item["type_id"]
+        ]
+        ranked = sorted(phases, key=lambda row: (-row["span_rows"], row["start_segment"], row["text"]))
+        chosen = sorted(ranked[:BRIEFING_PHASES], key=lambda row: (row["start_segment"], row["text"]))
+        for phase in chosen:
+            sentences.append(phase["reading"])
         for layer in ("word", "phrase"):
             claims = [
                 row
