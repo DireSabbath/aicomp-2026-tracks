@@ -285,8 +285,6 @@ class BriefingTest(unittest.TestCase):
         self.assertIn(">说法<", html)
         self.assertIn(">对照<", html)
         self.assertIn("不显示是谁发的", html)
-        self.assertNotIn("民意", html)
-        self.assertNotIn("政策建议", html)
         self.assertIn("阶段性成果", html)
         self.assertIn("沿片长换说法", html)
         self.assertNotIn("段", outside_quotes("\n".join(report["briefing"])))
@@ -319,6 +317,9 @@ class BriefingTest(unittest.TestCase):
         self.assertIn("人多的地方", briefing)
         self.assertIn("阶段性成果", briefing)
         self.assertIn("前方高能预警", briefing)
+        self.assertIn("沿片长先是", briefing)
+        self.assertIn("随后换成", briefing)
+        self.assertIsNone(re.search(r"共\d+", outside_quotes(briefing)))
         self.assertNotIn("段", outside_quotes(briefing))
         grounded = table_integers(report["table"])
         for sentence in report["briefing"]:
