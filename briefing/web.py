@@ -434,7 +434,8 @@ report.types.forEach((type, typeIndex) => {
   (type.crowd_readings || []).forEach((sentence) => block.appendChild(el("p", sentence)));
   if (!(type.crowd_readings || []).length) block.appendChild(el("p", "这一类还没有可定位的数量高峰。"));
   block.appendChild(el("h3", "沿片长换说法"));
-  block.appendChild(el("p", "横轴是片子从开头到片尾。色带贴在轴上往上叠，厚度是这句完整说法在那个位置出现的次数。下面一条色带标出哪一句在哪一截进度上最多。点色块能回到原话。"));
+  if (type.arc_reading) block.appendChild(el("p", type.arc_reading));
+  block.appendChild(el("p", "上面这句按片子的先后，串起次数最多的几截。图里色带贴在轴上，厚度是这句在那个位置的次数。下面一条色带标出每一截由哪一句领着。点色块能回到原话。"));
   if (type.phrases.length) {
     block.appendChild(chartBox(streamChart(type.phrases, 300)));
     block.appendChild(legendRow(typeIndex, "phrase", type.phrases));
@@ -445,7 +446,6 @@ report.types.forEach((type, typeIndex) => {
   } else {
     block.appendChild(el("p", "这一类还没有写入结论的完整说法。"));
   }
-  (type.phases || []).forEach((phase) => block.appendChild(el("p", phase.reading)));
   block.appendChild(el("h3", "分出来的词"));
   block.appendChild(el("p", "同样贴在轴上。厚度是这个词在那个位置出现的次数。"));
   if (type.words.length) {
