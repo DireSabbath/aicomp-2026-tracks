@@ -363,8 +363,11 @@ function renderDiffGrid(title, diff, layer) {
 
 const compare = document.getElementById("compare");
 compare.appendChild(el("p", `对照${report.types[0].title}和${report.types[1].title}。位置差不多，是指两边最密的地方相差不超过片长的${proto.peak_tolerance_pct}%。斜线前是${report.types[0].title}，斜线后是${report.types[1].title}。`));
-compare.appendChild(renderDiffGrid("词", report.diff, "word"));
 compare.appendChild(renderDiffGrid("完整说法", report.phrase_diff, "phrase"));
+const wordNote = el("p", "下面是分出来的词。虚词表没有盖住全部说话用的架子，这些词仍留在计数里，没有按内容删掉。");
+wordNote.className = "meta";
+compare.appendChild(wordNote);
+compare.appendChild(renderDiffGrid("词", report.diff, "word"));
 const brief = el("div");
 brief.className = "brief";
 brief.appendChild(el("h2", "简报"));

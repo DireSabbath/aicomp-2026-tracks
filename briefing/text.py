@@ -230,7 +230,7 @@ def briefing_from_table(rows: list[dict]) -> list[str]:
         sentences.append(f"对照的是{titles[0]}和{titles[1]}。")
     unit_name = {"word": "词", "phrase": "完整说法"}
     unit_measure = {"word": "个", "phrase": "句"}
-    for layer in ("word", "phrase"):
+    for layer in ("phrase", "word"):
         labels = {
             "same_peak": f"两边都有，而且最密的地方差不多的{unit_name[layer]}",
             "shifted": f"两边都有，但最密的地方错开了的{unit_name[layer]}",
