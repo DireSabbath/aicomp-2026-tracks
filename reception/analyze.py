@@ -13,7 +13,7 @@ import numpy as np
 from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.neighbors import NearestNeighbors
 
-from reception.load import Pool, Row
+from reception.load import Pool, Row, normalize
 
 WINDOWS = 10
 DENSITY_BINS = 50
@@ -256,9 +256,9 @@ def build_type(pool: Pool) -> dict:
                     "bvid": next(iter(videos)),
                 }
             )
-    things.sort(key=lambda item: (-(item["end"] - item["start"]), -item["n_videos"], item["text"]))
+    things.sort(key=lambda item: (-item["n_videos"], -item["n_rows"], item["text"]))
     solos.sort(key=lambda item: (-item["n_rows"], item["text"]))
-    shown = things[:SHOW]
+    shown = _one_per_window(things)
     return {
         "title": pool.title,
         "n_videos": len(pool.videos),
@@ -272,6 +272,18 @@ def build_type(pool: Pool) -> dict:
         "solos": solos[:SHOW],
         "solo_count": len(solos),
     }
+
+
+def _one_per_window(things: list[dict]) -> list[dict]:
+    """每一段只留出现在最多条视频里的那一件，按片长排开。"""
+    buckets: dict[int, list[dict]] = defaultdict(list)
+    for thing in things:
+        buckets[min(WINDOWS - 1, int(thing["median"] * WINDOWS))].append(thing)
+    picked = []
+    for items in buckets.values():
+        picked.append(max(items, key=lambda item: (item["n_videos"], item["n_rows"], item["text"])))
+    picked.sort(key=lambda item: (item["median"], item["text"]))
+    return picked
 
 
 def match_types(left: dict, right: dict) -> dict:
@@ -310,7 +322,11 @@ def match_types(left: dict, right: dict) -> dict:
 
 
 def _pair_score(left: str, right: str) -> float:
-    from reception.load import normalize
-
-    matrix = _vectors([normalize(left), normalize(right)])
+    """字面相同就是同一句。一个字没有二字片段，余弦会变成 0，不能拿来判。"""
+    folded_left, folded_right = normalize(left), normalize(right)
+    if not folded_left or not folded_right:
+        return 0.0
+    if folded_left == folded_right:
+        return 1.0
+    matrix = _vectors([folded_left, folded_right])
     return float((matrix @ matrix.T).toarray()[0, 1])

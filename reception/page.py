@@ -7,7 +7,6 @@ import json
 from reception.analyze import (
     CROWD_RATIO,
     DENSITY_BINS,
-    SHOW,
     SIMILAR,
     TIME_GAP,
     WINDOWS,
@@ -36,14 +35,18 @@ def _percent(value: float) -> int:
 
 def where(start: float, end: float) -> str:
     left, right = _percent(start), _percent(end)
+    if left == right:
+        if left <= 0:
+            return "片头"
+        if left >= 100:
+            return "片尾"
+        return f"片长的{left}%附近"
     if left <= 0 and right >= 100:
         return "整条片子"
     if left <= 0:
         return f"开头到片长的{right}%"
     if right >= 100:
         return f"片长的{left}%到片尾"
-    if left == right:
-        return f"片长的{left}%附近"
     return f"片长的{left}%到{right}%"
 
 
@@ -84,7 +87,7 @@ def readings(built: dict) -> list[str]:
     if built["solo_count"]:
         lines.append(f"只在一条视频里的事有{built['solo_count']}件，没有写进这一类。")
     if built["hidden"]:
-        lines.append(f"这一类里还有{built['hidden']}件事，带子上先放这{len(built['shown'])}件。")
+        lines.append(f"这一类里还有{built['hidden']}件事。带子上每一段只放出现在最多条视频里的那一件。")
     return lines
 
 
@@ -111,7 +114,7 @@ def method_text() -> str:
         f"两句的中位位置相差超过片长的 {round(TIME_GAP * 100)}%，就不再并成一件事。"
         f"先把片长分成 {WINDOWS} 段：段里条数高于各段中位的，围着连接最多的那句收；其余段里，字面接得上的收到一起。"
         f"人多是把片长分成 {DENSITY_BINS} 格，连在一起、并且达到这一类峰值 {round(CROWD_RATIO * 100)}% 的那些格。"
-        f"带子上至多放 {SHOW} 件。"
+        f"带子上每一段只放一件，也就是这一段里出现在最多条视频上的那句原话。"
     )
 
 
@@ -186,7 +189,7 @@ h1 {{ font-size: 28px; margin: 0 0 8px; }}
 .strip {{ background: #efe6d6; border-radius: 12px; padding: 12px 0 8px; }}
 .film {{ position: relative; min-height: 72px; margin: 0 80px; }}
 .crowd {{ position: absolute; top: 0; bottom: 0; background: rgba(196, 92, 46, 0.28); }}
-.word {{ position: absolute; transform: translateX(-50%); max-width: 9em; padding: 4px 8px; border: 0; border-radius: 999px; background: #fffdf8; cursor: pointer; font: inherit; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+.word {{ position: absolute; transform: translateX(-50%); max-width: 8em; padding: 4px 8px; border: 0; border-radius: 999px; background: #fffdf8; cursor: pointer; font: inherit; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
 .word.topic {{ box-shadow: inset 0 0 0 2px #8c3a2f; }}
 .word.dialogue {{ box-shadow: inset 0 0 0 2px #2f5d50; }}
 .word.shared {{ background: #f3e1b5; }}
@@ -199,7 +202,7 @@ h1 {{ font-size: 28px; margin: 0 0 8px; }}
 @media (max-width: 700px) {{
   h1 {{ font-size: 22px; }}
   .film, .axis {{ margin-left: 36px; margin-right: 36px; }}
-  .word {{ max-width: 7em; }}
+  .word {{ max-width: 6.2em; }}
 }}
 </style>
 </head>
@@ -233,6 +236,37 @@ report.match.pairs.forEach((pair) => {{
     shifted.add(pair.right);
   }}
 }});
+function layout(film) {{
+  const buttons = [...film.querySelectorAll(".word")];
+  buttons.forEach((button) => {{
+    const median = Number(button.dataset.median);
+    button.style.transform = "translateX(-50%)";
+    button.style.left = (median * 100) + "%";
+    button.style.top = "8px";
+  }});
+  const filmRect = film.getBoundingClientRect();
+  buttons.forEach((button) => {{
+    const rect = button.getBoundingClientRect();
+    if (rect.width === 0) return;
+    if (rect.left < filmRect.left) {{
+      button.style.transform = "translateX(0)";
+      button.style.left = "0%";
+    }} else if (rect.right > filmRect.right) {{
+      button.style.transform = "translateX(-100%)";
+      button.style.left = "100%";
+    }}
+  }});
+  const lanes = [];
+  buttons.forEach((button) => {{
+    const rect = button.getBoundingClientRect();
+    let lane = 0;
+    while (lanes[lane] && lanes[lane].some((other) => rect.left < other.right - 2 && rect.right > other.left + 2)) lane += 1;
+    if (!lanes[lane]) lanes[lane] = [];
+    lanes[lane].push(rect);
+    button.style.top = (8 + lane * 42) + "px";
+  }});
+  film.style.height = (24 + Math.max(1, buttons.length ? lanes.length : 1, 1) * 42) + "px";
+}}
 function mount(built) {{
   const wrap = document.createElement("section");
   wrap.className = "strip-wrap";
@@ -253,17 +287,12 @@ function mount(built) {{
     band.style.width = ((span.end - span.start) * 100) + "%";
     film.appendChild(band);
   }});
-  const lanes = [];
   built.shown.forEach((thing) => {{
-    let lane = 0;
-    while (lanes[lane] && lanes[lane].some((item) => Math.abs(item - thing.median) < 0.08)) lane += 1;
-    if (!lanes[lane]) lanes[lane] = [];
-    lanes[lane].push(thing.median);
     const button = document.createElement("button");
     button.type = "button";
     button.className = "word " + thing.mode + (shared.has(thing.text) ? " shared" : "") + (shifted.has(thing.text) ? " shifted" : "");
     button.style.left = (thing.median * 100) + "%";
-    button.style.top = (8 + lane * 40) + "px";
+    button.dataset.median = String(thing.median);
     button.textContent = thing.text;
     button.addEventListener("click", () => {{
       film.querySelectorAll(".word").forEach((item) => item.classList.remove("open"));
@@ -272,7 +301,7 @@ function mount(built) {{
     }});
     film.appendChild(button);
   }});
-  film.style.height = (24 + Math.max(1, lanes.length) * 40) + "px";
+  layout(film);
   strip.appendChild(film);
   wrap.appendChild(strip);
   const axis = document.createElement("div");
@@ -309,8 +338,14 @@ function mount(built) {{
   }}
   return wrap;
 }}
-document.getElementById("strips").appendChild(mount(report.left));
-document.getElementById("strips").appendChild(mount(report.right));
+const strips = document.getElementById("strips");
+strips.appendChild(mount(report.left));
+strips.appendChild(mount(report.right));
+layout(strips.children[0].querySelector(".film"));
+layout(strips.children[1].querySelector(".film"));
+window.addEventListener("resize", () => {{
+  strips.querySelectorAll(".film").forEach(layout);
+}});
 </script>
 </body>
 </html>

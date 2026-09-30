@@ -1,4 +1,6 @@
+import contextlib
 import gzip
+import io
 import json
 import re
 import tempfile
@@ -6,7 +8,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from reception.analyze import build_type
+from reception.analyze import _pair_score, build_type
 from reception.load import Pool, Row, Video, load_zip, normalize, percent_in_film
 from reception.page import build_report, render_page
 from reception.__main__ import main
@@ -38,6 +40,19 @@ def _write_zip(path: Path, folder: str, videos: list[dict]) -> None:
 
 
 class ReceptionTests(unittest.TestCase):
+    def test_same_words_match_even_when_one_character(self):
+        self.assertEqual(_pair_score("啊？", "啊？"), 1.0)
+        self.assertEqual(_pair_score("猿神，启动！", "猿神,启动！"), 1.0)
+        self.assertLess(_pair_score("前方高能", "高能预警"), 0.72)
+        self.assertGreaterEqual(_pair_score("前方高能", "前方高能预警"), 0.72)
+
+    def test_point_at_the_end_is_the_ending(self):
+        from reception.page import where
+
+        self.assertEqual(where(0.996, 0.996), "片尾")
+        self.assertEqual(where(0.0, 0.0), "片头")
+        self.assertEqual(where(0.5, 0.5), "片长的50%附近")
+
     def test_percent_across_parts(self):
         parts = [{"page": 1, "duration": 100}, {"page": 2, "duration": 100}]
         self.assertEqual(percent_in_film(0, 2, parts), 0.5)
@@ -90,12 +105,14 @@ class ReceptionTests(unittest.TestCase):
         left_pairs += _repeat("甲", "哈哈哈", 0.85, 2) + _repeat("甲", "哈哈", 0.85, 2)
         left_pairs += _repeat("甲", "人民万岁", 0.55, 3)
         left_pairs += _repeat("甲", "猿神，启动！", 0.33, 2)
-        left_pairs += _repeat("甲", "这句接话", 0.62, 2)
+        left_pairs += _repeat("甲", "这句接话", 0.62, 3)
+        left_pairs += _repeat("甲", "接话啊", 0.62, 2)
         left_pairs += _repeat("甲", "只此一家", 0.45, 4)
         right_pairs = filler("乙") + _repeat("乙", "前方高能", 0.06, 4) + _repeat("乙", "前方高能预警", 0.06, 4)
         right_pairs += _repeat("乙", "高能预警", 0.06, 3)
         right_pairs += _repeat("乙", "哈哈哈", 0.85, 2) + _repeat("乙", "哈哈", 0.85, 2)
         right_pairs += _repeat("乙", "人民万岁", 0.56, 3)
+        right_pairs += _repeat("乙", "这句接话", 0.62, 3)
         right_pairs += _repeat("乙", "接话啊", 0.62, 2)
         right_pairs += [("乙的另一句", 0.33), ("猿神,启动！", 0.34)]
         built = build_type(_pool("heishenhua", [_video("甲", left_pairs), _video("乙", right_pairs)]))
@@ -106,6 +123,10 @@ class ReceptionTests(unittest.TestCase):
         self.assertTrue(any("人民万岁" in group for group in groups))
         self.assertFalse(any("只此一家" in group for group in groups))
         self.assertTrue(any(item["text"] == "只此一家" for item in built["solos"]))
+        same_window = [thing for thing in built["things"] if thing["text"] in {"这句接话", "接话啊"}]
+        self.assertEqual({thing["text"] for thing in same_window}, {"这句接话", "接话啊"})
+        self.assertEqual([thing["text"] for thing in built["shown"] if thing["text"] in {"这句接话", "接话啊"}], ["这句接话"])
+        self.assertGreater(built["hidden"], 0)
         topic = next(thing for thing in built["things"] if "前方高能" in thing["norms"])
         self.assertEqual(topic["mode"], "topic")
         self.assertEqual(topic["evidence"][0]["content"], topic["text"])
@@ -130,15 +151,15 @@ class ReceptionTests(unittest.TestCase):
         left = _pool(
             "heishenhua",
             [
-                _video("甲", _repeat("甲", "前方高能", 0.20, 3) + _repeat("甲", "哈哈", 0.20, 3) + _repeat("甲", "只在黑神话", 0.40, 3)),
-                _video("乙", _repeat("乙", "前方高能", 0.20, 3) + _repeat("乙", "哈哈", 0.20, 3) + _repeat("乙", "只在黑神话", 0.40, 3)),
+                _video("甲", _repeat("甲", "前方高能", 0.20, 3) + _repeat("甲", "哈哈", 0.50, 3) + _repeat("甲", "只在黑神话", 0.40, 3)),
+                _video("乙", _repeat("乙", "前方高能", 0.20, 3) + _repeat("乙", "哈哈", 0.50, 3) + _repeat("乙", "只在黑神话", 0.40, 3)),
             ],
         )
         right = _pool(
             "yuanshen-preview",
             [
-                _video("丙", _repeat("丙", "前方高能预警", 0.22, 3) + _repeat("丙", "哈哈哈", 0.80, 3) + _repeat("丙", "<script>alert(1)</script>", 0.50, 2)),
-                _video("丁", _repeat("丁", "前方高能预警", 0.22, 3) + _repeat("丁", "哈哈哈", 0.80, 3) + _repeat("丁", "<script>alert(1)</script>", 0.50, 2)),
+                _video("丙", _repeat("丙", "前方高能预警", 0.22, 3) + _repeat("丙", "哈哈哈", 0.80, 3) + _repeat("丙", "<script>alert(1)</script>", 0.65, 2)),
+                _video("丁", _repeat("丁", "前方高能预警", 0.22, 3) + _repeat("丁", "哈哈哈", 0.80, 3) + _repeat("丁", "<script>alert(1)</script>", 0.65, 2)),
             ],
         )
         report = build_report(left, right)
@@ -212,7 +233,8 @@ class ReceptionTests(unittest.TestCase):
                 ],
             )
             out = root / "out"
-            main([str(left), str(right), "--out", str(out), "--limit-videos", "1"])
+            with contextlib.redirect_stdout(io.StringIO()):
+                main([str(left), str(right), "--out", str(out), "--limit-videos", "1"])
             report = json.loads((out / "report.json").read_text())
             self.assertEqual(report["left"]["n_videos"], 1)
             html = (out / "index.html").read_text()
