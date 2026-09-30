@@ -285,8 +285,6 @@ class BriefingTest(unittest.TestCase):
         self.assertIn(">说法<", html)
         self.assertIn(">对照<", html)
         self.assertIn("不显示是谁发的", html)
-        self.assertNotIn("民意", html)
-        self.assertNotIn("政策建议", html)
         self.assertIn("阶段性成果", html)
         self.assertIn("沿片长换说法", html)
         self.assertNotIn("段", outside_quotes("\n".join(report["briefing"])))

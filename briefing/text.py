@@ -5,7 +5,7 @@ from __future__ import annotations
 from briefing.protocol import BRIEFING_PHASES, DIFF_ITEMS
 from briefing.structure import _leader_at, label_buckets
 
-PURPOSE = "给文化研究者和政策制定者看某一类视频的观众弹幕：人多的地方在重复哪一句，这句自己的高峰是不是就在那里，沿片长怎样换说法，和另一类比哪些共享、哪些错开、哪些只属于一边。只描述弹幕，不评价，也不给建议。"
+PURPOSE = "给文化研究者和政策制定者看某一类视频的观众弹幕：人多的地方在重复哪一句，这句自己的高峰是不是就在那里，沿片长怎样换说法，和另一类比哪些共享、哪些错开、哪些只属于一边。"
 SIGNOFF = "这些视频算不算同一类，还没有人签字。"
 CLAIM_RULE = "词按分词归并，完整说法按去掉标点后的整条弹幕归并。同一个字连写的不单独成说法。同义不同词没有合并。只在一条视频里出现的单独列出，不写入类型结论。"
 
