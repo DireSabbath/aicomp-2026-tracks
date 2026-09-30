@@ -126,7 +126,8 @@ class ReceptionTests(unittest.TestCase):
         same_window = [thing for thing in built["things"] if thing["text"] in {"这句接话", "接话啊"}]
         self.assertEqual({thing["text"] for thing in same_window}, {"这句接话", "接话啊"})
         self.assertEqual([thing["text"] for thing in built["shown"] if thing["text"] in {"这句接话", "接话啊"}], ["这句接话"])
-        self.assertGreater(built["hidden"], 0)
+        ranks = {thing["text"]: thing["rank"] for thing in built["layers"] if thing["text"] in {"这句接话", "接话啊"}}
+        self.assertEqual(ranks, {"这句接话": 0, "接话啊": 1})
         topic = next(thing for thing in built["things"] if "前方高能" in thing["norms"])
         self.assertEqual(topic["mode"], "topic")
         self.assertEqual(topic["evidence"][0]["content"], topic["text"])

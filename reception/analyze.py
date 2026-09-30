@@ -25,6 +25,7 @@ TIME_GAP = 0.10
 NEARBY = 8
 EVIDENCE = 8
 SHOW = 8
+LAYER = 3
 
 
 def _dense_windows(rows: list[Row]) -> set[int]:
@@ -258,7 +259,8 @@ def build_type(pool: Pool) -> dict:
             )
     things.sort(key=lambda item: (-item["n_videos"], -item["n_rows"], item["text"]))
     solos.sort(key=lambda item: (-item["n_rows"], item["text"]))
-    shown = _one_per_window(things)
+    layers = _per_window(things, LAYER)
+    shown = [thing for thing in layers if thing["rank"] == 0]
     return {
         "title": pool.title,
         "n_videos": len(pool.videos),
@@ -268,21 +270,25 @@ def build_type(pool: Pool) -> dict:
         "crowded": crowded,
         "things": things,
         "shown": shown,
-        "hidden": max(0, len(things) - len(shown)),
+        "layers": layers,
+        "hidden": max(0, len(things) - len(layers)),
         "solos": solos[:SHOW],
         "solo_count": len(solos),
     }
 
 
-def _one_per_window(things: list[dict]) -> list[dict]:
-    """每一段只留出现在最多条视频里的那一件，按片长排开。"""
+def _per_window(things: list[dict], depth: int) -> list[dict]:
+    """每一段留下视频数最多的几句。rank 0 是这一段最大的那句。"""
     buckets: dict[int, list[dict]] = defaultdict(list)
     for thing in things:
         buckets[min(WINDOWS - 1, int(thing["median"] * WINDOWS))].append(thing)
     picked = []
     for items in buckets.values():
-        picked.append(max(items, key=lambda item: (item["n_videos"], item["n_rows"], item["text"])))
-    picked.sort(key=lambda item: (item["median"], item["text"]))
+        ordered = sorted(items, key=lambda item: (-item["n_videos"], -item["n_rows"], item["text"]))
+        for rank, thing in enumerate(ordered[:depth]):
+            thing["rank"] = rank
+            picked.append(thing)
+    picked.sort(key=lambda item: (item["median"], item["rank"], item["text"]))
     return picked
 
 
