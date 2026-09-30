@@ -2,9 +2,7 @@
 
 从 [aicomp.cn](https://www.aicomp.cn/) 保留算法主题赛中的 AI+开源，以及全大赛共用的章程、报名和宣传资料。
 
-弹幕清单和爬取脚本在 `danmaku/`。本地演示在 `briefing/`：用分词和去标点后的整句归成说法，`python -m briefing <类型一.zip> <类型二.zip> --out demo_out --serve`。清单格式见 `briefing/清单格式.md`。分词依赖见 `requirements.txt`。
-
-相关研究见 [research/README.md](research/README.md)。当前能用的人、代理、数据、模型和接口见 [资源清单.md](资源清单.md)。当前的项目规划见 [项目规划.md](项目规划.md)。
+弹幕清单和爬取脚本在 `danmaku/`。相关研究见 [research/README.md](research/README.md)。当天能用的人、数据、模型和接口见 [资源清单.md](资源清单.md)。
 
 ## 保留范围
 
