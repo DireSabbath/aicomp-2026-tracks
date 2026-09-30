@@ -55,7 +55,7 @@ def main(argv: list[str] | None = None) -> int:
     report = build(args.zips, args.out)
     for item in report["types"]:
         print(
-            f"{item['title']}\t视频{item['n_videos']}\t弹幕{item['n_rows']}\t说法{len(item['claims'])}",
+            f"{item['title']}\t视频{item['n_videos']}\t弹幕{item['n_rows']}\t词{len(item['words'])}\t完整说法{len(item['phrases'])}",
             flush=True,
         )
     print(f"写入 {args.out / 'index.html'}", flush=True)
