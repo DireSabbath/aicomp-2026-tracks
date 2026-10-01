@@ -73,11 +73,15 @@ def readings(built: dict) -> list[str]:
         lines.append(f"{title}人多的地方在{places}。")
     else:
         lines.append(f"{title}没有挤在一处的弹幕。")
-    gathered = [thing for thing in built["shown"] if thing["mode"] == "topic"]
+    gathered = [thing for thing in built["shown"] if thing.get("role") == "place" and thing["mode"] == "topic"]
     if gathered:
         thing = max(gathered, key=lambda item: (item["n_videos"], item["n_rows"], item["text"]))
-        lines.append(f"人多的地方围着「{thing['text']}」。")
-    dialogues = [thing for thing in built["shown"] if thing["mode"] == "dialogue"]
+        lines.append(f"人多的地方收着「{thing['text']}」。")
+    choruses = [thing for thing in built["shown"] if thing.get("role") == "chorus"]
+    if choruses:
+        thing = max(choruses, key=lambda item: (item["n_videos"], item["n_rows"], item["text"]))
+        lines.append(f"顺着整段片子都在说「{thing['text']}」。")
+    dialogues = [thing for thing in built["shown"] if thing.get("role") == "place" and thing["mode"] == "dialogue"]
     if dialogues and crowded:
         thing = max(dialogues, key=lambda item: (_crowd_distance(item, crowded), item["n_videos"], item["text"]))
         lines.append(
@@ -115,7 +119,9 @@ def method_text() -> str:
         f"两句的中位位置相差超过片长的 {round(TIME_GAP * 100)}%，就不再并成一件事。"
         f"先把片长分成 {WINDOWS} 段：段里条数高于各段中位的，围着连接最多的那句收；其余段里，字面接得上的收到一起。"
         f"人多是把片长分成 {DENSITY_BINS} 格，连在一起、并且达到这一类峰值 {round(CROWD_RATIO * 100)}% 的那些格。"
-        f"带子上每一段放视频数最多的 {LAYER} 句原话，字越大，视频越多。"
+        f"一件事有多少条落在自己中位位置前后 {round(TIME_GAP * 100)}% 以内，和这一类的中位比：更紧的是收在一处，更松的是顺着片子走。"
+        f"收在一处的，每一段放视频数最多的那句，字大。"
+        f"顺着片子走的，视频数最多的 {LAYER} 句用淡字重复写在带子上，其余每一段再放视频数最多的一句，字下面是它实际走过的一段。"
     )
 
 
@@ -144,7 +150,11 @@ def _page_thing(thing: dict) -> dict:
         "n_videos": thing["n_videos"],
         "n_rows": thing["n_rows"],
         "mode": thing["mode"],
+        "role": thing.get("role", "place"),
         "rank": thing.get("rank", 0),
+        "p25": thing.get("p25", thing["median"]),
+        "p75": thing.get("p75", thing["median"]),
+        "marks": thing.get("marks") or [thing["median"]],
         "evidence": thing["evidence"],
     }
 
@@ -189,17 +199,24 @@ h1 {{ font-size: 28px; margin: 0 0 20px; }}
 .strip {{ background: #efe6d6; border-radius: 12px; padding: 12px 0 8px; }}
 .film {{ position: relative; min-height: 72px; margin: 0 80px; }}
 .crowd {{ position: absolute; top: 0; bottom: 0; background: rgba(196, 92, 46, 0.34); }}
-.word {{ position: absolute; transform: translateX(-50%); max-width: 140px; padding: 2px 8px; border: 0; border-radius: 999px; background: #fffdf8; cursor: pointer; font: inherit; line-height: 1.25; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
-.word.topic {{ box-shadow: inset 0 0 0 2px #8c3a2f; }}
-.word.dialogue {{ box-shadow: inset 0 0 0 2px #2f5d50; }}
-.word.shared {{ background: #f3e1b5; }}
+.word {{ position: absolute; transform: translateX(-50%); width: max-content; max-width: 8em; padding: 2px 8px; border: 0; background: transparent; cursor: pointer; font: inherit; line-height: 1.25; text-align: center; white-space: normal; }}
+.word.place {{ border-radius: 999px; background: #fffdf8; }}
+.word.place.topic {{ box-shadow: inset 0 0 0 2px #8c3a2f; }}
+.word.place.dialogue {{ box-shadow: inset 0 0 0 2px #2f5d50; }}
+.word.travel {{ border-radius: 0; padding-bottom: 4px; }}
+.word.chorus {{ color: #8d7b6c; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 6em; }}
+.word.place.shared {{ background: #f3e1b5; }}
+.word.travel.shared, .word.chorus.shared {{ color: #8a5a12; }}
 .word.shifted {{ outline: 2px dashed #8a6a1f; }}
 .word.open {{ background: #241c16; color: #fffdf8; }}
+.range {{ position: absolute; z-index: 1; height: 0; border-top: 2px solid rgba(58, 42, 34, 0.55); pointer-events: none; }}
+.chorus-line {{ position: relative; margin: 2px 80px 6px; }}
 .axis {{ display: flex; justify-content: space-between; color: #6d6256; font-size: 13px; margin: 4px 80px 0; }}
 .key {{ display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 12px 0; color: #6d6256; font-size: 14px; }}
 .chip {{ padding: 2px 8px; border-radius: 999px; background: #fffdf8; white-space: nowrap; }}
-.chip.topic {{ box-shadow: inset 0 0 0 2px #8c3a2f; }}
-.chip.dialogue {{ box-shadow: inset 0 0 0 2px #2f5d50; }}
+.chip.place {{ box-shadow: inset 0 0 0 2px #8c3a2f; }}
+.chip.travel {{ background: transparent; border-radius: 0; box-shadow: inset 0 -2px 0 #5c4636; }}
+.chip.chorus {{ background: transparent; color: #8d7b6c; }}
 .chip.shared {{ background: #f3e1b5; }}
 .chip.shifted {{ outline: 2px dashed #8a6a1f; }}
 .note {{ margin: 8px 0 0; }}
@@ -211,8 +228,8 @@ summary {{ cursor: pointer; }}
 .meta {{ color: #6d6256; font-size: 13px; }}
 @media (max-width: 700px) {{
   h1 {{ font-size: 22px; }}
-  .film, .axis {{ margin-left: 28px; margin-right: 28px; }}
-  .word {{ max-width: 108px; }}
+  .film, .axis, .chorus-line {{ margin-left: 28px; margin-right: 28px; }}
+  .word {{ max-width: 7em; }}
 }}
 </style>
 </head>
@@ -221,9 +238,9 @@ summary {{ cursor: pointer; }}
 <h1>一类视频的观众接收</h1>
 <div id="strips"></div>
 <div class="key">
-  <span>字越大，出现在越多条视频里</span>
-  <span class="chip topic">人密处</span>
-  <span class="chip dialogue">人疏处</span>
+  <span class="chip place">大字收在这一处，越大视频越多</span>
+  <span class="chip travel">字下的线顺着片子走</span>
+  <span class="chip chorus">淡字重复，是到处在说</span>
   <span class="chip shared">两边都有</span>
   <span class="chip shared shifted">位置错开</span>
 </div>
@@ -252,6 +269,7 @@ function layout(film) {{
   buttons.forEach((button) => {{
     const median = Number(button.dataset.median);
     button.style.transform = "translateX(-50%)";
+    button.style.right = "auto";
     button.style.left = (median * 100) + "%";
     button.style.top = "8px";
   }});
@@ -260,28 +278,43 @@ function layout(film) {{
     const rect = button.getBoundingClientRect();
     if (rect.width === 0) return;
     if (rect.left < filmRect.left) {{
-      button.style.transform = "translateX(0)";
-      button.style.left = "0%";
+      button.style.transform = "none";
+      button.style.left = "0";
+      button.style.right = "auto";
     }} else if (rect.right > filmRect.right) {{
-      button.style.transform = "translateX(-100%)";
-      button.style.left = "100%";
+      button.style.transform = "none";
+      button.style.left = "auto";
+      button.style.right = "0";
     }}
   }});
   const lanes = [];
-  let pitch = 32;
   buttons.forEach((button) => {{
-    pitch = Math.max(pitch, button.offsetHeight + 8);
     const rect = button.getBoundingClientRect();
     let lane = 0;
-    while (lanes[lane] && lanes[lane].some((other) => rect.left < other.right - 2 && rect.right > other.left + 2)) lane += 1;
+    while (lanes[lane] && lanes[lane].some((other) => {{
+      const taken = other.getBoundingClientRect();
+      return rect.left < taken.right - 2 && rect.right > taken.left + 2;
+    }})) lane += 1;
     if (!lanes[lane]) lanes[lane] = [];
-    lanes[lane].push(rect);
+    lanes[lane].push(button);
     button.dataset.lane = String(lane);
   }});
-  buttons.forEach((button) => {{
-    button.style.top = (8 + Number(button.dataset.lane) * pitch) + "px";
+  const laneTop = [];
+  let cursor = 8;
+  lanes.forEach((group) => {{
+    laneTop.push(cursor);
+    const height = Math.max(...group.map((button) => button.offsetHeight), 18);
+    cursor += height + 8;
   }});
-  film.style.height = (16 + Math.max(1, lanes.length) * pitch) + "px";
+  buttons.forEach((button) => {{
+    button.style.top = laneTop[Number(button.dataset.lane)] + "px";
+  }});
+  film.style.height = Math.max(72, cursor + 8) + "px";
+  film.querySelectorAll(".range").forEach((range) => {{
+    const button = film.querySelector('.word[data-key="' + range.dataset.key + '"]');
+    if (!button) return;
+    range.style.top = (button.offsetTop + button.offsetHeight - 1) + "px";
+  }});
 }}
 function mount(built) {{
   const wrap = document.createElement("section");
@@ -294,6 +327,8 @@ function mount(built) {{
   strip.className = "strip";
   const film = document.createElement("div");
   film.className = "film";
+  const chorusLine = document.createElement("div");
+  chorusLine.className = "chorus-line";
   built.crowded.forEach((span) => {{
     const band = document.createElement("div");
     band.className = "crowd";
@@ -302,27 +337,59 @@ function mount(built) {{
     film.appendChild(band);
   }});
   const words = built.layers || built.shown;
-  const maxVideos = Math.max(...words.map((thing) => thing.n_videos), 1);
+  const places = words.filter((thing) => (thing.role || "place") === "place");
+  const maxVideos = Math.max(...places.map((thing) => thing.n_videos), 1);
+  let key = 0;
   words.forEach((thing) => {{
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "word " + thing.mode + (shared.has(thing.text) ? " shared" : "") + (shifted.has(thing.text) ? " shifted" : "");
-    button.style.left = (thing.median * 100) + "%";
+    const role = thing.role || "place";
+    const spots = role === "chorus" ? (thing.marks || [thing.median]) : [thing.median];
     const weight = thing.n_videos / maxVideos;
-    button.style.fontSize = Math.round(13 + 18 * weight) + "px";
-    button.style.fontWeight = thing.rank ? "500" : "700";
-    button.style.zIndex = String(10 + thing.n_videos);
-    button.dataset.median = String(thing.median);
-    button.textContent = thing.text;
-    button.addEventListener("click", () => {{
-      film.querySelectorAll(".word").forEach((item) => item.classList.remove("open"));
-      button.classList.add("open");
-      show(thing);
+    spots.forEach((spot) => {{
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "word " + role + " " + thing.mode + (shared.has(thing.text) ? " shared" : "") + (shifted.has(thing.text) ? " shifted" : "");
+      button.style.left = (Number(spot) * 100) + "%";
+      if (role === "place") {{
+        button.style.fontSize = Math.round(16 + 18 * weight) + "px";
+        button.style.fontWeight = "700";
+      }} else if (role === "travel") {{
+        button.style.fontSize = "15px";
+        button.style.fontWeight = "600";
+        button.dataset.key = String(key);
+        const range = document.createElement("div");
+        range.className = "range";
+        range.dataset.key = String(key);
+        let start = Number(thing.p25);
+        let end = Number(thing.p75);
+        if (end - start < 0.012) {{
+          start = Math.max(0, Number(thing.median) - 0.006);
+          end = Math.min(1, Number(thing.median) + 0.006);
+        }}
+        range.style.left = (start * 100) + "%";
+        range.style.width = ((end - start) * 100) + "%";
+        film.appendChild(range);
+        key += 1;
+      }} else {{
+        button.style.fontSize = "13px";
+      }}
+      button.style.zIndex = role === "place" ? String(20 + thing.n_videos) : "10";
+      button.dataset.median = String(spot);
+      button.textContent = thing.text;
+      button.addEventListener("click", () => {{
+        wrap.querySelectorAll(".word").forEach((item) => item.classList.remove("open"));
+        button.classList.add("open");
+        show(thing);
+      }});
+      if (role === "chorus") chorusLine.appendChild(button);
+      else film.appendChild(button);
     }});
-    film.appendChild(button);
   }});
   layout(film);
   strip.appendChild(film);
+  if (chorusLine.childElementCount) {{
+    layout(chorusLine);
+    strip.appendChild(chorusLine);
+  }}
   wrap.appendChild(strip);
   const axis = document.createElement("div");
   axis.className = "axis";
@@ -344,7 +411,8 @@ function mount(built) {{
     box.appendChild(head);
     const meta = document.createElement("div");
     meta.className = "meta";
-    meta.textContent = thing.n_videos + " 条视频";
+    const kind = thing.role === "chorus" ? "，这一类到处在说" : thing.role === "travel" ? "，顺着片子走" : "，收在这一处";
+    meta.textContent = thing.n_videos + " 条视频" + kind;
     box.appendChild(meta);
     const list = document.createElement("ul");
     thing.evidence.forEach((row) => {{
@@ -360,10 +428,9 @@ function mount(built) {{
 const strips = document.getElementById("strips");
 strips.appendChild(mount(report.left));
 strips.appendChild(mount(report.right));
-layout(strips.children[0].querySelector(".film"));
-layout(strips.children[1].querySelector(".film"));
+strips.querySelectorAll(".film, .chorus-line").forEach(layout);
 window.addEventListener("resize", () => {{
-  strips.querySelectorAll(".film").forEach(layout);
+  strips.querySelectorAll(".film, .chorus-line").forEach(layout);
 }});
 </script>
 </body>

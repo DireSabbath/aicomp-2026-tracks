@@ -126,8 +126,9 @@ class ReceptionTests(unittest.TestCase):
         same_window = [thing for thing in built["things"] if thing["text"] in {"这句接话", "接话啊"}]
         self.assertEqual({thing["text"] for thing in same_window}, {"这句接话", "接话啊"})
         self.assertEqual([thing["text"] for thing in built["shown"] if thing["text"] in {"这句接话", "接话啊"}], ["这句接话"])
-        ranks = {thing["text"]: thing["rank"] for thing in built["layers"] if thing["text"] in {"这句接话", "接话啊"}}
-        self.assertEqual(ranks, {"这句接话": 0, "接话啊": 1})
+        placed = next(thing for thing in built["layers"] if thing["text"] == "这句接话")
+        self.assertEqual(placed["role"], "place")
+        self.assertNotIn("接话啊", {thing["text"] for thing in built["layers"]})
         topic = next(thing for thing in built["things"] if "前方高能" in thing["norms"])
         self.assertEqual(topic["mode"], "topic")
         self.assertEqual(topic["evidence"][0]["content"], topic["text"])
@@ -138,6 +139,31 @@ class ReceptionTests(unittest.TestCase):
         quoted = re.findall(r"「([^」]*)」", "\n".join(__import__("reception.page", fromlist=["readings"]).readings({**built, "title": "黑神话官方"})))
         self.assertTrue(quoted)
         self.assertTrue(set(quoted) <= texts)
+
+    def test_spread_line_is_repeated_and_tight_line_is_large(self):
+        spread = [index / 20 for index in range(20)]
+        pool = _pool(
+            "heishenhua",
+            [
+                _video("甲", [( "好耶", percent) for percent in spread] + _repeat("甲", "通关小曲", 0.70, 4)),
+                _video("乙", [( "好耶", percent) for percent in spread] + _repeat("乙", "通关小曲", 0.71, 4)),
+            ],
+        )
+        built = build_type(pool)
+        roles = {thing["text"]: thing["role"] for thing in built["layers"]}
+        self.assertEqual(roles["好耶"], "chorus")
+        self.assertEqual(roles["通关小曲"], "place")
+        self.assertGreater(len(next(thing["marks"] for thing in built["layers"] if thing["text"] == "好耶")), 1)
+        html = render_page(build_report(pool, _pool("yuanshen-preview", [
+            _video("丙", _repeat("丙", "接话啊", 0.10, 2)),
+            _video("丁", _repeat("丁", "接话啊", 0.10, 2)),
+        ])))
+        self.assertIn("好耶", html)
+        self.assertIn("通关小曲", html)
+        self.assertIn('"role": "chorus"', html)
+        self.assertIn('"role": "place"', html)
+        self.assertNotIn("<svg", html)
+        self.assertNotIn("polyline", html)
 
     def test_stray_row_does_not_glue_two_ends(self):
         pairs_a = _repeat("甲", "前方高能", 0.10, 5) + [("前方高能", 0.90)]
