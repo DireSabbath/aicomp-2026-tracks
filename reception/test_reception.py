@@ -11,6 +11,8 @@ from pathlib import Path
 from reception.analyze import _pair_score, build_type
 from reception.load import Pool, Row, Video, load_zip, normalize, percent_in_film
 from reception.page import build_report, render_page
+from reception.shot import build_shot
+from reception.stage import render_shot
 from reception.__main__ import main
 
 
@@ -227,6 +229,27 @@ class ReceptionTests(unittest.TestCase):
         self.assertIn("人民万岁", html)
         self.assertIn("没有发言者", html)
 
+    def test_one_film_keeps_repeated_line_and_single_spark(self):
+        video = _video(
+            "甲",
+            _repeat("甲", "人民万岁", 0.40, 4)
+            + _repeat("甲", "前方高能", 0.20, 4)
+            + _repeat("甲", "前方高能预警", 0.22, 4)
+            + [("只此一句", 0.80)],
+        )
+        shot = build_shot(video)
+        hubs = [knot["text"] for knot in shot["knots"] if knot["hub"]]
+        self.assertIn("人民万岁", hubs)
+        self.assertTrue(any("前方高能" in text for text in hubs))
+        self.assertNotIn("前方高能预警", hubs)
+        self.assertTrue(any(item["text"] == "只此一句" for item in shot["mist"]))
+        html = render_shot(shot)
+        self.assertIn("人民万岁", html)
+        self.assertIn("没有发言者", html)
+        self.assertIn("0.72", html)
+        self.assertNotIn("<svg", html)
+        self.assertNotIn("polyline", html)
+
     def test_cli_writes_page(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
@@ -270,8 +293,10 @@ class ReceptionTests(unittest.TestCase):
             report = json.loads((out / "report.json").read_text())
             self.assertEqual(report["left"]["n_videos"], 1)
             html = (out / "index.html").read_text()
-            self.assertIn("一类视频的观众接收", html)
+            self.assertIn("人民万岁", html)
             self.assertIn("没有发言者", html)
+            self.assertNotIn("<svg", html)
+            self.assertNotIn("polyline", html)
 
 
 if __name__ == "__main__":

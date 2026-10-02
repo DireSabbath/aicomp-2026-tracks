@@ -1,6 +1,7 @@
-"""把两份试点压成一条带子。
+"""把一条片子上的原话铺成光。
 
 python -m reception 甲.zip 乙.zip --out demo_out/reception
+页面用第一份压缩包里弹幕最多的那一条。
 """
 
 from __future__ import annotations
@@ -11,7 +12,9 @@ from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 
 from reception.load import load_zip
-from reception.page import build_report, render_page
+from reception.page import build_report
+from reception.shot import build_shot
+from reception.stage import render_shot
 
 
 def _public_thing(thing: dict) -> dict:
@@ -49,7 +52,7 @@ def _public_side(built: dict) -> dict:
 
 
 def main(argv: list[str] | None = None) -> None:
-    parser = argparse.ArgumentParser(description="把两个类型的弹幕收成片长上的几件事")
+    parser = argparse.ArgumentParser(description="页面画第一份压缩包里弹幕最多的一条片子")
     parser.add_argument("zips", nargs=2, type=Path)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--limit-videos", type=int)
@@ -61,6 +64,8 @@ def main(argv: list[str] | None = None) -> None:
     print(f"{left.title} {len(left.videos)} 条视频，能定位 {len(left.rows)} 条", flush=True)
     print(f"{right.title} {len(right.videos)} 条视频，能定位 {len(right.rows)} 条", flush=True)
     report = build_report(left, right)
+    shot = build_shot(max(left.videos, key=lambda video: (len(video.rows), video.bvid)))
+    print(f"页面是 {shot['title']} ，能定位 {shot['n_rows']} 条", flush=True)
     args.out.mkdir(parents=True, exist_ok=True)
     stored = {
         "left": _public_side(report["left"]),
@@ -71,7 +76,7 @@ def main(argv: list[str] | None = None) -> None:
         "method": report["method"],
     }
     (args.out / "report.json").write_text(json.dumps(stored, ensure_ascii=False, indent=2), encoding="utf-8")
-    (args.out / "index.html").write_text(render_page(report), encoding="utf-8")
+    (args.out / "index.html").write_text(render_shot(shot), encoding="utf-8")
     for line in report["readings"]:
         print(line)
     print(args.out / "index.html")
