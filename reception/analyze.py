@@ -363,6 +363,8 @@ def match_types(left: dict, right: dict) -> dict:
             {
                 "left": item["text"],
                 "right": other["text"],
+                "left_at": item["median"],
+                "right_at": other["median"],
                 "score": best_score,
                 "shifted": abs(item["median"] - other["median"]) > TIME_GAP,
             }

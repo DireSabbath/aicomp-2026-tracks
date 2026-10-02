@@ -193,6 +193,10 @@ class ReceptionTests(unittest.TestCase):
         paired = {(item["left"], item["right"], item["shifted"]) for item in report["match"]["pairs"]}
         self.assertIn(("前方高能", "前方高能预警", False), paired)
         self.assertIn(("哈哈", "哈哈哈", True), paired)
+        aligned = next(item for item in report["match"]["pairs"] if item["left"] == "前方高能")
+        self.assertLess(abs(aligned["left_at"] - aligned["right_at"]), 0.10)
+        shifted = next(item for item in report["match"]["pairs"] if item["left"] == "哈哈")
+        self.assertGreater(abs(shifted["left_at"] - shifted["right_at"]), 0.10)
         self.assertIn("只在黑神话", report["match"]["only_left"])
         self.assertIn("<script>alert(1)</script>", report["match"]["only_right"])
         html = render_page(report)
@@ -202,6 +206,7 @@ class ReceptionTests(unittest.TestCase):
         self.assertIn("\\u003cscript>alert", html)
         self.assertNotIn("<svg", html)
         self.assertNotIn("polyline", html)
+        self.assertIn("bezierCurveTo", html)
         self.assertIn("黑神话官方", html)
         self.assertIn("原神前瞻", html)
         quotes = re.findall(r"「([^」]*)」", "\n".join(report["readings"]))
