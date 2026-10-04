@@ -6,6 +6,7 @@
 
 from __future__ import annotations
 
+import math
 from collections import Counter, defaultdict
 
 import numpy as np
@@ -60,10 +61,30 @@ def _families(video: Video, grouped: dict[str, list]) -> list[list[str]]:
     return list(buckets.values())
 
 
+def _clock(video: Video):
+    times = [row.ctime for row in video.rows if row.ctime is not None]
+    if len(set(times)) < 2:
+        return False, lambda _ctime: 0.5
+    origin = min(times)
+    hours = sorted((item - origin) / 3600 for item in times)
+    cap = hours[min(len(hours) - 1, int(round(0.99 * (len(hours) - 1))))]
+    cap = max(cap, 1e-6)
+    scale = math.log1p(cap)
+
+    def depth_of(ctime: int | None) -> float:
+        if ctime is None:
+            return 0.5
+        raw = math.log1p(max(0.0, (ctime - origin) / 3600)) / scale
+        return float(min(1.0, max(0.0, raw)))
+
+    return True, depth_of
+
+
 def build_shot(video: Video) -> dict:
     grouped: dict[str, list] = defaultdict(list)
     for row in video.rows:
         grouped[row.norm].append(row)
+    has_clock, depth_of = _clock(video)
     knots = []
     for family, norms in enumerate(_families(video, grouped)):
         members = []
@@ -75,6 +96,7 @@ def build_shot(video: Video) -> dict:
                 {
                     "text": text,
                     "percent": float(np.median([row.percent for row in own])),
+                    "depth": float(np.median([depth_of(row.ctime) for row in own])),
                     "n": len(own),
                 }
             )
@@ -94,6 +116,7 @@ def build_shot(video: Video) -> dict:
                 {
                     "text": member["text"],
                     "percent": member["percent"],
+                    "depth": member["depth"],
                     "n": member["n"],
                     "family_n": family_n,
                     "family": family,
@@ -106,7 +129,7 @@ def build_shot(video: Video) -> dict:
         for norm, rows in grouped.items()
         if len(rows) == 1
     ]
-    dots = [[round(row.percent, 4), _slot(row.norm)] for row in video.rows]
+    dots = [[round(row.percent, 4), _slot(row.norm), round(depth_of(row.ctime), 4)] for row in video.rows]
     hubs = [knot for knot in knots if knot["hub"]]
     play = max(hubs, key=lambda knot: (knot["n"], -knot["percent"], knot["text"]))["percent"] if hubs else 0.5
     return {
@@ -119,11 +142,19 @@ def build_shot(video: Video) -> dict:
         "dots": dots,
         "similar": SIMILAR,
         "time_gap": TIME_GAP,
+        "has_clock": has_clock,
         "note": "这一页只看一条片子。同义不同字还没有并到一块。材料里没有发言者，页面不显示是谁发的。",
         "method": (
-            f"每一条能定位的弹幕是一粒光，光堆得越高，当时人越多。"
-            f"字面余弦不低于 {SIMILAR}、两句中位位置相差不超过片长的 {round(TIME_GAP * 100)}%，收成一句。"
-            "至少出现两次才有资格写成字。画面上立着重复最多的几句，字越大，重复越多。"
-            "光带到哪一句，下面就读哪一句。点那一句，能看到原话。"
+            "每一条能定位的弹幕是一粒光，叠成可以侧着看的一层。"
+            "左右是片长，光堆得越高，当时人越多。"
+            + (
+                "纵深是发送先后：越远越晚，按时间的对数排开，不是把日历等分。"
+                if has_clock
+                else "这批材料的发送时间没有拉开，纵深只是错开光点，不表示早晚。"
+            )
+            + f"字面余弦不低于 {SIMILAR}、两句中位位置相差不超过片长的 {round(TIME_GAP * 100)}%，收成一句。"
+            "至少出现两次才有资格写成字。立在光上的是重复最多的几句，字越大，重复越多。"
+            "光带到哪一句，下面就读哪一句。点那一句，能看到原话。上下拖动可以侧过这层光。"
+            "没有在这批弹幕上训练模型。"
         ),
     }
