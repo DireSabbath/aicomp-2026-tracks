@@ -4,3 +4,4 @@ __pycache__/
 data/attachments/_files/*.tmp
 danmaku_out/
 demo_out/
+train_out/
