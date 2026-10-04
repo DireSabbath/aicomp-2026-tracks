@@ -247,6 +247,26 @@ class ReceptionTests(unittest.TestCase):
         self.assertIn("人民万岁", html)
         self.assertIn("没有发言者", html)
         self.assertIn("0.72", html)
+        self.assertIn("webgl", html)
+        self.assertIn("没有在这批弹幕上训练模型", html)
+        self.assertNotIn("<svg", html)
+        self.assertNotIn("polyline", html)
+
+    def test_send_time_spreads_the_volume(self):
+        early = [_row("甲", "人民万岁", 0.2) for _ in range(4)]
+        late = [_row("甲", "前方高能", 0.7) for _ in range(4)]
+        for row in early:
+            row.ctime = 1_000
+        for row in late:
+            row.ctime = 1_000 + 48 * 3600
+        shot = build_shot(Video("甲", "甲", early + late))
+        self.assertTrue(shot["has_clock"])
+        people = next(knot for knot in shot["knots"] if knot["hub"] and "人民万岁" in knot["text"])
+        ahead = next(knot for knot in shot["knots"] if knot["hub"] and "前方高能" in knot["text"])
+        self.assertLess(people["depth"], ahead["depth"])
+        self.assertEqual(len(shot["dots"][0]), 3)
+        html = render_shot(shot)
+        self.assertIn("发送先后", html)
         self.assertNotIn("<svg", html)
         self.assertNotIn("polyline", html)
 
