@@ -542,6 +542,7 @@ footer {{ color:var(--muted); font-size:13px; margin-top:28px; }}
 </header>
 <div class="stats">
 <div class="stat"><span>已读视频</span><strong>{summary.get('videos', 0):,}</strong></div>
+<div class="stat"><span>当前池为空</span><strong>{summary.get('empty_pools', 0):,}</strong></div>
 <div class="stat"><span>弹幕</span><strong>{summary.get('danmaku', 0):,}</strong></div>
 <div class="stat"><span>至少落入一类</span><strong>{_pct(summary.get('coded_rate') or 0)}</strong></div>
 <div class="stat"><span>多类并中</span><strong>{_pct(summary.get('multi_rate') or 0)}</strong></div>

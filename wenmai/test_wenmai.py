@@ -111,6 +111,7 @@ class PipelineTests(unittest.TestCase):
             summary = analyze(corpus, listing, root / "out")
             self.assertEqual(summary["danmaku"], 3)
             self.assertEqual(summary["videos"], 1)
+            self.assertEqual(summary["empty_pools"], 0)
             self.assertGreater(summary["by_code"]["制作认可"], 0)
             self.assertGreater(summary["by_code"]["文化符号提及"], 0)
             self.assertIn("文物博物馆", summary["groups"]["museum"]["title"])
@@ -121,6 +122,7 @@ class PipelineTests(unittest.TestCase):
                 self.assertIn(code, page)
             self.assertNotIn("后母戊鼎画面质感拉满", page)
             self.assertIn("相对抬升", page)
+            self.assertIn("当前池为空", page)
             self.assertIn("点互信息", page)
             codes = summary["codes"]
             left = codes.index("制作认可")

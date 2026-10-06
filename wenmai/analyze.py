@@ -199,6 +199,10 @@ def findings(summary: dict) -> list[str]:
             f"字符模型对照规则银标的宏平均 F1 为 {agree['macro_f1']:.3f}。"
             "银标来自规则，不是人工金标。"
         )
+    if summary.get("empty_pools"):
+        lines.append(
+            f"{summary['empty_pools']} 支视频的当前公开池是空的。页面弹幕计数是热门线，播放器里现在能拉到的可以少很多，也可以是零。"
+        )
     if summary.get("pending"):
         lines.append(f"清单里还有 {summary['pending']} 个视频尚未落盘，以上只覆盖已经拉到的部分。")
     return lines
@@ -283,6 +287,7 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
     danmaku = 0
     coded = 0
     multi = 0
+    empty_pools = 0
 
     for video in videos:
         rows = _video_rows(video["path"])
@@ -311,6 +316,8 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
         local_code = {code: [0] * BURST_BINS for code in CODE_NAMES}
         q_at: dict[int, int] = {}
         s_at: dict[int, int] = {}
+        if not rows:
+            empty_pools += 1
         for row in rows:
             text = row.get("content") or ""
             danmaku += 1
@@ -479,6 +486,7 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
     summary = {
         "videos": len(videos),
         "pending": pending,
+        "empty_pools": empty_pools,
         "danmaku": danmaku,
         "coded": coded,
         "coded_rate": coded / danmaku if danmaku else 0.0,
