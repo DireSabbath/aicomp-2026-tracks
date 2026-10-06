@@ -733,12 +733,17 @@ def crawl_collection(
     out_dir: Path,
     limit: int | None,
     preset: list[dict] | None = None,
+    shard_count: int = 1,
+    shard_index: int = 0,
 ) -> dict:
     videos = list(preset) if preset is not None else resolve_collection(client, spec)
     if preset is not None and spec.get("list") == "hot_search":
         videos = prune_hot_videos(videos, spec)
     if limit is not None:
         videos = videos[:limit]
+    if shard_count > 1:
+        videos = [video for index, video in enumerate(videos) if index % shard_count == shard_index]
+        print(f"[{spec['id']}] shard {shard_index}/{shard_count} videos {len(videos)}", flush=True)
     folder = out_dir / spec["id"]
     folder.mkdir(parents=True, exist_ok=True)
     done = []
@@ -816,6 +821,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--limit", type=int, default=None, help="每个合集最多爬多少条视频")
     parser.add_argument("--list-only", action="store_true")
     parser.add_argument("--refresh-list", action="store_true", help="忽略已保存的视频清单，重新向接口要列表")
+    parser.add_argument("--shard-count", type=int, default=1, help="把清单按顺序切成几份并行拉")
+    parser.add_argument("--shard-index", type=int, default=0, help="当前进程负责哪一份，从 0 开始")
     args = parser.parse_args(argv)
     client = BilibiliClient(args.delay)
     args.out.mkdir(parents=True, exist_ok=True)
@@ -860,7 +867,17 @@ def main(argv: list[str] | None = None) -> int:
         if saved.exists() and not args.refresh_list:
             preset = json.loads(saved.read_text(encoding="utf-8"))
             print(f"[{spec['id']}] 使用已保存清单 {len(preset)} 条", flush=True)
-        summaries.append(crawl_collection(client, spec, args.out, args.limit, preset))
+        summaries.append(
+            crawl_collection(
+                client,
+                spec,
+                args.out,
+                args.limit,
+                preset,
+                shard_count=args.shard_count,
+                shard_index=args.shard_index,
+            )
+        )
     if args.list_only:
         summaries = manifest_from_lists(args.out, all_specs)
     manifest = {
