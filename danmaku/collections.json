@@ -1,240 +1,187 @@
 [
   {
-    "id": "luoxiang",
-    "title": "罗翔说刑法",
-    "mid": 517327498,
-    "list": "author_plus_search",
-    "keyword": "罗翔说刑法",
-    "note": "该账号公开合集、系列，再并上搜索「罗翔说刑法」里属于这个账号的视频。搜索最多约 1000 条，空间投稿接口在这台机器上被风控，所以可能少于投稿总数。",
-    "search_orders": [
-      "dm",
-      "pubdate",
-      "click"
-    ]
-  },
-  {
-    "id": "yuanshen-preview",
-    "title": "原神前瞻特别节目",
-    "mid": 401742377,
-    "list": "search",
-    "keyword": "前瞻特别节目",
-    "title_contains": "前瞻",
-    "note": "只收官方账号「原神」标题里带「前瞻」的视频，不是全站原神视频，也不是该账号的全部投稿。",
-    "search_orders": [
-      "dm",
-      "pubdate"
-    ]
-  },
-  {
-    "id": "new-sanguo",
-    "title": "吃蛋挞的折棒·吐槽新三国",
-    "mid": 8878219,
-    "list": "season",
-    "season_id": 4058111,
-    "note": "该账号合集「吐槽新三国」的全部视频。"
-  },
-  {
-    "id": "xiaoyuehan",
-    "title": "小约翰可汗专栏",
-    "mid": 23947287,
-    "list": "seasons",
-    "season_ids": [
-      665,
-      1095498,
-      3491,
-      7022339
+    "id": "tradition-hot",
+    "title": "传统文化热门视频",
+    "list": "hot_search",
+    "min_danmaku": 1000,
+    "max_pages": 50,
+    "groups": {
+      "museum": "文物博物馆",
+      "classics": "典籍诗词",
+      "craft": "非遗技艺",
+      "opera_art": "戏曲书画",
+      "festival": "节庆民俗"
+    },
+    "title_exclude": [
+      "原神",
+      "王者荣耀",
+      "英雄联盟",
+      "我的世界",
+      "Minecraft",
+      "minecraft",
+      "鬼畜",
+      "整活",
+      "手游",
+      "开箱",
+      "吃播",
+      "吐槽",
+      "罗翔",
+      "小约翰",
+      "物华弥新",
+      "拜年祭",
+      "暴走",
+      "鸡你太美",
+      "蔡徐坤",
+      "周杰伦",
+      "刘畊宏",
+      "抖音",
+      "带货",
+      "说唱",
+      "街舞",
+      "京剧猫",
+      "股票",
+      "星穹铁道",
+      "崩坏",
+      "明日方舟",
+      "第五人格",
+      "黑神话",
+      "新三国",
+      "反应视频",
+      "的反应",
+      "YouTube",
+      "油管",
+      "海外反应",
+      "哇妹",
+      "魔刀",
+      "善逸",
+      "鬼灭",
+      "火影",
+      "游戏",
+      "Demo",
+      "UE5",
+      "MV",
+      "ASMR",
+      "asmr",
+      "采耳",
+      "逢考必过",
+      "金榜题名",
+      "翻译预测",
+      "四六级",
+      "六级翻译",
+      "四级翻译",
+      "考前冲刺",
+      "碧蓝航线",
+      "奥拉星",
+      "重返未来",
+      "港诡实录",
+      "时代少年团",
+      "饭拍",
+      "男团",
+      "女团",
+      "王者共创",
+      "打开王者",
+      "领克",
+      "vlog",
+      "Vlog",
+      "VLOG",
+      "鬼吹灯",
+      "琴魔",
+      "电子古琴",
+      "网红",
+      "推拿",
+      "洛天依",
+      "reaction",
+      "Reaction",
+      "翻唱",
+      "穿越剧",
+      "寻秦记",
+      "孤岛惊魂",
+      "星瑞",
+      "试车",
+      "陈情令",
+      "忘羡",
+      "钟离",
+      "轩辕剑",
+      "INTO1",
+      "Lolita",
+      "lolita",
+      "洛丽塔",
+      "JK制服",
+      "nc粉",
+      "魔幻手机",
+      "宫锁珠帘"
     ],
-    "note": "奇葩小国、神奇组织、硬核狠人、世纪风暴四个合集。"
-  },
-  {
-    "id": "heishenhua",
-    "title": "黑神话官方",
-    "mid": 642389251,
-    "list": "seasons_and_search",
-    "season_ids": [
-      3838930,
-      1940894,
-      650336
-    ],
-    "keyword": "黑神话",
-    "note": "官方账号三个合集，再并上搜索「黑神话」里属于该账号的视频。空间投稿接口在这台机器上会 412，所以不是按投稿总数逐条点名。",
-    "search_orders": [
-      "dm",
-      "pubdate"
+    "note": "旧选材已全部移出。本清单只收中华传统文化热门视频：检索按页面弹幕计数从高到低翻页，直到本页最高计数低于该词阈值，或达到接口最多 50 页。标题必须含指定载体或节目名，并躲过排除词。同一视频只保留第一次命中的载体分组。页面计数是热门线；播放器里能拉到的是当前公开池，两者可以不一致。标题和编号可以记在仓库里。弹幕正文不进 git。页面能打开，不等于文字可以再分发、转载或拿去公开训练。",
+    "queries": [
+      {"group": "museum", "keyword": "国家宝藏", "title_contains": "国家宝藏", "min_danmaku": 1000},
+      {"group": "museum", "keyword": "如果国宝会说话", "title_contains": "如果国宝会说话", "min_danmaku": 300},
+      {"group": "museum", "keyword": "我在故宫修文物", "title_contains": "我在故宫修文物", "min_danmaku": 500},
+      {"group": "museum", "keyword": "三星堆", "title_contains": "三星堆", "min_danmaku": 3000},
+      {"group": "museum", "keyword": "敦煌", "title_contains": "敦煌", "min_danmaku": 5000, "title_any": ["壁画", "莫高", "飞天", "研究院", "文物", "藻井", "藏经", "纪录片", "国宝"]},
+      {"group": "museum", "keyword": "河西走廊", "title_contains": "河西走廊", "min_danmaku": 2000, "title_any": ["纪录片", "《河西走廊》", "丝路"]},
+      {"group": "museum", "keyword": "兵马俑", "title_contains": "兵马俑", "min_danmaku": 3000},
+      {"group": "museum", "keyword": "马王堆", "title_contains": "马王堆", "min_danmaku": 1000},
+      {"group": "museum", "keyword": "海昏侯", "title_contains": "海昏侯", "min_danmaku": 1000},
+      {"group": "museum", "keyword": "曾侯乙", "title_contains": "曾侯乙", "min_danmaku": 800},
+      {"group": "museum", "keyword": "越王勾践", "title_contains": "越王勾践", "min_danmaku": 1500},
+      {"group": "museum", "keyword": "甲骨文", "title_contains": "甲骨文", "min_danmaku": 2000},
+      {"group": "museum", "keyword": "殷墟", "title_contains": "殷墟", "min_danmaku": 1000},
+      {"group": "museum", "keyword": "妇好", "title_contains": "妇好", "min_danmaku": 800},
+      {"group": "museum", "keyword": "中国考古", "title_contains": "考古", "min_danmaku": 4000, "title_any": ["文物", "遗址", "墓葬", "博物馆", "三星堆", "发掘", "通论"]},
+      {"group": "museum", "keyword": "才浅", "title_contains": "才浅", "min_danmaku": 8000, "title_any": ["三星堆", "青铜", "编钟", "金杖", "非遗", "文物", "失蜡", "面具", "鼎"]},
+      {"group": "museum", "keyword": "四羊方尊", "title_contains": "四羊方尊", "min_danmaku": 500},
+      {"group": "museum", "keyword": "后母戊", "title_contains": "后母戊", "min_danmaku": 500},
+      {"group": "museum", "keyword": "青铜器", "title_contains": "青铜", "min_danmaku": 4000, "title_any": ["博物馆", "文物", "考古", "三星堆", "鼎", "编钟", "铭文"]},
+      {"group": "classics", "keyword": "典籍里的中国", "title_contains": "典籍里的中国", "min_danmaku": 500},
+      {"group": "classics", "keyword": "中国诗词大会", "title_contains": "中国诗词大会", "min_danmaku": 500},
+      {"group": "classics", "keyword": "诗经", "title_contains": "诗经", "min_danmaku": 2000},
+      {"group": "classics", "keyword": "论语", "title_contains": "论语", "min_danmaku": 2000, "title_exclude": ["翻译"]},
+      {"group": "classics", "keyword": "二十四节气", "title_contains": "节气", "min_danmaku": 3000, "title_any": ["二十四", "节气", "立春", "白露", "清明", "冬至", "芒种", "夏至", "秋分"]},
+      {"group": "classics", "keyword": "天工开物", "title_contains": "天工开物", "min_danmaku": 800},
+      {"group": "classics", "keyword": "史记", "title_contains": "史记", "min_danmaku": 4000, "title_any": ["司马迁", "本纪", "世家", "列传", "讲", "品读"]},
+      {"group": "classics", "keyword": "汉字", "title_contains": "汉字", "min_danmaku": 4000, "title_any": ["甲骨", "造字", "六书", "说文", "演化", "演变", "文化"]},
+      {"group": "classics", "keyword": "楚辞", "title_contains": "楚辞", "min_danmaku": 1500},
+      {"group": "classics", "keyword": "道德经", "title_contains": "道德经", "min_danmaku": 2000},
+      {"group": "classics", "keyword": "本草纲目", "title_contains": "本草纲目", "min_danmaku": 3000, "title_exclude": ["演奏", "翻唱"]},
+      {"group": "craft", "keyword": "非遗", "title_contains": "非遗", "min_danmaku": 5000},
+      {"group": "craft", "keyword": "传承人", "title_contains": "传承人", "min_danmaku": 3000},
+      {"group": "craft", "keyword": "苏绣", "title_contains": "苏绣", "min_danmaku": 800},
+      {"group": "craft", "keyword": "剪纸", "title_contains": "剪纸", "min_danmaku": 3000},
+      {"group": "craft", "keyword": "年画", "title_contains": "年画", "min_danmaku": 1500},
+      {"group": "craft", "keyword": "景泰蓝", "title_contains": "景泰蓝", "min_danmaku": 500},
+      {"group": "craft", "keyword": "古琴", "title_contains": "古琴", "min_danmaku": 3000},
+      {"group": "craft", "keyword": "篆刻", "title_contains": "篆刻", "min_danmaku": 1500},
+      {"group": "craft", "keyword": "皮影", "title_contains": "皮影", "min_danmaku": 4000},
+      {"group": "craft", "keyword": "榫卯", "title_contains": "榫卯", "min_danmaku": 1500},
+      {"group": "craft", "keyword": "失蜡法", "title_contains": "失蜡", "min_danmaku": 500},
+      {"group": "craft", "keyword": "花丝镶嵌", "title_contains": "花丝", "min_danmaku": 500},
+      {"group": "craft", "keyword": "云锦", "title_contains": "云锦", "min_danmaku": 800},
+      {"group": "craft", "keyword": "蜡染", "title_contains": "蜡染", "min_danmaku": 1000},
+      {"group": "opera_art", "keyword": "昆曲", "title_contains": "昆曲", "min_danmaku": 1500},
+      {"group": "opera_art", "keyword": "京剧", "title_contains": "京剧", "min_danmaku": 8000},
+      {"group": "opera_art", "keyword": "越剧", "title_contains": "越剧", "min_danmaku": 2000},
+      {"group": "opera_art", "keyword": "黄梅戏", "title_contains": "黄梅戏", "min_danmaku": 1500},
+      {"group": "opera_art", "keyword": "书法", "title_contains": "书法", "min_danmaku": 8000},
+      {"group": "opera_art", "keyword": "国画", "title_contains": "国画", "min_danmaku": 3000},
+      {"group": "opera_art", "keyword": "只此青绿", "title_contains": "只此青绿", "min_danmaku": 1500},
+      {"group": "opera_art", "keyword": "千里江山图", "title_contains": "千里江山图", "min_danmaku": 1500},
+      {"group": "opera_art", "keyword": "清明上河图", "title_contains": "清明上河图", "min_danmaku": 5000, "title_exclude": ["我的世界"]},
+      {"group": "opera_art", "keyword": "兰亭序", "title_contains": "兰亭", "min_danmaku": 2000, "title_any": ["书法", "王羲之", "曲水", "神龙", "冯承素", "行书", "兰亭序帖"]},
+      {"group": "opera_art", "keyword": "国乐", "title_contains": "国乐", "min_danmaku": 3000},
+      {"group": "festival", "keyword": "唐宫夜宴", "title_contains": "唐宫夜宴", "min_danmaku": 1000},
+      {"group": "festival", "keyword": "洛神水赋", "title_contains": "洛神水赋", "min_danmaku": 400},
+      {"group": "festival", "keyword": "奇妙游", "title_contains": "奇妙游", "min_danmaku": 3000},
+      {"group": "festival", "keyword": "汉服", "title_contains": "汉服", "min_danmaku": 10000},
+      {"group": "festival", "keyword": "端午", "title_contains": "端午", "min_danmaku": 10000, "title_any": ["屈原", "龙舟", "民俗", "传统", "祭", "纪念"]},
+      {"group": "festival", "keyword": "祭孔", "title_contains": "祭孔", "min_danmaku": 500},
+      {"group": "festival", "keyword": "礼乐", "title_contains": "礼乐", "min_danmaku": 1500},
+      {"group": "festival", "keyword": "舞千年", "title_contains": "舞千年", "min_danmaku": 2000},
+      {"group": "festival", "keyword": "龙门金刚", "title_contains": "龙门金刚", "min_danmaku": 800},
+      {"group": "festival", "keyword": "纸扇书生", "title_contains": "纸扇书生", "min_danmaku": 800},
+      {"group": "festival", "keyword": "中秋", "title_contains": "中秋", "min_danmaku": 8000, "title_any": ["传统", "民俗", "祭月", "诗词", "奇妙", "嫦娥"]},
+      {"group": "festival", "keyword": "春节", "title_contains": "春节", "min_danmaku": 15000, "title_any": ["传统", "民俗", "祭祖", "年俗", "非遗", "庙会", "社火"]},
+      {"group": "festival", "keyword": "社火", "title_contains": "社火", "min_danmaku": 500},
+      {"group": "festival", "keyword": "傩戏", "title_contains": "傩", "min_danmaku": 500}
     ]
-  },
-  {
-    "id": "guo-criminal-3",
-    "title": "郭律说刑事3",
-    "mid": 13651973,
-    "list": "season",
-    "season_id": 8937118,
-    "note": "郭庆梓律师合集「郭律说刑事3」，117 支刑事个案。观众在这些案子上当场接话。该账号另有两个上千条的旧合集，这次不收。"
-  },
-  {
-    "id": "luoxiang-live",
-    "title": "罗翔老师直播课堂",
-    "mid": 9617619,
-    "list": "search",
-    "keyword": "罗翔老师直播课堂",
-    "title_contains": "罗翔",
-    "note": "哔哩哔哩直播账号里、标题含「罗翔」的直播课堂。搜索接口看不全，以清单里这次列出的为准。",
-    "search_orders": [
-      "dm",
-      "pubdate"
-    ]
-  },
-  {
-    "id": "guo-spoken",
-    "title": "郭律说刑事·弹幕多的案子",
-    "mid": 13651973,
-    "list": "listed",
-    "videos": [
-      {
-        "bvid": "BV1nX9hBdESK",
-        "aid": 116491492005965,
-        "title": "无限防卫权",
-        "duration": 11
-      },
-      {
-        "bvid": "BV14C411V7jK",
-        "aid": 1953220141,
-        "title": "出国创业回国养老，恢复中国国籍子女回国创业遇到阻力（粉丝提醒，字幕有误，应该是华人不是华侨）",
-        "duration": 144
-      },
-      {
-        "bvid": "BV1mdpuzLES4",
-        "aid": 115207330337425,
-        "title": "孩子在家饿死发臭，是遗弃罪 还是 故意杀人罪 ？",
-        "duration": 475
-      },
-      {
-        "bvid": "BV1hMCJYHEjF",
-        "aid": 113722530010075,
-        "title": "小哥哥爱分享黄游，免费发同好涉嫌犯罪",
-        "duration": 502
-      },
-      {
-        "bvid": "BV1fZ421u75X",
-        "aid": 1155639600,
-        "title": "女孩因男友家暴动手反击成故意伤害，男友因此运动生涯报废，赔偿问题该怎么办？",
-        "duration": 274
-      },
-      {
-        "bvid": "BV1QBxse5E4F",
-        "aid": 113225337214199,
-        "title": "爸爸性侵继妹妹，留下遗书控告继父",
-        "duration": 656
-      },
-      {
-        "bvid": "BV1zTBQYCETt",
-        "aid": 113553432383826,
-        "title": "卖笑气冲撞警车导致一牺牲一重伤，死刑还有没有转机？",
-        "duration": 312
-      },
-      {
-        "bvid": "BV1wjXrYZER9",
-        "aid": 114199254539557,
-        "title": "给痴呆傻女孩说媒？涉嫌拐卖妇女罪",
-        "duration": 477
-      },
-      {
-        "bvid": "BV1R891YtE8V",
-        "aid": 114119696979520,
-        "title": "一人一个丑模子，花了钱还怕犯罪！",
-        "duration": 394
-      },
-      {
-        "bvid": "BV1xaSdYAEBu",
-        "aid": 113406665301708,
-        "title": "弟弟被抢劫在工地撞人到楼下，涉嫌过失致人死亡罪",
-        "duration": 431
-      },
-      {
-        "bvid": "BV1fmw3e4E21",
-        "aid": 113836950557673,
-        "title": "三傻大闹金三角，诈骗园区逃生记录",
-        "duration": 789
-      },
-      {
-        "bvid": "BV19nJyzLETW",
-        "aid": 115252360386798,
-        "title": "收留了女孩发生关系？是犯罪还是仙人跳？",
-        "duration": 561
-      },
-      {
-        "bvid": "BV1XLy3YqEtm",
-        "aid": 113326973525619,
-        "title": "爸爸从安检筐拿了一块劳力士，涉嫌盗窃十万多",
-        "duration": 355
-      },
-      {
-        "bvid": "BV1UeqBY9Et1",
-        "aid": 113644566224621,
-        "title": "清澈大学生入组织，7天解散被抓？利用迷信破坏法律实施罪？",
-        "duration": 560
-      },
-      {
-        "bvid": "BV1b9yUYTE3D",
-        "aid": 113367020803276,
-        "title": "姐姐上麦，询问弟弟因与胃痛的女友发生关系涉嫌犯罪！说女方报警诉求是想和弟弟结婚？",
-        "duration": 586
-      },
-      {
-        "bvid": "BV1Px4y1J7Ah",
-        "aid": 1005444255,
-        "title": "参加体育运动被带走，既尴尬又危险还犯罪，大家千万不要参加！",
-        "duration": 373
-      },
-      {
-        "bvid": "BV18GjBz2EEC",
-        "aid": 114584409149665,
-        "title": "多年前抢劫杀人三次，加其他数罪能脱死吗？",
-        "duration": 799
-      },
-      {
-        "bvid": "BV1tnCpBJEbV",
-        "aid": 115539905090802,
-        "title": "女儿被霸凌，老爸干爹齐上阵！",
-        "duration": 484
-      },
-      {
-        "bvid": "BV11H4y1V7y3",
-        "aid": 1054038378,
-        "title": "花5200约小姐姐，送给警察叔叔立功",
-        "duration": 220
-      },
-      {
-        "bvid": "BV1Rx4y1x7Z5",
-        "aid": 1006219729,
-        "title": "必定犯罪的亲密关系，大叔潜逃该不该自首？",
-        "duration": 300
-      },
-      {
-        "bvid": "BV17UDtYrEnv",
-        "aid": 113428811223173,
-        "title": "小姨子生下孩子，姐夫涉嫌强奸被捕？很复杂的家庭关系",
-        "duration": 299
-      },
-      {
-        "bvid": "BV1xnDdYeERr",
-        "aid": 113446091755981,
-        "title": "11头猪猪突猛进到自家地里拱白菜，杀了2头涉嫌了盗窃",
-        "duration": 595
-      },
-      {
-        "bvid": "BV1rcSdYWE1y",
-        "aid": 113406732407024,
-        "title": "老公和女孩接触，能做无罪辩护吗？",
-        "duration": 374
-      },
-      {
-        "bvid": "BV1VjKPegErq",
-        "aid": 114000931069891,
-        "title": "在厕所生下孩子？还冲水锁门接受调查！",
-        "duration": 451
-      }
-    ],
-    "note": "从「郭律说刑事」和「郭律说刑事2」里，取标题点到公共事务、又不在「郭律说刑事3」中的公开弹幕计数最高的 24 支。计数只用来挑选，正文不进 git。"
   }
 ]

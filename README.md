@@ -1,12 +1,20 @@
-# 2026 AIC：AI+开源与通用资料
+# 文脉：传统文化热门视频的弹幕六维读法
+
+2026 AIC「AI+开源」作品。热门传统文化视频下的弹幕很多，人工按六维十七类来编码看不过来。这个仓库把码表做成可复算的流程：规则负责可解释的编码，字符模型对照规则还盖不住的说法，离线页面把时间、符号和载体分组画出来。
+
+```bash
+python -m wenmai eval
+python -m unittest wenmai.test_wenmai
+python danmaku/test_crawl.py
+```
+
+拉全量、出图和 GPU 微调见 [wenmai/README.md](wenmai/README.md)。技术报告在 [wenmai/技术报告.md](wenmai/技术报告.md)。选材规则在 [danmaku/SCOPE.md](danmaku/SCOPE.md)。
+
+弹幕正文不进 git。`reception/` 是更早的民声试点，不再定义选材。
+
+## 赛题资料
 
 从 [aicomp.cn](https://www.aicomp.cn/) 保留算法主题赛中的 AI+开源，以及全大赛共用的章程、报名和宣传资料。
-
-弹幕清单和爬取脚本在 `danmaku/`。相关研究见 [research/README.md](research/README.md)。自己手里的人、数据和接口见 [资源清单.md](资源清单.md)。
-
-试点把一个类型里字面接近的弹幕收成几件事，铺在从片头到片尾的带子上。再拿另一个类型对齐：`python -m reception 甲.zip 乙.zip --out demo_out/reception`。余弦用已经装好的 scikit-learn，不另外下载模型。同义不同字先不并。
-
-弹幕当作民声时，只分析标题里点到公共事务的片子：`python -m reception.voice 甲.zip --out demo_out/voice`。前瞻和套话不进去。反复说下去的原话，就是以后服务要接住的方向。多支片子按同一件事并到一起：`python -m reception.depth 甲.zip 乙.zip --out demo_out/depth`。
 
 ## 保留范围
 
@@ -17,10 +25,11 @@
 
 ## 目录
 
+- `wenmai/`：码表、分析、可视化和报告
+- `danmaku/`：爬取脚本和热门视频清单
 - `data/catalog.json`：页面目录、联系方式、附件 URL
-- `data/markdown/`：正文
+- `data/markdown/`：赛题正文
 - `data/raw/`：原始 JSON
-- `data/attachments/_files/`：PDF、图片和宣传压缩包
 
 赛区组委会联系方式在官网是图片，本地文件为：
 
