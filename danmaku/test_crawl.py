@@ -105,6 +105,26 @@ class ScopeTests(unittest.TestCase):
         )
         self.assertFalse(
             video_in_scope(
+                "如何轻松游玩V社火爆新游死锁deadlock",
+                5000,
+                min_danmaku=500,
+                title_contains="社火",
+                title_any=None,
+                title_exclude=["死锁"],
+            )
+        )
+        self.assertFalse(
+            video_in_scope(
+                "两年画完全部宝可梦",
+                8000,
+                min_danmaku=1500,
+                title_contains="年画",
+                title_any=None,
+                title_exclude=["宝可梦"],
+            )
+        )
+        self.assertFalse(
+            video_in_scope(
                 "穿越剧的鼻祖寻秦记",
                 20000,
                 min_danmaku=2000,
