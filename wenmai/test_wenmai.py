@@ -24,6 +24,15 @@ class CodebookTests(unittest.TestCase):
         found = find_symbols("清明上河图")
         self.assertEqual([name for name, _ in found], ["清明上河图"])
 
+    def test_school_names_and_official_titles_are_not_classics(self):
+        self.assertEqual(find_symbols("中国地质大学发来慰问"), [])
+        self.assertEqual(find_symbols("兵部尚书不敢"), [])
+        self.assertEqual([name for name, _ in find_symbols("开篇就是《大学》")], ["《大学》"])
+        self.assertNotIn("观看体验", classify("爱的魔力转圈圈"))
+        self.assertNotIn("实践印证", classify("真·家里有矿"))
+        self.assertIn("文化符号提及", classify("我会背石鼓歌"))
+        self.assertIn("古今适配讨论", classify("古为今用，让年轻人了解这门手艺"))
+
     def test_rules_match_every_core_sentence(self):
         report = evaluation_report(ROOT / "wenmai" / "gold.json")
         self.assertEqual(report["rules_core"]["exact_match"], 1.0)

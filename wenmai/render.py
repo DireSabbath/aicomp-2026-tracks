@@ -588,7 +588,7 @@ footer {{ color:var(--muted); font-size:13px; margin-top:28px; }}
 </section>
 <section>
 <h2>文化符号</h2>
-<p class="note">点名器物、技艺、典籍、民俗、书画戏曲或文物遗址。长名称优先，所以「清明上河图」不会被当成「清明」。</p>
+<p class="note">点名器物、技艺、典籍、民俗、书画戏曲、文物遗址或人物。长名称优先，所以「清明上河图」不会被当成「清明」，「《大学》」也不会被学校名称里的「大学」带走。单独的「大学」「尚书」不收，避免把大学校名和兵部尚书算进典籍。</p>
 {_hbar(cat_rows)}
 {_hbar(symbol_rows[:16])}
 {_symbol_dims(summary)}
