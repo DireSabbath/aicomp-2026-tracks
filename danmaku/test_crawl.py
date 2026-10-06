@@ -1,6 +1,6 @@
 import unittest
 
-from crawl import bv_to_aid, decode_danmaku_segment, segment_count_from_view
+from crawl import bv_to_aid, decode_danmaku_segment, resolve_collection, segment_count_from_view
 
 
 def encode_varint(number: int) -> bytes:
@@ -50,6 +50,13 @@ class DecodeTests(unittest.TestCase):
         self.assertEqual([row["content"] for row in rows], ["???", "????"])
         self.assertEqual(rows[0]["progress_ms"], 40000)
         self.assertEqual(rows[1]["id"], 100)
+
+    def test_listed_collection_keeps_the_given_videos(self):
+        videos = resolve_collection(
+            None,
+            {"mid": 1, "list": "listed", "videos": [{"bvid": "BV1", "aid": 2, "title": "甲"}]},
+        )
+        self.assertEqual(videos, [{"bvid": "BV1", "aid": 2, "title": "甲"}])
 
     def test_segment_count(self):
         inner = encode_varint((2 << 3) | 0) + encode_varint(3)

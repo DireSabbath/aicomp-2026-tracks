@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import Counter
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -56,7 +57,29 @@ MATTER = (
     "虐待",
     "性侵",
     "拐卖",
+    "家暴",
+    "抢劫",
+    "盗窃",
+    "诈骗",
+    "受贿",
+    "霸凌",
+    "催收",
+    "酒驾",
+    "赌博",
+    "讨薪",
+    "房东",
+    "租客",
 )
+# 这些合集本身就是在讲案情。标题在发问、但没点到上面的词时，再从标题里取短词。
+LEGAL_POOLS = {"guo-criminal-3", "luoxiang-live"}
+ASK_MARKS = ("吗", "是否", "算不算", "该不该", "怎么办", "要不要", "怎么判")
+_CONTENT_STOP = {
+    "罗翔", "老师", "直播", "课堂", "如何", "为什么", "是不是", "该不该", "怎么办",
+    "凭什么", "到底", "算不算", "要不要", "怎么判", "是否", "一个", "我们", "你们",
+    "他们", "自己", "这个", "那个", "什么", "怎么", "还是", "就是", "可以", "不是",
+    "没有", "知道", "觉得", "真的", "已经", "现在", "一个", "一下", "因为", "所以",
+    "如果", "但是", "然后", "以及", "郭律", "郭庆梓", "律师", "视频", "弹幕",
+}
 RITUAL = {
     "老师好",
     "哈哈哈",
@@ -78,6 +101,29 @@ CHAIN = (
 )
 # 除掉事项词之后还要留下这么多字，才算把这件事说下去，而不是把标题又念了一遍。
 SAID = 4
+
+
+def content_keys(title: str) -> list[str]:
+    """标题在发问、又没有点到事项词时，留下标题里的短词。"""
+    parts = re.split(r"(?:吗|是否|算不算|该不该|怎么办|要不要|怎么判)|[^\u4e00-\u9fff]+", title)
+    found = []
+    for part in parts:
+        if not part or part in _CONTENT_STOP or not 2 <= len(part) <= 4:
+            continue
+        if part not in found:
+            found.append(part)
+        if len(found) >= 4:
+            break
+    return found
+
+
+def keys_for(title: str, pool: str = "") -> list[str]:
+    keys = public_keys(title)
+    if keys or pool not in LEGAL_POOLS:
+        return keys
+    if not any(mark in title for mark in ASK_MARKS):
+        return []
+    return content_keys(title)
 
 
 def public_keys(title: str) -> list[str]:
@@ -193,7 +239,7 @@ def build_voice(pools: list[Pool]) -> tuple[dict, dict]:
         passed = 0
         answers_n = 0
         for video in pool.videos:
-            keys = public_keys(video.title)
+            keys = keys_for(video.title, pool.title)
             if not keys:
                 continue
             passed += 1
