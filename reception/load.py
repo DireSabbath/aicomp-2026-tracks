@@ -70,7 +70,7 @@ def percent_in_film(progress_ms: int | None, page: int, parts: list[dict]) -> fl
     return position / total
 
 
-def _load_video(archive: zipfile.ZipFile, meta_name: str) -> Video:
+def _load_video(archive: zipfile.ZipFile, meta_name: str, skip_bad: bool = False) -> Video:
     meta = json.loads(archive.read(meta_name))
     data_name = meta_name[: -len(".meta.json")] + ".jsonl.gz"
     video = Video(bvid=meta["bvid"], title=meta.get("title") or meta["bvid"])
@@ -79,7 +79,13 @@ def _load_video(archive: zipfile.ZipFile, meta_name: str) -> Video:
     for line in raw.splitlines():
         if not line.strip():
             continue
-        item = json.loads(line)
+        try:
+            item = json.loads(line)
+        except json.JSONDecodeError:
+            if not skip_bad:
+                raise
+            video.skipped += 1
+            continue
         content = item.get("content") or ""
         norm = normalize(content)
         placed = percent_in_film(item.get("progress_ms"), int(item.get("page") or 1), parts)
@@ -98,11 +104,11 @@ def _load_video(archive: zipfile.ZipFile, meta_name: str) -> Video:
     return video
 
 
-def load_zip(path: Path, limit_videos: int | None = None) -> Pool:
+def load_zip(path: Path, limit_videos: int | None = None, skip_bad: bool = False) -> Pool:
     with zipfile.ZipFile(path) as archive:
         metas = sorted(name for name in archive.namelist() if name.endswith(".meta.json"))
         if limit_videos is not None:
             metas = metas[:limit_videos]
-        videos = [_load_video(archive, name) for name in metas]
+        videos = [_load_video(archive, name, skip_bad=skip_bad) for name in metas]
     folder = Path(metas[0]).parent.name if metas else path.stem
     return Pool(title=folder, videos=videos)
