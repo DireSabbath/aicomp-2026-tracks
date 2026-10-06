@@ -488,6 +488,8 @@ def resolve_collection(client: BilibiliClient, spec: dict) -> list[dict]:
                     spec["keyword"], mid, spec.get("title_contains"), spec.get("search_orders")
                 )
             )
+    elif mode == "listed":
+        videos.extend(spec.get("videos") or [])
     elif mode == "author_plus_search":
         videos.extend(client.author_collection_videos(mid))
         if spec.get("keyword"):

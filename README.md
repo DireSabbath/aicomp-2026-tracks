@@ -6,7 +6,7 @@
 
 试点把一个类型里字面接近的弹幕收成几件事，铺在从片头到片尾的带子上。再拿另一个类型对齐：`python -m reception 甲.zip 乙.zip --out demo_out/reception`。余弦用已经装好的 scikit-learn，不另外下载模型。同义不同字先不并。
 
-弹幕当作民声时，只分析标题里点到公共事务的片子：`python -m reception.voice 甲.zip --out demo_out/voice`。前瞻和套话不进去。反复说下去的原话，就是以后服务要接住的方向。
+弹幕当作民声时，只分析标题里点到公共事务的片子：`python -m reception.voice 甲.zip --out demo_out/voice`。前瞻和套话不进去。反复说下去的原话，就是以后服务要接住的方向。多支片子按同一件事并到一起：`python -m reception.depth 甲.zip 乙.zip --out demo_out/depth`。
 
 ## 保留范围
 
