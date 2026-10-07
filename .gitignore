@@ -4,3 +4,7 @@ __pycache__/
 data/attachments/_files/*.tmp
 danmaku_out/
 demo_out/
+silver.jsonl
+exemplars.jsonl
+*.npz
+_partial.json

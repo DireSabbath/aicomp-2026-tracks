@@ -14,8 +14,10 @@ from __future__ import annotations
 
 import argparse
 import gzip
+import html
 import json
 import math
+import re
 import sys
 import time
 import urllib.error
@@ -31,10 +33,58 @@ SEGMENT_MS = 360_000
 BV_ALPHABET = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF"
 BV_INDEX = [11, 10, 3, 8, 4, 6]
 BV_ADD = 8728348608
+
 BV_XOR = 177451812
+
+_TITLE_TAG = re.compile(r"<[^>]+>")
+
+
+def clean_title(title: str) -> str:
+    """Drop search highlight tags and decode HTML escapes."""
+    return html.unescape(_TITLE_TAG.sub("", title or "")).strip()
+
+
+def as_int(value) -> int:
+    if isinstance(value, bool) or value is None:
+        return 0
+    if isinstance(value, int):
+        return value
+    text = str(value).replace(",", "").strip()
+    if text.endswith("万"):
+        try:
+            return int(float(text[:-1]) * 10000)
+        except ValueError:
+            return 0
+    try:
+        return int(float(text))
+    except ValueError:
+        return 0
+
+
+def video_in_scope(
+    title: str,
+    danmaku_count: int,
+    *,
+    min_danmaku: int,
+    title_contains: str | None,
+    title_any: list[str] | None,
+    title_exclude: list[str] | None,
+) -> bool:
+    """Hot traditional-culture video rule. Title checks run on cleaned text."""
+    if as_int(danmaku_count) < int(min_danmaku):
+        return False
+    text = clean_title(title)
+    if title_contains and title_contains not in text:
+        return False
+    if title_any and not any(token and token in text for token in title_any):
+        return False
+    if title_exclude and any(token and token in text for token in title_exclude):
+        return False
+    return True
 
 
 class HttpError(RuntimeError):
+
     def __init__(self, code, url, body):
         super().__init__(f"HTTP {code} {url} {body[:120]!r}")
         self.code = code
@@ -232,6 +282,7 @@ class BilibiliClient:
         rows = []
         seen = set()
         parts = []
+        timeline_offset = 0
         for page in pages:
             cid = page["cid"]
             duration = int(page.get("duration") or 0)
@@ -273,10 +324,12 @@ class BilibiliClient:
                     seen.add(key)
                     row["cid"] = cid
                     row["page"] = page.get("page")
+                    row["timeline_ms"] = (row["progress_ms"] or 0) + timeline_offset
                     rows.append(row)
                     part_count += 1
             parts.append({"cid": cid, "page": page.get("page"), "duration": duration, "segments": total, "count": part_count})
-        rows.sort(key=lambda item: (item["progress_ms"] or 0, item["id"] or 0))
+            timeline_offset += duration * 1000
+        rows.sort(key=lambda item: ((item.get("timeline_ms") if item.get("timeline_ms") is not None else item["progress_ms"]) or 0, item["id"] or 0))
         return rows, {"aid": aid, "parts": parts, "count": len(rows)}
 
     def season_videos(self, mid: int, season_id: int) -> list[dict]:
@@ -411,7 +464,78 @@ class BilibiliClient:
             print(f"  search {keyword} {order} pages {page - 1} matched {len(found)}", flush=True)
         return list(found.values())
 
+
+    def search_hot(
+        self,
+        keyword: str,
+        min_danmaku: int,
+        title_contains: str | None = None,
+        title_any: list[str] | None = None,
+        title_exclude: list[str] | None = None,
+        max_pages: int = 50,
+    ) -> list[dict]:
+        """Videos ordered by on-page danmaku count, filtered by the scope rule.
+
+        Stops when a page's first hit falls below ``min_danmaku`` because the
+        search order is danmaku-descending. Title filtering does not stop early.
+        """
+        found = {}
+        page = 1
+        while page <= max_pages:
+            try:
+                data = self.get_ok(
+                    "https://api.bilibili.com/x/web-interface/search/type?"
+                    + urllib.parse.urlencode(
+                        {
+                            "search_type": "video",
+                            "keyword": keyword,
+                            "order": "dm",
+                            "page": page,
+                            "page_size": 20,
+                        }
+                    ),
+                    "https://search.bilibili.com",
+                    f"hot {keyword} page {page}",
+                )
+            except Exception as exc:
+                print(f"  hot {keyword} page {page} fail {exc}", flush=True)
+                break
+            result = (data.get("data") or {}).get("result") or []
+            if not isinstance(result, list) or not result:
+                break
+            if as_int(result[0].get("danmaku")) < int(min_danmaku):
+                break
+            for item in result:
+                count = as_int(item.get("danmaku"))
+                title = item.get("title") or ""
+                if not video_in_scope(
+                    title,
+                    count,
+                    min_danmaku=min_danmaku,
+                    title_contains=title_contains,
+                    title_any=title_any,
+                    title_exclude=title_exclude,
+                ):
+                    continue
+                bvid = item.get("bvid")
+                if not bvid or not str(bvid).startswith("BV"):
+                    continue
+                found[bvid] = {
+                    "bvid": bvid,
+                    "aid": item.get("aid"),
+                    "title": clean_title(title),
+                    "duration": item.get("duration"),
+                    "danmaku_counter": count,
+                    "play": as_int(item.get("play")),
+                    "mid": item.get("mid"),
+                    "author": item.get("author") or "",
+                }
+            page += 1
+        print(f"  hot {keyword} pages {page - 1} kept {len(found)}", flush=True)
+        return list(found.values())
+
     def author_collection_videos(self, mid: int) -> list[dict]:
+
         """Every video inside the author's seasons and series."""
         videos: list[dict] = []
         page_num = 1
@@ -454,7 +578,54 @@ class BilibiliClient:
         return (data.get("data") or {}).get("archive_count")
 
 
+
+def prune_hot_videos(videos: list[dict], spec: dict) -> list[dict]:
+    """Apply the saved title rules again, so a resumed list picks up tighter excludes."""
+    exclude = [token for token in (spec.get("title_exclude") or []) if token]
+    queries = {item["keyword"]: item for item in spec.get("queries") or []}
+    kept = []
+    for video in videos:
+        title = video.get("title") or ""
+        if any(token in title for token in exclude):
+            continue
+        query = queries.get(video.get("query") or "")
+        if query:
+            contains = query.get("title_contains") or query.get("keyword")
+            if contains and contains not in title:
+                continue
+            any_of = [token for token in (query.get("title_any") or []) if token]
+            extra_exclude = [token for token in (query.get("title_exclude") or []) if token]
+            if any_of and not any(token in title for token in any_of):
+                continue
+            if any(token in title for token in extra_exclude):
+                continue
+        kept.append(video)
+    return kept
+
+
+def merge_hot(videos: list[dict]) -> list[dict]:
+    """One row per video. The first query keeps the carrier group."""
+    merged = {}
+    order = []
+    for video in videos:
+        bvid = video["bvid"]
+        if bvid not in merged:
+            row = dict(video)
+            query = video.get("query")
+            row["queries"] = [query] if query else []
+            merged[bvid] = row
+            order.append(bvid)
+            continue
+        query = video.get("query")
+        if query and query not in merged[bvid]["queries"]:
+            merged[bvid]["queries"].append(query)
+    rows = [merged[bvid] for bvid in order]
+    rows.sort(key=lambda item: int(item.get("danmaku_counter") or 0), reverse=True)
+    return rows
+
+
 def dedupe(videos: list[dict]) -> list[dict]:
+
     found = {}
     for video in videos:
         found[video["bvid"]] = {**found.get(video["bvid"], {}), **video}
@@ -462,8 +633,8 @@ def dedupe(videos: list[dict]) -> list[dict]:
 
 
 def resolve_collection(client: BilibiliClient, spec: dict) -> list[dict]:
-    mid = int(spec["mid"])
     mode = spec["list"]
+    mid = int(spec["mid"]) if spec.get("mid") not in (None, "") else 0
     videos: list[dict] = []
     if mode == "season":
         videos.extend(client.season_videos(mid, int(spec["season_id"])))
@@ -498,6 +669,52 @@ def resolve_collection(client: BilibiliClient, spec: dict) -> list[dict]:
                     spec["keyword"], mid, spec.get("title_contains"), spec.get("search_orders")
                 )
             )
+
+    elif mode == "hot_search":
+        groups = spec.get("groups") or {}
+        exclude = list(spec.get("title_exclude") or [])
+        default_min = int(spec.get("min_danmaku") or 0)
+        max_pages = int(spec.get("max_pages") or 50)
+        queries = list(spec.get("queries") or [])
+        checkpoint = Path(spec["_checkpoint"]) if spec.get("_checkpoint") else None
+        done = set()
+        if checkpoint and checkpoint.exists() and spec.get("_resume"):
+            saved = json.loads(checkpoint.read_text(encoding="utf-8"))
+            videos.extend(saved.get("videos") or [])
+            done = set(saved.get("done") or [])
+            print(f"  resume {len(done)} queries, {len(videos)} rows", flush=True)
+        for index, query in enumerate(queries):
+            if index in done:
+                continue
+            keyword = query["keyword"]
+            rows = client.search_hot(
+                keyword,
+                int(query.get("min_danmaku") or default_min),
+                query.get("title_contains") or keyword,
+                query.get("title_any"),
+                exclude + list(query.get("title_exclude") or []),
+                int(query.get("max_pages") or max_pages),
+            )
+            group = query.get("group")
+            for row in rows:
+                row["group"] = group
+                row["group_title"] = groups.get(group, group)
+                row["query"] = keyword
+            videos.extend(rows)
+            done.add(index)
+            if checkpoint:
+                checkpoint.parent.mkdir(parents=True, exist_ok=True)
+                checkpoint.write_text(
+                    json.dumps({"done": sorted(done), "videos": videos}, ensure_ascii=False),
+                    encoding="utf-8",
+                )
+            print(f"  checkpoint {index + 1}/{len(queries)} {keyword} rows {len(videos)}", flush=True)
+        videos = prune_hot_videos(merge_hot(videos), spec)
+        print(
+            f"  hot_search {spec.get('id')} videos {len(videos)}",
+            flush=True,
+        )
+        return videos
     else:
         raise SystemExit(f"unknown list mode {mode}")
     return dedupe(videos)
@@ -516,10 +733,17 @@ def crawl_collection(
     out_dir: Path,
     limit: int | None,
     preset: list[dict] | None = None,
+    shard_count: int = 1,
+    shard_index: int = 0,
 ) -> dict:
     videos = list(preset) if preset is not None else resolve_collection(client, spec)
+    if preset is not None and spec.get("list") == "hot_search":
+        videos = prune_hot_videos(videos, spec)
     if limit is not None:
         videos = videos[:limit]
+    if shard_count > 1:
+        videos = [video for index, video in enumerate(videos) if index % shard_count == shard_index]
+        print(f"[{spec['id']}] shard {shard_index}/{shard_count} videos {len(videos)}", flush=True)
     folder = out_dir / spec["id"]
     folder.mkdir(parents=True, exist_ok=True)
     done = []
@@ -548,6 +772,9 @@ def crawl_collection(
             "parts": info["parts"],
             "file": str(target.relative_to(out_dir)),
         }
+        for key in ("group", "group_title", "query", "queries", "danmaku_counter", "author", "play", "mid"):
+            if video.get(key) not in (None, "", []):
+                meta[key] = video.get(key)
         marker.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
         done.append(meta)
     summary = {
@@ -560,7 +787,23 @@ def crawl_collection(
         "saved": len(done),
         "danmaku": sum(item["count"] for item in done),
         "failures": failures,
-        "videos": [{k: item[k] for k in ("bvid", "aid", "title", "count")} for item in done],
+        "videos": [
+            {
+                key: item[key]
+                for key in (
+                    "bvid",
+                    "aid",
+                    "title",
+                    "count",
+                    "group",
+                    "group_title",
+                    "query",
+                    "danmaku_counter",
+                )
+                if key in item
+            }
+            for item in done
+        ],
     }
     (folder / "_collection.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
@@ -578,6 +821,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--limit", type=int, default=None, help="每个合集最多爬多少条视频")
     parser.add_argument("--list-only", action="store_true")
     parser.add_argument("--refresh-list", action="store_true", help="忽略已保存的视频清单，重新向接口要列表")
+    parser.add_argument("--shard-count", type=int, default=1, help="把清单按顺序切成几份并行拉")
+    parser.add_argument("--shard-index", type=int, default=0, help="当前进程负责哪一份，从 0 开始")
     args = parser.parse_args(argv)
     client = BilibiliClient(args.delay)
     args.out.mkdir(parents=True, exist_ok=True)
@@ -601,12 +846,19 @@ def main(argv: list[str] | None = None) -> int:
     summaries = []
     for spec in specs:
         if args.list_only:
-            videos = resolve_collection(client, spec)
             folder = args.out / spec["id"]
             folder.mkdir(parents=True, exist_ok=True)
+            if spec.get("list") == "hot_search":
+                spec = dict(spec)
+                spec["_checkpoint"] = str(folder / "_partial.json")
+                spec["_resume"] = True
+            videos = resolve_collection(client, spec)
             (folder / "_videos.json").write_text(
                 json.dumps(videos, ensure_ascii=False, indent=2), encoding="utf-8"
             )
+            partial = folder / "_partial.json"
+            if partial.exists():
+                partial.unlink()
             print(f"{spec['id']}\t{len(videos)}\t{spec.get('title')}", flush=True)
             summaries.append({"id": spec["id"], "title": spec.get("title"), "listed": len(videos)})
             continue
@@ -615,13 +867,23 @@ def main(argv: list[str] | None = None) -> int:
         if saved.exists() and not args.refresh_list:
             preset = json.loads(saved.read_text(encoding="utf-8"))
             print(f"[{spec['id']}] 使用已保存清单 {len(preset)} 条", flush=True)
-        summaries.append(crawl_collection(client, spec, args.out, args.limit, preset))
+        summaries.append(
+            crawl_collection(
+                client,
+                spec,
+                args.out,
+                args.limit,
+                preset,
+                shard_count=args.shard_count,
+                shard_index=args.shard_index,
+            )
+        )
     if args.list_only:
         summaries = manifest_from_lists(args.out, all_specs)
     manifest = {
         "source": "https://api.bilibili.com/x/v2/dm/web/seg.so",
         "scope": "播放器当前公开弹幕池的全部分段。页面上的累计数可以更大。",
-        "fields": ["id", "progress_ms", "mode", "content", "ctime", "cid", "page"],
+        "fields": ["id", "progress_ms", "timeline_ms", "mode", "content", "ctime", "cid", "page"],
         "omitted": ["midHash"],
         "collections": summaries,
     }
