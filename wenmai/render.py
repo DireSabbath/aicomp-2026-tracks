@@ -603,6 +603,182 @@ def _symbol_dims(summary: dict) -> str:
     return "".join(parts)
 
 
+def _support_table(summary: dict) -> str:
+    support = summary.get("support") or {}
+    dimensions = support.get("dimensions") or []
+    codes = [
+        item
+        for item in (support.get("codes") or [])
+        if item.get("count", 0) < 800 or item.get("top_share", 0) >= 0.2
+    ]
+    if not dimensions and not codes:
+        return ""
+    dim_rows = "".join(
+        "<tr><td>{}</td><td>{}</td><td>{}</td></tr>".format(
+            _esc(item["dimension"]),
+            f"{item['count']:,}",
+            item["dominant_videos"],
+        )
+        for item in dimensions
+    )
+    code_rows = "".join(
+        "<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(
+            _esc(item["code"]),
+            f"{item['count']:,}",
+            item["videos"],
+            f"{item['top_share']:.0%}",
+        )
+        for item in sorted(codes, key=lambda item: item["count"])
+    )
+    return f"""
+<h3>一级维度有没有成为某支片子的占优维</h3>
+<table class="plain"><thead><tr><th>维度</th><th>条数</th><th>以它为占优维的片子</th></tr></thead><tbody>{dim_rows}</tbody></table>
+<h3>条数少，或头部片子占比高的二级类</h3>
+<table class="plain"><thead><tr><th>类别</th><th>条数</th><th>出现的视频</th><th>头部占比</th></tr></thead><tbody>{code_rows}</tbody></table>
+"""
+
+
+def _bindings_table(summary: dict) -> str:
+    rows = summary.get("symbol_bindings") or []
+    picked = [item for item in rows if item.get("bound")]
+    picked.sort(key=lambda item: item["lift"][item["bound"]], reverse=True)
+    intro = (
+        f"<p class='note'>点名不少于 20 次的符号有 {len(rows)} 个，"
+        f"其中 {len(picked)} 个绑在知识认知以外的维度上。倍数是相对其他符号点名。</p>"
+    )
+    if not rows:
+        return "<p class='empty'>还没有足够多次的符号点名。</p>"
+    if not picked:
+        return intro + "<p class='empty'>没有符号同时跨过 1.3 倍和 8 条。</p>"
+    body = []
+    for item in picked:
+        dim = item["bound"]
+        body.append(
+            "<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{:.2f}</td></tr>".format(
+                _esc(item["name"]),
+                f"{item['count']:,}",
+                _esc(dim),
+                f"{item['by_dimension'].get(dim, 0):,}",
+                item["lift"][dim],
+            )
+        )
+    return (
+        intro
+        + "<table class='plain'><thead><tr><th>符号</th><th>点名条数</th><th>同一条绑在</th>"
+        "<th>同时落入该维</th><th>相对其他符号点名</th></tr></thead><tbody>"
+        + "".join(body)
+        + "</tbody></table>"
+    )
+
+
+def _gap_chart(summary: dict) -> str:
+    gap = summary.get("rule_gap") or {}
+    counts = gap.get("by_code") or {}
+    if not gap.get("sample_n"):
+        return "<p class='empty'>这批池子里还没有留出未编码抽样。</p>"
+    rows = []
+    for code, count in counts.items():
+        if count:
+            rows.append((code, count, DIM_COLOR.get(_dim_of(summary, code), "#333")))
+    rows.sort(key=lambda item: item[1], reverse=True)
+    note = (
+        f"<p class='note'>抽样 {gap['sample_n']:,} 条，模型标中 {gap.get('fired_n', 0):,} 条。"
+        "训练用了团队自写句和其余银标，这批句子本身没有参与训练。原文不在这页上。</p>"
+    )
+    return note + (_hbar(rows[:12]) if rows else "<p class='empty'>这批抽样里模型没有额外标出类别。</p>")
+
+
+def _video_section(summary: dict) -> str:
+    cards = summary.get("video_cards") or []
+    if not cards:
+        return ""
+    payload = []
+    for card in cards:
+        payload.append(
+            {
+                "bvid": card.get("bvid") or "",
+                "title": card.get("title") or "",
+                "group": card.get("group_title") or "",
+                "danmaku": int(card.get("danmaku") or 0),
+                "coded": int(card.get("coded") or 0),
+                "empty": bool(card.get("empty")),
+                "dominant": card.get("dominant") or "",
+                "by_dimension": card.get("by_dimension") or {},
+                "lift": {
+                    dim: (None if value is None else round(float(value), 2))
+                    for dim, value in (card.get("lift") or {}).items()
+                },
+                "symbols": card.get("symbols") or [],
+            }
+        )
+    data = json.dumps(
+        {"cards": payload, "dimensions": summary.get("dimensions") or []},
+        ensure_ascii=False,
+    ).replace("<", "\\u003c")
+    return f"""
+<section id="video">
+<h2>按一支片子读</h2>
+<p class="note">每支片子的方向是它自己的六维构成，抬升是相对它所在的载体，不是相对全库。空池会直接写明现在没有可编码的弹幕。符号只列词表里的名字。</p>
+<input id="video-q" class="search" type="search" placeholder="输入片名或 BV 号">
+<div id="video-list"></div>
+<div id="video-detail" class="detail">先从上面选一支片子。</div>
+</section>
+<script>
+const VIDEO = {data};
+(function () {{
+  const input = document.getElementById("video-q");
+  const list = document.getElementById("video-list");
+  const detail = document.getElementById("video-detail");
+  if (!input || !VIDEO.cards) return;
+  function line(text) {{
+    const node = document.createElement("p");
+    node.textContent = text;
+    return node;
+  }}
+  function show(card) {{
+    detail.replaceChildren();
+    const title = document.createElement("strong");
+    title.textContent = card.title;
+    detail.appendChild(title);
+    if (card.empty) {{
+      detail.appendChild(line(card.group + "。当前池是空的，没有可编码的弹幕。"));
+      return;
+    }}
+    detail.appendChild(line(card.group + "。弹幕 " + card.danmaku + " 条，已编码 " + card.coded + " 条。占优维是" + (card.dominant || "没有") + "。"));
+    const parts = VIDEO.dimensions.map(function (dim) {{
+      const count = (card.by_dimension && card.by_dimension[dim]) || 0;
+      const lift = card.lift ? card.lift[dim] : null;
+      return dim + " " + count + (lift == null ? "" : "，相对该组 " + Number(lift).toFixed(2) + " 倍");
+    }});
+    detail.appendChild(line(parts.join("；")));
+    if (card.symbols && card.symbols.length) {{
+      detail.appendChild(line("点到的符号：" + card.symbols.map(function (item) {{ return item.name + " " + item.count; }}).join("、")));
+    }} else {{
+      detail.appendChild(line("没有点到词表里的符号。"));
+    }}
+  }}
+  function renderList() {{
+    const query = input.value.trim();
+    const hits = VIDEO.cards.filter(function (card) {{
+      return !query || card.title.indexOf(query) >= 0 || card.bvid.indexOf(query) >= 0;
+    }}).slice(0, 8);
+    list.replaceChildren();
+    hits.forEach(function (card) {{
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "match";
+      button.textContent = (card.empty ? "空池 · " : "") + card.group + " · " + card.title;
+      button.addEventListener("click", function () {{ show(card); }});
+      list.appendChild(button);
+    }});
+  }}
+  input.addEventListener("input", renderList);
+  renderList();
+}})();
+</script>
+"""
+
+
 def render(summary: dict) -> str:
     dims = summary.get("dimensions") or []
     codes = summary.get("codes") or []
@@ -722,6 +898,11 @@ dd {{ margin:0; color:var(--muted); }}
 .chip {{ background:#fffdf8; border:1px solid var(--line); padding:4px 8px; }}
 .chip small {{ color:var(--muted); margin-left:6px; }}
 .warn {{ background:#fff4e8; border:1px solid #e2c39a; padding:8px 12px; }}
+input.search {{ width:100%; max-width:36em; padding:8px 10px; border:1px solid var(--line); background:#fffdf8; font:inherit; }}
+.match {{ display:block; width:100%; text-align:left; background:#fffdf8; border:1px solid var(--line); margin-top:-1px; padding:6px 10px; font:inherit; cursor:pointer; }}
+.detail {{ background:#fffdf8; border:1px solid var(--line); padding:12px 14px; margin-top:12px; }}
+table.plain {{ border-collapse:collapse; width:100%; background:#fffdf8; margin:0 0 14px; }}
+table.plain th, table.plain td {{ border:1px solid var(--line); padding:6px 8px; text-align:left; }}
 footer {{ color:var(--muted); font-size:13px; margin-top:28px; }}
 .hit {{ cursor:pointer; }}
 .empty {{ color:var(--muted); }}
@@ -776,7 +957,23 @@ footer {{ color:var(--muted); font-size:13px; margin-top:28px; }}
 <p class="note">从未编码、也不是纯笑声的句子里抽二字，再看某一组比其余组高多少个标准误。功能词已去掉。z 大于 2、该组至少 12 次、至少出现在 8 支视频里，并且单支视频不超过一半，才留下。一支片子反复刷的口令不会占满这一组。这是两组比例差，不是主题模型，也不把这些词补进十七类。</p>
 {_group_words(summary)}
 </section>
+<section id="gap">
+<h2>规则没标、模型标了</h2>
+<p class="note">只看规则没有落入十七类、并且没有拿去训练的那一批。字符模型用团队自写句加上其余银标来训。这里的次数是模型多标，不是人工金标，也不据此改码表，除非说法本身站得住并且核心句精确匹配仍为 1。</p>
+{_gap_chart(summary)}
+</section>
+<section id="binding">
+<h2>点名某个符号时，同一条落在哪一维</h2>
+<p class="note">点名本身就会落入知识认知，所以对照不是全库，而是所有点到符号的弹幕。倍数不低于 1.3、且该维至少 8 条，才算这个名字额外绑在知识认知以外的某一维上。至少 20 次点名才进入计算。</p>
+{_bindings_table(summary)}
+</section>
+<section id="support">
+<h2>稀有类的支撑</h2>
+<p class="note">条数少，或没有一支片子以这一维为占优维，都不能读成观众没有这个想法。头部占比高时，这个数主要来自少数片子。</p>
+{_support_table(summary)}
+</section>
 {starfield_section(summary)}
+{_video_section(summary)}
 <section>
 <h2>一级维度</h2>
 <p class="note">一条弹幕只要命中该维下的任一二级类，这一维就记 1 次。六个数相加可以大于已编码条数。</p>

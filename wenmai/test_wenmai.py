@@ -9,9 +9,15 @@ from collections import Counter
 from wenmai.analyze import analyze, fightin_words
 from wenmai.classify import classify, find_symbols
 from wenmai.codebook import CODE_NAMES, DIMENSIONS
-from wenmai.model import evaluation_report, fit_char_model, template_examples
+from wenmai.model import (
+    evaluation_report,
+    fit_char_model,
+    rule_gap_counts,
+    template_examples,
+    thresholds_from_scores,
+)
 from wenmai.render import render
-from wenmai.train_gpu import build_parser, main as gpu_main
+from wenmai.train_gpu import GPU_NOTE, build_parser, main as gpu_main
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -34,6 +40,11 @@ class CodebookTests(unittest.TestCase):
         self.assertNotIn("实践印证", classify("真·家里有矿"))
         self.assertIn("文化符号提及", classify("我会背石鼓歌"))
         self.assertIn("古今适配讨论", classify("古为今用，让年轻人了解这门手艺"))
+        self.assertIn("制作认可", classify("这期讲得真好"))
+        self.assertIn("古今共情", classify("古代人也太厉害了"))
+        self.assertEqual(classify("有字幕不错"), {"观看体验"})
+        self.assertEqual([name for name, _ in find_symbols("千里江山图")], ["千里江山图"])
+        self.assertEqual([name for name, _ in find_symbols("这幅千里江山")], ["千里江山"])
 
     def test_rules_match_every_core_sentence(self):
         report = evaluation_report(ROOT / "wenmai" / "gold.json")
@@ -137,6 +148,13 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual(len(summary["video_stars"]), 1)
             self.assertEqual(summary["video_stars"][0]["dominant"], "知识认知")
             self.assertIn("六维星图", page)
+            self.assertIn("按一支片子读", page)
+            self.assertIn("规则没标、模型标了", page)
+            self.assertIn("稀有类的支撑", page)
+            self.assertEqual(len(summary["video_cards"]), 1)
+            self.assertIn("rule_gap", summary)
+            self.assertNotIn("text", summary["rule_gap"])
+            self.assertIn("support", summary)
             codes = summary["codes"]
             left = codes.index("制作认可")
             right = codes.index("文化符号提及")
@@ -215,6 +233,62 @@ class PipelineTests(unittest.TestCase):
             ["--data", str(ROOT / "wenmai" / "sample_silver.jsonl"), "--out", "/tmp/wenmai-gpu-unused", "--check"]
         )
         self.assertEqual(code, 0)
+
+    def test_rule_gap_counts_do_not_keep_the_sentence(self):
+        import numpy as np
+
+        gap = rule_gap_counts(lambda text: {"学习意愿"} if "想学" in text else set(), ["想学这门手艺", "哈哈"])
+        self.assertEqual(gap["sample_n"], 2)
+        self.assertEqual(gap["fired_n"], 1)
+        self.assertEqual(gap["by_code"]["学习意愿"], 1)
+        self.assertNotIn("想学这门手艺", json.dumps(gap, ensure_ascii=False))
+        matrix = np.array([[0.9, 0.1], [0.2, 0.8], [0.05, 0.1]], dtype=np.float32)
+        targets = np.array([[1, 0], [0, 1], [0, 0]], dtype=np.int8)
+        thresholds = thresholds_from_scores(matrix, targets)
+        self.assertAlmostEqual(float(thresholds[0]), 0.25)
+        self.assertGreaterEqual(float(thresholds[1]), 0.15)
+        self.assertIn("不是从弹幕里抽出来的人工金标", GPU_NOTE)
+
+    def test_empty_pool_card_and_symbol_binding(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            corpus = root / "pool"
+            corpus.mkdir()
+            coded = {"id": 1, "progress_ms": 1000, "timeline_ms": 1000, "content": "后母戊鼎画面质感拉满"}
+            with gzip.open(corpus / "BV1FULL.jsonl.gz", "wt", encoding="utf-8") as handle:
+                for index in range(20):
+                    row = dict(coded)
+                    row["id"] = index
+                    handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+            (corpus / "BV1FULL.meta.json").write_text(json.dumps({"parts": [{"duration": 60}]}), encoding="utf-8")
+            with gzip.open(corpus / "BV1EMPTY.jsonl.gz", "wt", encoding="utf-8") as handle:
+                handle.write("")
+            (corpus / "BV1EMPTY.meta.json").write_text(json.dumps({"parts": [{"duration": 30}]}), encoding="utf-8")
+            listing = root / "_videos.json"
+            listing.write_text(
+                json.dumps(
+                    [
+                        {"bvid": "BV1FULL", "title": "有字幕", "group": "museum", "group_title": "文物博物馆"},
+                        {"bvid": "BV1EMPTY", "title": "空池片", "group": "museum", "group_title": "文物博物馆"},
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            summary = analyze(corpus, listing, root / "out")
+            cards = {card["bvid"]: card for card in summary["video_cards"]}
+            self.assertTrue(cards["BV1EMPTY"]["empty"])
+            self.assertEqual(cards["BV1EMPTY"]["danmaku"], 0)
+            self.assertIsNone(cards["BV1EMPTY"]["lift"]["知识认知"])
+            self.assertFalse(cards["BV1FULL"]["empty"])
+            self.assertEqual(cards["BV1FULL"]["symbols"][0]["name"], "后母戊鼎")
+            self.assertAlmostEqual(cards["BV1FULL"]["lift"]["知识认知"], 1.0)
+            names = [item["name"] for item in summary["symbol_bindings"]]
+            self.assertIn("后母戊鼎", names)
+            page = render(summary)
+            self.assertIn("空池片", page)
+            self.assertNotIn("后母戊鼎画面质感拉满", page)
+            self.assertIn("相对其他符号点名", page)
+            self.assertNotIn("是全库该维密度", "".join(summary.get("findings") or []))
 
 
 if __name__ == "__main__":

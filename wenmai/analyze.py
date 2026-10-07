@@ -14,6 +14,7 @@ from wenmai.model import (
     evaluation_report,
     fit_char_model,
     public_metrics,
+    rule_gap_counts,
     stable_hash,
 )
 
@@ -310,6 +311,50 @@ def findings(summary: dict) -> list[str]:
         lines.append(
             f"去掉单片口令之后，未编码残差里，{title}相对其余组更突出的是「{gram}」。这是用词差别，不是新的类别。"
         )
+    gap = summary.get("rule_gap") or {}
+    gap_codes = gap.get("by_code") or {}
+    if gap.get("sample_n") and gap.get("fired_n") and gap_codes:
+        top_gap = max(gap_codes, key=gap_codes.get)
+        if gap_codes[top_gap]:
+            lines.append(
+                f"在 {gap['sample_n']:,} 条规则没编码、也没拿去训练的弹幕上，"
+                f"字符模型另外标中 {gap['fired_n']:,} 条。最多的是{top_gap}"
+                f"（{gap_codes[top_gap]:,} 次）。这是模型多标，不是人工金标。"
+            )
+    bindings = summary.get("symbol_bindings") or []
+    bound = [
+        item
+        for item in bindings
+        if item.get("bound") and item.get("count", 0) >= 40
+    ]
+    if bound:
+        item = max(bound, key=lambda row: row["lift"][row["bound"]])
+        dim = item["bound"]
+        lines.append(
+            f"点名「{item['name']}」的 {item['count']:,} 条里，"
+            f"有 {item['by_dimension'][dim]:,} 条同时落在{dim}，"
+            f"是其他点到符号的弹幕里该维密度的 {item['lift'][dim]:.2f} 倍。"
+        )
+    lonely = []
+    for item in (summary.get("support") or {}).get("dimensions") or []:
+        if item.get("count") and item.get("dominant_videos") == 0:
+            lonely.append(item)
+    if lonely:
+        item = min(lonely, key=lambda row: row["count"])
+        lines.append(
+            f"{item['dimension']}有 {item['count']:,} 条，没有一支片子以它为占优维。"
+            "稀少不能读成观众没有这个想法。"
+        )
+    headed = []
+    for item in (summary.get("support") or {}).get("codes") or []:
+        if item.get("count", 0) >= 20 and item.get("top_share", 0) >= 0.2:
+            headed.append(item)
+    if headed:
+        item = max(headed, key=lambda row: row["top_share"])
+        lines.append(
+            f"{item['code']}有 {item['count']:,} 条，其中 {item['top_share']:.0%} 来自同一支视频。"
+            "读这一类时要带着头部占比。"
+        )
     if summary.get("pending"):
         lines.append(f"清单里还有 {summary['pending']} 个视频尚未落盘，以上只覆盖已经拉到的部分。")
     return lines
@@ -340,7 +385,6 @@ def _agreement(pos: dict[str, Reservoir], neg: Reservoir) -> dict | None:
     from wenmai.model import score_sets
 
     report = score_sets(gold, pred)
-    report.pop("per_code", None)
     model_only = Counter()
     rule_only = Counter()
     for gold_set, pred_set in zip(gold, pred):
@@ -355,6 +399,27 @@ def _agreement(pos: dict[str, Reservoir], neg: Reservoir) -> dict | None:
         "model_only": {code: model_only[code] for code in CODE_NAMES},
         "rule_only": {code: rule_only[code] for code in CODE_NAMES},
     }
+
+
+def _rule_gap(pos: dict[str, Reservoir], neg: Reservoir, gap_texts: list[str]) -> dict:
+    """自写句加银标训练，再在另一批未编码弹幕上数模型多标的类。"""
+    if not gap_texts:
+        return rule_gap_counts(lambda _text: set(), [])
+    from wenmai.model import template_examples
+
+    held_out = set(gap_texts)
+    train = list(template_examples())
+    for code, bucket in pos.items():
+        for text in bucket.items:
+            if text in held_out:
+                continue
+            train.append((text, set(classify(text))))
+    for text in neg.items:
+        if text in held_out:
+            continue
+        train.append((text, set()))
+    model = fit_char_model(train, epochs=6)
+    return rule_gap_counts(model.predict, gap_texts)
 
 
 def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
@@ -392,6 +457,9 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
     mode_dim = {dim: Counter() for dim in DIM_NAMES}
     hours = {"coded": [0] * 24, "other": [0] * 24}
     symbol_dim: dict[str, Counter] = {}
+    symbol_bind: dict[str, Counter] = {}
+    symbol_base = Counter()
+    symbol_mentions = 0
     dim_index = {dim: index for index, dim in enumerate(DIM_NAMES)}
     transitions = [[0 for _ in DIM_NAMES] for _ in DIM_NAMES]
     danmaku = 0
@@ -399,6 +467,8 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
     multi = 0
     empty_pools = 0
     video_stars: list[dict] = []
+    video_cards: list[dict] = []
+    gap = Reservoir(1500)
 
     for video in videos:
         rows = _video_rows(video["path"])
@@ -429,6 +499,7 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
         local_code = {code: [0] * BURST_BINS for code in CODE_NAMES}
         local_coded = 0
         video_grams: Counter = Counter()
+        video_symbols: Counter = Counter()
         q_at: dict[int, int] = {}
         s_at: dict[int, int] = {}
         if not rows:
@@ -499,11 +570,28 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
                         residue[gram] += 1
                         local_residue[gram] += 1
                         video_grams[gram] += 1
-                if len(text.strip()) >= 2:
+                stripped = text.strip()
+                if (
+                    not _is_laugh(text)
+                    and 4 <= len(stripped) <= 40
+                    and stable_hash("gap:" + text) % 8 == 0
+                ):
+                    gap.add(text)
+                elif len(stripped) >= 2:
                     neg.add(text)
+            if symbols:
+                symbol_mentions += 1
+                if hits:
+                    for dim in dims:
+                        symbol_base[dim] += 1
             for name, category in symbols:
                 symbol_count[name] += 1
                 symbol_of[name] = category
+                video_symbols[name] += 1
+                if hits:
+                    bound = symbol_bind.setdefault(name, Counter())
+                    for dim in dims:
+                        bound[dim] += 1
             for category in {category for _, category in symbols}:
                 symbol_cat[category] += 1
             if hits:
@@ -539,16 +627,32 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
             for value in bins:
                 if value >= 3 and value >= 3 * mean:
                     bursts[code] += 1
+        counts = {dim: sum(local_dim[dim]) for dim in DIM_NAMES}
+        dominant = max(DIM_NAMES, key=lambda dim: counts[dim]) if any(counts.values()) else ""
+        card = {
+            "bvid": video["bvid"],
+            "title": titles[video["bvid"]],
+            "group": group,
+            "group_title": bucket["title"],
+            "danmaku": len(rows),
+            "coded": local_coded,
+            "empty": not rows,
+            "by_dimension": counts,
+            "dominant": dominant,
+            "symbols": [
+                {"name": name, "count": count}
+                for name, count in video_symbols.most_common(3)
+            ],
+        }
+        video_cards.append(card)
         if rows:
-            counts = {dim: sum(local_dim[dim]) for dim in DIM_NAMES}
-            dominant = max(DIM_NAMES, key=lambda dim: counts[dim]) if any(counts.values()) else ""
             video_stars.append(
                 {
-                    "bvid": video["bvid"],
-                    "title": titles[video["bvid"]],
+                    "bvid": card["bvid"],
+                    "title": card["title"],
                     "group": group,
-                    "group_title": bucket["title"],
-                    "danmaku": len(rows),
+                    "group_title": card["group_title"],
+                    "danmaku": card["danmaku"],
                     "coded": local_coded,
                     "by_dimension": counts,
                     "dominant": dominant,
@@ -589,6 +693,40 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
             video_counts=group_residue_videos.get(key),
             top_counts=group_residue_top.get(key),
         )
+    for card in video_cards:
+        rates = groups[card["group"]]["dimension_rate"]
+        base = card["danmaku"]
+        card["lift"] = {}
+        for dim in DIM_NAMES:
+            if not base or not rates.get(dim):
+                card["lift"][dim] = None
+            else:
+                card["lift"][dim] = (card["by_dimension"][dim] / base) / rates[dim]
+    symbol_bindings = []
+    for name, count in symbol_count.most_common():
+        if count < 20:
+            continue
+        dims_here = symbol_bind.get(name, Counter())
+        lifts = {}
+        for dim in DIM_NAMES:
+            rate = dims_here[dim] / count
+            # 点名本身就会落入知识认知。对照改成「所有点到符号的弹幕」，才看得出越剧更偏审美、故宫更偏知识以外的哪一维。
+            base_rate = (symbol_base[dim] / symbol_mentions) if symbol_mentions else 0.0
+            lifts[dim] = (rate / base_rate) if base_rate else 0.0
+        candidates = [dim for dim in DIM_NAMES if dim != "知识认知"]
+        best = max(candidates, key=lambda dim: (lifts[dim], dims_here[dim]))
+        bound = best if lifts[best] >= 1.3 and dims_here[best] >= 8 else ""
+        symbol_bindings.append(
+            {
+                "name": name,
+                "category": symbol_of.get(name, ""),
+                "count": count,
+                "by_dimension": {dim: int(dims_here[dim]) for dim in DIM_NAMES},
+                "lift": lifts,
+                "bound": bound,
+            }
+        )
+    dominant_videos = Counter(card["dominant"] for card in video_cards if card["dominant"])
     timeline = {
         "bins": BINS,
         "videos": timeline_videos,
@@ -623,6 +761,26 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
                 for bvid, count in ranked
             ],
         }
+    support = {
+        "dimensions": [
+            {
+                "dimension": dim,
+                "count": int(by_dim[dim]),
+                "dominant_videos": int(dominant_videos[dim]),
+            }
+            for dim in DIM_NAMES
+        ],
+        "codes": [
+            {
+                "code": code,
+                "count": int(by_code[code]),
+                "videos": int(concentration[code]["videos"]),
+                "top_share": float(concentration[code]["top_share"]),
+            }
+            for code in CODE_NAMES
+            if by_code[code] < 800 or concentration[code]["top_share"] >= 0.2
+        ],
+    }
     pmi = [[0.0 for _ in CODE_NAMES] for _ in CODE_NAMES]
     if danmaku:
         for left, code_left in enumerate(CODE_NAMES):
@@ -653,6 +811,9 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
         "by_dimension": {dim: by_dim[dim] for dim in DIM_NAMES},
         "groups": groups,
         "video_stars": video_stars,
+        "video_cards": video_cards,
+        "symbol_bindings": symbol_bindings[:24],
+        "support": support,
         "timeline": timeline,
         "symbols": {
             "by_category": dict(symbol_cat),
@@ -693,6 +854,7 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
     agreement = _agreement(pos, neg)
     if agreement:
         summary["model_agreement"] = agreement
+    summary["rule_gap"] = _rule_gap(pos, neg, gap.items)
     summary["findings"] = findings(summary)
     (out / "summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2),
