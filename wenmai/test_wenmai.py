@@ -134,6 +134,9 @@ class PipelineTests(unittest.TestCase):
             self.assertIn("by_code", museum)
             self.assertIn("code_lift", museum)
             self.assertIn("words", museum)
+            self.assertEqual(len(summary["video_stars"]), 1)
+            self.assertEqual(summary["video_stars"][0]["dominant"], "知识认知")
+            self.assertIn("六维星图", page)
             codes = summary["codes"]
             left = codes.index("制作认可")
             right = codes.index("文化符号提及")
@@ -143,6 +146,47 @@ class PipelineTests(unittest.TestCase):
             self.assertIn("concentration", summary)
             self.assertTrue((root / "out" / "summary.json").exists())
             self.assertIn("文化符号提及", classify("后母戊鼎"))
+
+    def test_starfield_mix_leans_toward_the_heavier_dimension(self):
+        from wenmai.starfield import place, render_view
+
+        knowledge = place({"知识认知": 1})
+        aesthetic = place({"审美鉴赏": 1})
+        mixed = place({"知识认知": 0.8, "审美鉴赏": 0.2})
+
+        def gap(left, right):
+            return sum((a - b) ** 2 for a, b in zip(left, right))
+
+        self.assertLess(gap(mixed, knowledge), gap(mixed, aesthetic))
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "star.png"
+            render_view(
+                [
+                    {
+                        "bvid": "BV1STAR",
+                        "title": "测试",
+                        "group_title": "文物博物馆",
+                        "danmaku": 40,
+                        "coded": 10,
+                        "by_dimension": {"知识认知": 8, "审美鉴赏": 2},
+                        "dominant": "知识认知",
+                    },
+                    {
+                        "bvid": "BV1DUST",
+                        "title": "闲谈",
+                        "group_title": "典籍诗词",
+                        "danmaku": 12,
+                        "coded": 0,
+                        "by_dimension": {},
+                        "dominant": "",
+                    },
+                ],
+                0.55,
+                0.42,
+                "测试角度",
+                path,
+            )
+            self.assertGreater(path.stat().st_size, 1000)
 
     def test_fightin_words_keeps_a_gram_unique_to_one_group(self):
         group = Counter({"青铜": 40, "这个": 80})

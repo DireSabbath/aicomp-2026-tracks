@@ -6,6 +6,8 @@ import html
 import json
 from pathlib import Path
 
+from wenmai.starfield import section_html as starfield_section, write_views
+
 DIM_COLOR = {
     "作品评价": "#9c2b1e",
     "知识认知": "#2457a6",
@@ -774,6 +776,7 @@ footer {{ color:var(--muted); font-size:13px; margin-top:28px; }}
 <p class="note">从未编码、也不是纯笑声的句子里抽二字，再看某一组比其余组高多少个标准误。功能词已去掉。z 大于 2、该组至少 12 次、至少出现在 8 支视频里，并且单支视频不超过一半，才留下。一支片子反复刷的口令不会占满这一组。这是两组比例差，不是主题模型，也不把这些词补进十七类。</p>
 {_group_words(summary)}
 </section>
+{starfield_section(summary)}
 <section>
 <h2>一级维度</h2>
 <p class="note">一条弹幕只要命中该维下的任一二级类，这一维就记 1 次。六个数相加可以大于已编码条数。</p>
@@ -893,4 +896,6 @@ document.querySelectorAll(".legend").forEach((button) => {{
 
 def render_file(summary_path: Path, out_path: Path) -> None:
     summary = json.loads(Path(summary_path).read_text(encoding="utf-8"))
-    Path(out_path).write_text(render(summary), encoding="utf-8")
+    out_path = Path(out_path)
+    out_path.write_text(render(summary), encoding="utf-8")
+    write_views(summary, out_path.parent / "starfield")

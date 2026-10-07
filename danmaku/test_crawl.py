@@ -1,6 +1,7 @@
 import unittest
 
 from crawl import (
+    BilibiliClient,
     bv_to_aid,
     decode_danmaku_segment,
     prune_hot_videos,
@@ -209,6 +210,33 @@ class ScopeTests(unittest.TestCase):
             spec,
         )
         self.assertEqual([item["bvid"] for item in kept], ["BVKEEP"])
+
+
+class FetchTests(unittest.TestCase):
+    def test_empty_middle_segments_do_not_drop_the_tail(self):
+        client = BilibiliClient.__new__(BilibiliClient)
+        client.delay = 0
+        client._last = 0.0
+        client.cookie = ""
+        seen = []
+
+        def get(url, referer, raw=False, retries=5, cookie=False):
+            if "pagelist" in url:
+                return {"code": 0, "data": [{"cid": 1, "page": 1, "duration": 1800}]}
+            if "dm/web/view" in url:
+                return b""
+            index = int(url.split("segment_index=")[1])
+            seen.append(index)
+            if index == 3:
+                return encode_elem("青铜", 1000, 9)
+            return b""
+
+        client.get = get
+        rows, info = client.fetch_video_danmaku("BV1TEST", aid=1)
+        self.assertEqual(sorted(seen), [1, 2, 3, 4, 5])
+        self.assertEqual(info["count"], 1)
+        self.assertEqual(info["parts"][0]["segments"], 5)
+        self.assertEqual(rows[0]["content"], "青铜")
 
 
 if __name__ == "__main__":
