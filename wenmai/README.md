@@ -52,7 +52,7 @@ python -m wenmai.train_gpu \
 | `codebook.py` | 六维十七类、符号词表、短语 |
 | `classify.py` | 规则多标签 |
 | `model.py` | 字符 n-gram 逻辑回归，只依赖 numpy |
-| `analyze.py` | 时间曲线、承接、抬升、集中度、共现、点互信息、符号、突发、银标抽样 |
+| `analyze.py` | 时间曲线、承接、抬升、二级类签名、停留、组间残差、集中度、共现、点互信息、符号、突发、银标抽样 |
 | `render.py` | 离线 HTML |
 | `train_gpu.py` | 可选的开源中文编码器微调 |
 | `gold.json` | 自写核心句和难句 |

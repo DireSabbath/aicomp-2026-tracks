@@ -30,28 +30,218 @@ def _pct(value: float) -> str:
     return f"{value * 100:.1f}%"
 
 
-def _hbar(rows: list[tuple[str, float, str]], width: int = 860) -> str:
+def _fmt(value, places: int | None = None) -> str:
+    if places is not None and isinstance(value, float):
+        return f"{value:.{places}f}"
+    return _num(value)
+
+
+def _hbar(
+    rows: list[tuple[str, float, str]],
+    width: int = 860,
+    label_w: int = 132,
+    value_w: int = 88,
+    suffix: str = "",
+    places: int | None = None,
+    title: str = "条形图",
+    bind: bool = True,
+) -> str:
     if not rows:
         return "<p class='empty'>这一项还没有数。</p>"
     peak = max(value for _, value, _ in rows) or 1
-    label_w = 132
     height = 8 + len(rows) * 28
+    span = max(40, width - label_w - value_w)
     parts = [
         f"<svg viewBox='0 0 {width} {height}' class='chart' role='img'>",
-        f"<title>条形图</title>",
+        f"<title>{_esc(title)}</title>",
     ]
     for index, (label, value, color) in enumerate(rows):
         y = 8 + index * 28
-        bar = (width - label_w - 88) * (value / peak)
+        bar = span * (value / peak)
+        shown = _fmt(value, places) + suffix
+        opener = f"<g data-code='{_esc(label)}' class='hit'>" if bind else "<g>"
         parts.append(
-            f"<g data-code='{_esc(label)}' class='hit'>"
-            f"<text x='0' y='{y + 16}' class='lab'>{_esc(label)}</text>"
+            opener
+            + f"<text x='0' y='{y + 16}' class='lab'>{_esc(label)}</text>"
             f"<rect x='{label_w}' y='{y + 4}' width='{bar:.1f}' height='16' fill='{color}'></rect>"
-            f"<text x='{label_w + bar + 8:.1f}' y='{y + 16}' class='val'>{_num(value)}</text>"
-            f"<title>{_esc(label)} {_num(value)}</title></g>"
+            f"<text x='{label_w + bar + 8:.1f}' y='{y + 16}' class='val'>{_esc(shown)}</text>"
+            f"<title>{_esc(label)} {_esc(shown)}</title></g>"
         )
     parts.append("</svg>")
     return "".join(parts)
+
+
+def _group_rows(summary: dict) -> list[tuple[str, dict]]:
+    groups = summary.get("groups") or {}
+    order = ["museum", "classics", "craft", "opera_art", "festival"]
+    keys = [key for key in order if key in groups] + [key for key in groups if key not in order]
+    return [(key, groups[key]) for key in keys]
+
+
+def _swatches(items: list[tuple[str, str]]) -> str:
+    return "<div class='legend-row'>" + "".join(
+        f"<span class='swatch' style='--c:{color}'>{_esc(label)}</span>" for label, color in items
+    ) + "</div>"
+
+
+def _per_10k(summary: dict) -> str:
+    danmaku = summary.get("danmaku") or 0
+    dims = summary.get("dimensions") or []
+    by_dim = summary.get("by_dimension") or {}
+    if not danmaku or not dims:
+        return "<p class='empty'>还没有弹幕来换算每万条。</p>"
+    rows = [
+        (dim, by_dim.get(dim, 0) * 10000 / danmaku, DIM_COLOR.get(dim, "#333"))
+        for dim in dims
+    ]
+    return _hbar(rows, places=1, title="每万条弹幕", bind=False)
+
+
+def _composition(summary: dict) -> str:
+    dims = summary.get("dimensions") or []
+    rows = [(key, info) for key, info in _group_rows(summary) if sum((info.get("by_dimension") or {}).values())]
+    if not rows or not dims:
+        return "<p class='empty'>还没有载体上的维度命中。</p>"
+    width = 920
+    label_w = 132
+    bar_w = width - label_w - 16
+    height = 12 + len(rows) * 36
+    parts = [f"<svg viewBox='0 0 {width} {height}' class='chart' role='img'><title>组内维度构成</title>"]
+    for index, (_, info) in enumerate(rows):
+        counts = [int((info.get("by_dimension") or {}).get(dim) or 0) for dim in dims]
+        total = sum(counts) or 1
+        y = 8 + index * 36
+        parts.append(f"<text x='0' y='{y + 20}' class='lab'>{_esc(info.get('title') or '')}</text>")
+        x = label_w
+        for dim, count in zip(dims, counts):
+            width_i = bar_w * count / total
+            if width_i <= 0:
+                continue
+            color = DIM_COLOR.get(dim, "#333")
+            share = count / total
+            parts.append(
+                f"<rect x='{x:.1f}' y='{y + 4}' width='{max(width_i, 0.8):.1f}' height='22' fill='{color}'>"
+                f"<title>{_esc(info.get('title') or '')} · {_esc(dim)} {share:.1%}</title></rect>"
+            )
+            if width_i >= 46:
+                parts.append(
+                    f"<text x='{x + width_i / 2:.1f}' y='{y + 19}' class='onbar' text-anchor='middle'>{share:.0%}</text>"
+                )
+            x += width_i
+    parts.append("</svg>")
+    legend = _swatches([(dim, DIM_COLOR.get(dim, "#333")) for dim in dims])
+    return legend + "".join(parts)
+
+
+def _pools(summary: dict) -> str:
+    rows = []
+    for _, info in _group_rows(summary):
+        videos = int(info.get("videos") or 0)
+        empty = int(info.get("empty") or 0)
+        if videos:
+            rows.append((info.get("title") or "", empty, videos - empty))
+    if not rows:
+        return "<p class='empty'>还没有载体分组。</p>"
+    width = 920
+    label_w = 132
+    value_w = 150
+    bar_max = width - label_w - value_w
+    height = 8 + len(rows) * 32
+    peak = max(empty + live for _, empty, live in rows) or 1
+    parts = [f"<svg viewBox='0 0 {width} {height}' class='chart' role='img'><title>有字的池和空池</title>"]
+    for index, (title, empty, live) in enumerate(rows):
+        y = 8 + index * 32
+        live_w = bar_max * live / peak
+        empty_w = bar_max * empty / peak
+        parts.append(
+            f"<text x='0' y='{y + 18}' class='lab'>{_esc(title)}</text>"
+            f"<rect x='{label_w}' y='{y + 6}' width='{live_w:.1f}' height='16' fill='#2f6f62'>"
+            f"<title>{_esc(title)} 有字 {live}</title></rect>"
+            f"<rect x='{label_w + live_w:.1f}' y='{y + 6}' width='{empty_w:.1f}' height='16' fill='#c4b8a5'>"
+            f"<title>{_esc(title)} 空池 {empty}</title></rect>"
+            f"<text x='{label_w + live_w + empty_w + 8:.1f}' y='{y + 18}' class='val'>{live:,} 有字 / {empty:,} 空</text>"
+        )
+    parts.append("</svg>")
+    legend = _swatches([("有字的当前池", "#2f6f62"), ("当前池为空", "#c4b8a5")])
+    return legend + "".join(parts)
+
+
+def _signatures(summary: dict) -> str:
+    rows = []
+    for _, info in _group_rows(summary):
+        title = info.get("title") or ""
+        by_code = info.get("by_code") or {}
+        lifts = info.get("code_lift") or {}
+        for code, count in by_code.items():
+            lift = float(lifts.get(code) or 0)
+            if count >= 20 and lift >= 1.3:
+                rows.append(
+                    (f"{title} · {code}", lift, DIM_COLOR.get(_dim_of(summary, code), "#333"))
+                )
+    rows.sort(key=lambda item: item[1], reverse=True)
+    if not rows:
+        return "<p class='empty'>还没有同时达到 20 条、且不低于全库 1.3 倍的二级类。</p>"
+    return _hbar(
+        rows[:12],
+        width=920,
+        label_w=248,
+        value_w=72,
+        places=2,
+        suffix=" 倍",
+        title="二级类相对抬升",
+        bind=False,
+    )
+
+
+def _stay(summary: dict) -> str:
+    matrix = summary.get("transitions") or []
+    dims = summary.get("dimensions") or []
+    if not matrix or not dims or not any(any(row) for row in matrix):
+        return "<p class='empty'>还没有不少于 30 条弹幕的片子来看停留。</p>"
+    stays = []
+    flows = []
+    for index, dim in enumerate(dims):
+        row = matrix[index] if index < len(matrix) else []
+        total = sum(row)
+        if total >= 30:
+            stays.append((dim, row[index] / total, DIM_COLOR.get(dim, "#333")))
+        for target_index, target in enumerate(dims):
+            if target_index == index or target_index >= len(row):
+                continue
+            if row[target_index] >= 8:
+                flows.append(
+                    (f"{dim} → {target}", row[target_index], DIM_COLOR.get(dim, "#333"))
+                )
+    flows.sort(key=lambda item: item[1], reverse=True)
+    stay_rows = [(label, value * 100, color) for label, value, color in stays]
+    stay_chart = _hbar(stay_rows, places=1, suffix="%", title="停留率", bind=False)
+    flow_chart = (
+        _hbar(flows, width=920, label_w=220, title="换到另一维", bind=False)
+        if flows
+        else "<p class='empty'>相邻进度里，换到另一维的次数都少于 8。</p>"
+    )
+    return stay_chart + flow_chart
+
+
+def _group_words(summary: dict) -> str:
+    blocks = []
+    for _, info in _group_rows(summary):
+        words = info.get("words") or []
+        if not words:
+            continue
+        chips = "".join(
+            "<span class='chip'>{gram}<small>z {z:.1f} · {count} 次{videos}</small></span>".format(
+                gram=_esc(item["gram"]),
+                z=item["z"],
+                count=item["count"],
+                videos=f" · {item['videos']} 支" if item.get("videos") else "",
+            )
+            for item in words
+        )
+        blocks.append(f"<h3>{_esc(info.get('title') or '')}</h3><div class='chips'>{chips}</div>")
+    if not blocks:
+        return "<p class='empty'>各组残差里还没有明显高于其余组的二字。</p>"
+    return "".join(blocks)
 
 
 def _lines(summary: dict) -> str:
@@ -508,6 +698,7 @@ header h1 {{ font: 600 48px/1.05 "Iowan Old Style","Palatino Linotype","Songti S
 .stat strong {{ font: 600 28px/1.2 "Iowan Old Style","Palatino Linotype",serif; }}
 section {{ margin-top:36px; }}
 h2 {{ font:600 22px/1.3 "Iowan Old Style","Palatino Linotype","Songti SC",serif; margin:0 0 8px; }}
+h3 {{ font:600 16px/1.3 "Songti SC","Noto Serif SC",serif; margin:14px 0 6px; }}
 .note {{ color:var(--muted); margin:0 0 12px; max-width:78ch; }}
 .chart {{ width:100%; height:auto; background:#fffdf8; border:1px solid var(--line); }}
 .lab {{ font-size:13px; fill:var(--ink); }}
@@ -516,7 +707,9 @@ h2 {{ font:600 22px/1.3 "Iowan Old Style","Palatino Linotype","Songti SC",serif;
 .grid {{ stroke:var(--line); stroke-width:1; }}
 .legend-row {{ display:flex; flex-wrap:wrap; gap:8px; margin:0 0 8px; }}
 .legend {{ border:1px solid var(--line); background:#fffdf8; padding:4px 10px; cursor:pointer; font:inherit; }}
-.legend::before {{ content:""; display:inline-block; width:10px; height:10px; background:var(--c); margin-right:6px; }}
+.legend::before, .swatch::before {{ content:""; display:inline-block; width:10px; height:10px; background:var(--c); margin-right:6px; }}
+.swatch {{ border:1px solid var(--line); background:#fffdf8; padding:4px 10px; }}
+.onbar {{ font-size:11px; fill:#fffdf8; }}
 .legend.off {{ opacity:.35; }}
 .findings {{ padding-left:1.2em; }}
 dl {{ display:grid; grid-template-columns:8em 1fr; gap:6px 12px; margin:0; }}
@@ -550,6 +743,36 @@ footer {{ color:var(--muted); font-size:13px; margin-top:28px; }}
 <section>
 <h2>读下来的几句</h2>
 <ol class="findings">{findings}</ol>
+</section>
+<section id="density">
+<h2>每万条弹幕里的六维</h2>
+<p class="note">绝对条数会让知识认知占满横轴，传播思辨只剩一条缝。这里把每一维换成每万条弹幕里出现多少次，稀有的维度才能和常见的维度放在同一张图里读。</p>
+{_per_10k(summary)}
+</section>
+<section id="composition">
+<h2>各组把编码用在哪里</h2>
+<p class="note">每一条横条内部加总为 100%，分母是该组六个维度的命中次数，不是该组弹幕条数。一条弹幕可以同时落入多维，所以这个构成回答的是「编码落在哪些维」，不是「有多少条被编码」。</p>
+{_composition(summary)}
+</section>
+<section id="pools">
+<h2>哪些载体还拉得到弹幕</h2>
+<p class="note">绿色是当前公开池里有字的视频，灰色是清单在热门线上、播放器里现在为空的视频。空池是拉到了，不是漏拉。</p>
+{_pools(summary)}
+</section>
+<section id="signatures">
+<h2>哪一类在哪一组更密</h2>
+<p class="note">只画该组至少 20 条、且不低于全库 1.3 倍的二级类。倍数是该组里这一类占弹幕的比例，除以全库同一比例。读的时候和绝对条数一起看，避免小样本把倍数抬得很高。</p>
+{_signatures(summary)}
+</section>
+<section id="stay">
+<h2>停留与换维</h2>
+<p class="note">停留率是相邻进度里，下一格仍然是同一维的比例，只画这一维的相邻次数不少于 30 的维度。下面只画换到另一维、且不少于 8 次的交接。知识认知停在原地时，对角线会很长；这里把「停住」和「交到别的维」拆开。</p>
+{_stay(summary)}
+</section>
+<section id="words">
+<h2>各组没被码表盖住的用词</h2>
+<p class="note">从未编码、也不是纯笑声的句子里抽二字，再看某一组比其余组高多少个标准误。功能词已去掉。z 大于 2、该组至少 12 次、至少出现在 8 支视频里，并且单支视频不超过一半，才留下。一支片子反复刷的口令不会占满这一组。这是两组比例差，不是主题模型，也不把这些词补进十七类。</p>
+{_group_words(summary)}
 </section>
 <section>
 <h2>一级维度</h2>

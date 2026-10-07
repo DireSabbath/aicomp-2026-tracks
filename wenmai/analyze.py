@@ -51,6 +51,69 @@ def _cjk_bigrams(text: str) -> list[str]:
     return [a + b for a, b in zip(chars, chars[1:])]
 
 
+# 功能词不参与组间对比，避免「这个」「真的」占满每一组。
+STOP_CHARS = set("的了是我你这不也都就和个们吗呢吧啊呀哦嗯很在有到说人看会要没还")
+
+
+def fightin_words(
+    group_counts: Counter,
+    rest_counts: Counter,
+    *,
+    min_count: int = 12,
+    top: int = 6,
+    video_counts: Counter | None = None,
+    top_counts: Counter | None = None,
+    min_videos: int = 8,
+    max_top_share: float = 0.5,
+) -> list[dict]:
+    """两组残差二字的比例差，除以合并比例的标准误。只留明显高于其余组的词。
+
+    给出分视频计数时，还要求至少出现在若干支视频里，且单支不超过一半。
+    这样一支片子反复刷的口令不会变成该载体的用词。
+    """
+    n_g = sum(group_counts.values())
+    n_r = sum(rest_counts.values())
+    if n_g < 30 or n_r < 30:
+        return []
+    scored = []
+    for gram, y_g in group_counts.items():
+        if y_g < min_count or len(gram) < 2:
+            continue
+        if any(char in STOP_CHARS for char in gram):
+            continue
+        videos = None
+        top_share = None
+        if video_counts is not None:
+            videos = int(video_counts.get(gram, 0))
+            if videos < min_videos:
+                continue
+            top_share = (top_counts or Counter()).get(gram, y_g) / y_g
+            if top_share > max_top_share:
+                continue
+        y_r = rest_counts.get(gram, 0)
+        p_g = y_g / n_g
+        p_r = y_r / n_r
+        p = (y_g + y_r) / (n_g + n_r)
+        if not 0 < p < 1:
+            continue
+        se = math.sqrt(p * (1 - p) * (1 / n_g + 1 / n_r))
+        if not se:
+            continue
+        z = (p_g - p_r) / se
+        if z > 2:
+            scored.append((z, gram, y_g, videos, top_share))
+    scored.sort(reverse=True)
+    words = []
+    for z, gram, count, videos, top_share in scored[:top]:
+        item = {"gram": gram, "z": round(z, 2), "count": count}
+        if videos is not None:
+            item["videos"] = videos
+        if top_share is not None:
+            item["top_share"] = round(top_share, 3)
+        words.append(item)
+    return words
+
+
 def _video_rows(path: Path) -> list[dict]:
     rows = []
     with gzip.open(path, "rt", encoding="utf-8") as handle:
@@ -203,6 +266,50 @@ def findings(summary: dict) -> list[str]:
         lines.append(
             f"{summary['empty_pools']} 支视频的当前公开池是空的。页面弹幕计数是热门线，播放器里现在能拉到的可以少很多，也可以是零。"
         )
+    if summary.get("danmaku") and summary.get("by_dimension"):
+        dims = summary["by_dimension"]
+        scale = 10000 / summary["danmaku"]
+        dense = max(dims, key=dims.get)
+        rare = min(dims, key=dims.get)
+        lines.append(
+            f"按每万条弹幕，{dense}约 {dims[dense] * scale:.0f} 次，{rare}约 {dims[rare] * scale:.1f} 次。"
+        )
+    signatures = []
+    for info in summary.get("groups", {}).values():
+        if info.get("danmaku", 0) < 100:
+            continue
+        for code, count in (info.get("by_code") or {}).items():
+            lift = float((info.get("code_lift") or {}).get(code) or 0)
+            if count >= 20 and lift >= 1.3:
+                signatures.append((lift, info.get("title") or "", code, count))
+    if signatures:
+        lift, title, code, count = max(signatures)
+        lines.append(f"{title}的{code}是全库的 {lift:.2f} 倍（该组 {count} 条）。")
+    matrix = summary.get("transitions") or []
+    dim_names = summary.get("dimensions") or []
+    stay_rates = []
+    for index, dim in enumerate(dim_names):
+        if index >= len(matrix):
+            continue
+        total = sum(matrix[index])
+        if total >= 30:
+            stay_rates.append((matrix[index][index] / total, dim))
+    if stay_rates:
+        hold, held = max(stay_rates)
+        leave, left = min(stay_rates)
+        lines.append(
+            f"片内相邻进度里，{held}停在原维的比例是 {hold:.1%}，{left}是 {leave:.1%}。"
+        )
+    word_hits = []
+    for info in summary.get("groups", {}).values():
+        words = info.get("words") or []
+        if words:
+            word_hits.append((words[0]["z"], info.get("title") or "", words[0]["gram"]))
+    if word_hits:
+        _z, title, gram = max(word_hits)
+        lines.append(
+            f"去掉单片口令之后，未编码残差里，{title}相对其余组更突出的是「{gram}」。这是用词差别，不是新的类别。"
+        )
     if summary.get("pending"):
         lines.append(f"清单里还有 {summary['pending']} 个视频尚未落盘，以上只覆盖已经拉到的部分。")
     return lines
@@ -270,6 +377,9 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
     laugh_n = 0
     unlabeled = 0
     residue = Counter()
+    group_residue: dict[str, Counter] = {}
+    group_residue_videos: dict[str, Counter] = {}
+    group_residue_top: dict[str, Counter] = {}
     length = {"le4": [0, 0], "gt4": [0, 0]}
     groups: dict[str, dict] = {}
     pos = {code: Reservoir(250) for code in CODE_NAMES}
@@ -307,6 +417,8 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
                 "danmaku": 0,
                 "coded": 0,
                 "by_dimension": {dim: 0 for dim in DIM_NAMES},
+                "by_code": {code: 0 for code in CODE_NAMES},
+                "empty": 0,
             },
         )
         bucket["videos"] += 1
@@ -314,10 +426,12 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
         local_dim = {dim: [0] * BINS for dim in DIM_NAMES}
         local_n = [0] * BINS
         local_code = {code: [0] * BURST_BINS for code in CODE_NAMES}
+        video_grams: Counter = Counter()
         q_at: dict[int, int] = {}
         s_at: dict[int, int] = {}
         if not rows:
             empty_pools += 1
+            bucket["empty"] += 1
         for row in rows:
             text = row.get("content") or ""
             danmaku += 1
@@ -355,6 +469,7 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
                     mode_coded[str(int(mode))] += 1
                 for code in hits:
                     by_code[code] += 1
+                    bucket["by_code"][code] += 1
                     local_code[code][burst_index] += 1
                     video_hits[code][video["bvid"]] += 1
                     pos[code].add(text)
@@ -376,8 +491,11 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
                 if _is_laugh(text):
                     laugh_n += 1
                 elif 4 <= len(text) <= 40 and stable_hash(text) % 3 == 0:
+                    local_residue = group_residue.setdefault(group, Counter())
                     for gram in _cjk_bigrams(text):
                         residue[gram] += 1
+                        local_residue[gram] += 1
+                        video_grams[gram] += 1
                 if len(text.strip()) >= 2:
                     neg.add(text)
             for name, category in symbols:
@@ -418,13 +536,21 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
             for value in bins:
                 if value >= 3 and value >= 3 * mean:
                     bursts[code] += 1
+        if video_grams:
+            seen = group_residue_videos.setdefault(group, Counter())
+            peaked = group_residue_top.setdefault(group, Counter())
+            for gram, count in video_grams.items():
+                seen[gram] += 1
+                if count > peaked[gram]:
+                    peaked[gram] = count
         for sec, questions in q_at.items():
             near = sum(s_at.get(sec + offset, 0) for offset in range(0, 6))
             if near:
                 qa_questions += questions
 
     corpus_rate = {dim: (by_dim[dim] / danmaku if danmaku else 0.0) for dim in DIM_NAMES}
-    for bucket in groups.values():
+    corpus_code_rate = {code: (by_code[code] / danmaku if danmaku else 0.0) for code in CODE_NAMES}
+    for key, bucket in groups.items():
         base = bucket["danmaku"] or 1
         bucket["dimension_rate"] = {
             dim: bucket["by_dimension"][dim] / base for dim in DIM_NAMES
@@ -433,6 +559,18 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
             dim: (bucket["dimension_rate"][dim] / corpus_rate[dim]) if corpus_rate[dim] else 0.0
             for dim in DIM_NAMES
         }
+        bucket["code_rate"] = {code: bucket["by_code"][code] / base for code in CODE_NAMES}
+        bucket["code_lift"] = {
+            code: (bucket["code_rate"][code] / corpus_code_rate[code]) if corpus_code_rate[code] else 0.0
+            for code in CODE_NAMES
+        }
+        local = group_residue.get(key, Counter())
+        bucket["words"] = fightin_words(
+            local,
+            residue - local,
+            video_counts=group_residue_videos.get(key),
+            top_counts=group_residue_top.get(key),
+        )
     timeline = {
         "bins": BINS,
         "videos": timeline_videos,
