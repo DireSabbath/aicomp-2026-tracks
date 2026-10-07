@@ -52,7 +52,7 @@ def _cjk_bigrams(text: str) -> list[str]:
 
 
 # 功能词不参与组间对比，避免「这个」「真的」占满每一组。
-STOP_CHARS = set("的了是我你这不也都就和个们吗呢吧啊呀哦嗯很在有到说人看会要没还")
+STOP_CHARS = set("的了是我你这不也都就和个们吗呢吧啊呀哦嗯很在有到说人看会要没还哈")
 
 
 def fightin_words(
@@ -398,6 +398,7 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
     coded = 0
     multi = 0
     empty_pools = 0
+    video_stars: list[dict] = []
 
     for video in videos:
         rows = _video_rows(video["path"])
@@ -426,6 +427,7 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
         local_dim = {dim: [0] * BINS for dim in DIM_NAMES}
         local_n = [0] * BINS
         local_code = {code: [0] * BURST_BINS for code in CODE_NAMES}
+        local_coded = 0
         video_grams: Counter = Counter()
         q_at: dict[int, int] = {}
         s_at: dict[int, int] = {}
@@ -454,6 +456,7 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
             slot[0] += 1
             if hits:
                 coded += 1
+                local_coded += 1
                 bucket["coded"] += 1
                 slot[1] += 1
                 if len(hits) > 1:
@@ -536,6 +539,21 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
             for value in bins:
                 if value >= 3 and value >= 3 * mean:
                     bursts[code] += 1
+        if rows:
+            counts = {dim: sum(local_dim[dim]) for dim in DIM_NAMES}
+            dominant = max(DIM_NAMES, key=lambda dim: counts[dim]) if any(counts.values()) else ""
+            video_stars.append(
+                {
+                    "bvid": video["bvid"],
+                    "title": titles[video["bvid"]],
+                    "group": group,
+                    "group_title": bucket["title"],
+                    "danmaku": len(rows),
+                    "coded": local_coded,
+                    "by_dimension": counts,
+                    "dominant": dominant,
+                }
+            )
         if video_grams:
             seen = group_residue_videos.setdefault(group, Counter())
             peaked = group_residue_top.setdefault(group, Counter())
@@ -634,6 +652,7 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
         "by_code": {code: by_code[code] for code in CODE_NAMES},
         "by_dimension": {dim: by_dim[dim] for dim in DIM_NAMES},
         "groups": groups,
+        "video_stars": video_stars,
         "timeline": timeline,
         "symbols": {
             "by_category": dict(symbol_cat),

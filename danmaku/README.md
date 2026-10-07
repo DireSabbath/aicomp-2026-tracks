@@ -1,6 +1,6 @@
 # 弹幕爬取
 
-通用脚本 `crawl.py` 拉取 B 站播放器当前公开弹幕池的全部分段。每段 6 分钟，接口是 `https://api.bilibili.com/x/v2/dm/web/seg.so`。脚本保存的是现在播放器里的那一池，同一条不重复写入。页面上的累计条数可以更大。
+通用脚本 `crawl.py` 拉取 B 站播放器当前公开弹幕池的全部分段。每段 6 分钟，接口是 `https://api.bilibili.com/x/v2/dm/web/seg.so`。脚本保存的是现在播放器里的那一池，同一条不重复写入。页面上的累计条数可以更大。一段里没有弹幕时仍会继续拉后面的段，避免把后半段丢掉。
 
 每条记录有：`id`、`progress_ms`（视频内毫秒）、`timeline_ms`（多分P时按前几P的时长接上）、`mode`、`content`、`ctime`（发送时间，接口有则保留）、`cid`、`page`。用户标识 `midHash` 不写入。
 

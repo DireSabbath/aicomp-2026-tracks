@@ -19,10 +19,12 @@ import json
 import math
 import re
 import sys
+import threading
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 USER_AGENT = (
@@ -189,6 +191,7 @@ class BilibiliClient:
     def __init__(self, delay: float):
         self.delay = delay
         self._last = 0.0
+        self._lock = threading.Lock()
         self.cookie = self._load_buvid()
 
     def _load_buvid(self) -> str:
@@ -211,10 +214,14 @@ class BilibiliClient:
             return ""
 
     def _wait(self):
-        gap = self.delay - (time.monotonic() - self._last)
-        if gap > 0:
-            time.sleep(gap)
-        self._last = time.monotonic()
+        lock = getattr(self, "_lock", None)
+        if lock is None:
+            lock = self._lock = threading.Lock()
+        with lock:
+            gap = self.delay - (time.monotonic() - self._last)
+            if gap > 0:
+                time.sleep(gap)
+            self._last = time.monotonic()
 
     def get(self, url: str, referer: str, raw: bool = False, retries: int = 5, cookie: bool = False):
         headers = {
@@ -275,6 +282,20 @@ class BilibiliClient:
             break
         raise RuntimeError(f"{what}: {last.get('message') if last else 'empty'} ({None if last is None else last.get('code')})")
 
+    def _segment_blob(self, bvid: str, cid: int, aid: int, index: int) -> bytes:
+        url = "https://api.bilibili.com/x/v2/dm/web/seg.so?" + urllib.parse.urlencode(
+            {"type": 1, "oid": cid, "pid": aid, "segment_index": index}
+        )
+        referer = f"https://www.bilibili.com/video/{bvid}"
+        blob = b""
+        for attempt in range(4):
+            blob = self.get(url, referer, raw=True)
+            if not blob[:1] == b"{":
+                return blob
+            if attempt + 1 < 4:
+                time.sleep(min(8, 2 ** attempt))
+        return blob
+
     def fetch_video_danmaku(self, bvid: str, aid: int | None = None) -> tuple[list[dict], dict]:
         if aid is None:
             aid = bv_to_aid(bvid)
@@ -295,28 +316,17 @@ class BilibiliClient:
             by_duration = max(1, math.ceil(duration / 360)) if duration else 1
             total = max(reported or 0, by_duration)
             part_count = 0
-            empty_run = 0
-            for index in range(1, total + 1):
-                blob = self.get(
-                    "https://api.bilibili.com/x/v2/dm/web/seg.so?"
-                    + urllib.parse.urlencode(
-                        {"type": 1, "oid": cid, "pid": aid, "segment_index": index}
-                    ),
-                    f"https://www.bilibili.com/video/{bvid}",
-                    raw=True,
-                )
+            # 每一段都要拉。中间两段为空不能停：后面的六分钟里仍可能有弹幕。
+            indexes = list(range(1, total + 1))
+            workers = min(4, len(indexes)) or 1
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                blobs = list(pool.map(lambda index: self._segment_blob(bvid, cid, aid, index), indexes))
+            for blob in blobs:
                 if blob[:1] == b"{":
-                    empty_run += 1
-                    if empty_run >= 2:
-                        break
                     continue
                 decoded = decode_danmaku_segment(blob)
                 if not decoded:
-                    empty_run += 1
-                    if empty_run >= 2:
-                        break
                     continue
-                empty_run = 0
                 for row in decoded:
                     key = (cid, row["id"], row["progress_ms"], row["content"])
                     if key in seen:
