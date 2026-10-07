@@ -159,16 +159,12 @@ def fit_char_model(
     return CharModel(weights, bias, thresholds, n_features)
 
 
-def _tune_thresholds(examples, weights, bias, n_features: int) -> np.ndarray:
-    model = CharModel(weights, bias, np.full(len(CODE_NAMES), 0.5), n_features)
-    matrix = np.vstack([model.scores(text) for text, _ in examples]) if examples else np.zeros((0, len(CODE_NAMES)))
-    targets = np.array(
-        [[1 if code in labels else 0 for code in CODE_NAMES] for _, labels in examples],
-        dtype=np.int8,
-    )
-    thresholds = np.full(len(CODE_NAMES), 0.5, dtype=np.float32)
+def thresholds_from_scores(matrix: np.ndarray, targets: np.ndarray) -> np.ndarray:
+    """按类在给定分数上搜索阈值。没有正例的类抬到 0.99，避免空类被误标。"""
+    width = int(matrix.shape[1]) if matrix.ndim == 2 else 0
+    thresholds = np.full(width, 0.5, dtype=np.float32)
     grid = [step / 20 for step in range(2, 19)]
-    for index in range(len(CODE_NAMES)):
+    for index in range(width):
         if targets.size == 0 or int(targets[:, index].sum()) == 0:
             thresholds[index] = 0.99
             continue
@@ -187,6 +183,35 @@ def _tune_thresholds(examples, weights, bias, n_features: int) -> np.ndarray:
     return thresholds
 
 
+def _tune_thresholds(examples, weights, bias, n_features: int) -> np.ndarray:
+    model = CharModel(weights, bias, np.full(len(CODE_NAMES), 0.5), n_features)
+    matrix = np.vstack([model.scores(text) for text, _ in examples]) if examples else np.zeros((0, len(CODE_NAMES)))
+    targets = np.array(
+        [[1 if code in labels else 0 for code in CODE_NAMES] for _, labels in examples],
+        dtype=np.int8,
+    )
+    return thresholds_from_scores(matrix, targets)
+
+
+def rule_gap_counts(predict, texts: list[str]) -> dict:
+    """规则没编码的句子上，模型还标出了哪些类。只留计数。"""
+    from collections import Counter
+
+    counts: Counter = Counter()
+    fired = 0
+    for text in texts:
+        pred = set(predict(text))
+        if pred:
+            fired += 1
+            counts.update(pred)
+    return {
+        "sample_n": len(texts),
+        "fired_n": fired,
+        "by_code": {code: int(counts[code]) for code in CODE_NAMES},
+        "note": "这些弹幕规则没有编码，也没有拿去训练。数字是字符模型多标出的类，不是人工金标。原文不写入摘要。",
+    }
+
+
 def template_examples() -> list[tuple[str, set[str]]]:
     """自写训练句。不得与 gold.json 的句子相同。"""
     rows = [
@@ -194,6 +219,7 @@ def template_examples() -> list[tuple[str, set[str]]]:
         ("这期考据扎实，文案也好", {"制作认可"}),
         ("配乐加分，还原度高", {"制作认可"}),
         ("解说专业，细节到位", {"制作认可"}),
+        ("讲得真好，听完还想再听一遍", {"制作认可"}),
         ("剪辑流畅，拍得真好", {"制作认可"}),
         ("服化道好，美术绝了", {"制作认可"}),
         ("运镜好，打光好", {"制作认可"}),
@@ -206,6 +232,7 @@ def template_examples() -> list[tuple[str, set[str]]]:
         ("穿帮了，考据不严", {"制作诟病"}),
         ("字幕太小还卡顿", {"观看体验"}),
         ("没有字幕，加载失败", {"观看体验"}),
+        ("字幕不错，台词终于跟得上", {"观看体验"}),
         ("这么卡，一直转圈", {"观看体验"}),
         ("时长太长了，片头太长", {"观看体验"}),
         ("清晰度不行，画面糊", {"观看体验"}),
@@ -223,6 +250,7 @@ def template_examples() -> list[tuple[str, set[str]]]:
         ("隔着千年也能共情", {"古今共情"}),
         ("跨越时空的共鸣", {"古今共情"}),
         ("身临其境，他们也曾这样生活", {"古今共情"}),
+        ("古代人也把日子过成了仪式", {"古今共情"}),
         ("千年以后仍然心有戚戚", {"古今共情"}),
         ("文化自信从这儿来，吾辈记得", {"文化自豪"}),
         ("老祖宗的底蕴，华夏的浪漫", {"文化自豪"}),

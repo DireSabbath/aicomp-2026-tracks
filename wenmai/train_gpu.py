@@ -18,6 +18,12 @@ import sys
 from pathlib import Path
 
 from wenmai.codebook import CODE_NAMES
+from wenmai.model import evaluate_split, load_gold, thresholds_from_scores
+
+GPU_NOTE = (
+    "银标划分出来的验证集只说明编码器像不像规则。"
+    "核心句和难句是团队自写句，对照的是码表，不是从弹幕里抽出来的人工金标。"
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -133,6 +139,19 @@ def main(argv: list[str] | None = None) -> int:
         print(f"epoch {epoch + 1} loss {total / max(1, seen):.4f}", flush=True)
 
     model.eval()
+    import numpy as np
+
+    score_rows = []
+    target_rows = []
+    with torch.no_grad():
+        for batch in DataLoader(TextSet(train_rows), batch_size=args.batch_size):
+            labels = batch.pop("labels")
+            batch = {key: value.to(device) for key, value in batch.items()}
+            probs = torch.sigmoid(model(**batch).logits).cpu().numpy()
+            score_rows.append(probs)
+            target_rows.append(labels.numpy())
+    thresholds = thresholds_from_scores(np.vstack(score_rows), np.vstack(target_rows))
+    cutoff = torch.tensor(thresholds, dtype=torch.float32, device=device)
     tp = [0] * len(CODE_NAMES)
     fp = [0] * len(CODE_NAMES)
     fn = [0] * len(CODE_NAMES)
@@ -141,7 +160,7 @@ def main(argv: list[str] | None = None) -> int:
             labels = batch.pop("labels").to(device)
             batch = {key: value.to(device) for key, value in batch.items()}
             logits = model(**batch).logits
-            pred = (torch.sigmoid(logits) >= 0.5).int()
+            pred = (torch.sigmoid(logits) >= cutoff).int()
             truth = labels.int()
             for index in range(len(CODE_NAMES)):
                 tp[index] += int(((pred[:, index] == 1) & (truth[:, index] == 1)).sum())
@@ -156,6 +175,34 @@ def main(argv: list[str] | None = None) -> int:
         return 2 * precision * recall / (precision + recall)
 
     supported = [f1_of(index) for index in range(len(CODE_NAMES)) if tp[index] + fn[index]]
+
+    def predict_gold(text: str) -> set[str]:
+        encoded = tokenizer(
+            text,
+            truncation=True,
+            max_length=args.max_length,
+            padding="max_length",
+            return_tensors="pt",
+        )
+        encoded = {key: value.to(device) for key, value in encoded.items()}
+        with torch.no_grad():
+            probs = torch.sigmoid(model(**encoded).logits).squeeze(0).cpu().numpy()
+        return {
+            code
+            for code, score, threshold in zip(CODE_NAMES, probs, thresholds)
+            if float(score) >= float(threshold)
+        }
+
+    core, hard = load_gold()
+    core_report = evaluate_split(core, predict_gold)
+    hard_report = evaluate_split(hard, predict_gold)
+
+    def public_split(report: dict) -> dict:
+        return {
+            key: report[key]
+            for key in ("exact_match", "micro_f1", "macro_f1", "n")
+        }
+
     metrics = {
         "model": args.model,
         "device": str(device),
@@ -163,13 +210,24 @@ def main(argv: list[str] | None = None) -> int:
         "eval_n": len(eval_rows),
         "macro_f1": sum(supported) / len(supported) if supported else 0.0,
         "per_code_f1": {code: f1_of(index) for index, code in enumerate(CODE_NAMES)},
-        "note": "验证集来自银标随机划分，银标本身是规则或自写句，不是人工金标。",
+        "thresholds": {code: float(thresholds[index]) for index, code in enumerate(CODE_NAMES)},
+        "gold_core": public_split(core_report),
+        "gold_hard": public_split(hard_report),
+        "note": GPU_NOTE,
     }
     args.out.mkdir(parents=True, exist_ok=True)
     model.save_pretrained(args.out)
     tokenizer.save_pretrained(args.out)
     (args.out / "metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({key: metrics[key] for key in ("device", "train_n", "eval_n", "macro_f1")}, ensure_ascii=False))
+    print(
+        json.dumps(
+            {
+                key: metrics[key]
+                for key in ("device", "train_n", "eval_n", "macro_f1", "gold_core", "gold_hard")
+            },
+            ensure_ascii=False,
+        )
+    )
     return 0
 
 

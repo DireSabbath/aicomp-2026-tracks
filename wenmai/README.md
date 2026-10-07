@@ -12,7 +12,7 @@ python -m unittest wenmai.test_wenmai
 python danmaku/test_crawl.py
 ```
 
-`eval` 在团队自写的 30 条核心句和 8 条难句上比较规则与字符模型。核心句用来锁住十七类的操作化定义。难句是规则故意还盖不住的说法。
+`eval` 在团队自写的 33 条核心句和 8 条难句上比较规则与字符模型。核心句用来锁住十七类的操作化定义。难句是规则故意还盖不住的说法。
 
 ## 拉弹幕，再出图
 
@@ -37,13 +37,13 @@ python -m wenmai render wenmai/results/summary.json --out wenmai/results/index.h
 pip install -r wenmai/requirements-gpu.txt
 python -m wenmai.train_gpu --data wenmai/sample_silver.jsonl --out /tmp/wenmai-gpu-smoke --cpu --epochs 1
 python -m wenmai.train_gpu \
-  --data danmaku_out/tradition-hot/silver.jsonl \
+  --data wenmai/results/silver.jsonl \
   --out danmaku_out/gpu-model \
   --model hfl/chinese-macbert-base \
   --epochs 2
 ```
 
-没有 CUDA 且不加 `--cpu` 时，脚本会退出并说明要接到 GPU。`--check` 只核对银标格式，不加载模型。`sample_silver.jsonl` 是自写样例。真实银标只在本地分析目录里，默认模型是 `hfl/chinese-macbert-base`。权重不要提交。
+没有 CUDA 且不加 `--cpu` 时，脚本会退出并说明要接到 GPU。`--check` 只核对银标格式，不加载模型。`sample_silver.jsonl` 是自写样例。真实银标写在 `analyze --out` 那个目录的 `silver.jsonl`，上面的分析命令会把它放在 `wenmai/results/`。默认模型是 `hfl/chinese-macbert-base`。阈值按类在训练集上搜索，并在 33 条核心句和 8 条难句上另算分数。这两份分数对照的是码表，不是人工抽检的弹幕。权重不要提交。
 
 ## 目录
 
@@ -52,7 +52,7 @@ python -m wenmai.train_gpu \
 | `codebook.py` | 六维十七类、符号词表、短语 |
 | `classify.py` | 规则多标签 |
 | `model.py` | 字符 n-gram 逻辑回归，只依赖 numpy |
-| `analyze.py` | 时间曲线、承接、抬升、二级类签名、停留、组间残差、集中度、共现、点互信息、符号、突发、银标抽样 |
+| `analyze.py` | 时间曲线、承接、抬升、二级类签名、停留、组间残差、集中度、共现、点互信息、符号绑定、单片卡片、规则缺口计数、稀有类支撑、突发、银标抽样 |
 | `render.py` | 离线 HTML |
 | `train_gpu.py` | 可选的开源中文编码器微调 |
 | `gold.json` | 自写核心句和难句 |
