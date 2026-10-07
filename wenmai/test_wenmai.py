@@ -4,7 +4,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from wenmai.analyze import analyze
+from collections import Counter
+
+from wenmai.analyze import analyze, fightin_words
 from wenmai.classify import classify, find_symbols
 from wenmai.codebook import CODE_NAMES, DIMENSIONS
 from wenmai.model import evaluation_report, fit_char_model, template_examples
@@ -124,6 +126,14 @@ class PipelineTests(unittest.TestCase):
             self.assertIn("相对抬升", page)
             self.assertIn("当前池为空", page)
             self.assertIn("点互信息", page)
+            self.assertIn("每万条", page)
+            self.assertIn("停留", page)
+            self.assertIn("有字", page)
+            museum = summary["groups"]["museum"]
+            self.assertEqual(museum["empty"], 0)
+            self.assertIn("by_code", museum)
+            self.assertIn("code_lift", museum)
+            self.assertIn("words", museum)
             codes = summary["codes"]
             left = codes.index("制作认可")
             right = codes.index("文化符号提及")
@@ -133,6 +143,25 @@ class PipelineTests(unittest.TestCase):
             self.assertIn("concentration", summary)
             self.assertTrue((root / "out" / "summary.json").exists())
             self.assertIn("文化符号提及", classify("后母戊鼎"))
+
+    def test_fightin_words_keeps_a_gram_unique_to_one_group(self):
+        group = Counter({"青铜": 40, "这个": 80})
+        rest = Counter({"这个": 200, "真的": 50})
+        words = fightin_words(group, rest)
+        grams = [item["gram"] for item in words]
+        self.assertIn("青铜", grams)
+        self.assertNotIn("这个", grams)
+        self.assertGreater(next(item["z"] for item in words if item["gram"] == "青铜"), 2)
+        spread = fightin_words(
+            Counter({"赐福": 40, "青铜": 30}),
+            Counter({"真的": 80}),
+            video_counts=Counter({"赐福": 1, "青铜": 8}),
+            top_counts=Counter({"赐福": 40, "青铜": 6}),
+        )
+        spread_grams = [item["gram"] for item in spread]
+        self.assertIn("青铜", spread_grams)
+        self.assertNotIn("赐福", spread_grams)
+        self.assertGreaterEqual(spread[0]["videos"], 8)
 
     def test_gpu_script_can_be_imported_without_torch(self):
         self.assertIn("--cpu", build_parser().format_help())
