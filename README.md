@@ -8,7 +8,7 @@ python -m unittest wenmai.test_wenmai
 python danmaku/test_crawl.py
 ```
 
-拉全量、出图和 GPU 微调见 [wenmai/README.md](wenmai/README.md)。技术报告在 [wenmai/技术报告.md](wenmai/技术报告.md)。选材规则在 [danmaku/SCOPE.md](danmaku/SCOPE.md)。
+拉全量、出图和 GPU 微调见 [wenmai/README.md](wenmai/README.md)。技术报告在 [wenmai/技术报告.md](wenmai/技术报告.md)。赛题怎么读、作品对上哪一项评分、当前弹幕分析的完整清单在 [wenmai/赛题解读与分析清单.md](wenmai/赛题解读与分析清单.md)。选材规则在 [danmaku/SCOPE.md](danmaku/SCOPE.md)。
 
 弹幕正文不进 git。`reception/` 是更早的民声试点，不再定义选材。
 
