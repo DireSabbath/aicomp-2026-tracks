@@ -101,14 +101,19 @@ def next_follow_up(
     next_seed: int,
     reserve_s: float | None = None,
     requested_batch: int = 16,
+    allow_pass: bool = True,
 ) -> dict | None:
-    """主模型种子 0 已经跑完之后的下一项。装得下大模型时先跑它，再跑另一种编码器，然后用重复种子填满剩余时间。"""
+    """主模型种子 0 已经跑完之后的下一项。装得下大模型时先跑它，再跑另一种编码器，然后用重复种子填满剩余时间。
+
+    allow_pass 为假时，大模型和另一种编码器只训、不再做全量前向。主模型那次前向失败后用这个，避免把同一次失败重复到预算里。
+    """
     reserve = reserve_for(train_s) if reserve_s is None else reserve_s
     catalog: list[tuple[str, int, str]] = []
-    if primary_model != SCALE_MODEL and vram_gb >= VRAM_SCALE and (SCALE_MODEL, 0, "pass") not in finished:
-        catalog.append((SCALE_MODEL, 0, "pass"))
-    if primary_model != ARCH_MODEL and vram_gb >= VRAM_ARCH and (ARCH_MODEL, 0, "pass") not in finished:
-        catalog.append((ARCH_MODEL, 0, "pass"))
+    follow_kind = "pass" if allow_pass else "train"
+    if primary_model != SCALE_MODEL and vram_gb >= VRAM_SCALE and (SCALE_MODEL, 0, follow_kind) not in finished:
+        catalog.append((SCALE_MODEL, 0, follow_kind))
+    if primary_model != ARCH_MODEL and vram_gb >= VRAM_ARCH and (ARCH_MODEL, 0, follow_kind) not in finished:
+        catalog.append((ARCH_MODEL, 0, follow_kind))
     catalog.append((primary_model, next_seed, "train"))
     for model, seed, kind in catalog:
         cost = job_cost(model, kind, train_s, pass_s)
@@ -249,6 +254,8 @@ def public_budget_run(metrics: dict, *, keep_misses: bool) -> dict:
         record["corpus_coded_n"] = corpus.get("coded_n")
         record["corpus_unlabeled_n"] = corpus.get("unlabeled_n")
         record["corpus_disagreement"] = corpus.get("disagreement") or {}
+    if metrics.get("corpus_error"):
+        record["corpus_error"] = str(metrics["corpus_error"])
     return record
 
 

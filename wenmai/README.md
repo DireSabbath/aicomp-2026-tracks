@@ -45,7 +45,7 @@ python -m wenmai resample danmaku_out/tradition-hot \
 
 3090 24GB 上按约 3 小时排作业。种子 0 的主模型写 `metrics.json`：银标分数、核心句和难句的逐句差异、已编码弹幕相对规则的多标和漏标、与分析相同的那 1,500 条缺口的各类次数。离阈值最近的未编码句子写到输出目录的 `margin-queue.json`：`rows` 是全局最近的，`per_code` 是每个类自己最近的，避免稀有类被挤掉。全量前向的 batch 在 24GB 上用 256，训练 batch 仍是 16。后续作业按训练循环本身的耗时来估，不把第一次下载权重的时间乘进大模型。CUDA 上会先把这几份权重下到本机缓存，下载失败也不中断。
 
-预算里接着各跑一轮 `hfl/chinese-macbert-large` 和 `hfl/chinese-roberta-wwm-ext` 的全量对照，其余时间重复主模型的种子。范围写在 `budget.json`，每完成一轮就落盘，中断也能留下已经跑完的种子；各类 F1 的最小、最大和中位也写在里面。预下载只取 PyTorch 权重。某一轮显存不够时，训练 batch 减半并整轮重试，实际 batch 写进 `metrics.json` 和 `budget.json`。报告只采用主模型种子 0。重复种子的权重不保存。这些分数对照的是码表，不是人工金标，也不替换页面上的规则计数。
+种子 0 的训练分数在全量前向之前就写入 `metrics.json`。前向失败时保留这份分数，文件里只记异常类型；同一次前向不再重复到后续作业，大模型和另一种编码器改为只训。预算里接着各跑一轮 `hfl/chinese-macbert-large` 和 `hfl/chinese-roberta-wwm-ext` 的全量对照，其余时间重复主模型的种子。范围写在 `budget.json`，每完成一轮就落盘，中断也能留下已经跑完的种子；各类 F1 的最小、最大和中位也写在里面。预下载只取 PyTorch 权重。某一轮显存不够时，训练 batch 减半并整轮重试，实际 batch 写进 `metrics.json` 和 `budget.json`。报告只采用主模型种子 0。重复种子的权重不保存。这些分数对照的是码表，不是人工金标，也不替换页面上的规则计数。
 
 ```bash
 pip install -r wenmai/requirements-gpu.txt
