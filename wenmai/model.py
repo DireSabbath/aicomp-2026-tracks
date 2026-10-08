@@ -193,7 +193,7 @@ def _tune_thresholds(examples, weights, bias, n_features: int) -> np.ndarray:
     return thresholds_from_scores(matrix, targets)
 
 
-def rule_gap_counts(predict, texts: list[str]) -> dict:
+def rule_gap_counts(predict, texts: list[str], note: str | None = None) -> dict:
     """规则没编码的句子上，模型还标出了哪些类。只留计数。"""
     from collections import Counter
 
@@ -208,7 +208,8 @@ def rule_gap_counts(predict, texts: list[str]) -> dict:
         "sample_n": len(texts),
         "fired_n": fired,
         "by_code": {code: int(counts[code]) for code in CODE_NAMES},
-        "note": "这些弹幕规则没有编码，也没有拿去训练。数字是字符模型多标出的类，不是人工金标。原文不写入摘要。",
+        "note": note
+        or "这些弹幕规则没有编码，也没有拿去训练。数字是字符模型多标出的类，不是人工金标。原文不写入摘要。",
     }
 
 

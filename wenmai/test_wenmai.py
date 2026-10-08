@@ -37,6 +37,7 @@ from wenmai.train_gpu import (
     WEIGHT_IGNORE,
     attach_corpus,
     build_parser,
+    commit_primary,
     disagreement_counts,
     fit_with_oom_retry,
     gold_public,
@@ -361,6 +362,8 @@ class ResampleAndGpuReadoutTests(unittest.TestCase):
             self.assertEqual(texts, [kept])
             summary = analyze(corpus, listing, root / "out")
             self.assertNotIn(kept, json.dumps(summary, ensure_ascii=False))
+            silver = (root / "out" / "silver.jsonl").read_text(encoding="utf-8")
+            self.assertNotIn(kept, silver)
 
     def test_corpus_attachment_counts_gap_and_keeps_margin_text_out_of_metrics(self):
         import numpy as np
@@ -430,6 +433,8 @@ class ResampleAndGpuReadoutTests(unittest.TestCase):
             )
             self.assertNotIn(gap_text, public)
             self.assertNotIn(near, public)
+            self.assertIn("编码器", fragment["gap"]["note"])
+            self.assertNotIn("字符模型", fragment["gap"]["note"])
             margin = json.loads((out / "margin-queue.json").read_text(encoding="utf-8"))
             self.assertIn(near, [row["text"] for row in margin["rows"]])
             self.assertNotIn("哈哈哈哈", json.dumps(margin, ensure_ascii=False))
@@ -481,6 +486,40 @@ class ResampleAndGpuReadoutTests(unittest.TestCase):
         self.assertEqual(kept["gap_fired_n"], 3)
         self.assertEqual(kept["corpus_coded_n"], 9)
         self.assertNotIn("text", json.dumps(kept, ensure_ascii=False))
+        plain = rule_gap_counts(lambda _text: set(), ["一句"])
+        self.assertIn("字符模型", plain["note"])
+
+    def test_seed_metrics_are_on_disk_before_the_corpus_pass(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            order = []
+
+            def save():
+                order.append("save")
+                self.assertEqual(json.loads((out / "metrics.json").read_text(encoding="utf-8"))["macro_f1"], 0.5)
+
+            def boom():
+                order.append("pass")
+                raise RuntimeError("未编码缺口正文不应进文件")
+
+            updated, _spent = commit_primary(out, {"macro_f1": 0.5, "seed": 0}, boom, before_attach=save)
+            saved = json.loads((out / "metrics.json").read_text(encoding="utf-8"))
+            self.assertEqual(order, ["save", "pass"])
+            self.assertEqual(saved["macro_f1"], 0.5)
+            self.assertEqual(saved["corpus_error"], "RuntimeError")
+            self.assertEqual(updated["corpus_error"], "RuntimeError")
+            self.assertNotIn("未编码缺口", json.dumps(saved, ensure_ascii=False))
+            kept = public_budget_run(saved, keep_misses=False)
+            self.assertEqual(kept["corpus_error"], "RuntimeError")
+            self.assertEqual(kept["macro_f1"], 0.5)
+
+            def succeed():
+                return {"gap": {"sample_n": 2, "fired_n": 0, "by_code": {}}}
+
+            updated, _spent = commit_primary(out, {"macro_f1": 0.5, "seed": 0}, succeed)
+            saved = json.loads((out / "metrics.json").read_text(encoding="utf-8"))
+            self.assertEqual(saved["gap"]["sample_n"], 2)
+            self.assertNotIn("corpus_error", saved)
 
     def test_video_bootstrap_point_lift_and_no_sentence(self):
         import numpy as np
@@ -623,6 +662,20 @@ class ResampleAndGpuReadoutTests(unittest.TestCase):
             next_seed=1,
         )
         self.assertEqual(narrow["model"], ARCH_MODEL)
+        held = next_follow_up(
+            elapsed_s=570,
+            budget_s=3 * 3600,
+            train_s=90,
+            pass_s=480,
+            vram_gb=23.7,
+            primary_model=PRIMARY_MODEL,
+            finished=set(),
+            next_seed=1,
+            allow_pass=False,
+        )
+        self.assertEqual(held["model"], SCALE_MODEL)
+        self.assertEqual(held["kind"], "train")
+        self.assertAlmostEqual(held["cost_s"], 360)
         self.assertIsNone(
             next_follow_up(
                 elapsed_s=10700,
