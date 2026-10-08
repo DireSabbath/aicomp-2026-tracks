@@ -55,6 +55,11 @@ CORPUS_NOTE = (
     "这不是人工金标，也不替换页面上的规则计数。"
 )
 
+ENCODER_GAP_NOTE = (
+    "这些弹幕规则没有编码，也没有拿去训练。"
+    "数字是编码器多标出的类，不是人工金标。原文不写入摘要。"
+)
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="用银标微调开源中文编码器，十七类多标签。")
@@ -457,7 +462,11 @@ def attach_corpus(
             "disagreement": disagreement_counts(false_pos, false_neg),
             "note": CORPUS_NOTE,
         },
-        "gap": rule_gap_counts(lambda text: lookup.get(text, set()), gap_items),
+        "gap": rule_gap_counts(
+            lambda text: lookup.get(text, set()),
+            gap_items,
+            note=ENCODER_GAP_NOTE,
+        ),
     }
     if write_margin:
         margin_path = args.margin_out or (args.out / "margin-queue.json")
@@ -525,6 +534,38 @@ def _batched_probs(texts, tokenizer, model, device, max_length: int, batch_size:
                 remembered[0] = size
 
 
+def write_metrics(path: Path, metrics: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def apply_corpus(metrics: dict, attach) -> tuple[dict, float]:
+    """跑全量前向。失败时保留训练分数，文件里只记异常类型，不记异常正文。"""
+    started = time.monotonic()
+    try:
+        extra = attach()
+    except Exception as exc:
+        print(f"全量前向没有跑完：{exc}", flush=True)
+        failed = dict(metrics)
+        failed["corpus_error"] = type(exc).__name__
+        return failed, time.monotonic() - started
+    merged = dict(metrics)
+    merged.update(extra or {})
+    return merged, time.monotonic() - started
+
+
+def commit_primary(out: Path, metrics: dict, attach, before_attach=None) -> tuple[dict, float]:
+    """先把种子 0 的训练分数落盘，再做全量前向。前向中断时，这份分数还在。"""
+    write_metrics(out / "metrics.json", metrics)
+    if before_attach is not None:
+        before_attach()
+    if attach is None:
+        return metrics, 0.0
+    updated, spent = apply_corpus(metrics, attach)
+    write_metrics(out / "metrics.json", updated)
+    return updated, spent
+
+
 def _print_metrics(metrics: dict) -> None:
     printed = {
         key: metrics[key]
@@ -536,6 +577,8 @@ def _print_metrics(metrics: dict) -> None:
     if metrics.get("corpus"):
         printed["corpus_coded_n"] = metrics["corpus"]["coded_n"]
         printed["corpus_unlabeled_n"] = metrics["corpus"]["unlabeled_n"]
+    if metrics.get("corpus_error"):
+        printed["corpus_error"] = metrics["corpus_error"]
     print(json.dumps(printed, ensure_ascii=False))
 
 
@@ -592,26 +635,30 @@ def main(argv: list[str] | None = None) -> int:
     train_s = max(1.0, packed["train_s"])
     metrics = packed["metrics"]
     metrics["train_batch"] = used_batch
-    pass_s = 0.0
+
+    def save_weights() -> None:
+        try:
+            packed["model"].save_pretrained(args.out)
+            packed["tokenizer"].save_pretrained(args.out)
+        except Exception as exc:
+            print(f"权重没有保存：{exc}", flush=True)
+            metrics["weight_error"] = type(exc).__name__
+            write_metrics(args.out / "metrics.json", metrics)
+
+    attach = None
     if args.corpus:
-        pass_started = time.monotonic()
-        metrics.update(
-            attach_corpus(
-                packed["model"],
-                packed["tokenizer"],
-                device,
-                args,
-                packed["thresholds"],
-                infer_batch,
-                write_margin=True,
-            )
+        attach = lambda: attach_corpus(
+            packed["model"],
+            packed["tokenizer"],
+            device,
+            args,
+            packed["thresholds"],
+            infer_batch,
+            write_margin=True,
         )
-        pass_s = time.monotonic() - pass_started
-    args.out.mkdir(parents=True, exist_ok=True)
-    packed["model"].save_pretrained(args.out)
-    packed["tokenizer"].save_pretrained(args.out)
-    (args.out / "metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
+    metrics, pass_s = commit_primary(args.out, metrics, attach, before_attach=save_weights)
     _print_metrics(metrics)
+    corpus_ok = args.corpus is not None and "corpus_error" not in metrics
 
     use_budget = bool(args.hours and args.hours > 0 and device.type == "cuda")
     if args.hours and args.hours > 0 and device.type != "cuda":
@@ -626,7 +673,7 @@ def main(argv: list[str] | None = None) -> int:
     finished: set[tuple] = set()
     next_seed = args.seed + 1
     primary = public_budget_run(metrics, keep_misses=True)
-    primary["kind"] = "pass" if args.corpus else "train"
+    primary["kind"] = "pass" if corpus_ok else "train"
     primary["seconds"] = elapsed
     runs = [primary]
 
@@ -641,6 +688,7 @@ def main(argv: list[str] | None = None) -> int:
                 "pass_s": pass_s,
                 "infer_batch_primary": infer_batch,
                 "note": BUDGET_NOTE,
+                "corpus_ok": corpus_ok,
                 "runs": runs,
                 "summary": summarize_runs(runs, args.model),
             },
@@ -658,6 +706,7 @@ def main(argv: list[str] | None = None) -> int:
             finished=finished,
             next_seed=next_seed,
             requested_batch=args.batch_size,
+            allow_pass=corpus_ok,
         )
         if job is None:
             break
@@ -688,9 +737,15 @@ def main(argv: list[str] | None = None) -> int:
             follow, used_batch = fit_with_oom_retry(fit_follow, job["train_batch"])
             follow_metrics = follow["metrics"]
             follow_metrics["train_batch"] = used_batch
-            if job["kind"] == "pass" and args.corpus:
-                follow_metrics.update(
-                    attach_corpus(
+            record = public_budget_run(follow_metrics, keep_misses=job["seed"] == 0)
+            record["kind"] = "train"
+            record["seconds"] = time.monotonic() - job_started
+            runs.append(record)
+            checkpoint()
+            if job["kind"] == "pass" and corpus_ok:
+                follow_metrics, _spent = apply_corpus(
+                    follow_metrics,
+                    lambda: attach_corpus(
                         follow["model"],
                         follow["tokenizer"],
                         device,
@@ -698,12 +753,12 @@ def main(argv: list[str] | None = None) -> int:
                         follow["thresholds"],
                         job["infer_batch"],
                         write_margin=False,
-                    )
+                    ),
                 )
-            record = public_budget_run(follow_metrics, keep_misses=job["seed"] == 0)
-            record["kind"] = job["kind"]
-            record["seconds"] = time.monotonic() - job_started
-            runs.append(record)
+                record = public_budget_run(follow_metrics, keep_misses=job["seed"] == 0)
+                record["kind"] = "pass" if "corpus_error" not in follow_metrics else "train"
+                record["seconds"] = time.monotonic() - job_started
+                runs[-1] = record
             print(
                 json.dumps(
                     {
@@ -725,7 +780,7 @@ def main(argv: list[str] | None = None) -> int:
                     "model": job["model"],
                     "seed": job["seed"],
                     "kind": job["kind"],
-                    "error": str(exc),
+                    "error": type(exc).__name__,
                 }
             )
         finally:
