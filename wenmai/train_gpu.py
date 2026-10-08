@@ -4,9 +4,20 @@
 银标文件由 `python -m wenmai analyze` 写到输出目录的 silver.jsonl，里面是弹幕正文，不要提交。
 仓库里的 wenmai/sample_silver.jsonl 只是团队自写的格式样例。
 
+3090 24GB、约 3 小时的用法见 --hours。主模型种子 0 写 metrics.json。
+随后若显存放得下，再跑大模型和另一种编码器的全量对照，并用重复种子填满剩余时间。
+重复种子的权重不保存。边际清单和权重都不要提交。
+
 示例：
-  python -m wenmai.train_gpu --data wenmai/sample_silver.jsonl --out danmaku_out/gpu-smoke --cpu --epochs 1
-  python -m wenmai.train_gpu --data danmaku_out/tradition-hot/silver.jsonl --out danmaku_out/gpu-model --model hfl/chinese-macbert-base --epochs 2
+  python -m wenmai.train_gpu --data wenmai/sample_silver.jsonl --out /tmp/wenmai-gpu-smoke --cpu --epochs 1
+  python -m wenmai.train_gpu \
+    --data wenmai/results/silver.jsonl \
+    --out danmaku_out/gpu-model \
+    --model hfl/chinese-macbert-base \
+    --epochs 2 \
+    --hours 3 \
+    --corpus danmaku_out/tradition-hot \
+    --list danmaku/lists/tradition-hot/_videos.json
 """
 
 from __future__ import annotations
@@ -15,14 +26,31 @@ import argparse
 import json
 import random
 import sys
+import time
 from pathlib import Path
 
+from wenmai.budget import (
+    BUDGET_NOTE,
+    MarginBook,
+    fold_predictions,
+    inference_batch_for,
+    next_follow_up,
+    public_budget_run,
+    smaller_batch,
+    summarize_runs,
+)
 from wenmai.codebook import CODE_NAMES
-from wenmai.model import evaluate_split, load_gold, thresholds_from_scores
+from wenmai.model import evaluate_split, load_gold, rule_gap_counts, thresholds_from_scores
 
 GPU_NOTE = (
     "银标划分出来的验证集只说明编码器像不像规则。"
     "核心句和难句是团队自写句，对照的是码表，不是从弹幕里抽出来的人工金标。"
+)
+
+CORPUS_NOTE = (
+    "已编码弹幕上的多标和漏标，是编码器相对规则的次数。"
+    "未编码、长度 4 到 40 且不是纯笑声的句子用来留边际清单。"
+    "这不是人工金标，也不替换页面上的规则计数。"
 )
 
 
@@ -38,7 +66,62 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--cpu", action="store_true", help="没有 GPU 时也跑，只适合样例或抽查")
     parser.add_argument("--check", action="store_true", help="只检查银标格式，不加载模型")
+    parser.add_argument("--corpus", type=Path, default=None, help="本地弹幕池。给出后才数同一批缺口，并写边际清单")
+    parser.add_argument("--list", type=Path, default=None, help="与分析时相同的视频清单，用来保持缺口抽样顺序")
+    parser.add_argument(
+        "--margin-out",
+        type=Path,
+        default=None,
+        help="离阈值最近的未编码句子。默认写到输出目录，不要提交",
+    )
+    parser.add_argument("--margin-limit", type=int, default=40)
+    parser.add_argument(
+        "--hours",
+        type=float,
+        default=None,
+        help="墙钟预算（小时）。仅 CUDA 上会继续跑大模型、另一种编码器和重复种子",
+    )
+    parser.add_argument("--vram", type=float, default=None, help="显存 GB。默认读当前 CUDA 设备")
+    parser.add_argument("--infer-batch", type=int, default=None, help="全量前向的 batch。默认按显存选取")
     return parser
+
+
+def disagreement_counts(false_pos: list[int], false_neg: list[int]) -> dict:
+    """编码器多标和漏标的各类次数。不保留句子。"""
+    return {
+        "model_only": {code: int(false_pos[index]) for index, code in enumerate(CODE_NAMES)},
+        "rule_only": {code: int(false_neg[index]) for index, code in enumerate(CODE_NAMES)},
+        "note": "模型多标是编码器判了而银标没有。规则有而模型无是银标有而编码器没判。银标来自规则，不是人工金标。",
+    }
+
+
+def gold_public(report: dict) -> dict:
+    """自写句可以留下逐句漏标和多标。弹幕原文不走这条。"""
+    return {
+        "exact_match": report.get("exact_match"),
+        "micro_f1": report.get("micro_f1"),
+        "macro_f1": report.get("macro_f1"),
+        "n": report.get("n"),
+        "misses": report.get("misses") or [],
+    }
+
+
+def nearest_queue(texts: list[str], probs, thresholds, limit: int = 40) -> list[dict]:
+    """取概率离各类阈值最近的句子。距离小的靠前，留给团队自己看。"""
+    import numpy as np
+
+    book = MarginBook(limit)
+    matrix = np.asarray(probs, dtype=np.float32)
+    cutoff = np.asarray(thresholds, dtype=np.float32)
+    for index, text in enumerate(texts):
+        distance = float(np.min(np.abs(matrix[index] - cutoff)))
+        labels = [
+            code
+            for code_index, code in enumerate(CODE_NAMES)
+            if float(matrix[index, code_index]) >= float(cutoff[code_index])
+        ]
+        book.consider(text, distance, labels)
+    return book.ranked()
 
 
 def _read_rows(path: Path) -> list[dict]:
@@ -64,43 +147,51 @@ def _read_rows(path: Path) -> list[dict]:
     return rows
 
 
-def main(argv: list[str] | None = None) -> int:
-    args = build_parser().parse_args(argv)
-    if args.check:
-        rows = _read_rows(args.data)
-        print(json.dumps({"rows": len(rows), "codes": len(CODE_NAMES)}, ensure_ascii=False))
-        return 0
-    try:
-        import torch
-        from torch.utils.data import DataLoader, Dataset
-        from transformers import AutoModelForSequenceClassification, AutoTokenizer
-    except ImportError as exc:
-        print(
-            "还没装 torch / transformers。GPU 机器上执行：pip install -r wenmai/requirements-gpu.txt",
-            file=sys.stderr,
-        )
-        print(exc, file=sys.stderr)
-        return 2
-    if not torch.cuda.is_available() and not args.cpu:
-        print("没有检测到 CUDA。接到 GPU 后重跑；只抽查流程就加 --cpu。", file=sys.stderr)
-        return 2
-    device = torch.device("cpu" if args.cpu or not torch.cuda.is_available() else "cuda")
-    rows = _read_rows(args.data)
-    random.Random(args.seed).shuffle(rows)
-    split = max(1, int(len(rows) * 0.1))
-    if split >= len(rows):
+def _vram_gb(torch_mod, device) -> float:
+    if getattr(device, "type", None) != "cuda":
+        return 0.0
+    props = torch_mod.cuda.get_device_properties(device)
+    return float(props.total_memory) / (1024 ** 3)
+
+
+def fit_encoder(
+    *,
+    rows: list[dict],
+    model_name: str,
+    seed: int,
+    epochs: int,
+    batch_size: int,
+    lr: float,
+    max_length: int,
+    device,
+    torch,
+    auto_model,
+    auto_tokenizer,
+    data_loader,
+    dataset_cls,
+) -> dict:
+    """微调一轮并在银标验证集、核心句、难句上打分。调用方决定是否保存权重。"""
+    started = time.monotonic()
+    random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+    shuffled = list(rows)
+    random.Random(seed).shuffle(shuffled)
+    split = max(1, int(len(shuffled) * 0.1))
+    if split >= len(shuffled):
         split = 1
-    eval_rows, train_rows = rows[:split], rows[split:]
-    tokenizer = AutoTokenizer.from_pretrained(args.model)
-    model = AutoModelForSequenceClassification.from_pretrained(
-        args.model,
+    eval_rows, train_rows = shuffled[:split], shuffled[split:]
+    tokenizer = auto_tokenizer.from_pretrained(model_name)
+    model = auto_model.from_pretrained(
+        model_name,
         num_labels=len(CODE_NAMES),
         problem_type="multi_label_classification",
         id2label={index: code for index, code in enumerate(CODE_NAMES)},
         label2id={code: index for index, code in enumerate(CODE_NAMES)},
     ).to(device)
 
-    class TextSet(Dataset):
+    class TextSet(dataset_cls):
         def __init__(self, data):
             self.data = data
 
@@ -112,7 +203,7 @@ def main(argv: list[str] | None = None) -> int:
             encoded = tokenizer(
                 item["text"],
                 truncation=True,
-                max_length=args.max_length,
+                max_length=max_length,
                 padding="max_length",
                 return_tensors="pt",
             )
@@ -122,10 +213,10 @@ def main(argv: list[str] | None = None) -> int:
                 "labels": torch.tensor(item["labels"], dtype=torch.float32),
             }
 
-    train_loader = DataLoader(TextSet(train_rows), batch_size=args.batch_size, shuffle=True)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
+    train_loader = data_loader(TextSet(train_rows), batch_size=batch_size, shuffle=True)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
     model.train()
-    for epoch in range(args.epochs):
+    for epoch in range(epochs):
         total = 0.0
         seen = 0
         for batch in train_loader:
@@ -144,7 +235,7 @@ def main(argv: list[str] | None = None) -> int:
     score_rows = []
     target_rows = []
     with torch.no_grad():
-        for batch in DataLoader(TextSet(train_rows), batch_size=args.batch_size):
+        for batch in data_loader(TextSet(train_rows), batch_size=batch_size):
             labels = batch.pop("labels")
             batch = {key: value.to(device) for key, value in batch.items()}
             probs = torch.sigmoid(model(**batch).logits).cpu().numpy()
@@ -156,7 +247,7 @@ def main(argv: list[str] | None = None) -> int:
     fp = [0] * len(CODE_NAMES)
     fn = [0] * len(CODE_NAMES)
     with torch.no_grad():
-        for batch in DataLoader(TextSet(eval_rows), batch_size=args.batch_size):
+        for batch in data_loader(TextSet(eval_rows), batch_size=batch_size):
             labels = batch.pop("labels").to(device)
             batch = {key: value.to(device) for key, value in batch.items()}
             logits = model(**batch).logits
@@ -180,7 +271,7 @@ def main(argv: list[str] | None = None) -> int:
         encoded = tokenizer(
             text,
             truncation=True,
-            max_length=args.max_length,
+            max_length=max_length,
             padding="max_length",
             return_tensors="pt",
         )
@@ -194,39 +285,373 @@ def main(argv: list[str] | None = None) -> int:
         }
 
     core, hard = load_gold()
-    core_report = evaluate_split(core, predict_gold)
-    hard_report = evaluate_split(hard, predict_gold)
-
-    def public_split(report: dict) -> dict:
-        return {
-            key: report[key]
-            for key in ("exact_match", "micro_f1", "macro_f1", "n")
-        }
-
     metrics = {
-        "model": args.model,
+        "model": model_name,
         "device": str(device),
+        "seed": seed,
         "train_n": len(train_rows),
         "eval_n": len(eval_rows),
         "macro_f1": sum(supported) / len(supported) if supported else 0.0,
         "per_code_f1": {code: f1_of(index) for index, code in enumerate(CODE_NAMES)},
+        "disagreement": disagreement_counts(fp, fn),
         "thresholds": {code: float(thresholds[index]) for index, code in enumerate(CODE_NAMES)},
-        "gold_core": public_split(core_report),
-        "gold_hard": public_split(hard_report),
+        "gold_core": gold_public(evaluate_split(core, predict_gold)),
+        "gold_hard": gold_public(evaluate_split(hard, predict_gold)),
         "note": GPU_NOTE,
     }
+    return {
+        "metrics": metrics,
+        "model": model,
+        "tokenizer": tokenizer,
+        "thresholds": thresholds,
+        "train_s": time.monotonic() - started,
+    }
+
+
+def attach_corpus(model, tokenizer, device, args, thresholds, infer_batch: int, *, write_margin: bool) -> dict:
+    """一次读完弹幕池：已编码对照规则，同一批缺口只留次数，未编码句子留边际清单。"""
+    from wenmai.analyze import Reservoir, _index, _video_rows, is_gap_candidate, is_margin_candidate
+    from wenmai.classify import classify
+
+    margin = MarginBook(args.margin_limit)
+    false_pos = [0] * len(CODE_NAMES)
+    false_neg = [0] * len(CODE_NAMES)
+    coded_n = 0
+    unlabeled_n = 0
+    gap = Reservoir(1500)
+    videos, _pending = _index(Path(args.corpus), args.list)
+    batch_texts: list[str] = []
+    batch_hits: list[set[str]] = []
+    forward_batch = [max(1, infer_batch)]
+
+    def flush() -> None:
+        nonlocal coded_n, unlabeled_n
+        if not batch_texts:
+            return
+        probs = _batched_probs(
+            batch_texts,
+            tokenizer,
+            model,
+            device,
+            args.max_length,
+            forward_batch[0],
+            forward_batch,
+        )
+        stats = fold_predictions(batch_texts, batch_hits, probs, thresholds, margin)
+        coded_n += stats["coded_n"]
+        unlabeled_n += stats["unlabeled_n"]
+        for index in range(len(CODE_NAMES)):
+            false_pos[index] += stats["fp"][index]
+            false_neg[index] += stats["fn"][index]
+        batch_texts.clear()
+        batch_hits.clear()
+
+    for seen, video in enumerate(videos, start=1):
+        for row in _video_rows(video["path"]):
+            text = row.get("content") or ""
+            if not str(text).strip():
+                continue
+            hits = classify(text)
+            if is_gap_candidate(text, hits):
+                gap.add(text)
+            if hits or is_margin_candidate(text, hits):
+                batch_texts.append(text)
+                batch_hits.append(hits)
+                if len(batch_texts) >= forward_batch[0]:
+                    flush()
+        if seen % 50 == 0:
+            print(f"已读 {seen} 支视频", flush=True)
+    flush()
+
+    gap_probs = _batched_probs(
+        gap.items,
+        tokenizer,
+        model,
+        device,
+        args.max_length,
+        forward_batch[0],
+        forward_batch,
+    )
+    lookup = {}
+    for text, row in zip(gap.items, gap_probs):
+        lookup[text] = {
+            code
+            for index, code in enumerate(CODE_NAMES)
+            if float(row[index]) >= float(thresholds[index])
+        }
+    fragment = {
+        "corpus": {
+            "coded_n": coded_n,
+            "unlabeled_n": unlabeled_n,
+            "disagreement": disagreement_counts(false_pos, false_neg),
+            "note": CORPUS_NOTE,
+        },
+        "gap": rule_gap_counts(lambda text: lookup.get(text, set()), gap.items),
+    }
+    if write_margin:
+        margin_path = args.margin_out or (args.out / "margin-queue.json")
+        margin_path.parent.mkdir(parents=True, exist_ok=True)
+        margin_path.write_text(
+            json.dumps(
+                {
+                    "note": "这些句子规则没有编码，长度在 4 到 40 之间，且不是纯笑声。按概率离各类阈值的最近距离排序，留给团队自己看。不要提交。",
+                    "rows": margin.ranked(),
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        fragment["margin_queue"] = str(margin_path)
+    return fragment
+
+
+def _release(torch, packed: dict | None) -> None:
+    if not packed:
+        return
+    packed.pop("model", None)
+    packed.pop("tokenizer", None)
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
+
+def _batched_probs(texts, tokenizer, model, device, max_length: int, batch_size: int, remembered: list[int] | None = None):
+    import numpy as np
+    import torch
+
+    if not texts:
+        return np.zeros((0, len(CODE_NAMES)), dtype=np.float32)
+    size = max(1, batch_size)
+    while True:
+        chunks = []
+        try:
+            model.eval()
+            with torch.no_grad():
+                for start in range(0, len(texts), size):
+                    batch = texts[start : start + size]
+                    encoded = tokenizer(
+                        list(batch),
+                        truncation=True,
+                        max_length=max_length,
+                        padding="max_length",
+                        return_tensors="pt",
+                    )
+                    encoded = {key: value.to(device) for key, value in encoded.items()}
+                    chunks.append(torch.sigmoid(model(**encoded).logits).cpu().numpy())
+            if remembered is not None:
+                remembered[0] = size
+            return np.vstack(chunks)
+        except RuntimeError as exc:
+            nxt = smaller_batch(size, str(exc))
+            if nxt is None:
+                raise
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+            print(f"显存不足，前向 batch 从 {size} 降到 {nxt}", flush=True)
+            size = nxt
+            if remembered is not None:
+                remembered[0] = size
+
+
+def _print_metrics(metrics: dict) -> None:
+    printed = {
+        key: metrics[key]
+        for key in ("device", "seed", "train_n", "eval_n", "macro_f1", "gold_core", "gold_hard", "disagreement")
+        if key in metrics
+    }
+    if metrics.get("gap"):
+        printed["gap"] = {key: metrics["gap"][key] for key in ("sample_n", "fired_n", "by_code")}
+    if metrics.get("corpus"):
+        printed["corpus_coded_n"] = metrics["corpus"]["coded_n"]
+        printed["corpus_unlabeled_n"] = metrics["corpus"]["unlabeled_n"]
+    print(json.dumps(printed, ensure_ascii=False))
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    if args.check:
+        rows = _read_rows(args.data)
+        print(json.dumps({"rows": len(rows), "codes": len(CODE_NAMES)}, ensure_ascii=False))
+        return 0
+    if args.corpus and not args.corpus.exists():
+        print(f"找不到弹幕池：{args.corpus}", file=sys.stderr)
+        return 2
+    try:
+        import torch
+        from torch.utils.data import DataLoader, Dataset
+        from transformers import AutoModelForSequenceClassification, AutoTokenizer
+    except ImportError as exc:
+        print(
+            "还没装 torch / transformers。GPU 机器上执行：pip install -r wenmai/requirements-gpu.txt",
+            file=sys.stderr,
+        )
+        print(exc, file=sys.stderr)
+        return 2
+    if not torch.cuda.is_available() and not args.cpu:
+        print("没有检测到 CUDA。接到 GPU 后重跑；只抽查流程就加 --cpu。", file=sys.stderr)
+        return 2
+    device = torch.device("cpu" if args.cpu or not torch.cuda.is_available() else "cuda")
+    rows = _read_rows(args.data)
+    vram = args.vram if args.vram is not None else _vram_gb(torch, device)
+    infer_batch = args.infer_batch or inference_batch_for(vram, args.model)
+    if device.type != "cuda":
+        infer_batch = args.infer_batch or args.batch_size
+    started = time.monotonic()
+    packed = fit_encoder(
+        rows=rows,
+        model_name=args.model,
+        seed=args.seed,
+        epochs=args.epochs,
+        batch_size=args.batch_size,
+        lr=args.lr,
+        max_length=args.max_length,
+        device=device,
+        torch=torch,
+        auto_model=AutoModelForSequenceClassification,
+        auto_tokenizer=AutoTokenizer,
+        data_loader=DataLoader,
+        dataset_cls=Dataset,
+    )
+    train_s = max(1.0, packed["train_s"])
+    metrics = packed["metrics"]
+    pass_s = 0.0
+    if args.corpus:
+        pass_started = time.monotonic()
+        metrics.update(
+            attach_corpus(
+                packed["model"],
+                packed["tokenizer"],
+                device,
+                args,
+                packed["thresholds"],
+                infer_batch,
+                write_margin=True,
+            )
+        )
+        pass_s = time.monotonic() - pass_started
     args.out.mkdir(parents=True, exist_ok=True)
-    model.save_pretrained(args.out)
-    tokenizer.save_pretrained(args.out)
+    packed["model"].save_pretrained(args.out)
+    packed["tokenizer"].save_pretrained(args.out)
     (args.out / "metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
+    _print_metrics(metrics)
+
+    use_budget = bool(args.hours and args.hours > 0 and device.type == "cuda")
+    if args.hours and args.hours > 0 and device.type != "cuda":
+        print("小时预算只在 CUDA 上继续排后续作业。这次只完成当前这一轮。", flush=True)
+    if not use_budget:
+        _release(torch, packed)
+        return 0
+
+    _release(torch, packed)
+    budget_s = float(args.hours) * 3600.0
+    elapsed = time.monotonic() - started
+    finished: set[tuple] = set()
+    next_seed = args.seed + 1
+    primary = public_budget_run(metrics, keep_misses=True)
+    primary["kind"] = "pass" if args.corpus else "train"
+    primary["seconds"] = elapsed
+    runs = [primary]
+    while True:
+        job = next_follow_up(
+            elapsed_s=elapsed,
+            budget_s=budget_s,
+            train_s=train_s,
+            pass_s=pass_s,
+            vram_gb=vram,
+            primary_model=args.model,
+            finished=finished,
+            next_seed=next_seed,
+            requested_batch=args.batch_size,
+        )
+        if job is None:
+            break
+        print(
+            f"预算作业 {job['model']} seed {job['seed']} {job['kind']}，预计 {job['cost_s']:.0f} 秒",
+            flush=True,
+        )
+        job_started = time.monotonic()
+        follow = None
+        try:
+            follow = fit_encoder(
+                rows=rows,
+                model_name=job["model"],
+                seed=job["seed"],
+                epochs=args.epochs,
+                batch_size=job["train_batch"],
+                lr=args.lr,
+                max_length=args.max_length,
+                device=device,
+                torch=torch,
+                auto_model=AutoModelForSequenceClassification,
+                auto_tokenizer=AutoTokenizer,
+                data_loader=DataLoader,
+                dataset_cls=Dataset,
+            )
+            follow_metrics = follow["metrics"]
+            if job["kind"] == "pass" and args.corpus:
+                follow_metrics.update(
+                    attach_corpus(
+                        follow["model"],
+                        follow["tokenizer"],
+                        device,
+                        args,
+                        follow["thresholds"],
+                        job["infer_batch"],
+                        write_margin=False,
+                    )
+                )
+            record = public_budget_run(follow_metrics, keep_misses=job["seed"] == 0)
+            record["kind"] = job["kind"]
+            record["seconds"] = time.monotonic() - job_started
+            runs.append(record)
+            print(
+                json.dumps(
+                    {
+                        "model": record["model"],
+                        "seed": record["seed"],
+                        "macro_f1": record["macro_f1"],
+                        "gold_core_exact": record["gold_core_exact"],
+                        "gold_hard_exact": record["gold_hard_exact"],
+                    },
+                    ensure_ascii=False,
+                ),
+                flush=True,
+            )
+        except Exception as exc:
+            print(f"这一轮没有跑完：{exc}", flush=True)
+            runs.append(
+                {
+                    "model": job["model"],
+                    "seed": job["seed"],
+                    "kind": job["kind"],
+                    "error": str(exc),
+                }
+            )
+        finally:
+            _release(torch, follow)
+        finished.add((job["model"], job["seed"], job["kind"]))
+        if job["kind"] == "train":
+            next_seed += 1
+        elapsed = time.monotonic() - started
+
+    budget = {
+        "budget_s": budget_s,
+        "elapsed_s": elapsed,
+        "vram_gb": vram,
+        "train_s": train_s,
+        "pass_s": pass_s,
+        "infer_batch_primary": infer_batch,
+        "note": BUDGET_NOTE,
+        "runs": runs,
+        "summary": summarize_runs(runs, args.model),
+    }
+    (args.out / "budget.json").write_text(json.dumps(budget, ensure_ascii=False, indent=2), encoding="utf-8")
     print(
         json.dumps(
-            {
-                key: metrics[key]
-                for key in ("device", "train_n", "eval_n", "macro_f1", "gold_core", "gold_hard")
-            },
+            {"elapsed_s": elapsed, "runs": len(runs), "summary": budget["summary"]},
             ensure_ascii=False,
-        )
+        ),
+        flush=True,
     )
     return 0
 

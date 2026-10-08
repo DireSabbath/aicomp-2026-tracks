@@ -3,6 +3,7 @@ __pycache__/
 .DS_Store
 data/attachments/_files/*.tmp
 danmaku_out/
+margin-queue.json
 demo_out/
 silver.jsonl
 exemplars.jsonl

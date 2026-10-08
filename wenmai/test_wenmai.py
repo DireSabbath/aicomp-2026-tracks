@@ -6,7 +6,19 @@ from pathlib import Path
 
 from collections import Counter
 
-from wenmai.analyze import analyze, fightin_words
+from wenmai.analyze import analyze, collect_gap_texts, fightin_words, is_gap_candidate, is_margin_candidate
+from wenmai.budget import (
+    ARCH_MODEL,
+    PRIMARY_MODEL,
+    SCALE_MODEL,
+    MarginBook,
+    fold_predictions,
+    inference_batch_for,
+    next_follow_up,
+    public_budget_run,
+    smaller_batch,
+    summarize_runs,
+)
 from wenmai.classify import classify, find_symbols
 from wenmai.codebook import CODE_NAMES, DIMENSIONS
 from wenmai.model import (
@@ -17,7 +29,15 @@ from wenmai.model import (
     thresholds_from_scores,
 )
 from wenmai.render import render
-from wenmai.train_gpu import GPU_NOTE, build_parser, main as gpu_main
+from wenmai.resample import bootstrap_lifts
+from wenmai.train_gpu import (
+    GPU_NOTE,
+    build_parser,
+    disagreement_counts,
+    gold_public,
+    main as gpu_main,
+    nearest_queue,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -289,6 +309,253 @@ class PipelineTests(unittest.TestCase):
             self.assertNotIn("后母戊鼎画面质感拉满", page)
             self.assertIn("相对其他符号点名", page)
             self.assertNotIn("是全库该维密度", "".join(summary.get("findings") or []))
+
+
+class ResampleAndGpuReadoutTests(unittest.TestCase):
+    def test_gap_candidate_rejects_coded_and_laughter(self):
+        found = None
+        for index in range(2000):
+            candidate = f"测试缺口句子{index}号"
+            if is_gap_candidate(candidate, set()):
+                found = candidate
+                break
+        self.assertIsNotNone(found)
+        self.assertFalse(is_gap_candidate(found, {"学习意愿"}))
+        self.assertFalse(is_gap_candidate("哈哈哈哈", set()))
+        self.assertFalse(is_gap_candidate("好", set()))
+
+    def test_gap_collection_follows_the_same_rule_and_drops_empty_pools(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            corpus = root / "pool"
+            corpus.mkdir()
+            kept = None
+            for index in range(400):
+                text = f"缺口抽样用句{index}"
+                if is_gap_candidate(text, set()):
+                    kept = text
+                    break
+            self.assertIsNotNone(kept)
+            with gzip.open(corpus / "BV1GAP.jsonl.gz", "wt", encoding="utf-8") as handle:
+                handle.write(json.dumps({"id": 1, "content": kept}, ensure_ascii=False) + "\n")
+                handle.write(json.dumps({"id": 2, "content": "哈哈哈哈"}, ensure_ascii=False) + "\n")
+            with gzip.open(corpus / "BV1EMPTY.jsonl.gz", "wt", encoding="utf-8") as handle:
+                handle.write("")
+            listing = root / "_videos.json"
+            listing.write_text(
+                json.dumps(
+                    [
+                        {"bvid": "BV1GAP", "group": "museum", "group_title": "文物博物馆"},
+                        {"bvid": "BV1EMPTY", "group": "museum", "group_title": "文物博物馆"},
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            texts = collect_gap_texts(corpus, listing)
+            self.assertEqual(texts, [kept])
+            summary = analyze(corpus, listing, root / "out")
+            self.assertNotIn(kept, json.dumps(summary, ensure_ascii=False))
+
+    def test_video_bootstrap_point_lift_and_no_sentence(self):
+        import numpy as np
+
+        from wenmai.codebook import CODE_NAMES as codes
+        from wenmai.codebook import DIM_NAMES as dims
+
+        def blank(group, n, code=None, count=0):
+            code_row = np.zeros(len(codes), dtype=np.int32)
+            dim_row = np.zeros(len(dims), dtype=np.int32)
+            if code:
+                code_row[codes.index(code)] = count
+                dim_row[dims.index("审美鉴赏")] = count
+            return {
+                "group": group,
+                "group_title": group,
+                "n": n,
+                "codes": code_row,
+                "dims": dim_row,
+                "sym_n": 0,
+                "sym_dims": np.zeros(len(dims), dtype=np.int32),
+                "sym_count": {},
+                "sym_by": {},
+            }
+
+        records = [
+            blank("opera", 20, "传统美学褒扬", 20),
+            blank("museum", 20),
+        ]
+        report = bootstrap_lifts(records, draws=20, seed=0)
+        matched = [
+            row
+            for row in report["code_lifts"]
+            if row["group"] == "opera" and row["code"] == "传统美学褒扬"
+        ]
+        self.assertEqual(len(matched), 1)
+        self.assertAlmostEqual(matched[0]["lift"], 2.0)
+        self.assertLessEqual(matched[0]["low"], matched[0]["lift"])
+        self.assertGreaterEqual(matched[0]["high"], matched[0]["lift"])
+        self.assertNotIn("text", json.dumps(report, ensure_ascii=False))
+        dumped = json.dumps(report, ensure_ascii=False)
+        self.assertNotIn("画面质感", dumped)
+
+    def test_gpu_readout_keeps_gold_misses_and_hides_margin_text_from_counts(self):
+        import numpy as np
+
+        false_pos = [0] * len(CODE_NAMES)
+        false_neg = [0] * len(CODE_NAMES)
+        false_pos[0] = 1
+        false_neg[1] = 4
+        counts = disagreement_counts(false_pos, false_neg)
+        self.assertEqual(counts["model_only"][CODE_NAMES[0]], 1)
+        self.assertEqual(counts["rule_only"][CODE_NAMES[1]], 4)
+        self.assertNotIn("text", json.dumps(counts, ensure_ascii=False))
+        public = gold_public(
+            {
+                "exact_match": 0.5,
+                "micro_f1": 0.5,
+                "macro_f1": 0.5,
+                "n": 1,
+                "misses": [{"text": "自写句", "missing": ["学习意愿"], "extra": []}],
+            }
+        )
+        self.assertEqual(public["misses"][0]["text"], "自写句")
+        probs = np.array([[0.50, 0.10] + [0.0] * 15, [0.90, 0.20] + [0.0] * 15], dtype=np.float32)
+        thresholds = np.array([0.5] * 17, dtype=np.float32)
+        queue = nearest_queue(["离阈值近的一句", "离阈值远的一句"], probs, thresholds, limit=1)
+        self.assertEqual(queue[0]["text"], "离阈值近的一句")
+        self.assertLess(queue[0]["distance"], 0.2)
+        gap = rule_gap_counts(lambda text: {"学习意愿"} if "想学" in text else set(), ["想学", "哈哈"])
+        self.assertNotIn("想学", json.dumps({key: gap[key] for key in ("sample_n", "fired_n", "by_code")}, ensure_ascii=False))
+
+    def test_resample_artifact_matches_summary_and_hides_text(self):
+        resample_path = ROOT / "wenmai" / "results" / "resample.json"
+        summary_path = ROOT / "wenmai" / "results" / "summary.json"
+        resample = json.loads(resample_path.read_text(encoding="utf-8"))
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        self.assertEqual(resample["videos"], 564)
+        self.assertEqual(resample["draws"], 1000)
+        self.assertEqual(resample["seed"], 0)
+        self.assertNotIn('"text"', resample_path.read_text(encoding="utf-8"))
+        for row in resample["code_lifts"]:
+            group = summary["groups"][row["group"]]
+            self.assertAlmostEqual(row["lift"], group["code_lift"][row["code"]])
+            self.assertEqual(row["count"], group["by_code"][row["code"]])
+        for row in resample["dimension_lifts"]:
+            group = summary["groups"][row["group"]]
+            self.assertAlmostEqual(row["lift"], group["lift"][row["dimension"]])
+
+    def test_margin_candidate_is_the_unlabeled_band_and_gap_is_its_subset(self):
+        self.assertFalse(is_margin_candidate("哈哈哈哈", set()))
+        self.assertFalse(is_margin_candidate("想学昆曲", {"学习意愿"}))
+        self.assertFalse(is_margin_candidate("好", set()))
+        sentence = "想学这门手艺啊"
+        self.assertTrue(is_margin_candidate(sentence, set()))
+        if is_gap_candidate(sentence, set()):
+            self.assertTrue(is_margin_candidate(sentence, set()))
+
+    def test_3090_three_hours_schedules_scale_then_seeds(self):
+        import numpy as np
+
+        elapsed = 570.0
+        finished = set()
+        seed = 1
+        jobs = []
+        while True:
+            job = next_follow_up(
+                elapsed_s=elapsed,
+                budget_s=3 * 3600,
+                train_s=90,
+                pass_s=480,
+                vram_gb=23.7,
+                primary_model=PRIMARY_MODEL,
+                finished=finished,
+                next_seed=seed,
+            )
+            if job is None:
+                break
+            jobs.append(job)
+            finished.add((job["model"], job["seed"], job["kind"]))
+            elapsed += job["cost_s"]
+            if job["kind"] == "train":
+                seed += 1
+        self.assertEqual(jobs[0]["model"], SCALE_MODEL)
+        self.assertEqual(jobs[0]["kind"], "pass")
+        self.assertEqual(jobs[0]["infer_batch"], 64)
+        self.assertEqual(jobs[1]["model"], ARCH_MODEL)
+        self.assertGreater(sum(1 for job in jobs if job["kind"] == "train"), 20)
+        self.assertLessEqual(elapsed, 3 * 3600)
+        self.assertLess(3 * 3600 - elapsed, 90 + 90)
+        self.assertEqual(inference_batch_for(23.7, PRIMARY_MODEL), 256)
+        narrow = next_follow_up(
+            elapsed_s=570,
+            budget_s=3 * 3600,
+            train_s=90,
+            pass_s=480,
+            vram_gb=10,
+            primary_model=PRIMARY_MODEL,
+            finished=set(),
+            next_seed=1,
+        )
+        self.assertEqual(narrow["model"], ARCH_MODEL)
+        self.assertIsNone(
+            next_follow_up(
+                elapsed_s=10700,
+                budget_s=10800,
+                train_s=90,
+                pass_s=480,
+                vram_gb=24,
+                primary_model=PRIMARY_MODEL,
+                finished={(SCALE_MODEL, 0, "pass"), (ARCH_MODEL, 0, "pass")},
+                next_seed=3,
+            )
+        )
+        probs = np.array(
+            [
+                [1.0, 0.0] + [0.0] * 15,
+                [0.51, 0.0] + [0.0] * 15,
+                [0.0, 0.0] + [0.0] * 15,
+            ],
+            dtype=np.float32,
+        )
+        book = MarginBook(1)
+        stats = fold_predictions(
+            ["已编码的一句", "贴着阈值", "离得远"],
+            [{CODE_NAMES[1]}, set(), set()],
+            probs,
+            np.array([0.5] * 17, dtype=np.float32),
+            book,
+        )
+        self.assertEqual(stats["coded_n"], 1)
+        self.assertEqual(stats["fn"][1], 1)
+        self.assertEqual(stats["fp"][0], 1)
+        self.assertEqual(book.ranked()[0]["text"], "贴着阈值")
+        public = public_budget_run(
+            {
+                "model": PRIMARY_MODEL,
+                "seed": 1,
+                "macro_f1": 0.5,
+                "per_code_f1": {},
+                "gold_core": {"exact_match": 1.0, "misses": [{"text": "自写句", "missing": [], "extra": []}]},
+                "gold_hard": {"exact_match": 0.0},
+                "corpus": {"coded_n": 3, "unlabeled_n": 2, "disagreement": {"model_only": {}, "rule_only": {}}},
+            },
+            keep_misses=False,
+        )
+        self.assertNotIn("text", json.dumps(public, ensure_ascii=False))
+        summary = summarize_runs(
+            [
+                {"model": PRIMARY_MODEL, "macro_f1": 0.2, "gold_core_exact": 0.5, "gold_hard_exact": 0.0},
+                {"model": PRIMARY_MODEL, "macro_f1": 0.4, "gold_core_exact": 1.0, "gold_hard_exact": 0.0},
+                {"model": SCALE_MODEL, "macro_f1": 0.9, "gold_core_exact": 1.0, "gold_hard_exact": 1.0},
+                {"model": PRIMARY_MODEL, "error": "out of memory"},
+            ],
+            PRIMARY_MODEL,
+        )
+        self.assertEqual(summary["primary_runs"], 2)
+        self.assertEqual(summary["macro_f1"]["min"], 0.2)
+        self.assertEqual(summary["macro_f1"]["max"], 0.4)
+        self.assertIsNone(smaller_batch(8, "other error"))
+        self.assertEqual(smaller_batch(8, "CUDA out of memory"), 4)
 
 
 if __name__ == "__main__":

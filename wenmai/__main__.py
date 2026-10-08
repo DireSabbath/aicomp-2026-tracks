@@ -10,6 +10,7 @@ from pathlib import Path
 from wenmai.analyze import analyze
 from wenmai.model import evaluation_report, public_metrics
 from wenmai.render import render_file
+from wenmai.resample import write_resample
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -27,10 +28,31 @@ def main(argv: list[str] | None = None) -> int:
     render_parser.add_argument("summary", type=Path)
     render_parser.add_argument("--out", type=Path, required=True)
 
+    resample_parser = sub.add_parser("resample", help="按视频重抽样，给抬升和符号绑定一个区间")
+    resample_parser.add_argument("corpus", type=Path)
+    resample_parser.add_argument("--list", type=Path, default=None)
+    resample_parser.add_argument("--out", type=Path, required=True)
+    resample_parser.add_argument("--draws", type=int, default=1000)
+    resample_parser.add_argument("--seed", type=int, default=0)
+
     args = parser.parse_args(argv)
     if args.cmd == "eval":
         report = public_metrics(evaluation_report())
         print(json.dumps(report, ensure_ascii=False, indent=2))
+        return 0
+    if args.cmd == "resample":
+        report = write_resample(args.corpus, args.list, args.out, draws=args.draws, seed=args.seed)
+        print(
+            json.dumps(
+                {
+                    "videos": report["videos"],
+                    "draws": report["draws"],
+                    "code_lifts": len(report["code_lifts"]),
+                    "symbol_bindings": sum(1 for row in report["symbol_bindings"] if row["bound"]),
+                },
+                ensure_ascii=False,
+            )
+        )
         return 0
     if args.cmd == "analyze":
         summary = analyze(args.corpus, args.list, args.out)
