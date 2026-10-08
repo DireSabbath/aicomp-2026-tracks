@@ -5,6 +5,9 @@
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 from wenmai.codebook import CODE_NAMES
 
 PRIMARY_MODEL = "hfl/chinese-macbert-base"
@@ -268,10 +271,29 @@ def summarize_runs(runs: list[dict], primary_model: str) -> dict:
         values = [float(row[key]) for row in primary if row.get(key) is not None]
         return _range(values)
 
+    per_code = {}
+    for code in CODE_NAMES:
+        values = []
+        for row in primary:
+            score = (row.get("per_code_f1") or {}).get(code)
+            if score is not None:
+                values.append(float(score))
+        if values:
+            per_code[code] = _range(values)
     return {
         "primary_model": primary_model,
         "primary_runs": len(primary),
         "macro_f1": pack("macro_f1"),
         "gold_core_exact": pack("gold_core_exact"),
         "gold_hard_exact": pack("gold_hard_exact"),
+        "per_code_f1": per_code,
     }
+
+
+def write_budget(path, payload: dict) -> None:
+    """每完成一轮就落盘。3 小时中途断开时，已经跑完的种子还在。"""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    temporary.replace(path)

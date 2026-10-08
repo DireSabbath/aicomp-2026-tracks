@@ -39,6 +39,7 @@ from wenmai.budget import (
     public_budget_run,
     smaller_batch,
     summarize_runs,
+    write_budget,
 )
 from wenmai.codebook import CODE_NAMES
 from wenmai.model import evaluate_split, load_gold, rule_gap_counts, thresholds_from_scores
@@ -577,6 +578,24 @@ def main(argv: list[str] | None = None) -> int:
     primary["kind"] = "pass" if args.corpus else "train"
     primary["seconds"] = elapsed
     runs = [primary]
+
+    def checkpoint() -> None:
+        write_budget(
+            args.out / "budget.json",
+            {
+                "budget_s": budget_s,
+                "elapsed_s": time.monotonic() - started,
+                "vram_gb": vram,
+                "train_s": train_s,
+                "pass_s": pass_s,
+                "infer_batch_primary": infer_batch,
+                "note": BUDGET_NOTE,
+                "runs": runs,
+                "summary": summarize_runs(runs, args.model),
+            },
+        )
+
+    checkpoint()
     while True:
         job = next_follow_up(
             elapsed_s=elapsed,
@@ -659,22 +678,17 @@ def main(argv: list[str] | None = None) -> int:
         if job["kind"] == "train":
             next_seed += 1
         elapsed = time.monotonic() - started
+        checkpoint()
 
-    budget = {
-        "budget_s": budget_s,
-        "elapsed_s": elapsed,
-        "vram_gb": vram,
-        "train_s": train_s,
-        "pass_s": pass_s,
-        "infer_batch_primary": infer_batch,
-        "note": BUDGET_NOTE,
-        "runs": runs,
-        "summary": summarize_runs(runs, args.model),
-    }
-    (args.out / "budget.json").write_text(json.dumps(budget, ensure_ascii=False, indent=2), encoding="utf-8")
+    elapsed = time.monotonic() - started
+    checkpoint()
     print(
         json.dumps(
-            {"elapsed_s": elapsed, "runs": len(runs), "summary": budget["summary"]},
+            {
+                "elapsed_s": elapsed,
+                "runs": len(runs),
+                "summary": summarize_runs(runs, args.model),
+            },
             ensure_ascii=False,
         ),
         flush=True,

@@ -19,6 +19,7 @@ from wenmai.budget import (
     public_budget_run,
     smaller_batch,
     summarize_runs,
+    write_budget,
 )
 from wenmai.classify import classify, find_symbols
 from wenmai.codebook import CODE_NAMES, DIMENSIONS
@@ -572,8 +573,8 @@ class ResampleAndGpuReadoutTests(unittest.TestCase):
         self.assertNotIn("text", json.dumps(public, ensure_ascii=False))
         summary = summarize_runs(
             [
-                {"model": PRIMARY_MODEL, "macro_f1": 0.2, "gold_core_exact": 0.5, "gold_hard_exact": 0.0},
-                {"model": PRIMARY_MODEL, "macro_f1": 0.4, "gold_core_exact": 1.0, "gold_hard_exact": 0.0},
+                {"model": PRIMARY_MODEL, "macro_f1": 0.2, "gold_core_exact": 0.5, "gold_hard_exact": 0.0, "per_code_f1": {CODE_NAMES[0]: 0.1}},
+                {"model": PRIMARY_MODEL, "macro_f1": 0.4, "gold_core_exact": 1.0, "gold_hard_exact": 0.0, "per_code_f1": {CODE_NAMES[0]: 0.3}},
                 {"model": SCALE_MODEL, "macro_f1": 0.9, "gold_core_exact": 1.0, "gold_hard_exact": 1.0},
                 {"model": PRIMARY_MODEL, "error": "out of memory"},
             ],
@@ -582,6 +583,13 @@ class ResampleAndGpuReadoutTests(unittest.TestCase):
         self.assertEqual(summary["primary_runs"], 2)
         self.assertEqual(summary["macro_f1"]["min"], 0.2)
         self.assertEqual(summary["macro_f1"]["max"], 0.4)
+        self.assertEqual(summary["per_code_f1"][CODE_NAMES[0]]["min"], 0.1)
+        self.assertEqual(summary["per_code_f1"][CODE_NAMES[0]]["max"], 0.3)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "budget.json"
+            write_budget(path, {"summary": summary})
+            self.assertFalse(path.with_suffix(path.suffix + ".tmp").exists())
+            self.assertEqual(json.loads(path.read_text(encoding="utf-8"))["summary"]["primary_runs"], 2)
         self.assertIsNone(smaller_batch(8, "other error"))
         self.assertEqual(smaller_batch(8, "CUDA out of memory"), 4)
 
