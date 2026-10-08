@@ -32,6 +32,7 @@ from pathlib import Path
 from wenmai.budget import (
     BUDGET_NOTE,
     MarginBook,
+    budget_model_names,
     fold_predictions,
     inference_batch_for,
     next_follow_up,
@@ -75,6 +76,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="离阈值最近的未编码句子。默认写到输出目录，不要提交",
     )
     parser.add_argument("--margin-limit", type=int, default=40)
+    parser.add_argument(
+        "--margin-per-code",
+        type=int,
+        default=8,
+        help="每个类另留这么多条离该类阈值最近的未编码句子",
+    )
     parser.add_argument(
         "--hours",
         type=float,
@@ -147,6 +154,21 @@ def _read_rows(path: Path) -> list[dict]:
     return rows
 
 
+def warm_model_cache(names: list[str]) -> None:
+    """先把权重量到本机缓存。失败不中断，训练时还会再试一次。"""
+    try:
+        from huggingface_hub import snapshot_download
+    except ImportError:
+        print("没有 huggingface_hub，跳过预下载。", flush=True)
+        return
+    for name in names:
+        print(f"下载编码器缓存 {name}", flush=True)
+        try:
+            snapshot_download(repo_id=name)
+        except Exception as exc:
+            print(f"下载 {name} 没有完成：{exc}", flush=True)
+
+
 def _vram_gb(torch_mod, device) -> float:
     if getattr(device, "type", None) != "cuda":
         return 0.0
@@ -190,6 +212,7 @@ def fit_encoder(
         id2label={index: code for index, code in enumerate(CODE_NAMES)},
         label2id={code: index for index, code in enumerate(CODE_NAMES)},
     ).to(device)
+    loop_started = time.monotonic()
 
     class TextSet(dataset_cls):
         def __init__(self, data):
@@ -304,21 +327,22 @@ def fit_encoder(
         "model": model,
         "tokenizer": tokenizer,
         "thresholds": thresholds,
-        "train_s": time.monotonic() - started,
+        "train_s": time.monotonic() - loop_started,
+        "load_s": loop_started - started,
     }
 
 
 def attach_corpus(model, tokenizer, device, args, thresholds, infer_batch: int, *, write_margin: bool) -> dict:
     """一次读完弹幕池：已编码对照规则，同一批缺口只留次数，未编码句子留边际清单。"""
-    from wenmai.analyze import Reservoir, _index, _video_rows, is_gap_candidate, is_margin_candidate
+    from wenmai.analyze import _index, _video_rows, collect_gap_texts, is_margin_candidate
     from wenmai.classify import classify
 
     margin = MarginBook(args.margin_limit)
+    per_code = {code: MarginBook(args.margin_per_code) for code in CODE_NAMES}
     false_pos = [0] * len(CODE_NAMES)
     false_neg = [0] * len(CODE_NAMES)
     coded_n = 0
     unlabeled_n = 0
-    gap = Reservoir(1500)
     videos, _pending = _index(Path(args.corpus), args.list)
     batch_texts: list[str] = []
     batch_hits: list[set[str]] = []
@@ -337,7 +361,7 @@ def attach_corpus(model, tokenizer, device, args, thresholds, infer_batch: int, 
             forward_batch[0],
             forward_batch,
         )
-        stats = fold_predictions(batch_texts, batch_hits, probs, thresholds, margin)
+        stats = fold_predictions(batch_texts, batch_hits, probs, thresholds, margin, per_code)
         coded_n += stats["coded_n"]
         unlabeled_n += stats["unlabeled_n"]
         for index in range(len(CODE_NAMES)):
@@ -352,8 +376,6 @@ def attach_corpus(model, tokenizer, device, args, thresholds, infer_batch: int, 
             if not str(text).strip():
                 continue
             hits = classify(text)
-            if is_gap_candidate(text, hits):
-                gap.add(text)
             if hits or is_margin_candidate(text, hits):
                 batch_texts.append(text)
                 batch_hits.append(hits)
@@ -363,8 +385,9 @@ def attach_corpus(model, tokenizer, device, args, thresholds, infer_batch: int, 
             print(f"已读 {seen} 支视频", flush=True)
     flush()
 
+    gap_items = collect_gap_texts(args.corpus, args.list)
     gap_probs = _batched_probs(
-        gap.items,
+        gap_items,
         tokenizer,
         model,
         device,
@@ -373,7 +396,7 @@ def attach_corpus(model, tokenizer, device, args, thresholds, infer_batch: int, 
         forward_batch,
     )
     lookup = {}
-    for text, row in zip(gap.items, gap_probs):
+    for text, row in zip(gap_items, gap_probs):
         lookup[text] = {
             code
             for index, code in enumerate(CODE_NAMES)
@@ -386,7 +409,7 @@ def attach_corpus(model, tokenizer, device, args, thresholds, infer_batch: int, 
             "disagreement": disagreement_counts(false_pos, false_neg),
             "note": CORPUS_NOTE,
         },
-        "gap": rule_gap_counts(lambda text: lookup.get(text, set()), gap.items),
+        "gap": rule_gap_counts(lambda text: lookup.get(text, set()), gap_items),
     }
     if write_margin:
         margin_path = args.margin_out or (args.out / "margin-queue.json")
@@ -394,8 +417,9 @@ def attach_corpus(model, tokenizer, device, args, thresholds, infer_batch: int, 
         margin_path.write_text(
             json.dumps(
                 {
-                    "note": "这些句子规则没有编码，长度在 4 到 40 之间，且不是纯笑声。按概率离各类阈值的最近距离排序，留给团队自己看。不要提交。",
+                    "note": "这些句子规则没有编码，长度在 4 到 40 之间，且不是纯笑声。rows 是离任一阈值最近的句子。per_code 是离该类阈值最近的句子，避免稀有类被挤掉。留给团队自己看。不要提交。",
                     "rows": margin.ranked(),
+                    "per_code": {code: book.ranked() for code, book in per_code.items()},
                 },
                 ensure_ascii=False,
                 indent=2,
@@ -497,6 +521,8 @@ def main(argv: list[str] | None = None) -> int:
     if device.type != "cuda":
         infer_batch = args.infer_batch or args.batch_size
     started = time.monotonic()
+    if args.hours and args.hours > 0 and device.type == "cuda":
+        warm_model_cache(budget_model_names(args.model, vram))
     packed = fit_encoder(
         rows=rows,
         model_name=args.model,

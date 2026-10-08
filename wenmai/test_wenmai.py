@@ -12,6 +12,7 @@ from wenmai.budget import (
     PRIMARY_MODEL,
     SCALE_MODEL,
     MarginBook,
+    budget_model_names,
     fold_predictions,
     inference_batch_for,
     next_follow_up,
@@ -529,6 +530,33 @@ class ResampleAndGpuReadoutTests(unittest.TestCase):
         self.assertEqual(stats["fn"][1], 1)
         self.assertEqual(stats["fp"][0], 1)
         self.assertEqual(book.ranked()[0]["text"], "贴着阈值")
+        crowded = MarginBook(1)
+        crowded.consider("同一句", 0.4, [])
+        crowded.consider("同一句", 0.05, ["学习意愿"])
+        crowded.consider("另一句", 0.2, [])
+        self.assertEqual([row["text"] for row in crowded.ranked()], ["同一句"])
+        self.assertAlmostEqual(crowded.ranked()[0]["distance"], 0.05)
+        rare = CODE_NAMES[-1]
+        books = {code: MarginBook(1) for code in CODE_NAMES}
+        near = [0.0] * 17
+        near[0] = 0.5
+        far_on_rare = [0.0] * 17
+        far_on_rare[CODE_NAMES.index(rare)] = 0.5
+        fold_predictions(
+            ["贴着第一类", "贴着稀有类"],
+            [set(), set()],
+            np.array([near, far_on_rare], dtype=np.float32),
+            np.array([0.5] * 17, dtype=np.float32),
+            MarginBook(1),
+            books,
+        )
+        self.assertEqual(books[rare].ranked()[0]["text"], "贴着稀有类")
+        self.assertEqual(books[CODE_NAMES[0]].ranked()[0]["text"], "贴着第一类")
+        names = budget_model_names(PRIMARY_MODEL, 23.7)
+        self.assertEqual(names[0], PRIMARY_MODEL)
+        self.assertIn(SCALE_MODEL, names)
+        self.assertIn(ARCH_MODEL, names)
+        self.assertNotIn(SCALE_MODEL, budget_model_names(PRIMARY_MODEL, 10))
         public = public_budget_run(
             {
                 "model": PRIMARY_MODEL,

@@ -5,8 +5,6 @@
 
 from __future__ import annotations
 
-import heapq
-
 from wenmai.codebook import CODE_NAMES
 
 PRIMARY_MODEL = "hfl/chinese-macbert-base"
@@ -36,6 +34,16 @@ BUDGET_NOTE = (
     "这些分数都对照码表，不是人工金标，也不替换页面上的规则计数。"
     "重复种子的权重不保存。"
 )
+
+
+def budget_model_names(primary: str, vram_gb: float) -> list[str]:
+    """这一档显存上，3 小时里会用到的编码器。下载清单用它，避免把下载时间乘进后续作业。"""
+    names = [primary]
+    if primary != SCALE_MODEL and vram_gb >= VRAM_SCALE:
+        names.append(SCALE_MODEL)
+    if primary != ARCH_MODEL and vram_gb >= VRAM_ARCH:
+        names.append(ARCH_MODEL)
+    return names
 
 
 def inference_batch_for(vram_gb: float, model: str) -> int:
@@ -123,34 +131,51 @@ def smaller_batch(batch_size: int, message: str) -> int | None:
 
 
 class MarginBook:
-    """只留离阈值最近的若干条。距离小的排在前面。"""
+    """只留离阈值最近的若干条。同一句只留更近的那次。距离小的排在前面。"""
 
     def __init__(self, limit: int):
         self.limit = max(0, int(limit))
-        self._heap: list[tuple] = []
-        self._seq = 0
+        self._dist: dict[str, float] = {}
+        self._labels: dict[str, list[str]] = {}
 
     def consider(self, text: str, distance: float, labels: list[str]) -> None:
         if self.limit <= 0:
             return
-        self._seq += 1
-        item = (-float(distance), self._seq, text, tuple(labels))
-        if len(self._heap) < self.limit:
-            heapq.heappush(self._heap, item)
+        distance = float(distance)
+        if text in self._dist:
+            if self._dist[text] <= distance:
+                return
+            self._dist[text] = distance
+            self._labels[text] = list(labels)
             return
-        if item[0] > self._heap[0][0]:
-            heapq.heapreplace(self._heap, item)
+        if len(self._dist) < self.limit:
+            self._dist[text] = distance
+            self._labels[text] = list(labels)
+            return
+        worst = max(self._dist, key=self._dist.get)
+        if distance < self._dist[worst]:
+            del self._labels[worst]
+            del self._dist[worst]
+            self._dist[text] = distance
+            self._labels[text] = list(labels)
 
     def ranked(self) -> list[dict]:
         rows = [
-            {"distance": -item[0], "labels": list(item[3]), "text": item[2]}
-            for item in self._heap
+            {"distance": self._dist[text], "labels": list(self._labels[text]), "text": text}
+            for text in self._dist
         ]
         rows.sort(key=lambda row: (row["distance"], row["text"]))
         return rows
 
 
-def fold_predictions(texts: list[str], hit_sets: list[set[str]], probs, thresholds, margin: MarginBook) -> dict:
+def fold_predictions(
+    texts: list[str],
+    hit_sets: list[set[str]],
+    probs,
+    thresholds,
+    margin: MarginBook,
+    per_code: dict[str, MarginBook] | None = None,
+) -> dict:
     """已编码的句子计入相对规则的多标和漏标。未编码的句子只更新边际清单。"""
     import numpy as np
 
@@ -167,6 +192,7 @@ def fold_predictions(texts: list[str], hit_sets: list[set[str]], probs, threshol
             for code_index, code in enumerate(CODE_NAMES)
             if float(row[code_index]) >= float(cutoff[code_index])
         }
+        labels = sorted(pred)
         if hits:
             coded_n += 1
             for code_index, code in enumerate(CODE_NAMES):
@@ -179,7 +205,12 @@ def fold_predictions(texts: list[str], hit_sets: list[set[str]], probs, threshol
             continue
         unlabeled_n += 1
         distance = float(np.min(np.abs(row - cutoff)))
-        margin.consider(text, distance, sorted(pred))
+        margin.consider(text, distance, labels)
+        if per_code:
+            for code_index, code in enumerate(CODE_NAMES):
+                book = per_code.get(code)
+                if book is not None:
+                    book.consider(text, abs(float(row[code_index]) - float(cutoff[code_index])), labels)
     return {
         "coded_n": coded_n,
         "unlabeled_n": unlabeled_n,
