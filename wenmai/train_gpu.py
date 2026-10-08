@@ -155,19 +155,56 @@ def _read_rows(path: Path) -> list[dict]:
     return rows
 
 
-def warm_model_cache(names: list[str]) -> None:
-    """先把权重量到本机缓存。失败不中断，训练时还会再试一次。"""
-    try:
-        from huggingface_hub import snapshot_download
-    except ImportError:
-        print("没有 huggingface_hub，跳过预下载。", flush=True)
-        return
+# 训练只用 PyTorch 权重。TensorFlow / Flax 文件不计入这 3 小时。
+WEIGHT_IGNORE = ["*.h5", "*.ot", "*.msgpack", "*.onnx", "flax_model*", "tf_model*", "rust_model*"]
+
+
+def warm_model_cache(names: list[str], download=None) -> None:
+    """先把 PyTorch 权重量到本机缓存。失败不中断，训练时还会再试一次。"""
+    if download is None:
+        try:
+            from huggingface_hub import snapshot_download
+        except ImportError:
+            print("没有 huggingface_hub，跳过预下载。", flush=True)
+            return
+        download = snapshot_download
     for name in names:
         print(f"下载编码器缓存 {name}", flush=True)
         try:
-            snapshot_download(repo_id=name)
+            download(repo_id=name, ignore_patterns=list(WEIGHT_IGNORE))
         except Exception as exc:
             print(f"下载 {name} 没有完成：{exc}", flush=True)
+
+
+def _empty_cuda_cache() -> None:
+    try:
+        import torch
+    except ImportError:
+        return
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
+
+def fit_with_oom_retry(fit, batch_size: int):
+    """显存不够就把训练 batch 减半，整轮重试。减到 1 仍失败则抛出。
+
+    异常对象会留住失败那一轮的模型，所以先离开 except，再回收显存。
+    """
+    import gc
+
+    batch = max(1, int(batch_size))
+    while True:
+        try:
+            return fit(batch), batch
+        except Exception as exc:
+            message = str(exc)
+            nxt = smaller_batch(batch, message)
+        gc.collect()
+        _empty_cuda_cache()
+        if nxt is None:
+            raise RuntimeError(message) from None
+        print(f"显存不足，训练 batch 从 {batch} 降到 {nxt} 后重试这一轮", flush=True)
+        batch = nxt
 
 
 def _vram_gb(torch_mod, device) -> float:
@@ -333,10 +370,36 @@ def fit_encoder(
     }
 
 
-def attach_corpus(model, tokenizer, device, args, thresholds, infer_batch: int, *, write_margin: bool) -> dict:
-    """一次读完弹幕池：已编码对照规则，同一批缺口只留次数，未编码句子留边际清单。"""
+def attach_corpus(
+    model,
+    tokenizer,
+    device,
+    args,
+    thresholds,
+    infer_batch: int,
+    *,
+    write_margin: bool,
+    score_fn=None,
+) -> dict:
+    """一次读完弹幕池：已编码对照规则，同一批缺口只留次数，未编码句子留边际清单。
+
+    score_fn 只在测试里替换前向。正式运行走编码器。
+    """
     from wenmai.analyze import _index, _video_rows, collect_gap_texts, is_margin_candidate
     from wenmai.classify import classify
+
+    def score(texts: list[str]):
+        if score_fn is not None:
+            return score_fn(texts)
+        return _batched_probs(
+            texts,
+            tokenizer,
+            model,
+            device,
+            args.max_length,
+            forward_batch[0],
+            forward_batch,
+        )
 
     margin = MarginBook(args.margin_limit)
     per_code = {code: MarginBook(args.margin_per_code) for code in CODE_NAMES}
@@ -353,15 +416,7 @@ def attach_corpus(model, tokenizer, device, args, thresholds, infer_batch: int, 
         nonlocal coded_n, unlabeled_n
         if not batch_texts:
             return
-        probs = _batched_probs(
-            batch_texts,
-            tokenizer,
-            model,
-            device,
-            args.max_length,
-            forward_batch[0],
-            forward_batch,
-        )
+        probs = score(batch_texts)
         stats = fold_predictions(batch_texts, batch_hits, probs, thresholds, margin, per_code)
         coded_n += stats["coded_n"]
         unlabeled_n += stats["unlabeled_n"]
@@ -387,15 +442,7 @@ def attach_corpus(model, tokenizer, device, args, thresholds, infer_batch: int, 
     flush()
 
     gap_items = collect_gap_texts(args.corpus, args.list)
-    gap_probs = _batched_probs(
-        gap_items,
-        tokenizer,
-        model,
-        device,
-        args.max_length,
-        forward_batch[0],
-        forward_batch,
-    )
+    gap_probs = score(gap_items)
     lookup = {}
     for text, row in zip(gap_items, gap_probs):
         lookup[text] = {
@@ -481,7 +528,7 @@ def _batched_probs(texts, tokenizer, model, device, max_length: int, batch_size:
 def _print_metrics(metrics: dict) -> None:
     printed = {
         key: metrics[key]
-        for key in ("device", "seed", "train_n", "eval_n", "macro_f1", "gold_core", "gold_hard", "disagreement")
+        for key in ("device", "seed", "train_n", "eval_n", "macro_f1", "train_batch", "gold_core", "gold_hard", "disagreement")
         if key in metrics
     }
     if metrics.get("gap"):
@@ -524,23 +571,27 @@ def main(argv: list[str] | None = None) -> int:
     started = time.monotonic()
     if args.hours and args.hours > 0 and device.type == "cuda":
         warm_model_cache(budget_model_names(args.model, vram))
-    packed = fit_encoder(
-        rows=rows,
-        model_name=args.model,
-        seed=args.seed,
-        epochs=args.epochs,
-        batch_size=args.batch_size,
-        lr=args.lr,
-        max_length=args.max_length,
-        device=device,
-        torch=torch,
-        auto_model=AutoModelForSequenceClassification,
-        auto_tokenizer=AutoTokenizer,
-        data_loader=DataLoader,
-        dataset_cls=Dataset,
-    )
+    def fit_primary(batch_size: int) -> dict:
+        return fit_encoder(
+            rows=rows,
+            model_name=args.model,
+            seed=args.seed,
+            epochs=args.epochs,
+            batch_size=batch_size,
+            lr=args.lr,
+            max_length=args.max_length,
+            device=device,
+            torch=torch,
+            auto_model=AutoModelForSequenceClassification,
+            auto_tokenizer=AutoTokenizer,
+            data_loader=DataLoader,
+            dataset_cls=Dataset,
+        )
+
+    packed, used_batch = fit_with_oom_retry(fit_primary, args.batch_size)
     train_s = max(1.0, packed["train_s"])
     metrics = packed["metrics"]
+    metrics["train_batch"] = used_batch
     pass_s = 0.0
     if args.corpus:
         pass_started = time.monotonic()
@@ -617,22 +668,26 @@ def main(argv: list[str] | None = None) -> int:
         job_started = time.monotonic()
         follow = None
         try:
-            follow = fit_encoder(
-                rows=rows,
-                model_name=job["model"],
-                seed=job["seed"],
-                epochs=args.epochs,
-                batch_size=job["train_batch"],
-                lr=args.lr,
-                max_length=args.max_length,
-                device=device,
-                torch=torch,
-                auto_model=AutoModelForSequenceClassification,
-                auto_tokenizer=AutoTokenizer,
-                data_loader=DataLoader,
-                dataset_cls=Dataset,
-            )
+            def fit_follow(batch_size: int) -> dict:
+                return fit_encoder(
+                    rows=rows,
+                    model_name=job["model"],
+                    seed=job["seed"],
+                    epochs=args.epochs,
+                    batch_size=batch_size,
+                    lr=args.lr,
+                    max_length=args.max_length,
+                    device=device,
+                    torch=torch,
+                    auto_model=AutoModelForSequenceClassification,
+                    auto_tokenizer=AutoTokenizer,
+                    data_loader=DataLoader,
+                    dataset_cls=Dataset,
+                )
+
+            follow, used_batch = fit_with_oom_retry(fit_follow, job["train_batch"])
             follow_metrics = follow["metrics"]
+            follow_metrics["train_batch"] = used_batch
             if job["kind"] == "pass" and args.corpus:
                 follow_metrics.update(
                     attach_corpus(
@@ -657,6 +712,7 @@ def main(argv: list[str] | None = None) -> int:
                         "macro_f1": record["macro_f1"],
                         "gold_core_exact": record["gold_core_exact"],
                         "gold_hard_exact": record["gold_hard_exact"],
+                        "train_batch": record.get("train_batch"),
                     },
                     ensure_ascii=False,
                 ),

@@ -34,9 +34,13 @@ from wenmai.render import render
 from wenmai.resample import bootstrap_lifts
 from wenmai.train_gpu import (
     GPU_NOTE,
+    WEIGHT_IGNORE,
+    attach_corpus,
     build_parser,
     disagreement_counts,
+    fit_with_oom_retry,
     gold_public,
+    warm_model_cache,
     main as gpu_main,
     nearest_queue,
 )
@@ -357,6 +361,126 @@ class ResampleAndGpuReadoutTests(unittest.TestCase):
             self.assertEqual(texts, [kept])
             summary = analyze(corpus, listing, root / "out")
             self.assertNotIn(kept, json.dumps(summary, ensure_ascii=False))
+
+    def test_corpus_attachment_counts_gap_and_keeps_margin_text_out_of_metrics(self):
+        import numpy as np
+        from argparse import Namespace
+
+        gap_text = None
+        for index in range(800):
+            text = f"未编码缺口{index}号"
+            if is_gap_candidate(text, set()):
+                gap_text = text
+                break
+        self.assertIsNotNone(gap_text)
+        near = "贴阈值测句甲"
+        coded = "想学这门手艺"
+        self.assertIn("学习意愿", classify(coded))
+        self.assertFalse(classify(near))
+        self.assertTrue(is_margin_candidate(near, set()))
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            corpus = root / "pool"
+            corpus.mkdir()
+            with gzip.open(corpus / "BV1GAP.jsonl.gz", "wt", encoding="utf-8") as handle:
+                for content in (gap_text, near, coded, "哈哈哈哈", "  "):
+                    handle.write(json.dumps({"content": content}, ensure_ascii=False) + "\n")
+            listing = root / "_videos.json"
+            listing.write_text(
+                json.dumps([{"bvid": "BV1GAP", "group": "museum", "group_title": "文物博物馆"}]),
+                encoding="utf-8",
+            )
+            out = root / "gpu"
+
+            def score(texts):
+                rows = []
+                for text in texts:
+                    row = [0.0] * len(CODE_NAMES)
+                    if "贴阈值" in text:
+                        row[0] = 0.49
+                    rows.append(row)
+                return np.array(rows, dtype=np.float32)
+
+            fragment = attach_corpus(
+                None,
+                None,
+                None,
+                Namespace(
+                    corpus=corpus,
+                    list=listing,
+                    margin_limit=2,
+                    margin_per_code=1,
+                    margin_out=None,
+                    out=out,
+                    max_length=64,
+                ),
+                np.array([0.5] * len(CODE_NAMES), dtype=np.float32),
+                1,
+                write_margin=True,
+                score_fn=score,
+            )
+            self.assertEqual(fragment["gap"]["sample_n"], 1)
+            self.assertEqual(fragment["gap"]["fired_n"], 0)
+            self.assertEqual(fragment["corpus"]["coded_n"], 1)
+            self.assertGreaterEqual(fragment["corpus"]["unlabeled_n"], 1)
+            self.assertGreater(fragment["corpus"]["disagreement"]["rule_only"]["学习意愿"], 0)
+            public = json.dumps(
+                {key: fragment[key] for key in ("corpus", "gap")},
+                ensure_ascii=False,
+            )
+            self.assertNotIn(gap_text, public)
+            self.assertNotIn(near, public)
+            margin = json.loads((out / "margin-queue.json").read_text(encoding="utf-8"))
+            self.assertIn(near, [row["text"] for row in margin["rows"]])
+            self.assertNotIn("哈哈哈哈", json.dumps(margin, ensure_ascii=False))
+            self.assertTrue(margin["per_code"][CODE_NAMES[0]])
+
+    def test_oom_retry_halves_batch_and_cache_skips_other_formats(self):
+        seen = []
+
+        def fit(batch):
+            seen.append(batch)
+            if batch > 2:
+                raise RuntimeError("CUDA out of memory. Tried to allocate 2.00 GiB")
+            return {"ok": batch}
+
+        packed, used = fit_with_oom_retry(fit, 8)
+        self.assertEqual(seen, [8, 4, 2])
+        self.assertEqual(used, 2)
+        self.assertEqual(packed["ok"], 2)
+
+        def other(_batch):
+            raise RuntimeError("disk full")
+
+        with self.assertRaises(RuntimeError) as caught:
+            fit_with_oom_retry(other, 8)
+        self.assertIn("disk full", str(caught.exception))
+        calls = []
+
+        def download(**kwargs):
+            calls.append(kwargs)
+
+        warm_model_cache(["hfl/chinese-macbert-base"], download=download)
+        self.assertEqual(calls[0]["repo_id"], "hfl/chinese-macbert-base")
+        self.assertEqual(calls[0]["ignore_patterns"], list(WEIGHT_IGNORE))
+        self.assertIn("*.h5", WEIGHT_IGNORE)
+        self.assertNotIn("*.bin", WEIGHT_IGNORE)
+        kept = public_budget_run(
+            {
+                "model": PRIMARY_MODEL,
+                "seed": 0,
+                "macro_f1": 0.2,
+                "train_batch": 4,
+                "gap": {"sample_n": 1500, "fired_n": 3, "by_code": {CODE_NAMES[0]: 3}},
+                "corpus": {"coded_n": 9, "unlabeled_n": 4, "disagreement": {"model_only": {}, "rule_only": {}}},
+            },
+            keep_misses=False,
+        )
+        self.assertEqual(kept["train_batch"], 4)
+        self.assertEqual(kept["gap_sample_n"], 1500)
+        self.assertEqual(kept["gap_fired_n"], 3)
+        self.assertEqual(kept["corpus_coded_n"], 9)
+        self.assertNotIn("text", json.dumps(kept, ensure_ascii=False))
 
     def test_video_bootstrap_point_lift_and_no_sentence(self):
         import numpy as np

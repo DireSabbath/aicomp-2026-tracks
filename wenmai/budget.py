@@ -234,6 +234,8 @@ def public_budget_run(metrics: dict, *, keep_misses: bool) -> dict:
         "gold_hard_exact": hard.get("exact_match"),
         "per_code_f1": metrics.get("per_code_f1") or {},
     }
+    if metrics.get("train_batch") is not None:
+        record["train_batch"] = int(metrics["train_batch"])
     if keep_misses:
         record["gold_core_misses"] = core.get("misses") or []
         record["gold_hard_misses"] = hard.get("misses") or []
