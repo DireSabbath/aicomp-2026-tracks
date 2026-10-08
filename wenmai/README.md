@@ -57,4 +57,6 @@ python -m wenmai.train_gpu \
 | `train_gpu.py` | 可选的开源中文编码器微调 |
 | `gold.json` | 自写核心句和难句 |
 | `技术报告.md` | 按赛题大纲写的说明 |
+| `技术报告.pdf` | 提交用 PDF，由 `export_report.py` 从上一份稿导出 |
+| `export_report.py` | 把技术报告印成 A4 PDF，并单独数正文页 |
 | `赛题解读与分析清单.md` | 赛题解读、评分对应，以及当前弹幕分析的完整清单 |
