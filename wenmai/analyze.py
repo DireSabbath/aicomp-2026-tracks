@@ -47,6 +47,34 @@ def _is_laugh(text: str) -> bool:
     return all(char in LAUGH or char in EXTRA for char in compact)
 
 
+def is_margin_candidate(text: str, hits: set[str]) -> bool:
+    """未编码、不是纯笑声、长度 4 到 40。全量前向从这批里留离阈值最近的清单。"""
+    if hits:
+        return False
+    stripped = text.strip()
+    return (not _is_laugh(text)) and 4 <= len(stripped) <= 40
+
+
+def is_gap_candidate(text: str, hits: set[str]) -> bool:
+    """规则没编码、不是纯笑声、长度 4 到 40，且缺口哈希抽中。
+
+    与全量分析里进入 1,500 条水库之前的条件相同。水库本身仍按视频顺序填。
+    """
+    return is_margin_candidate(text, hits) and stable_hash("gap:" + text) % 8 == 0
+
+
+def collect_gap_texts(corpus: Path, list_path: Path | None, cap: int = 1500) -> list[str]:
+    """按分析时的视频顺序抽出同一批缺口句子。只在本地推理时使用，不要写入仓库。"""
+    videos, _pending = _index(Path(corpus), list_path)
+    gap = Reservoir(cap)
+    for video in videos:
+        for row in _video_rows(video["path"]):
+            text = row.get("content") or ""
+            if is_gap_candidate(text, classify(text)):
+                gap.add(text)
+    return gap.items
+
+
 def _cjk_bigrams(text: str) -> list[str]:
     chars = [char for char in text if "\u4e00" <= char <= "\u9fff"]
     return [a + b for a, b in zip(chars, chars[1:])]
@@ -571,11 +599,7 @@ def analyze(corpus: Path, list_path: Path | None, out: Path) -> dict:
                         local_residue[gram] += 1
                         video_grams[gram] += 1
                 stripped = text.strip()
-                if (
-                    not _is_laugh(text)
-                    and 4 <= len(stripped) <= 40
-                    and stable_hash("gap:" + text) % 8 == 0
-                ):
+                if is_gap_candidate(text, hits):
                     gap.add(text)
                 elif len(stripped) >= 2:
                     neg.add(text)
