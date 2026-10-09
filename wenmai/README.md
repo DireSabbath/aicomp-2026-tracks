@@ -75,6 +75,7 @@ python -m wenmai.train_gpu \
 | `render.py` | 离线 HTML |
 | `train_gpu.py` | 可选的开源中文编码器微调，3090 上可用 `--hours 3` |
 | `gold.json` | 自写核心句和难句 |
+| `数学公式.md` | 计数、抬升、字符模型和编码器里用到的式子 |
 | `技术报告.md` | 按赛题大纲写的说明 |
 | `技术报告.pdf` | 提交用 PDF，由 `export_report.py` 从上一份稿导出 |
 | `export_report.py` | 把技术报告印成 A4 PDF，并单独数正文页 |
